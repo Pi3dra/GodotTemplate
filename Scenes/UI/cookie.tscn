@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://b5dekwm16iqx0"]
+
+[ext_resource type="Script" uid="uid://dqknjoplpupkk" path="res://Scripts/UI/following_cookie.gd" id="1_nelwp"]
+[ext_resource type="Texture2D" uid="uid://cgds718bsy6sc" path="res://Assets/Sprites/Head.png" id="2_86uf8"]
+
+[node name="Cookie" type="Control"]
+layout_mode = 3
+anchor_right = 0.023
+anchor_bottom = 0.042
+offset_right = 0.581997
+offset_bottom = -0.256004
+script = ExtResource("1_nelwp")
+
+[node name="shadow" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="cookie_texture" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_86uf8")

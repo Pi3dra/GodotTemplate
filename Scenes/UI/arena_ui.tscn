@@ -1,0 +1,97 @@
+[gd_scene load_steps=6 format=3 uid="uid://dpnhc72tu6qee"]
+
+[ext_resource type="Script" uid="uid://ci1pj1mqdc2i5" path="res://Scenes/UI/arena_ui.gd" id="1_0jrm8"]
+[ext_resource type="Script" uid="uid://b2yp7yuei5lgc" path="res://Scenes/UI/cookie_holder.gd" id="2_y73w7"]
+[ext_resource type="Theme" uid="uid://dadlocyhpxvuk" path="res://Assets/Themes/ArenaTheme.tres" id="3_enddi"]
+[ext_resource type="Texture2D" uid="uid://cgds718bsy6sc" path="res://Assets/Sprites/Head.png" id="4_a7d03"]
+[ext_resource type="Texture2D" uid="uid://cqnbcwq2lqtos" path="res://Assets/Sprites/Tail.png" id="5_q6rnn"]
+
+[node name="ArenaUi" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0jrm8")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -204.438
+offset_right = 204.438
+offset_bottom = 64.0
+grow_horizontal = 2
+theme = ExtResource("3_enddi")
+
+[node name="CookieHolder" type="BoxContainer" parent="PanelContainer"]
+layout_mode = 2
+theme = ExtResource("3_enddi")
+alignment = 1
+script = ExtResource("2_y73w7")
+
+[node name="Flip" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -63.0
+offset_top = -53.0
+offset_right = 65.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("3_enddi")
+text = "Flip"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.203
+anchor_top = 0.107
+anchor_right = 0.297
+anchor_bottom = 0.159
+offset_left = -0.298004
+offset_top = -0.17601
+offset_right = 0.297974
+offset_bottom = -0.112007
+
+[node name="Heads" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_enddi")
+text = "Heads"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_a7d03")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+layout_mode = 2
+anchor_left = 0.703
+anchor_top = 0.107
+anchor_right = 0.798
+anchor_bottom = 0.159
+offset_left = 0.201965
+offset_top = -0.17601
+offset_right = -0.567993
+offset_bottom = -0.112007
+
+[node name="Tails" type="Label" parent="HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_enddi")
+text = "Tails"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("5_q6rnn")
+
+[connection signal="instantiate_cookie" from="PanelContainer/CookieHolder" to="." method="_on_cookie_holder_instantiate_cookie"]
+[connection signal="pressed" from="Flip" to="." method="_on_button_pressed"]

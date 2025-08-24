@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://tcsmvgvcigkk"]
 
-[ext_resource type="Theme" uid="uid://dadlocyhpxvuk" path="res://Assets/Themes/ButtonTheme.tres" id="1_nhmg3"]
+[ext_resource type="Theme" uid="uid://dadlocyhpxvuk" path="res://Assets/Themes/ArenaTheme.tres" id="1_nhmg3"]
 [ext_resource type="Script" uid="uid://c45x8bahnhe8d" path="res://Scripts/UI/menu/menu.gd" id="1_uk6bn"]
 
 [node name="Menu" type="Control" node_paths=PackedStringArray("play", "options", "quit")]
