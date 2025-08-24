@@ -4,6 +4,7 @@ extends Node
 
 static var children_array = []
 
+# ceci est un commit
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	for lChilds_numb: AudioStreamPlayer in get_children():
