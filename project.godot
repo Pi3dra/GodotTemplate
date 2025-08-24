@@ -19,9 +19,10 @@ config/icon="res://Assets/Sprites/icon.svg"
 
 buses/default_bus_layout="res://Assets/Audio/default_bus_layout.tres"
 
-[editor_plugins]
+[display]
 
-enabled=PackedStringArray("res://addons/godot-vim/plugin.cfg")
+window/size/viewport_width=1366
+window/size/viewport_height=768
 
 [internationalization]
 

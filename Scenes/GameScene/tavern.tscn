@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://dngx7vu22cd8o"]
+
+[ext_resource type="Script" uid="uid://hw6bytylistb" path="res://Scripts/GameScene/tavern.gd" id="1_273kw"]
+
+[node name="Tavern" type="Node2D" node_paths=PackedStringArray("arena")]
+script = ExtResource("1_273kw")
+arena = NodePath("Button")
+
+[node name="Button" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 742.0
+offset_top = 342.0
+offset_right = 750.0
+offset_bottom = 350.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "GO TO ARENA"
+metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
