@@ -19,6 +19,10 @@ config/icon="res://Assets/Sprites/icon.svg"
 
 buses/default_bus_layout="res://Assets/Audio/default_bus_layout.tres"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot-vim/plugin.cfg")
+
 [internationalization]
 
 locale/translations=PackedStringArray("res://Localization/TestTrad.en.translation", "res://Localization/TestTrad.es.translation", "res://Localization/TestTrad.fr.translation")
