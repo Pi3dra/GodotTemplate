@@ -1,20 +1,17 @@
 extends Control
 
+var cookie : Cookie
 var following := true
-var color := Color.WHITE
 var state : String
 
-var up_tween
-var flip_tween
+var up_tween : Tween
+var flip_tween : Tween
 
 @onready var texture_rect = $cookie_texture
 
-var tail_texture = preload("res://Assets/Sprites/Head.png")
-var head_texture = preload("res://Assets/Sprites/Tail.png")
-var shadow_texture = preload("res://Assets/Sprites/cookie_shadow.png")
+func _ready() -> void:
+	texture_rect.texture = cookie.head_texture
 
-func _ready():
-	$shadow.texture = shadow_texture
 
 func _process(delta: float) -> void:
 	if following:
@@ -29,7 +26,6 @@ func flip_coin(npercent: int) -> String:
 	
 	var roll = randi() % 100 + 1
 	if roll <= npercent:
-		color = Color.RED
 		state = "HEAD"
 	else:
 		state = "TAIL"
@@ -47,19 +43,24 @@ func flip_coin(npercent: int) -> String:
 		flip_tween.tween_property(texture_rect, "scale:y", 1, duration)
 		duration += 0.02
 	up_tween.tween_property(texture_rect, "position:y", texture_rect.position.y, 0.02*10 ) 
-	if state == "HEAD":
-		texture_rect.texture = head_texture
-	elif state == "TAIL":
-		texture_rect.texture = tail_texture
+	update()
+
 
 	return state
 
+func update():
+	await flip_tween.finished
+	if state == "HEAD":
+		texture_rect.texture = cookie.head_texture
+	elif state == "TAIL":
+		texture_rect.texture = cookie.tail_texture
+		
 func make_red():
 	await flip_tween.finished
 	texture_rect.modulate = Color(1, 0, 0, 1)
 
 func _swap_side():
-	if texture_rect.texture == tail_texture:
-		texture_rect.texture = head_texture
-	elif texture_rect.texture == head_texture:
-		texture_rect.texture = tail_texture
+	if texture_rect.texture == cookie.tail_texture:
+		texture_rect.texture = cookie.head_texture
+	elif texture_rect.texture == cookie.head_texture:
+		texture_rect.texture = cookie.tail_texture

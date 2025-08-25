@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b5dekwm16iqx0"]
 
 [ext_resource type="Script" uid="uid://dqknjoplpupkk" path="res://Scripts/UI/following_cookie.gd" id="1_nelwp"]
-[ext_resource type="Texture2D" uid="uid://cgds718bsy6sc" path="res://Assets/Sprites/Head.png" id="2_86uf8"]
+[ext_resource type="Texture2D" uid="uid://cgds718bsy6sc" path="res://Assets/Sprites/Cookies/Head.png" id="2_86uf8"]
 
 [node name="Cookie" type="Control"]
 layout_mode = 3
