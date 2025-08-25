@@ -14,5 +14,8 @@ script = ExtResource("1_l6yvh")
 [connection signal="pressed" from="Tavern/Skeleton" to="Arena" method="_on_skeleton_pressed"]
 [connection signal="pressed" from="Tavern/Skeletonx3" to="Arena" method="_on_skeletonx_3_pressed"]
 [connection signal="pressed" from="Tavern/Goblinx2" to="Arena" method="_on_goblinx_2_pressed"]
+[connection signal="pressed" from="Tavern/Knight" to="Arena" method="_on_knight_pressed"]
+[connection signal="pressed" from="Tavern/Knightx2" to="Arena" method="_on_knightx_2_pressed"]
+[connection signal="pressed" from="Tavern/Knightx3" to="Arena" method="_on_knightx_3_pressed"]
 
 [editable path="Tavern"]
