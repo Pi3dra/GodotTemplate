@@ -2,9 +2,8 @@
 
 [ext_resource type="Script" uid="uid://hw6bytylistb" path="res://Scripts/GameScene/tavern.gd" id="1_273kw"]
 
-[node name="Tavern" type="Node2D" node_paths=PackedStringArray("arena")]
+[node name="Tavern" type="Node2D"]
 script = ExtResource("1_273kw")
-arena = NodePath("Button")
 
 [node name="Button" type="Button" parent="."]
 anchors_preset = 8
@@ -20,5 +19,26 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "GO TO ARENA"
 metadata/_edit_use_anchors_ = true
+
+[node name="Skeleton" type="Button" parent="."]
+offset_left = 978.0
+offset_top = 156.0
+offset_right = 1037.0
+offset_bottom = 187.0
+text = "Skeleton"
+
+[node name="Skeletonx3" type="Button" parent="."]
+offset_left = 1083.0
+offset_top = 152.0
+offset_right = 1168.0
+offset_bottom = 183.0
+text = "3Skeleton"
+
+[node name="Goblinx2" type="Button" parent="."]
+offset_left = 858.0
+offset_top = 165.0
+offset_right = 866.0
+offset_bottom = 173.0
+text = "2Goblin"
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

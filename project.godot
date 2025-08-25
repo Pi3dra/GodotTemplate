@@ -24,6 +24,15 @@ buses/default_bus_layout="res://Assets/Audio/default_bus_layout.tres"
 window/size/viewport_width=1366
 window/size/viewport_height=768
 
+[file_customization]
+
+folder_colors={
+"res://Assets/": "green",
+"res://Scenes/": "blue",
+"res://Scripts/": "red",
+"res://addons/": "gray"
+}
+
 [internationalization]
 
 locale/translations=PackedStringArray("res://Localization/TestTrad.en.translation", "res://Localization/TestTrad.es.translation", "res://Localization/TestTrad.fr.translation")
