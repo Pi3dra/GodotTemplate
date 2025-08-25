@@ -41,4 +41,25 @@ offset_right = 866.0
 offset_bottom = 173.0
 text = "2Goblin"
 
+[node name="Knight" type="Button" parent="."]
+offset_left = 215.0
+offset_top = 139.0
+offset_right = 274.0
+offset_bottom = 170.0
+text = "Knight"
+
+[node name="Knightx2" type="Button" parent="."]
+offset_left = 290.0
+offset_top = 138.0
+offset_right = 358.0
+offset_bottom = 169.0
+text = "2Knight"
+
+[node name="Knightx3" type="Button" parent="."]
+offset_left = 382.0
+offset_top = 135.0
+offset_right = 450.0
+offset_bottom = 166.0
+text = "3Knight"
+
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
