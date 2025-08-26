@@ -9,7 +9,7 @@ script = ExtResource("1_lbk2d")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_qqnvc")
-animation = &"attack"
+animation = &"walk"
 
 [node name="LifeBar" type="ProgressBar" parent="."]
 anchors_preset = 8
