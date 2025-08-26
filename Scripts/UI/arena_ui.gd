@@ -95,8 +95,8 @@ func _on_button_pressed() -> void:
 	
 		for cookie_node in cookie_instances:
 			var cookie_object : Cookie = cookie_node.cookie
-			
 			var result : Cookie.STATE 
+			
 			if cookie_object.side == Cookie.SCREENSIDE.Head:
 				result = cookie_node.flip_coin(cookie_object.chance + head_chance)
 			elif cookie_object.side == Cookie.SCREENSIDE.Tail:
@@ -106,7 +106,11 @@ func _on_button_pressed() -> void:
 				correct_guesses.append(cookie_node)
 			else:
 				incorrect_guesses.append(cookie_node)
-				
+			
+			match cookie_object.cookie_type:
+				Globals.COOKIETYPE.Replay:
+					if randf() > 0.5:
+						cookie_holder.create_button(cookie_object)
 				
 		for cookie in incorrect_guesses:
 			cookie.make_red()

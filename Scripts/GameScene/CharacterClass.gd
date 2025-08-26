@@ -21,7 +21,8 @@ func debug(to_print,confirm):
 func _init(pHealth: int, pDamage: int, pAttack_speed: float, pCrit: float, pSprite_frame: String, pSide: String):
 	health = pHealth
 	damage = pDamage
-	attack_speed = pAttack_speed
+	var random_offset : float = randf() * 0.5
+	attack_speed = pAttack_speed + random_offset
 	crit = pCrit
 	sprite_frame = pSprite_frame
 	side = pSide
