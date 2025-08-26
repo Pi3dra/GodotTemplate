@@ -39,10 +39,6 @@ func _ready() -> void:
 	attack_rate()
 
 
-func _process(delta: float) -> void:
-	pass
-
-
 func attack_rate():
 	var lTimer = Timer.new()
 	lTimer.autostart = true
@@ -54,7 +50,7 @@ func attack_rate():
 func _on_attack_timer_timeout():
 	actual_state = States.ATTACKING
 	crit()
-	emit_signal("attack", character.damage, character.side) # arena gets it
+	emit_signal("attack", character.attack(), character.side) # arena gets it
 
 
 func die():

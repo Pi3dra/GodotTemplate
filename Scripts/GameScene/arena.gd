@@ -6,8 +6,8 @@ extends Node2D
 
 var char_scene: PackedScene = load("uid://b3y2sr2uweroy")
 
-var chosen_enemies: Array[String]
-var player_party: Array[String]
+var chosen_enemies: Array[LogicalCharacter.TYPES]
+var player_party: Array[LogicalCharacter.TYPES]
 var spawned_enemies: Array[Node2D]
 var spawned_allies: Array[Node2D]
 var enemies_spawn_pos: Array[Vector2]
@@ -17,7 +17,7 @@ var allies_spawn_pos: Array[Vector2]
 #//////////function//////////
 func _init():
 	hide()
-	#area_ui.instance.connect("combat_cookies", update_active_cookies)
+	area_ui.instance.connect("combat_cookies", update_active_cookies)
 
 
 func _ready() -> void:
@@ -28,32 +28,29 @@ func _ready() -> void:
 		allies_spawn_pos.append(pos.position)
 
 
-func _process(delta: float) -> void:
-	pass
-
 #region Signals
 func _on_skeleton_pressed() -> void:
-	add_to_array(chosen_enemies, 1, "Skeleton")
+	add_to_array(chosen_enemies, 1, LogicalCharacter.TYPES.Skeleton)
 
 
 func _on_skeletonx_3_pressed() -> void:
-	add_to_array(chosen_enemies, 3, "Skeleton")
+	add_to_array(chosen_enemies, 3, LogicalCharacter.TYPES.Skeleton)
 
 
 func _on_goblinx_2_pressed() -> void:
-	add_to_array(chosen_enemies, 2, "Goblin")
+	add_to_array(chosen_enemies, 2, LogicalCharacter.TYPES.Goblin)
 
 
 func _on_knight_pressed() -> void:
-	add_to_array(player_party, 1, "Knight")
+	add_to_array(player_party, 1, LogicalCharacter.TYPES.Knight)
 
 
 func _on_knightx_2_pressed() -> void:
-	add_to_array(player_party, 2, "Knight")
+	add_to_array(player_party, 2, LogicalCharacter.TYPES.Knight)
 
 
 func _on_knightx_3_pressed() -> void:
-	add_to_array(player_party, 3, "Knight")
+	add_to_array(player_party, 3, LogicalCharacter.TYPES.Knight)
 
 
 func _on_visibility_changed() -> void:
@@ -75,7 +72,7 @@ func place_camera():
 	add_child(lCam)
 
 
-func spawn_characters(pStr_array: Array[String], pVec_array: Array[Vector2], pNode_array: Array[Node2D]):
+func spawn_characters(pStr_array: Array[LogicalCharacter.TYPES], pVec_array: Array[Vector2], pNode_array: Array[Node2D]):
 	for characters in pStr_array:
 		create_character(characters)
 	
@@ -84,15 +81,15 @@ func spawn_characters(pStr_array: Array[String], pVec_array: Array[Vector2], pNo
 			pNode_array[i].position = pVec_array[i] # Adjust the pos of enemies to avaible spawn pos
 
 
-func add_to_array(pArray: Array, pNumb: int, pChar_name: String):
+func add_to_array(pArray: Array, pNumb: int, pChar_name: LogicalCharacter.TYPES):
 	pArray.clear()
 	for i in range(pNumb):
 		pArray.append(pChar_name)
 
 
-func create_character(pChar_name: String):
+func create_character(pChar_name: LogicalCharacter.TYPES):
 	# Creation character Class (pas egal a character.tscn)
-	var lDict: Dictionary = GameScene.pokedex[pChar_name] # lDict = the character(pChar_name) dictionary of stat
+	var lDict: Dictionary = GameScene.pokedex.get(pChar_name) # lDict = the character(pChar_name) dictionary of stat
 	var lChar: LogicalCharacter = LogicalCharacter.new(lDict["Health"], lDict["Damage"], lDict["Speed"], lDict["Crit"], lDict["Sprite"], lDict["Side"])
 	# Instantiation of character tscn
 	var lCharScene : Node2D = char_scene.instantiate()
@@ -130,8 +127,6 @@ func combat_handler(pDamage, pSide):
 		list_to_pick.erase(lEnemy_to_attack)
 
 
-#func update_active_cookies(combat_cookies):
-#	print("Cookies Received, Over")
-#	for cookie in combat_cookies:
-#		for ally_node in spawned_allies:
-#			ally_node.character.append(cookie)
+func update_active_cookies(combat_cookies):
+	for ally_node in spawned_allies:
+		ally_node.character.receive_cookie_POWER(combat_cookies)

@@ -42,4 +42,28 @@ func to_stringg():
 	var key_name = Globals.COOKIETYPE.keys()[cookie_type]
 	return key_name
 	
+static func filter_cookies_type(cookie_list : Array, pCookie_type : Globals.COOKIETYPE) -> Array:
+	return cookie_list.filter(func(cookie):return cookie.cookie_type == pCookie_type )
+
+static func filter_cookies_effect(cookie_list : Array, pCookie_effect :EFFECTYPE) -> Array:
+	return cookie_list.filter(func(cookie):return cookie.effect_type == pCookie_effect )
+
+
+static func list_to_dict(cookie_list : Array[Cookie]) -> Dictionary:
+	print("Adding:", cookie_list)
+	var dict = {}
+	for value in Globals.COOKIETYPE.values():
+		dict[value] = []
+	for cookie in cookie_list:
+		dict[cookie.cookie_type].append(cookie)
+	print("Result:", dict)
+	return dict
+	
+## Returns an empty dict of type Dictionary[COOKIETYPE, Array[Cookie]
+static func type_dict() -> Dictionary:
+	var dict = {}
+	for value in Globals.COOKIETYPE.values():
+		dict[value] = []
+	return dict
+	
 #TODO: Might be good to have a function that returns the sprite of a given cookie type

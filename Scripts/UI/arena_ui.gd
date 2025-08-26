@@ -11,12 +11,10 @@ var selected_cookie : Control
 var screen_size : Vector2 
 var screen_middle : float
 
-var active_cookies : Array#[Cookie]
+var active_cookies = Cookie.type_dict() #Dictionary[COOKIETYPE, Array[Cookie]]
 
 @onready var flip_button: Button = $Flip
 @onready var cookie_holder = $PanelContainer/CookieHolder
-
-
 
 func _ready() -> void:
 	hide()
@@ -78,22 +76,23 @@ func _on_button_pressed() -> void:
 		if cookie_instances.size() < 1:
 			return
 		flip_button.text = "Accept"
-		var correct_guesses : Array[Control]
-		var incorrect_guesses : Array[Control]
 		
-		#### Handling chance cookies:
-		print("Active cookies ", active_cookies)
-		var weighted_cookies = filter_cookies_type(active_cookies,Globals.COOKIETYPE.Weighted)
-		
+		#### Handling pre flip Cookies
+		var weighted_cookies = active_cookies.get(Globals.COOKIETYPE.Weighted,5)
+
 		var head_chance = 0
 		var tail_chance = 0
 		for cookie in weighted_cookies:
+			# TODO put this to 15
 			if cookie.side == Cookie.SCREENSIDE.Head:
 				head_chance += 50
 			elif cookie.side == Cookie.SCREENSIDE.Tail:
 				tail_chance += 50
 		
 		#### Cookie flipping
+		var correct_guesses : Array[Control]
+		var incorrect_guesses : Array[Control]
+	
 		for cookie_node in cookie_instances:
 			var cookie_object : Cookie = cookie_node.cookie
 			
@@ -115,32 +114,26 @@ func _on_button_pressed() -> void:
 		# Clear old effects:
 		active_cookies.clear()
 		
-		var active_cookie_nodes = filter_cookies_effect(correct_guesses, Cookie.EFFECTYPE.Chance)
-		var combat_cookie_nodes  = filter_cookies_effect(correct_guesses, Cookie.EFFECTYPE.Combat)
-		active_cookies = active_cookie_nodes.map(func(cookie_node): return cookie_node.cookie) 
-		var combat_cookies = combat_cookie_nodes.map(func(cookie_node): return cookie_node.cookie) as Array[Cookie]
+		# Handling correctly guessed cookies 
 		
-		####### DEBUG
-		print("Chance Cookies:")
-		for cookie in active_cookies:
-			print(cookie.to_stringg())
-		print()
-		print("Combat Cookies:")
-		for cookie in combat_cookies:
-			print(cookie.to_stringg())
+		var correct_guessed_cookies : Array[Cookie] = []
+		for cookie_node in correct_guesses:
+			correct_guessed_cookies.append(cookie_node.cookie)
 			
-		emit_signal("combat_cookies", combat_cookies)
+		var active_cookie_list : Array[Cookie] = Cookie.filter_cookies_effect(correct_guessed_cookies, Cookie.EFFECTYPE.Chance)
+		active_cookies = Cookie.list_to_dict(active_cookie_list)
+		
+		var combat_cookie_list : Array[Cookie]  = Cookie.filter_cookies_effect(correct_guessed_cookies, Cookie.EFFECTYPE.Combat)
+		var combat_cookie = Cookie.list_to_dict(combat_cookie_list)
+		
+		print("COMBAT: ", combat_cookie, combat_cookie_list, correct_guesses)
+		
+		if combat_cookie.size() > 0:
+			emit_signal("combat_cookies", combat_cookie)
 		
 	elif flip_button.text == "Accept":
 		erase_cookies()
 		
-
-func filter_cookies_effect(cookie_list : Array[Control], pEffect_type : Cookie.EFFECTYPE) -> Array[Control]:
-	return cookie_list.filter(func(cookie_node):return cookie_node.cookie.effect_type == pEffect_type )
-
-func filter_cookies_type(cookie_list : Array, pCookie_type : Globals.COOKIETYPE) -> Array:
-	return cookie_list.filter(func(cookie):return cookie.cookie_type == pCookie_type )
-
 
 func erase_cookies():
 	for cookie in cookie_instances:
