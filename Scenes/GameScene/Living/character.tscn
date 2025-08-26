@@ -1,8 +1,29 @@
-[gd_scene load_steps=2 format=3 uid="uid://b3y2sr2uweroy"]
+[gd_scene load_steps=4 format=3 uid="uid://b3y2sr2uweroy"]
 
 [ext_resource type="Script" uid="uid://6hi3fxftlshh" path="res://Scripts/GameScene/character.gd" id="1_lbk2d"]
+[ext_resource type="SpriteFrames" uid="uid://b2ygb7ty6nyn7" path="res://Assets/SpritesFrames/Knight.tres" id="2_qqnvc"]
+[ext_resource type="Theme" uid="uid://dadlocyhpxvuk" path="res://Assets/Themes/ArenaTheme.tres" id="3_garmb"]
 
 [node name="Character" type="Node2D"]
 script = ExtResource("1_lbk2d")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("2_qqnvc")
+animation = &"attack"
+
+[node name="LifeBar" type="ProgressBar" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.0
+offset_top = -51.0
+offset_right = 37.0
+offset_bottom = 59.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_garmb")
+value = 100.0
+
+[connection signal="attack" from="." to="." method="_damage_taken"]

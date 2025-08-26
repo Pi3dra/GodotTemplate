@@ -1,5 +1,8 @@
 extends Control
 
+class_name area_ui
+
+static var instance
 var cookie_tscn : PackedScene = load("res://Scenes/UI/cookie.tscn")
 var cookie_list : Array[Cookie]
 var cookie_instances : Array [Control] = []
@@ -15,7 +18,8 @@ var screen_middle : float
 
 
 func _ready() -> void:
-	# THIS SHOULD BE TRANSMITED ELSEWHERE (PROBABLY ARENA
+	hide()
+	instance = self
 	cookie_list = [
 	Cookie.new("","",Globals.COOKIETYPE.Normal),
 	Cookie.new("","",Globals.COOKIETYPE.Weighted),
