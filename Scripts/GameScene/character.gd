@@ -4,13 +4,16 @@ signal attack(damage: int, team: String)
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var life_bar: ProgressBar = $LifeBar
+@onready var animated_sprite_fx: AnimatedSprite2D = $AnimatedSpriteFX
 
 enum States {IDLE, WALKING, ATTACKING, DYING, HURT}
+
+var previous_state: States
 
 # This variable keeps track of the character's current state.
 var actual_state: States = States.IDLE:
 	set(pNew_state):
-		var previous_state: States = actual_state
+		previous_state = actual_state
 		actual_state = pNew_state as States
 		match actual_state:
 				States.IDLE:
@@ -20,9 +23,15 @@ var actual_state: States = States.IDLE:
 				States.ATTACKING:
 					animated_sprite.play("attack")
 				States.DYING:
+					var lTween_die = create_tween()
+					lTween_die.tween_property(animated_sprite, "modulate", Color.TRANSPARENT, 0.8)
+					animated_sprite_fx.play("die")
 					animated_sprite.play("die")
 				States.HURT:
+					#TODO execute the anim below if crit receive
+					#animated_sprite_fx.play("hit")
 					animated_sprite.play("hit")
+
 
 var character : LogicalCharacter 
 
@@ -39,6 +48,31 @@ func _ready() -> void:
 	attack_rate()
 
 
+func _process(delta: float) -> void:
+	pass
+
+
+#region Signals
+func _on_animated_sprite_2d_animation_finished() -> void:
+	if previous_state == States.DYING: queue_free() # To kill this mtf
+	match actual_state:
+			States.WALKING:
+				actual_state = States.IDLE
+			States.ATTACKING:
+				actual_state = States.IDLE
+			States.HURT:
+				actual_state = States.IDLE
+			States.DYING:
+				queue_free()
+
+
+func _on_attack_timer_timeout():
+	actual_state = States.ATTACKING
+	if previous_state == States.DYING: return # To avoid bug where attack can be done dying
+	crit()
+	emit_signal("attack", character.damage, character.side) # arena gets it
+#endregion
+
 func attack_rate():
 	var lTimer = Timer.new()
 	lTimer.autostart = true
@@ -47,17 +81,11 @@ func attack_rate():
 	lTimer.timeout.connect(_on_attack_timer_timeout) # Pareil que lTimer.timout += _on_...
 	add_child(lTimer)
 
-func _on_attack_timer_timeout():
-	actual_state = States.ATTACKING
-	crit()
-	emit_signal("attack", character.attack(), character.side) # arena gets it
-
 
 func die():
 	if character.health <= 0:
 		#faire le trala
 		actual_state = States.DYING
-		queue_free()
 
 
 func crit():
@@ -70,7 +98,8 @@ func crit():
 # This is called in arena
 func receive_damage(damage):
 	actual_state = States.HURT
-	var health_tween = create_tween()
+	var lTween_health = create_tween()
 	character.health -= damage
-	health_tween.tween_property(life_bar,"value", character.health ,0.5)
+	lTween_health.tween_property(life_bar,"value", character.health ,0.5)
 	die()
+	

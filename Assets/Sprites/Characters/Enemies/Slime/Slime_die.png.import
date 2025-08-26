@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cypp722v6bebw"
-path="res://.godot/imported/Paladin_attack.png-7d03ec93065f774c4c5caefd882ea7d2.ctex"
+uid="uid://dqfbqhxc31c22"
+path="res://.godot/imported/Slime_die.png-d79b8db868b7e0f5773ba918bd66ae60.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Characters/Player/Paladin_attack.png"
-dest_files=["res://.godot/imported/Paladin_attack.png-7d03ec93065f774c4c5caefd882ea7d2.ctex"]
+source_file="res://Assets/Sprites/Characters/Enemies/Slime/Slime_die.png"
+dest_files=["res://.godot/imported/Slime_die.png-d79b8db868b7e0f5773ba918bd66ae60.ctex"]
 
 [params]
 

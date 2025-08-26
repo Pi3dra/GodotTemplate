@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://drfid0msefm6h"
-path="res://.godot/imported/Paladin_idle.png-bca0aa746a736e9acfe672fc32a3149b.ctex"
+uid="uid://dbor7ohqh7m17"
+path="res://.godot/imported/Pixie_attack.png-74e96a5d2524122932e1abb8fe0cf822.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Characters/Player/Paladin_idle.png"
-dest_files=["res://.godot/imported/Paladin_idle.png-bca0aa746a736e9acfe672fc32a3149b.ctex"]
+source_file="res://Assets/Sprites/Characters/Player/Pixie/Pixie_attack.png"
+dest_files=["res://.godot/imported/Pixie_attack.png-74e96a5d2524122932e1abb8fe0cf822.ctex"]
 
 [params]
 

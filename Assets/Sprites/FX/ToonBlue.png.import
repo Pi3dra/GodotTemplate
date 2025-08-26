@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bld31belfhn31"
-path="res://.godot/imported/Paladin_walk.png-449a8ba10337d9731e849b95721c55da.ctex"
+uid="uid://dfc2gygigqquq"
+path="res://.godot/imported/ToonBlue.png-fe63cf451c10b29f4b28271192acc3a9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Characters/Player/Paladin_walk.png"
-dest_files=["res://.godot/imported/Paladin_walk.png-449a8ba10337d9731e849b95721c55da.ctex"]
+source_file="res://Assets/Sprites/FX/ToonBlue.png"
+dest_files=["res://.godot/imported/ToonBlue.png-fe63cf451c10b29f4b28271192acc3a9.ctex"]
 
 [params]
 
