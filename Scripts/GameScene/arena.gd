@@ -13,9 +13,11 @@ var spawned_allies: Array[Node2D]
 var enemies_spawn_pos: Array[Vector2]
 var allies_spawn_pos: Array[Vector2]
 
+
 #//////////function//////////
 func _init():
 	hide()
+	#area_ui.instance.connect("combat_cookies", update_active_cookies)
 
 
 func _ready() -> void:
@@ -126,4 +128,10 @@ func combat_handler(pDamage, pSide):
 	lEnemy_to_attack.receive_damage(pDamage)
 	if lEnemy_to_attack.character.health <= 0:
 		list_to_pick.erase(lEnemy_to_attack)
-		
+
+
+#func update_active_cookies(combat_cookies):
+#	print("Cookies Received, Over")
+#	for cookie in combat_cookies:
+#		for ally_node in spawned_allies:
+#			ally_node.character.append(cookie)

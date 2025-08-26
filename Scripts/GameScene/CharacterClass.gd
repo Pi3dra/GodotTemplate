@@ -2,13 +2,13 @@ extends Node
 
 class_name LogicalCharacter
 
-
 var sprite_frame: String
 var health: int
 var damage: int
 var attack_speed: float
 var crit: float
 var side: String
+
 
 #//////////function//////////
 func _init(pHealth: int, pDamage: int, pAttack_speed: float, pCrit: float, pSprite_frame: String, pSide: String):

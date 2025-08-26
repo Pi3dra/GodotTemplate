@@ -2,7 +2,6 @@ extends Control
 
 var cookie : Cookie
 var following := true
-var state : String
 
 var up_tween : Tween
 var flip_tween : Tween
@@ -21,19 +20,19 @@ func _process(_delta: float) -> void:
 		var new_pos = Vector2(mouse_pos.x - 32, mouse_pos.y - 32)
 		position = new_pos
 
-func flip_coin(npercent: int) -> String:
+func flip_coin(headpercent: int) -> Cookie.STATE:
 	# Clamp to 0–100 just in case
-	npercent = clamp(npercent, 0, 100)
+	headpercent = clamp(headpercent, 0, 100)
 	
 	var roll = randi() % 100 + 1
-	if roll <= npercent:
-		state = "HEAD"
+	if roll <= headpercent:
+		cookie.state = Cookie.STATE.Head
 	else:
-		state = "TAIL"
+		cookie.state = Cookie.STATE.Tail
 	
 	do_flip_animation()
 		
-	return state
+	return cookie.state
 	
 func do_flip_animation():
 	flip_tween = get_tree().create_tween()
@@ -53,9 +52,9 @@ func do_flip_animation():
 ## Waits for the tween to stop to display the correct sprite
 func update_sprite():
 	await flip_tween.finished
-	if state == "HEAD":
+	if cookie.state == Cookie.STATE.Head:
 		texture_rect.texture = cookie.head_texture
-	elif state == "TAIL":
+	elif cookie.state == Cookie.STATE.Tail :
 		texture_rect.texture = cookie.tail_texture
 
 ## Makes Cookie red when guessed wrong 
