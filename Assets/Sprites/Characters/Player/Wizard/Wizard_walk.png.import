@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://kc4ef7j3bwdl"
-path="res://.godot/imported/cookie_shadow.png-aa9114c86411fcff6b97cb4ee389fab9.ctex"
+uid="uid://d0458w3n3cyx5"
+path="res://.godot/imported/Wizard_walk.png-9836968fa51261f280a78d028f5689a3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Cookies/cookie_shadow.png"
-dest_files=["res://.godot/imported/cookie_shadow.png-aa9114c86411fcff6b97cb4ee389fab9.ctex"]
+source_file="res://Assets/Sprites/Characters/Player/Wizard/Wizard_walk.png"
+dest_files=["res://.godot/imported/Wizard_walk.png-9836968fa51261f280a78d028f5689a3.ctex"]
 
 [params]
 

@@ -1,23 +1,28 @@
 [gd_scene load_steps=3 format=3 uid="uid://b5dekwm16iqx0"]
 
 [ext_resource type="Script" uid="uid://dqknjoplpupkk" path="res://Scripts/UI/following_cookie.gd" id="1_nelwp"]
-[ext_resource type="Texture2D" uid="uid://cgds718bsy6sc" path="res://Assets/Sprites/Cookies/Head.png" id="2_86uf8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nelwp"]
 
 [node name="Cookie" type="Control"]
 layout_mode = 3
 anchor_right = 0.023
 anchor_bottom = 0.042
-offset_right = 0.581997
-offset_bottom = -0.256004
+offset_right = -31.418
+offset_bottom = -32.256
 script = ExtResource("1_nelwp")
 
 [node name="shadow" type="TextureRect" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 72.0
+offset_bottom = 72.0
+scale = Vector2(0.8, 0.8)
+stretch_mode = 4
 
 [node name="cookie_texture" type="TextureRect" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("2_86uf8")
+offset_right = 64.0
+offset_bottom = 64.0
+texture = SubResource("AtlasTexture_nelwp")

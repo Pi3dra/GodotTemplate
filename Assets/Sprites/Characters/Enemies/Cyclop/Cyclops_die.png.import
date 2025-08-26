@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cqnbcwq2lqtos"
-path="res://.godot/imported/Tail.png-c48106db02160c0df7feb2cf22c8eba8.ctex"
+uid="uid://ck4h720urc3of"
+path="res://.godot/imported/Cyclops_die.png-e68f2e42e89d9fbc75e22b6ced30072f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Cookies/Tail.png"
-dest_files=["res://.godot/imported/Tail.png-c48106db02160c0df7feb2cf22c8eba8.ctex"]
+source_file="res://Assets/Sprites/Characters/Enemies/Cyclop/Cyclops_die.png"
+dest_files=["res://.godot/imported/Cyclops_die.png-e68f2e42e89d9fbc75e22b6ced30072f.ctex"]
 
 [params]
 

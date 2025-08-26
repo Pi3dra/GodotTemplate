@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cgds718bsy6sc"
-path="res://.godot/imported/Head.png-b0cdd10f4597ddd52d1da4365f54c1bf.ctex"
+uid="uid://c2v61frkgnemq"
+path="res://.godot/imported/Bandit04_idle.png-e6119a22703861176135105c6b69ff86.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Cookies/Head.png"
-dest_files=["res://.godot/imported/Head.png-b0cdd10f4597ddd52d1da4365f54c1bf.ctex"]
+source_file="res://Assets/Sprites/Characters/Player/Bandit/Bandit04_idle.png"
+dest_files=["res://.godot/imported/Bandit04_idle.png-e6119a22703861176135105c6b69ff86.ctex"]
 
 [params]
 

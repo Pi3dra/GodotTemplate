@@ -5,7 +5,7 @@ var cookie_type : Globals.COOKIETYPE
 
 var tail_texture : AtlasTexture
 var head_texture : AtlasTexture
-var shadow_texture = preload("res://Assets/Sprites/Cookies/cookie_shadow.png")
+var shadow_texture = preload("res://Assets/Sprites/cookie_shadow.png")
 var spritesheet = preload("res://Assets/Sprites/CookieSheet.png")
 
 func _init(pId, pDescription, pCookie_type):
@@ -21,7 +21,6 @@ func _init(pId, pDescription, pCookie_type):
 	tail_atlas.atlas = spritesheet
 	tail_atlas.region = Rect2(32, cookie_type * 32, 32, 32)
 	
-	#WHY THE HELL IS THIS INVERTED?
 	tail_texture = tail_atlas
 	head_texture = head_atlas
 	

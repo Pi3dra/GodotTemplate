@@ -1,10 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://dpnhc72tu6qee"]
+[gd_scene load_steps=7 format=3 uid="uid://dpnhc72tu6qee"]
 
-[ext_resource type="Script" uid="uid://ci1pj1mqdc2i5" path="res://Scenes/UI/arena_ui.gd" id="1_0jrm8"]
-[ext_resource type="Script" uid="uid://b2yp7yuei5lgc" path="res://Scenes/UI/cookie_holder.gd" id="2_y73w7"]
+[ext_resource type="Script" uid="uid://ci1pj1mqdc2i5" path="res://Scripts/UI/arena_ui.gd" id="1_0jrm8"]
+[ext_resource type="Script" uid="uid://b2yp7yuei5lgc" path="res://Scripts/UI/cookie_holder.gd" id="2_y73w7"]
 [ext_resource type="Theme" uid="uid://dadlocyhpxvuk" path="res://Assets/Themes/ArenaTheme.tres" id="3_enddi"]
-[ext_resource type="Texture2D" uid="uid://cgds718bsy6sc" path="res://Assets/Sprites/Cookies/Head.png" id="4_a7d03"]
-[ext_resource type="Texture2D" uid="uid://cqnbcwq2lqtos" path="res://Assets/Sprites/Cookies/Tail.png" id="5_q6rnn"]
+[ext_resource type="Texture2D" uid="uid://cu2f2lwoupqox" path="res://Assets/Sprites/CookieSheet.png" id="4_a7d03"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q6rnn"]
+atlas = ExtResource("4_a7d03")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_31k31"]
+atlas = ExtResource("4_a7d03")
+region = Rect2(32, 0, 32, 32)
 
 [node name="ArenaUi" type="Control"]
 layout_mode = 3
@@ -68,7 +75,7 @@ vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("4_a7d03")
+texture = SubResource("AtlasTexture_q6rnn")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -91,7 +98,7 @@ vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="HBoxContainer2"]
 layout_mode = 2
-texture = ExtResource("5_q6rnn")
+texture = SubResource("AtlasTexture_31k31")
 
 [connection signal="instantiate_cookie" from="PanelContainer/CookieHolder" to="." method="_on_cookie_holder_instantiate_cookie"]
 [connection signal="pressed" from="Flip" to="." method="_on_button_pressed"]
