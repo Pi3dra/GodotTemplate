@@ -69,8 +69,8 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 func _on_attack_timer_timeout():
 	actual_state = States.ATTACKING
 	if previous_state == States.DYING: return # To avoid bug where attack can be done dying
-	crit()
-	emit_signal("attack", character.damage, character.side) # arena gets it
+	var attack_info : Array = character.attack()
+	emit_signal("attack", character.attack(), character.side) # arena gets it
 #endregion
 
 func attack_rate():
@@ -88,15 +88,8 @@ func die():
 		actual_state = States.DYING
 
 
-func crit():
-	randomize()
-	var lCrit_chance: float = character.crit
-	if lCrit_chance >= randf_range(0,1):
-		character.damage += character.damage/2
-
-
 # This is called in arena
-func receive_damage(damage):
+func receive_damage(damage, crit):
 	actual_state = States.HURT
 	var lTween_health = create_tween()
 	character.health -= damage

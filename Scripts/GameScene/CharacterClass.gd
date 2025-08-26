@@ -47,7 +47,7 @@ func receive_cookie_POWER(received_cookies: Dictionary):
 			
 
 
-func attack() -> int:
+func attack() -> Array:
 	var damage_multiplier = 1
 	
 	# Damage Boosting cookies
@@ -67,7 +67,9 @@ func attack() -> int:
 	critical_bonus += 0.2 * critical_cookies.size()
 	debug("Critical!", critical_cookies.size() > 0)
 	
-	var total_damage : float = calculate_crit(damage*damage_multiplier, critical_bonus)
+	# Array Float Bool
+	var crit_info : Array  = calculate_crit(damage*damage_multiplier, critical_bonus)
+	var total_damage : float = crit_info[0]
 	
 	# Damage using cookies
 	# Vampire cookie
@@ -76,16 +78,19 @@ func attack() -> int:
 	debug("Vampire!", vampire_cookies.size() > 0)
 	
 	active_cookies = Cookie.type_dict() # Resetting to empty
-	return total_damage
+	return [total_damage, crit_info[1]]
 	
 	
 
-func calculate_crit(damage: float, bonus_chance: float) -> float:
+func calculate_crit(damage: float, bonus_chance: float) -> Array:
 	randomize() # TODO Faut bouger ce truc qui pue ailleurs
 	bonus_chance = clamp(bonus_chance, 0.0, 1.0)
 	var lCrit_chance: float = crit 
 	var total_chance: float = clamp(lCrit_chance + bonus_chance, 0.0, 1)
+	
+	var crit_triggered : bool = false
 	if randf() <= total_chance:
 		damage *= 1.5 
+		crit_triggered = true
 
-	return damage
+	return [damage, crit_triggered]

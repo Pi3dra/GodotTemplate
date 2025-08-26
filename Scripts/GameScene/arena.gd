@@ -65,7 +65,7 @@ func _on_visibility_changed() -> void:
 
 func place_camera():
 	var lCam: Camera2D = Camera2D.new()
-	var lZoom: Vector2 = Vector2(1.5, 1.5)
+	var lZoom: Vector2 = Vector2(1, 1)
 	var lPos: Vector2 = Vector2(654.0, 547.0)
 	lCam.zoom = lZoom
 	lCam.position = lPos
@@ -105,8 +105,11 @@ func create_character(pChar_name: LogicalCharacter.TYPES):
 			spawned_enemies.append(lCharScene)
 
 
-func combat_handler(pDamage, pSide):
+func combat_handler(Attack_info : Array, pSide):
 	var list_to_pick : Array[Node2D] = []
+	
+	var damage = Attack_info[0]
+	var crit = Attack_info[1]
 	
 	match pSide:
 		"Good":
@@ -120,9 +123,9 @@ func combat_handler(pDamage, pSide):
 	
 	var lEnemy_to_attack: Node2D = list_to_pick.pick_random()
 	
-	print("Damage:", pDamage, " to Enemy :", lEnemy_to_attack.character.health)
+	print("Damage:", damage, " to Enemy :", lEnemy_to_attack.character.health)
 	
-	lEnemy_to_attack.receive_damage(pDamage)
+	lEnemy_to_attack.receive_damage(damage, crit)
 	if lEnemy_to_attack.character.health <= 0:
 		list_to_pick.erase(lEnemy_to_attack)
 
