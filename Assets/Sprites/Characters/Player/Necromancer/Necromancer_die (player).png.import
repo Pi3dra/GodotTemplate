@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b31tguafo7iac"
-path="res://.godot/imported/Paladin_hit.png-3dce77964454de9009e802ece6948b1d.ctex"
+uid="uid://cyiguvr5snv7i"
+path="res://.godot/imported/Necromancer_die (player).png-fae58355db20705547152973becaa22c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Characters/Player/Paladin_hit.png"
-dest_files=["res://.godot/imported/Paladin_hit.png-3dce77964454de9009e802ece6948b1d.ctex"]
+source_file="res://Assets/Sprites/Characters/Player/Necromancer/Necromancer_die (player).png"
+dest_files=["res://.godot/imported/Necromancer_die (player).png-fae58355db20705547152973becaa22c.ctex"]
 
 [params]
 

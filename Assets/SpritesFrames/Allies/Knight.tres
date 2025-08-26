@@ -1,73 +1,73 @@
 [gd_resource type="SpriteFrames" load_steps=22 format=3 uid="uid://b2ygb7ty6nyn7"]
 
-[ext_resource type="Texture2D" uid="uid://cypp722v6bebw" path="res://Assets/Sprites/Characters/Player/Paladin_attack.png" id="1_wr6ke"]
-[ext_resource type="Texture2D" uid="uid://dvwpsxeijpc14" path="res://Assets/Sprites/Characters/Player/Paladin_die.png" id="2_lu7is"]
-[ext_resource type="Texture2D" uid="uid://b31tguafo7iac" path="res://Assets/Sprites/Characters/Player/Paladin_hit.png" id="3_5mjtb"]
-[ext_resource type="Texture2D" uid="uid://drfid0msefm6h" path="res://Assets/Sprites/Characters/Player/Paladin_idle.png" id="4_4hfej"]
-[ext_resource type="Texture2D" uid="uid://bld31belfhn31" path="res://Assets/Sprites/Characters/Player/Paladin_walk.png" id="5_57y1c"]
+[ext_resource type="Texture2D" uid="uid://cypp722v6bebw" path="res://Assets/Sprites/Characters/Player/Paladin_attack.png" id="1_k8mac"]
+[ext_resource type="Texture2D" uid="uid://dvwpsxeijpc14" path="res://Assets/Sprites/Characters/Player/Paladin_die.png" id="2_lyu3g"]
+[ext_resource type="Texture2D" uid="uid://b31tguafo7iac" path="res://Assets/Sprites/Characters/Player/Paladin_hit.png" id="3_ggwhl"]
+[ext_resource type="Texture2D" uid="uid://drfid0msefm6h" path="res://Assets/Sprites/Characters/Player/Paladin_idle.png" id="4_gkarj"]
+[ext_resource type="Texture2D" uid="uid://bld31belfhn31" path="res://Assets/Sprites/Characters/Player/Paladin_walk.png" id="5_c5lx3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2nkdh"]
-atlas = ExtResource("1_wr6ke")
+atlas = ExtResource("1_k8mac")
 region = Rect2(0, 224, 96, 112)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sjf4d"]
-atlas = ExtResource("1_wr6ke")
+atlas = ExtResource("1_k8mac")
 region = Rect2(96, 224, 96, 112)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_myml4"]
-atlas = ExtResource("1_wr6ke")
+atlas = ExtResource("1_k8mac")
 region = Rect2(192, 224, 96, 112)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7cwjo"]
-atlas = ExtResource("1_wr6ke")
+atlas = ExtResource("1_k8mac")
 region = Rect2(288, 224, 96, 112)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rcl3n"]
-atlas = ExtResource("1_wr6ke")
+atlas = ExtResource("1_k8mac")
 region = Rect2(384, 224, 96, 112)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gylrf"]
-atlas = ExtResource("2_lu7is")
+atlas = ExtResource("2_lyu3g")
 region = Rect2(0, 96, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6q04b"]
-atlas = ExtResource("3_5mjtb")
+atlas = ExtResource("3_ggwhl")
 region = Rect2(0, 96, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jewg1"]
-atlas = ExtResource("3_5mjtb")
+atlas = ExtResource("3_ggwhl")
 region = Rect2(32, 96, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wpyhj"]
-atlas = ExtResource("4_4hfej")
+atlas = ExtResource("4_gkarj")
 region = Rect2(0, 96, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3ev7m"]
-atlas = ExtResource("4_4hfej")
+atlas = ExtResource("4_gkarj")
 region = Rect2(32, 96, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cfjug"]
-atlas = ExtResource("4_4hfej")
+atlas = ExtResource("4_gkarj")
 region = Rect2(64, 96, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ytdto"]
-atlas = ExtResource("4_4hfej")
+atlas = ExtResource("4_gkarj")
 region = Rect2(96, 96, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kqf2d"]
-atlas = ExtResource("5_57y1c")
+atlas = ExtResource("5_c5lx3")
 region = Rect2(0, 96, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4noeb"]
-atlas = ExtResource("5_57y1c")
+atlas = ExtResource("5_c5lx3")
 region = Rect2(32, 96, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n5dmv"]
-atlas = ExtResource("5_57y1c")
+atlas = ExtResource("5_c5lx3")
 region = Rect2(64, 96, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0t5hs"]
-atlas = ExtResource("5_57y1c")
+atlas = ExtResource("5_c5lx3")
 region = Rect2(96, 96, 32, 48)
 
 [resource]
@@ -98,7 +98,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"die",
-"speed": 8.0
+"speed": 1.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -109,7 +109,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"hit",
-"speed": 8.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -126,7 +126,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -143,5 +143,5 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk",
-"speed": 5.0
+"speed": 6.0
 }]

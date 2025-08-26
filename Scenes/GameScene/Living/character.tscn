@@ -1,15 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://b3y2sr2uweroy"]
+[gd_scene load_steps=5 format=3 uid="uid://b3y2sr2uweroy"]
 
 [ext_resource type="Script" uid="uid://6hi3fxftlshh" path="res://Scripts/GameScene/character.gd" id="1_lbk2d"]
-[ext_resource type="SpriteFrames" uid="uid://b2ygb7ty6nyn7" path="res://Assets/SpritesFrames/Knight.tres" id="2_qqnvc"]
+[ext_resource type="SpriteFrames" uid="uid://b2ygb7ty6nyn7" path="res://Assets/SpritesFrames/Allies/Knight.tres" id="2_qqnvc"]
 [ext_resource type="Theme" uid="uid://dadlocyhpxvuk" path="res://Assets/Themes/ArenaTheme.tres" id="3_garmb"]
+[ext_resource type="SpriteFrames" uid="uid://uu214ly4380a" path="res://Assets/SpritesFrames/FX/death.tres" id="4_garmb"]
 
 [node name="Character" type="Node2D"]
 script = ExtResource("1_lbk2d")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_qqnvc")
-animation = &"walk"
+animation = &"die"
 
 [node name="LifeBar" type="ProgressBar" parent="."]
 anchors_preset = 8
@@ -26,4 +27,9 @@ grow_vertical = 2
 theme = ExtResource("3_garmb")
 value = 100.0
 
+[node name="AnimatedSpriteFX" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("4_garmb")
+animation = &"die"
+
 [connection signal="attack" from="." to="." method="_damage_taken"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
