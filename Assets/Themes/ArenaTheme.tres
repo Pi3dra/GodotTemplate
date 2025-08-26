@@ -1,6 +1,7 @@
-[gd_resource type="Theme" load_steps=9 format=3 uid="uid://dadlocyhpxvuk"]
+[gd_resource type="Theme" load_steps=12 format=3 uid="uid://dadlocyhpxvuk"]
 
 [ext_resource type="Texture2D" uid="uid://bbmwn81f77iqu" path="res://Assets/Themes/UI assets (2x).png" id="1_gposl"]
+[ext_resource type="Texture2D" uid="uid://c8p7gyqg0toa4" path="res://Assets/Sprites/UI/Bar/Slider01_Bar02.png" id="2_pvb1u"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gposl"]
 texture = ExtResource("1_gposl")
@@ -56,6 +57,12 @@ texture_margin_right = 18.0
 texture_margin_bottom = 16.0
 region_rect = Rect2(486, 6, 84, 84)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7g1q8"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fjjhf"]
+texture = ExtResource("2_pvb1u")
+texture_margin_top = 50.0
+
 [resource]
 BoxContainer/styles/normal = SubResource("StyleBoxTexture_gposl")
 Button/colors/font_hover_color = Color(0.729412, 0.72549, 0.745098, 1)
@@ -66,3 +73,6 @@ Button/styles/normal = SubResource("StyleBoxTexture_k558t")
 Button/styles/pressed = SubResource("StyleBoxTexture_vnygf")
 Label/styles/normal = SubResource("StyleBoxTexture_86iin")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_pvb1u")
+ProgressBar/colors/font_color = Color(0.94902, 0.94902, 0.94902, 0)
+ProgressBar/styles/background = SubResource("StyleBoxEmpty_7g1q8")
+ProgressBar/styles/fill = SubResource("StyleBoxTexture_fjjhf")

@@ -17,4 +17,5 @@ func _process(delta: float) -> void:
 # Go to combat
 func _on_button_pressed() -> void:
 	arena.show()
+	area_ui.instance.show()
 	hide()

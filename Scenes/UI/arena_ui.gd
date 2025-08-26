@@ -1,5 +1,9 @@
 extends Control
 
+class_name area_ui
+
+static var instance
+
 #TODO this should be instantiated beforehand in the tavern!
 var cookie_list : Array[Cookie]
 var screen_size : Vector2 
@@ -13,6 +17,9 @@ var selected_cookie
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	hide()
+	instance = self
+	
 	cookie_list = [
 	Cookie.new("","",Globals.COOKIETYPE.Normal),
 	Cookie.new("","",Globals.COOKIETYPE.Weighted),
