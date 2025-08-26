@@ -99,7 +99,7 @@ func create_character(pChar_name: String):
 	lCharScene.character = lChar # Attribution of the logical character to the physical tscn of character
 	add_child(lCharScene)
 	
-	lCharScene.connect("attack", combat_handler)
+	lCharScene.connect("attack", combat_handler) # Get the signal from character
 	
 	match lDict["Side"]:
 		"Good":
