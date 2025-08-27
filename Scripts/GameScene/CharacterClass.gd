@@ -10,7 +10,7 @@ var crit: float
 var side: String
 var active_cookies : Dictionary = Cookie.type_dict()
 
-enum TYPES  {Knight, Goblin, Skeleton, Cyclops, Devil, Wizard}
+enum TYPES  {Knight, Goblin, Skeleton, Cyclop, Devil, Wizard, Farmer, Necromancer, Pixie, Ranger, Dragon, Orc, Slime, Spider, Witch}
 
 var DEBUG = true
 func debug(to_print,confirm):
