@@ -65,7 +65,7 @@ func _on_visibility_changed() -> void:
 
 func place_camera():
 	var lCam: Camera2D = Camera2D.new()
-	var lZoom: Vector2 = Vector2(1, 1)
+	var lZoom: Vector2 = Vector2(2, 2)
 	var lPos: Vector2 = Vector2(654.0, 547.0)
 	lCam.zoom = lZoom
 	lCam.position = lPos

@@ -28,12 +28,13 @@ var actual_state: States = States.IDLE:
 					animated_sprite_fx.play("die")
 					animated_sprite.play("die")
 				States.HURT:
-					#TODO execute the anim below if crit receive
-					#animated_sprite_fx.play("hit")
+					if has_been_crit == true: animated_sprite_fx.play("hit")
 					animated_sprite.play("hit")
 
 
 var character : LogicalCharacter 
+
+var has_been_crit: bool = false
 
 
 #//////////function//////////
@@ -90,10 +91,11 @@ func die():
 
 
 # This is called in arena
-func receive_damage(damage, crit):
+func receive_damage(pDamage, pCrit):
 	actual_state = States.HURT
+	if pCrit == true: has_been_crit = true
 	var lTween_health = create_tween()
-	character.health -= damage
+	character.health -= pDamage
 	lTween_health.tween_property(life_bar,"value", character.health ,0.5)
 	die()
 	
