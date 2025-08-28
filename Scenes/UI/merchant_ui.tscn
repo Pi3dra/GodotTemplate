@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=4 format=3 uid="uid://duf7bdfx04xnu"]
 
-[ext_resource type="PackedScene" path="res://Scenes/UI/cookie_panel_ui.tscn" id="1_fxqs8"]
+[ext_resource type="PackedScene" uid="uid://cg5yimbr12qqr" path="res://Scenes/UI/cookie_panel_ui.tscn" id="1_fxqs8"]
+[ext_resource type="Theme" uid="uid://koj3axa8mw8p" path="res://Assets/Themes/MerchantTheme.tres" id="1_hcs8x"]
+[ext_resource type="Script" uid="uid://crbrpvnifj3bv" path="res://Scenes/UI/merchant_ui.gd" id="1_rggwi"]
 
 [node name="MerchantUI" type="Control"]
 layout_mode = 3
@@ -9,25 +11,65 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_rggwi")
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 8
 anchor_left = 0.5
-anchor_top = 0.355
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.355
-offset_left = -424.0
-offset_top = 0.359985
-offset_right = 424.0
-offset_bottom = 400.36
+anchor_bottom = 0.5
+offset_left = -488.0
+offset_top = -200.0
+offset_right = 488.0
+offset_bottom = 200.0
 grow_horizontal = 2
+grow_vertical = 2
 
-[node name="CookiePanel" parent="HBoxContainer2" instance=ExtResource("1_fxqs8")]
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 128)
+layout_mode = 2
+theme = ExtResource("1_hcs8x")
+theme_type_variation = &"CookieBar"
+
+[node name="CookierBar" type="HBoxContainer" parent="VBoxContainer/PanelContainer"]
 layout_mode = 2
 
-[node name="CookiePanel2" parent="HBoxContainer2" instance=ExtResource("1_fxqs8")]
+[node name="Label" type="Label" parent="VBoxContainer/PanelContainer/CookierBar"]
+layout_mode = 2
+theme = ExtResource("1_hcs8x")
+theme_type_variation = &"TextBox"
+text = "Available Cookies:"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Left" type="Button" parent="VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(60, 70)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("1_hcs8x")
+theme_type_variation = &"LeftArrow"
+
+[node name="CookiePanel" parent="VBoxContainer/HBoxContainer2" instance=ExtResource("1_fxqs8")]
 layout_mode = 2
 
-[node name="CookiePanel3" parent="HBoxContainer2" instance=ExtResource("1_fxqs8")]
+[node name="CookiePanel2" parent="VBoxContainer/HBoxContainer2" instance=ExtResource("1_fxqs8")]
 layout_mode = 2
+
+[node name="CookiePanel3" parent="VBoxContainer/HBoxContainer2" instance=ExtResource("1_fxqs8")]
+layout_mode = 2
+
+[node name="Right" type="Button" parent="VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(60, 70)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("1_hcs8x")
+theme_type_variation = &"SideButton"
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/Left" to="." method="_on_left_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/Right" to="." method="_on_right_pressed"]

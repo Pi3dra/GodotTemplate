@@ -70,7 +70,7 @@ static func type_dict() -> Dictionary:
 #TODO: Might be good to have a function that returns the sprite of a given cookie type
 
 static func type_description(cookie_type) -> String:
-	var string 
+	var string = "defaultstring"
 	match cookie_type:
 		TYPE.Normal:
 			string = "Party Deals 50% more damage when this cookie lands on the correct side"
@@ -86,7 +86,30 @@ static func type_description(cookie_type) -> String:
 			string = "Heals the party by a 35% of dealt damage, if guessed correctly"
 		TYPE.Weighted:
 			string = "When guessed correctly, during the next flip all the cookies placed on the same side have 25% bonus chance of landing correctly"
+		TYPE.Crit:
+			string = "When guessed correctly, party has 15% more chance of dealing a crit on next attack"
 	return string
+
+static func type_price(cookie_type) -> int:
+	var price = 0
+	match cookie_type:
+		TYPE.Normal:
+			price = 1
+		TYPE.Berserk:
+			price = 3
+		TYPE.Golden:
+			price = 4
+		TYPE.Replay:
+			price = 4
+		TYPE.Healing:
+			price = 3
+		TYPE.Vampire:
+			price = 4
+		TYPE.Weighted:
+			price = 5
+		TYPE.Crit:
+			price = 4
+	return price
 
 static func type_sprite(cookie_type)  -> AtlasTexture:
 	var head_atlas = AtlasTexture.new()
