@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://hjnoyvqc4n3n"]
 
-[ext_resource type="Theme" path="/run/user/1000/doc/938967f3/LevelSelectTheme.tres" id="1_bd7my"]
+[ext_resource type="Theme" path="../../Assets/Themes/LevelSelectTheme.tres" id="1_bd7my"]
 [ext_resource type="Script" uid="uid://bw0kmj5x2i6vv" path="res://Scenes/UI/level_panel.gd" id="1_jg6o6"]
 [ext_resource type="Theme" uid="uid://c844w2sp1c2l7" path="res://Assets/Themes/LevelSelectTheme.tres" id="2_kdjnp"]
 [ext_resource type="Texture2D" uid="uid://cu2f2lwoupqox" path="res://Assets/Sprites/CookieSheet.png" id="4_vpru0"]
