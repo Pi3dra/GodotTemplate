@@ -1,7 +1,43 @@
-[gd_scene load_steps=3 format=3 uid="uid://ccgdngh77m0hc"]
+[gd_scene load_steps=6 format=3 uid="uid://ccgdngh77m0hc"]
 
 [ext_resource type="Script" uid="uid://ctqaycr8567lg" path="res://Scripts/GameScene/arena.gd" id="1_ir3ek"]
 [ext_resource type="PackedScene" uid="uid://mbpwvbww4e0w" path="res://Scenes/GameScene/background.tscn" id="2_jo8k4"]
+
+[sub_resource type="Animation" id="Animation_jo8k4"]
+resource_name = "Opening"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.15, 1),
+"update": 0,
+"values": [Vector2(-856, 352), Vector2(-856, 744)]
+}
+
+[sub_resource type="Animation" id="Animation_6qpk1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-856, 352)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m30qt"]
+_data = {
+&"Opening": SubResource("Animation_jo8k4"),
+&"RESET": SubResource("Animation_6qpk1")
+}
 
 [node name="Arena" type="Node2D"]
 script = ExtResource("1_ir3ek")
@@ -29,5 +65,21 @@ position = Vector2(453, 573)
 
 [node name="Marker2D3" type="Marker2D" parent="AllySpawners"]
 position = Vector2(438, 616)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_m30qt")
+}
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(661, 552)
+zoom = Vector2(2, 2)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -856.0
+offset_top = 352.0
+offset_right = 1008.0
+offset_bottom = 768.0
+color = Color(0, 0, 0, 1)
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

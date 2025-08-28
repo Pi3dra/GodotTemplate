@@ -82,15 +82,15 @@ func attack() -> Array:
 	
 	
 
-func calculate_crit(damage: float, bonus_chance: float) -> Array:
+func calculate_crit(pDamage: float, pBonus_chance: float) -> Array:
 	randomize() # TODO Faut bouger ce truc qui pue ailleurs
-	bonus_chance = clamp(bonus_chance, 0.0, 1.0)
+	pBonus_chance = clamp(pBonus_chance, 0.0, 1.0)
 	var lCrit_chance: float = crit 
-	var total_chance: float = clamp(lCrit_chance + bonus_chance, 0.0, 1)
+	var total_chance: float = clamp(lCrit_chance + pBonus_chance, 0.0, 1)
 	
 	var crit_triggered : bool = false
 	if randf() <= total_chance:
-		damage *= 1.5 
+		pDamage *= 1.5 
 		crit_triggered = true
 
-	return [damage, crit_triggered]
+	return [pDamage, crit_triggered]

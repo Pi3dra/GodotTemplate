@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var enemies_spawners: Node2D = $EnemiesSpawners
 @onready var ally_spawners: Node2D = $AllySpawners
-
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 var char_scene: PackedScene = load("uid://b3y2sr2uweroy")
 
@@ -16,11 +16,12 @@ var allies_spawn_pos: Array[Vector2]
 
 #//////////function//////////
 func _init():
-	hide()
 	area_ui.instance.connect("combat_cookies", update_active_cookies)
 
 
 func _ready() -> void:
+	animation_player.play("Opening")
+	
 	for pos: Marker2D in enemies_spawners.get_children():
 		enemies_spawn_pos.append(pos.position)
 	
@@ -58,18 +59,8 @@ func _on_visibility_changed() -> void:
 		spawn_characters(chosen_enemies, enemies_spawn_pos, spawned_enemies)
 		spawn_characters(player_party, allies_spawn_pos, spawned_allies)
 	
-	place_camera()
 	
 #endregion
-
-
-func place_camera():
-	var lCam: Camera2D = Camera2D.new()
-	var lZoom: Vector2 = Vector2(2, 2)
-	var lPos: Vector2 = Vector2(654.0, 547.0)
-	lCam.zoom = lZoom
-	lCam.position = lPos
-	add_child(lCam)
 
 
 func spawn_characters(pStr_array: Array[LogicalCharacter.TYPES], pVec_array: Array[Vector2], pNode_array: Array[Node2D]):
