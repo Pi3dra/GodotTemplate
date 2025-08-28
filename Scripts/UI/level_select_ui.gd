@@ -20,4 +20,5 @@ func send_level_start(wave_info):
 	print("wave_info")
 	emit_signal("start_level", wave_info)
 
+# Array[Array[LogicalCharacter.TYPE]] = [[Goblin;,Skelet],[],[]]
 signal start_level(wave_info)

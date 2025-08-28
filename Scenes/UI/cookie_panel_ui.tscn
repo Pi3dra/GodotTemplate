@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=7 format=3 uid="uid://cg5yimbr12qqr"]
 
 [ext_resource type="Script" uid="uid://gnhal6n8bo5e" path="res://cookie_panel.gd" id="1_jy74s"]
 [ext_resource type="Theme" uid="uid://koj3axa8mw8p" path="res://Assets/Themes/MerchantTheme.tres" id="2_oe5k4"]
