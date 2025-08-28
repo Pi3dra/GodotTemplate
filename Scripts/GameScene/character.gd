@@ -74,6 +74,7 @@ func _on_attack_timer_timeout():
 	emit_signal("attack", character.attack(), character.side) # arena gets it
 #endregion
 
+
 func attack_rate():
 	var lTimer = Timer.new()
 	lTimer.autostart = true

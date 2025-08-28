@@ -21,7 +21,8 @@ func debug(to_print,confirm):
 func _init(pHealth: int, pDamage: int, pAttack_speed: float, pCrit: float, pSprite_frame: String, pSide: String):
 	health = pHealth
 	damage = pDamage
-	attack_speed = pAttack_speed
+	var random_offset : float = randf() * 0.5
+	attack_speed = pAttack_speed + random_offset
 	crit = pCrit
 	sprite_frame = pSprite_frame
 	side = pSide
@@ -41,7 +42,7 @@ func receive_cookie_POWER(received_cookies: Dictionary):
 	#		active_cookies[key].append(cookie)
 	print("after: ", active_cookies)
 			
-	var healing_cookies = active_cookies.get(Globals.COOKIETYPE.Healing)
+	var healing_cookies = active_cookies.get(Cookie.TYPE.Healing)
 	health += (health/3)*healing_cookies.size()
 	debug("Healed!", healing_cookies.size() > 0)
 			
@@ -52,18 +53,18 @@ func attack() -> Array:
 	
 	# Damage Boosting cookies
 	
-	var normal_cookies = active_cookies.get(Globals.COOKIETYPE.Normal)
+	var normal_cookies = active_cookies.get(Cookie.TYPE.Normal)
 	damage_multiplier += 0.5 * normal_cookies.size()
 	debug("Normal!", normal_cookies.size() > 0)
 	
 	# Berserk Cookie
-	var berserk_cookies = active_cookies.get(Globals.COOKIETYPE.Berserk)
+	var berserk_cookies = active_cookies.get(Cookie.TYPE.Berserk)
 	damage_multiplier += 2 * berserk_cookies.size()
 	debug("Berserk!", berserk_cookies.size() > 0)
 	
 	# Critical Boosting Cookies
 	var critical_bonus := 0.0
-	var critical_cookies = active_cookies.get(Globals.COOKIETYPE.Crit)
+	var critical_cookies = active_cookies.get(Cookie.TYPE.Crit)
 	critical_bonus += 0.2 * critical_cookies.size()
 	debug("Critical!", critical_cookies.size() > 0)
 	
@@ -73,7 +74,7 @@ func attack() -> Array:
 	
 	# Damage using cookies
 	# Vampire cookie
-	var vampire_cookies = active_cookies.get(Globals.COOKIETYPE.Vampire)
+	var vampire_cookies = active_cookies.get(Cookie.TYPE.Vampire)
 	health += (total_damage/3) * vampire_cookies.size()
 	debug("Vampire!", vampire_cookies.size() > 0)
 	

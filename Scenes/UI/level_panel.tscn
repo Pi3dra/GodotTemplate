@@ -1,0 +1,109 @@
+[gd_scene load_steps=7 format=3 uid="uid://hjnoyvqc4n3n"]
+
+[ext_resource type="Theme" path="/run/user/1000/doc/938967f3/LevelSelectTheme.tres" id="1_bd7my"]
+[ext_resource type="Script" uid="uid://bw0kmj5x2i6vv" path="res://Scenes/UI/level_panel.gd" id="1_jg6o6"]
+[ext_resource type="Theme" uid="uid://c844w2sp1c2l7" path="res://Assets/Themes/LevelSelectTheme.tres" id="2_kdjnp"]
+[ext_resource type="Texture2D" uid="uid://cu2f2lwoupqox" path="res://Assets/Sprites/CookieSheet.png" id="4_vpru0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cigow"]
+atlas = ExtResource("4_vpru0")
+region = Rect2(0, 4, 32, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vpru0"]
+atlas = ExtResource("4_vpru0")
+region = Rect2(0, 96, 32, 31)
+
+[node name="Control" type="Control"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 3
+anchor_right = 0.302
+anchor_bottom = 1.0
+offset_right = 0.467987
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jg6o6")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+offset_left = 38.0
+offset_top = 93.0
+offset_right = 372.0
+offset_bottom = 647.0
+theme = ExtResource("1_bd7my")
+
+[node name="Difficulty" type="Label" parent="."]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 137.0
+offset_right = 392.0
+offset_bottom = 189.0
+theme = ExtResource("2_kdjnp")
+text = "Difficulty
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+offset_left = 80.0
+offset_top = 186.0
+offset_right = 330.0
+offset_bottom = 464.0
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(250, 128)
+layout_mode = 2
+theme = ExtResource("2_kdjnp")
+
+[node name="EnemyDisplay" type="BoxContainer" parent="VBoxContainer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("2_kdjnp")
+
+[node name="Spacer" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="RewardTitle" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "REWARDS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextContainer" type="BoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+vertical = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TextContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/TextContainer/HBoxContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_cigow")
+
+[node name="Reward1" type="Label" parent="VBoxContainer/TextContainer/HBoxContainer"]
+layout_mode = 2
+text = "Cookies : "
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/TextContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/TextContainer/HBoxContainer2"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_vpru0")
+
+[node name="Reward2" type="Label" parent="VBoxContainer/TextContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Special :"
+
+[node name="Spacer2" type="Control" parent="VBoxContainer/TextContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_kdjnp")
+text = "Battle!
+"
+
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]

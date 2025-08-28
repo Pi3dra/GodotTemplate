@@ -7,6 +7,10 @@ func _ready() -> void:
 
 func create_buttons(cookies : Array[Cookie]):
 	for cookie in cookies:
+		create_button(cookie)
+
+
+func create_button(cookie):
 		var button = Button.new()
 
 		button.expand_icon = false
@@ -23,6 +27,7 @@ func create_buttons(cookies : Array[Cookie]):
 		
 		button.pressed.connect(_on_button_pressed.bind(button))
 		button_cookies[button] = cookie
+	
 
 ## Called when a child button is pressed
 func _on_button_pressed(button):
