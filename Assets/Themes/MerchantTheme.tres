@@ -1,0 +1,53 @@
+[gd_resource type="Theme" load_steps=8 format=3 uid="uid://koj3axa8mw8p"]
+
+[ext_resource type="FontFile" uid="uid://b0ndjepym4tga" path="res://Assets/Themes/FantasyRPGtitle (size 11).ttf" id="1_48ogh"]
+[ext_resource type="Texture2D" uid="uid://dxcc6fps2vdnc" path="res://Assets/Themes/UI assets (3x).png" id="1_tflsn"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_48ogh"]
+texture = ExtResource("1_tflsn")
+texture_margin_left = 12.0
+texture_margin_top = 15.0
+texture_margin_right = 12.0
+texture_margin_bottom = 18.0
+region_rect = Rect2(3, 531, 138, 45)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ym8ad"]
+texture = ExtResource("1_tflsn")
+texture_margin_left = 12.0
+texture_margin_top = 18.0
+texture_margin_right = 12.0
+texture_margin_bottom = 15.0
+region_rect = Rect2(291, 531, 138, 45)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cvl0a"]
+texture = ExtResource("1_tflsn")
+texture_margin_left = 23.0
+texture_margin_top = 8.0
+texture_margin_right = 24.0
+texture_margin_bottom = 8.0
+region_rect = Rect2(289, 148, 143, 40)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3f6d3"]
+texture = ExtResource("1_tflsn")
+texture_margin_left = 26.0
+texture_margin_top = 30.0
+texture_margin_right = 27.0
+texture_margin_bottom = 30.0
+region_rect = Rect2(307, 18, 107, 108)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g01tv"]
+texture = ExtResource("1_tflsn")
+texture_margin_left = 18.0
+texture_margin_top = 18.0
+texture_margin_right = 17.0
+texture_margin_bottom = 18.0
+region_rect = Rect2(594, 18, 108, 108)
+
+[resource]
+Button/fonts/font = ExtResource("1_48ogh")
+Button/styles/normal = SubResource("StyleBoxTexture_48ogh")
+Button/styles/pressed = SubResource("StyleBoxTexture_ym8ad")
+Label/fonts/font = ExtResource("1_48ogh")
+Label/styles/normal = SubResource("StyleBoxTexture_cvl0a")
+Panel/styles/panel = SubResource("StyleBoxTexture_3f6d3")
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_g01tv")

@@ -1,6 +1,7 @@
-[gd_resource type="Theme" load_steps=8 format=3 uid="uid://c844w2sp1c2l7"]
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://c844w2sp1c2l7"]
 
 [ext_resource type="Texture2D" uid="uid://dxcc6fps2vdnc" path="res://Assets/Themes/UI assets (3x).png" id="1_8qop3"]
+[ext_resource type="FontFile" uid="uid://b0ndjepym4tga" path="res://Assets/Themes/FantasyRPGtitle (size 11).ttf" id="1_sjsve"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sjsve"]
 texture = ExtResource("1_8qop3")
@@ -50,9 +51,11 @@ texture_margin_bottom = 9.0
 region_rect = Rect2(1299, 210, 138, 51)
 
 [resource]
+Button/fonts/font = ExtResource("1_sjsve")
 Button/styles/hover = SubResource("StyleBoxTexture_sjsve")
 Button/styles/normal = SubResource("StyleBoxTexture_f7oq3")
 Button/styles/pressed = SubResource("StyleBoxTexture_4s22f")
+Label/fonts/font = ExtResource("1_sjsve")
 Label/styles/normal = SubResource("StyleBoxTexture_vvqeh")
 Panel/styles/panel = SubResource("StyleBoxTexture_b0b8o")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_11hc4")

@@ -11,7 +11,7 @@ var selected_cookie : Control
 var screen_size : Vector2 
 var screen_middle : float
 
-var active_cookies = Cookie.type_dict() #Dictionary[COOKIETYPE, Array[Cookie]]
+var active_cookies = Cookie.type_dict() #Dictionary[TYPE, Array[Cookie]]
 
 @onready var flip_button: Button = $Flip
 @onready var cookie_holder = $PanelContainer/CookieHolder
@@ -20,17 +20,17 @@ func _ready() -> void:
 	hide()
 	instance = self
 	cookie_list = [
-	Cookie.new("","",Globals.COOKIETYPE.Normal),
-	Cookie.new("","",Globals.COOKIETYPE.Weighted),
-	Cookie.new("","",Globals.COOKIETYPE.Weighted),
-	Cookie.new("","",Globals.COOKIETYPE.Weighted),
-	Cookie.new("","",Globals.COOKIETYPE.Weighted),
-	Cookie.new("","",Globals.COOKIETYPE.Berserk),
-	Cookie.new("","",Globals.COOKIETYPE.Crit),
-	Cookie.new("","",Globals.COOKIETYPE.Golden),
-	Cookie.new("","",Globals.COOKIETYPE.Healing),
-	Cookie.new("","",Globals.COOKIETYPE.Vampire),
-	Cookie.new("","",Globals.COOKIETYPE.Replay),
+	Cookie.new("","",Cookie.TYPE.Normal),
+	Cookie.new("","",Cookie.TYPE.Weighted),
+	Cookie.new("","",Cookie.TYPE.Weighted),
+	Cookie.new("","",Cookie.TYPE.Weighted),
+	Cookie.new("","",Cookie.TYPE.Weighted),
+	Cookie.new("","",Cookie.TYPE.Berserk),
+	Cookie.new("","",Cookie.TYPE.Crit),
+	Cookie.new("","",Cookie.TYPE.Golden),
+	Cookie.new("","",Cookie.TYPE.Healing),
+	Cookie.new("","",Cookie.TYPE.Vampire),
+	Cookie.new("","",Cookie.TYPE.Replay),
 	]
 
 	cookie_holder.create_buttons(cookie_list)
@@ -78,7 +78,7 @@ func _on_button_pressed() -> void:
 		flip_button.text = "Accept"
 		
 		#### Handling pre flip Cookies
-		var weighted_cookies = active_cookies.get(Globals.COOKIETYPE.Weighted,5)
+		var weighted_cookies = active_cookies.get(Cookie.TYPE.Weighted,5)
 
 		var head_chance = 0
 		var tail_chance = 0
@@ -108,7 +108,7 @@ func _on_button_pressed() -> void:
 				incorrect_guesses.append(cookie_node)
 			
 			match cookie_object.cookie_type:
-				Globals.COOKIETYPE.Replay:
+				Cookie.TYPE.Replay:
 					if randf() > 0.5:
 						cookie_holder.create_button(cookie_object)
 				
