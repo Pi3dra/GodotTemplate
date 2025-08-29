@@ -15,7 +15,12 @@ var total_enemies = 3*5
 enum Difficulty { Easy, Medium, Hard}
 
 # This is bubbled up to the arena
-var wave_info 
+var waves
+
+var level_difficulty
+var reward1
+var reward2
+var wave_info
 
 var spriteorder = {LogicalCharacter.TYPES.Skeleton : 1, LogicalCharacter.TYPES.Slime : 4, LogicalCharacter.TYPES.Spider : 3,
 	LogicalCharacter.TYPES.Orc : 5, LogicalCharacter.TYPES.Witch : 2, LogicalCharacter.TYPES.Goblin:0,
@@ -28,7 +33,16 @@ var enemy_palette = { Difficulty.Easy : easy_enemies, Difficulty.Medium : medium
 
 var sprites = preload("res://Assets/Sprites/Heads.png")
 
+# This would be way cleaner with a class
+# consisting of a:
+# - setter
+# - constructor
+# - getter
+# - drawer
 
+#func _ready():
+#   For some reason when ready is called the panel layout gets fd up
+#	set_panel(Difficulty.Hard, [[LogicalCharacter.TYPES.Goblin]], [5,5])
 
 func generate_level(difficulty : Difficulty):
 	reward_title.add_theme_font_override("font",font)
@@ -56,12 +70,11 @@ func generate_level(difficulty : Difficulty):
 			
 	reward_1.text = str(cookies) +" x Cookies"
 	reward_2.text = str(special_cookies) +" x Special Cookies"
-			
 	var waves : Array = distribute_enemies(used_enemies)
 	var enemy_info = pick_enemies(waves, difficulty) #Array[Array[LogicalCharacter.TYPES]]
 	var enemy_waves = enemy_info.get("Waves")
 	var enemy_count = enemy_info.get("Counter")
-	wave_info = enemy_waves # This gets sent through signal
+	
 	
 	for enemy in enemy_count.keys():
 		var icon = TextureRect.new()
@@ -81,7 +94,12 @@ func generate_level(difficulty : Difficulty):
 		label.add_theme_stylebox_override("hover", style)
 		head_display.add_child(icon)
 		head_display.add_child(label)
-	
+		
+	# This gets sent through signal
+	wave_info = enemy_waves 
+	level_difficulty = difficulty
+	reward1 = cookies
+	reward2 = special_cookies
 	
 func distribute_enemies(number_of_enemies):
 	randomize()
@@ -116,7 +134,6 @@ func pick_enemies(waves : Array, difficulty : Difficulty):
 		enemy_waves.append(wave)
 	return {"Waves" : enemy_waves, "Counter" : enemy_counter}
 	
-			
 
 signal wave_information(wave)
 func _on_button_pressed() -> void:

@@ -17,34 +17,30 @@ var active_cookies = Cookie.type_dict() #Dictionary[TYPE, Array[Cookie]]
 @onready var cookie_holder = $PanelContainer/CookieHolder
 
 func _ready() -> void:
-	hide()
+	#hide()
 	instance = self
-	cookie_list = [
-	Cookie.new("","",Cookie.TYPE.Normal),
-	Cookie.new("","",Cookie.TYPE.Weighted),
-	Cookie.new("","",Cookie.TYPE.Weighted),
-	Cookie.new("","",Cookie.TYPE.Weighted),
-	Cookie.new("","",Cookie.TYPE.Weighted),
-	Cookie.new("","",Cookie.TYPE.Berserk),
-	Cookie.new("","",Cookie.TYPE.Crit),
-	Cookie.new("","",Cookie.TYPE.Golden),
-	Cookie.new("","",Cookie.TYPE.Healing),
-	Cookie.new("","",Cookie.TYPE.Vampire),
-	Cookie.new("","",Cookie.TYPE.Replay),
-	]
 
-	cookie_holder.create_buttons(cookie_list)
 	screen_size = get_viewport().get_visible_rect().size
 	screen_middle = screen_size.x/2
+
+
+# Called after instantiation
+func init(cookies : Dictionary):
+	print(cookies)
+	var cookie_list : Array[Cookie] = []
+	for cookie in cookies.keys():
+		for i in range(cookies.get(cookie)):
+			cookie_list.append(Cookie.new("","",cookie))
+	cookie_holder.create_buttons(cookie_list)
 
 func _draw() -> void:
 	var to = Vector2(screen_middle, 0)
 	var from = Vector2(screen_middle, screen_size.y)
-	draw_line(from, to, Color.WHITE,10 )
+	draw_line(from, to, Color.WHITE,2 )
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed and selected_cookie != null:
+		if event.button_index == MOUSE_BUTTON_LEFT and !event.pressed and selected_cookie != null:
 			selected_cookie.following = false
 			if selected_cookie.position.x < screen_middle:
 				selected_cookie.cookie.side = Cookie.SCREENSIDE.Head

@@ -1,7 +1,18 @@
-[gd_resource type="Theme" load_steps=9 format=3 uid="uid://c844w2sp1c2l7"]
+[gd_resource type="Theme" load_steps=12 format=3 uid="uid://c844w2sp1c2l7"]
 
 [ext_resource type="Texture2D" uid="uid://dxcc6fps2vdnc" path="res://Assets/Themes/UI assets (3x).png" id="1_8qop3"]
 [ext_resource type="FontFile" uid="uid://b0ndjepym4tga" path="res://Assets/Themes/FantasyRPGtitle (size 11).ttf" id="1_sjsve"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oiwus"]
+texture = ExtResource("1_8qop3")
+texture_margin_left = 9.0
+texture_margin_top = 12.0
+texture_margin_right = 9.0
+texture_margin_bottom = 12.0
+region_rect = Rect2(291, 486, 138, 39)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sjsve"]
+bg_color = Color(1, 1, 1, 0)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sjsve"]
 texture = ExtResource("1_8qop3")
@@ -50,8 +61,13 @@ texture_margin_right = 15.0
 texture_margin_bottom = 9.0
 region_rect = Rect2(1299, 210, 138, 51)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f7oq3"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
 [resource]
 Button/fonts/font = ExtResource("1_sjsve")
+Button/styles/disabled = SubResource("StyleBoxTexture_oiwus")
+Button/styles/focus = SubResource("StyleBoxFlat_sjsve")
 Button/styles/hover = SubResource("StyleBoxTexture_sjsve")
 Button/styles/normal = SubResource("StyleBoxTexture_f7oq3")
 Button/styles/pressed = SubResource("StyleBoxTexture_4s22f")
@@ -59,3 +75,5 @@ Label/fonts/font = ExtResource("1_sjsve")
 Label/styles/normal = SubResource("StyleBoxTexture_vvqeh")
 Panel/styles/panel = SubResource("StyleBoxTexture_b0b8o")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_11hc4")
+TextBox/base_type = &"Label"
+TextBox/styles/normal = SubResource("StyleBoxFlat_f7oq3")
