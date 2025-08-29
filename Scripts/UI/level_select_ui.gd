@@ -7,7 +7,11 @@ class_name level_select_ui
 @onready var lvl2 = $HBoxContainer/Level2
 @onready var lvl3 = $HBoxContainer/Level3
 
+static var instance
+
 func _ready():
+	instance = self
+	
 	var levels = [lvl1, lvl2, lvl3]
 	lvl1.generate_level(level_panel.Difficulty.Easy)
 	lvl2.generate_level(level_panel.Difficulty.Medium)
@@ -17,8 +21,8 @@ func _ready():
 		level.connect("wave_information", send_level_start)
 		
 func send_level_start(wave_info):
-	print("wave_info")
 	emit_signal("start_level", wave_info)
+	queue_free()
 
 # Array[Array[LogicalCharacter.TYPE]] = [[Goblin;,Skelet],[],[]]
 signal start_level(wave_info)

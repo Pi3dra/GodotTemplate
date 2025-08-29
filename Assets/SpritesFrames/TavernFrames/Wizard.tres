@@ -1,0 +1,39 @@
+[gd_resource type="SpriteFrames" load_steps=6 format=3 uid="uid://web178x58oer"]
+
+[ext_resource type="Texture2D" uid="uid://b8rcq6ffv05rf" path="res://Assets/Sprites/Characters/Player/Wizard/Wizard_idle.png" id="1_o5tty"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_huhyo"]
+atlas = ExtResource("1_o5tty")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kqeoh"]
+atlas = ExtResource("1_o5tty")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vbcrv"]
+atlas = ExtResource("1_o5tty")
+region = Rect2(64, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jeyyn"]
+atlas = ExtResource("1_o5tty")
+region = Rect2(96, 0, 32, 48)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_huhyo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kqeoh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vbcrv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jeyyn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
