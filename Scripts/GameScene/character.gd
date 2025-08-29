@@ -5,6 +5,7 @@ signal attack(damage: int, team: String)
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var life_bar: ProgressBar = $LifeBar
 @onready var animated_sprite_fx: AnimatedSprite2D = $AnimatedSpriteFX
+@onready var hit_damage: Label = $HitDamage
 
 enum States {IDLE, WALKING, ATTACKING, DYING, HURT}
 
@@ -28,7 +29,9 @@ var actual_state: States = States.IDLE:
 					animated_sprite_fx.play("die")
 					animated_sprite.play("die")
 				States.HURT:
-					if has_been_crit == true: animated_sprite_fx.play("hit")
+					if has_been_crit == true:
+						animated_sprite_fx.play("hit")
+						has_been_crit = false
 					animated_sprite.play("hit")
 
 
@@ -94,8 +97,35 @@ func die():
 func receive_damage(pDamage, pCrit):
 	actual_state = States.HURT
 	if pCrit == true: has_been_crit = true
+	show_damage(has_been_crit, pDamage) # Anim numb damage
 	var lTween_health = create_tween()
 	character.health -= pDamage
-	lTween_health.tween_property(life_bar,"value", character.health ,0.5)
+	lTween_health.tween_property(life_bar, "value", character.health ,0.5)
 	die()
+
+
+func show_damage(pIs_Crit: bool, pDamage: float):
+	var lPos_array: Array[Vector2] = [Vector2(10,-45), Vector2(-5,-52), Vector2(-20,-47)]
 	
+	hit_damage.text = str(pDamage as int)
+	hit_damage.modulate = Color.ORANGE
+	
+	if pIs_Crit == false:
+		var lTween = create_tween()
+		lTween.tween_property(hit_damage, "position", lPos_array.pick_random(), 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+		lTween.tween_property(hit_damage, "modulate", Color.TRANSPARENT, 0.2)
+		lTween.tween_property(hit_damage, "position", Vector2.ZERO, 0.1)
+		lTween.tween_callback(kill_tween.bind(lTween))
+	else:
+		hit_damage.modulate = Color.RED
+		var lTween = create_tween().set_parallel(true)
+		lTween.tween_property(hit_damage, "position", lPos_array.pick_random(), 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+		lTween.tween_property(hit_damage, "theme_override_font_sizes/font_size", 100.0, 0.5)
+		lTween.set_parallel(false).tween_property(hit_damage, "modulate", Color.TRANSPARENT, 0.2)
+		lTween.tween_property(hit_damage, "position", Vector2.ZERO, 0.1)
+		lTween.tween_callback(kill_tween.bind(lTween))
+
+
+func kill_tween(pTween: Tween):
+	hit_damage.add_theme_font_size_override("font_size", 16)
+	pTween.kill()

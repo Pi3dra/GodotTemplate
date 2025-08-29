@@ -17,9 +17,12 @@ var allies_spawn_pos: Array[Vector2]
 #//////////function//////////
 func _init():
 	area_ui.instance.connect("combat_cookies", update_active_cookies)
+	
 
 
 func _ready() -> void:
+	get_parent().get_child(0).connect("pass_info_to_arena", get_tavern_info)
+	
 	animation_player.play("Opening")
 	
 	for pos: Marker2D in enemies_spawners.get_children():
@@ -29,38 +32,36 @@ func _ready() -> void:
 		allies_spawn_pos.append(pos.position)
 
 
-#region Signals
-func _on_skeleton_pressed() -> void:
-	add_to_array(chosen_enemies, 1, LogicalCharacter.TYPES.Skeleton)
-
-
-func _on_skeletonx_3_pressed() -> void:
-	add_to_array(chosen_enemies, 3, LogicalCharacter.TYPES.Skeleton)
-
-
-func _on_goblinx_2_pressed() -> void:
-	add_to_array(chosen_enemies, 2, LogicalCharacter.TYPES.Goblin)
-
-
-func _on_knight_pressed() -> void:
-	add_to_array(player_party, 1, LogicalCharacter.TYPES.Knight)
-
-
-func _on_knightx_2_pressed() -> void:
-	add_to_array(player_party, 2, LogicalCharacter.TYPES.Knight)
-
-
-func _on_knightx_3_pressed() -> void:
-	add_to_array(player_party, 3, LogicalCharacter.TYPES.Knight)
-
-
 func _on_visibility_changed() -> void:
 	if visible == true: # This means that we leave the Tavern
-		spawn_characters(chosen_enemies, enemies_spawn_pos, spawned_enemies)
-		spawn_characters(player_party, allies_spawn_pos, spawned_allies)
+		pass
 	
+
+func get_tavern_info(pWave_info, pParty_info):
+	#region Wave_info
+	var lWaves_numb: int
+	var lEnnemies_par_wave = []
+	var lChar_type: LogicalCharacter.TYPES
+	# Parce que ça marche pas avec le foooooooooor
+	var lWave_1: Array
+	var lWave_2: Array
+	var lWave_3: Array
+	lWave_1 = pWave_info[0]
+	lWave_2 = pWave_info[1]
+	lWave_3 = pWave_info[2]
 	
-#endregion
+	lWaves_numb = pWave_info.size() # Nb of waves
+	
+	for wave in pWave_info:
+		lEnnemies_par_wave.append(wave.size()) # This stock the nb of ennemies per wave
+	
+	add_to_array(chosen_enemies, lEnnemies_par_wave[0], lWave_1)
+	spawn_characters(chosen_enemies, enemies_spawn_pos, spawned_enemies)
+	#endregion
+	
+	#For player party
+	add_to_array(player_party, pParty_info.size(), pParty_info)
+	spawn_characters(player_party, allies_spawn_pos, spawned_allies)
 
 
 func spawn_characters(pStr_array: Array[LogicalCharacter.TYPES], pVec_array: Array[Vector2], pNode_array: Array[Node2D]):
@@ -72,10 +73,10 @@ func spawn_characters(pStr_array: Array[LogicalCharacter.TYPES], pVec_array: Arr
 			pNode_array[i].position = pVec_array[i] # Adjust the pos of enemies to avaible spawn pos
 
 
-func add_to_array(pArray: Array, pNumb: int, pChar_name: LogicalCharacter.TYPES):
-	pArray.clear()
+func add_to_array(pArray: Array, pNumb: int, pChar_name: Array):
+	#pArray.clear()
 	for i in range(pNumb):
-		pArray.append(pChar_name)
+		pArray.append(pChar_name[i])
 
 
 func create_character(pChar_name: LogicalCharacter.TYPES):
