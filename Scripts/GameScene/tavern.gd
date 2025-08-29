@@ -27,7 +27,7 @@ func spawn_party():
 	var lPlayers_spawned: Array = party.get_children()
 	#for players: AnimatedSprite2D in lPlayers_spawned:
 	if lPlayers_spawned[0].sprite_frames != null:
-		print("caca")
+		print("ya deja un joueur askip")
 		 #players exist ... le faire spawn et l'ajouter pour le spawn à l'arena
 	else:
 		randomize()
@@ -35,7 +35,7 @@ func spawn_party():
 		party_info.append(lPlayer_type)
 		match lPlayer_type:
 			LogicalCharacter.TYPES.Knight:
-				lPlayers_spawned[0].sprite_frames = load("uid://bya4yxuvdd8au")
+				lPlayers_spawned[0].sprite_frames = load("uid://b2ygb7ty6nyn7")
 				lPlayers_spawned[0].play("default")
 			LogicalCharacter.TYPES.Wizard:
 				lPlayers_spawned[0].sprite_frames = load("uid://web178x58oer")
@@ -66,7 +66,6 @@ func switch_scene():
 
 
 func _on_board_pressed() -> void:
-	print("ui quest")
 	var quest_ui: Control = scene_quest_ui.instantiate()
 	UI.instance.add_child(quest_ui)
 	level_select_ui.instance.connect("start_level", get_ennemies_info)
