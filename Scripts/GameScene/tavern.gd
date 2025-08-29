@@ -1,11 +1,12 @@
 extends Node2D
 
+
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var camera_2d: Camera2D = $Camera2D
 
 var scene_arena: PackedScene = load("uid://ccgdngh77m0hc")
 var scene_arena_ui: PackedScene = load("uid://dpnhc72tu6qee")
-
+var shop_ui : PackedScene = load("uid://duf7bdfx04xnu")
 
 #//////////function//////////
 func _ready() -> void:
@@ -33,5 +34,10 @@ func _on_door_pressed() -> void:
 
 
 func _on_merchant_pressed() -> void:
-	print("marchant menu")
+	var shop  : Control = shop_ui.instantiate()
+	UI.instance.add_child(shop)
+	#merchant_ui.instance.connect("update_cookies", test)
 	#marchant menu
+	
+func test(cookies):
+	print(cookies)

@@ -40,7 +40,7 @@ layout_mode = 2
 layout_mode = 2
 theme = ExtResource("1_hcs8x")
 theme_type_variation = &"TextBox"
-text = "Available Cookies:"
+text = "Available Cookies:   "
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -71,5 +71,16 @@ size_flags_vertical = 4
 theme = ExtResource("1_hcs8x")
 theme_type_variation = &"SideButton"
 
+[node name="Exit" type="Button" parent="."]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 34.0
+offset_right = 156.0
+offset_bottom = 79.0
+theme = ExtResource("1_hcs8x")
+theme_override_font_sizes/font_size = 22
+text = "EXIT"
+
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/Left" to="." method="_on_left_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/Right" to="." method="_on_right_pressed"]
+[connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]

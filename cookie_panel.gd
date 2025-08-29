@@ -33,8 +33,7 @@ func update_buttons(available_cookies : Dictionary[Cookie.TYPE,int]):
 func update_panel(cookie : Cookie.TYPE, locked : bool):
 	cookie_type = cookie
 	cookie_price = Cookie.type_price(cookie)
-	
-	print(cookie_type)
+
 	if cookie_type == Cookie.TYPE.Normal:
 		buy.hide()
 		sell.hide()
@@ -54,3 +53,15 @@ func update_panel(cookie : Cookie.TYPE, locked : bool):
 		description_box.text = Cookie.type_description(cookie)
 		cookie_title.text = Cookie.TYPE.keys()[cookie] + " Cookie"
 		price.text = "Price: " +  str(Cookie.type_price(cookie)) + "X"
+
+
+signal buy_cookie(type, price)
+func _on_buy_pressed() -> void:
+	print("emitted buy")
+	emit_signal("buy_cookie", cookie_type, cookie_price)
+
+
+signal sell_cookie(type, price)
+func _on_sell_pressed() -> void:
+	print("emitted sell")
+	emit_signal("sell_cookie", cookie_type, cookie_price)
