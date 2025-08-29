@@ -6,6 +6,7 @@ signal attack(damage: int, team: String)
 @onready var life_bar: ProgressBar = $LifeBar
 @onready var animated_sprite_fx: AnimatedSprite2D = $AnimatedSpriteFX
 @onready var hit_damage: Label = $HitDamage
+@onready var timer: Timer = $Timer
 
 enum States {IDLE, WALKING, ATTACKING, DYING, HURT}
 
@@ -29,9 +30,7 @@ var actual_state: States = States.IDLE:
 					animated_sprite_fx.play("die")
 					animated_sprite.play("die")
 				States.HURT:
-					if has_been_crit == true:
-						animated_sprite_fx.play("hit")
-						has_been_crit = false
+					
 					animated_sprite.play("hit")
 
 
@@ -79,12 +78,8 @@ func _on_attack_timer_timeout():
 
 
 func attack_rate():
-	var lTimer = Timer.new()
-	lTimer.autostart = true
-	lTimer.one_shot = false
-	lTimer.wait_time = character.attack_speed
-	lTimer.timeout.connect(_on_attack_timer_timeout) # Pareil que lTimer.timout += _on_...
-	add_child(lTimer)
+	timer.wait_time = character.attack_speed
+	timer.timeout.connect(_on_attack_timer_timeout) # Pareil que lTimer.timout += _on_...
 
 
 func die():
@@ -110,22 +105,32 @@ func show_damage(pIs_Crit: bool, pDamage: float):
 	hit_damage.text = str(pDamage as int)
 	hit_damage.modulate = Color.ORANGE
 	
+	var lTween = create_tween()
 	if pIs_Crit == false:
-		var lTween = create_tween()
 		lTween.tween_property(hit_damage, "position", lPos_array.pick_random(), 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 		lTween.tween_property(hit_damage, "modulate", Color.TRANSPARENT, 0.2)
 		lTween.tween_property(hit_damage, "position", Vector2.ZERO, 0.1)
 		lTween.tween_callback(kill_tween.bind(lTween))
 	else:
+		animated_sprite_fx.play("hit")
+		has_been_crit = false
+		
 		hit_damage.modulate = Color.RED
-		var lTween = create_tween().set_parallel(true)
-		lTween.tween_property(hit_damage, "position", lPos_array.pick_random(), 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
-		lTween.tween_property(hit_damage, "theme_override_font_sizes/font_size", 100.0, 0.5)
-		lTween.set_parallel(false).tween_property(hit_damage, "modulate", Color.TRANSPARENT, 0.2)
+		lTween.set_parallel(true).tween_property(hit_damage, "position", lPos_array.pick_random(), 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+		lTween.tween_property(hit_damage, "scale", Vector2(2.4,2.4), 0.4)
+		lTween.set_parallel(false).tween_property(hit_damage, "modulate", Color.TRANSPARENT, 0.4)
 		lTween.tween_property(hit_damage, "position", Vector2.ZERO, 0.1)
 		lTween.tween_callback(kill_tween.bind(lTween))
 
 
 func kill_tween(pTween: Tween):
-	hit_damage.add_theme_font_size_override("font_size", 16)
+	hit_damage.scale = Vector2.ONE
 	pTween.kill()
+
+func no_attacking():
+	timer.paused = true
+	actual_state = States.WALKING
+
+func attacking():
+	timer.paused = false
+	actual_state = States.IDLE
