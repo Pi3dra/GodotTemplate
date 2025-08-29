@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://wn0rp33fbpef"]
+[gd_scene load_steps=4 format=3 uid="uid://wn0rp33fbpef"]
 
 [ext_resource type="Script" uid="uid://bt2xi8qrj5rak" path="res://Scripts/UI/level_select_ui.gd" id="1_x7emo"]
 [ext_resource type="PackedScene" uid="uid://hjnoyvqc4n3n" path="res://Scenes/UI/level_panel.tscn" id="2_g6h48"]
+[ext_resource type="Theme" uid="uid://koj3axa8mw8p" path="res://Assets/Themes/MerchantTheme.tres" id="3_ivv4g"]
 
 [node name="LevelSelect" type="Control"]
 layout_mode = 3
@@ -11,6 +12,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_x7emo")
+
+[node name="BlurryBackground" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1374.0
+offset_bottom = 775.0
+color = Color(0, 0, 0, 0.352941)
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 0
@@ -27,3 +34,15 @@ layout_mode = 2
 
 [node name="Level3" parent="HBoxContainer" instance=ExtResource("2_g6h48")]
 layout_mode = 2
+
+[node name="Exit" type="Button" parent="."]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 158.0
+offset_bottom = 86.0
+theme = ExtResource("3_ivv4g")
+theme_override_font_sizes/font_size = 22
+text = "EXIT"
+
+[connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]

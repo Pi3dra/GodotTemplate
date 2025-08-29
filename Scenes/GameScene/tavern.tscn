@@ -158,10 +158,12 @@ libraries = {
 autoplay = "Transition"
 
 [node name="Board" type="TextureButton" parent="."]
-offset_left = -320.0
-offset_top = 400.0
-offset_right = -248.0
-offset_bottom = 440.0
+anchors_preset = -1
+offset_left = -284.0
+offset_top = 418.0
+offset_right = -212.0
+offset_bottom = 458.0
+grow_horizontal = 2
 texture_normal = ExtResource("3_gkydx")
 texture_pressed = ExtResource("3_gkydx")
 texture_hover = ExtResource("3_gkydx")
@@ -178,13 +180,22 @@ texture_pressed = SubResource("AtlasTexture_18yo5")
 texture_hover = SubResource("AtlasTexture_7b57p")
 
 [node name="Merchant" type="TextureButton" parent="."]
-offset_left = -670.0
-offset_top = 436.0
-offset_right = -630.0
-offset_bottom = 481.0
+custom_minimum_size = Vector2(30, 45)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -658.0
+offset_top = 429.0
+offset_right = -628.0
+offset_bottom = 474.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Merchant"]
-position = Vector2(20, 19)
+position = Vector2(16, 25)
 sprite_frames = SubResource("SpriteFrames_p7d70")
 autoplay = "default"
 
@@ -199,6 +210,20 @@ position = Vector2(-337, 643)
 [node name="P3" type="AnimatedSprite2D" parent="Party"]
 position = Vector2(-420, 652)
 
+[node name="Spawners" type="Node2D" parent="."]
+
+[node name="C1" type="Marker2D" parent="Spawners"]
+position = Vector2(-208, 684)
+
+[node name="C2" type="Marker2D" parent="Spawners"]
+position = Vector2(-496, 588)
+
+[node name="C3" type="Marker2D" parent="Spawners"]
+position = Vector2(-400, 492)
+
+[node name="C4" type="Marker2D" parent="Spawners"]
+position = Vector2(-240, 588)
+
 [node name="ColorRect" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_e4y1a")
 offset_left = -833.0
@@ -207,8 +232,14 @@ offset_right = -97.0
 offset_bottom = 379.0
 color = Color(0.0214346, 0.0214346, 0.0214346, 1)
 
+[connection signal="mouse_entered" from="Board" to="." method="_on_board_mouse_entered"]
+[connection signal="mouse_exited" from="Board" to="." method="_on_board_mouse_exited"]
 [connection signal="pressed" from="Board" to="." method="_on_board_pressed"]
+[connection signal="mouse_entered" from="Door" to="." method="_on_door_mouse_entered"]
+[connection signal="mouse_exited" from="Door" to="." method="_on_door_mouse_exited"]
 [connection signal="pressed" from="Door" to="." method="_on_door_pressed"]
+[connection signal="mouse_entered" from="Merchant" to="." method="_on_merchant_mouse_entered"]
+[connection signal="mouse_exited" from="Merchant" to="." method="_on_merchant_mouse_exited"]
 [connection signal="pressed" from="Merchant" to="." method="_on_merchant_pressed"]
 
 [editable path="Background"]

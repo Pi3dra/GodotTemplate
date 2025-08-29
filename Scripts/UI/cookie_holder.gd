@@ -25,12 +25,13 @@ func create_button(cookie):
 		button.add_theme_stylebox_override("hover", style)
 		add_child(button)  # the BoxContainer will place it automatically
 		
-		button.pressed.connect(_on_button_pressed.bind(button))
+		button.button_down.connect(_on_button_down.bind(button))
 		button_cookies[button] = cookie
 	
 
 ## Called when a child button is pressed
-func _on_button_pressed(button):
+func _on_button_down(button):
+	print("lol")
 	emit_signal("instantiate_cookie", button_cookies[button], button)
 	
 ## This is called by parent to prevent pulling cookies on accept phase

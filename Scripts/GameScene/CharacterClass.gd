@@ -33,14 +33,11 @@ func receive_cookie_POWER(received_cookies: Dictionary):
 	# like the healing cookie does, we do it now, and if any are trigerred during active combat
 	# we leave them in active_cookies
 	# cookies : Dictionary [COOKIETYPE, Array[Cookie]]
-	print("Cookies Received, Over")
-	print("before: ", active_cookies)
 	
 	active_cookies = received_cookies
 	#for key in received_cookies.keys():
 	#	for cookie in received_cookies[key]:
 	#		active_cookies[key].append(cookie)
-	print("after: ", active_cookies)
 			
 	var healing_cookies = active_cookies.get(Cookie.TYPE.Healing)
 	health += (health/3)*healing_cookies.size()
@@ -69,9 +66,10 @@ func attack() -> Array:
 	debug("Critical!", critical_cookies.size() > 0)
 	
 	# Array Float Bool
+	
 	var crit_info : Array  = calculate_crit(damage*damage_multiplier, critical_bonus)
 	var total_damage : float = crit_info[0]
-	
+	print("x: ", damage_multiplier," d: ", total_damage, damage_multiplier," t: ", total_damage*damage_multiplier)
 	# Damage using cookies
 	# Vampire cookie
 	var vampire_cookies = active_cookies.get(Cookie.TYPE.Vampire)

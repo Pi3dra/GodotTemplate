@@ -1,0 +1,114 @@
+[gd_scene load_steps=5 format=3 uid="uid://cgftnhlkpkt4h"]
+
+[ext_resource type="Script" uid="uid://5beqyelocfx3" path="res://cookie_select_ui.gd" id="1_nrv4p"]
+[ext_resource type="Theme" uid="uid://koj3axa8mw8p" path="res://Assets/Themes/MerchantTheme.tres" id="2_iriai"]
+[ext_resource type="Theme" uid="uid://c844w2sp1c2l7" path="res://Assets/Themes/LevelSelectTheme.tres" id="2_vlo32"]
+[ext_resource type="FontFile" uid="uid://b0ndjepym4tga" path="res://Assets/Themes/FantasyRPGtitle (size 11).ttf" id="4_quo3h"]
+
+[node name="CookieSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nrv4p")
+
+[node name="BlurryBackground" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1374.0
+offset_bottom = 775.0
+color = Color(0, 0, 0, 0.352941)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.143
+anchor_top = 0.219
+anchor_right = 0.857
+anchor_bottom = 0.781
+offset_left = -0.338013
+offset_top = 15.808
+offset_right = 0.337891
+offset_bottom = -15.808
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_quo3h")
+theme_override_font_sizes/font_size = 44
+text = "RISK YOUR BISCUITS!"
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_quo3h")
+theme_override_font_sizes/font_size = 18
+text = "Your party needs supplies!
+Click cookies and place them below to take them to combat.
+Choose  wisely as cookies will be consumed during combat"
+
+[node name="Spacer" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 128)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme = ExtResource("2_vlo32")
+theme_type_variation = &"CookieBar"
+
+[node name="CookierBar" type="HBoxContainer" parent="VBoxContainer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Label" type="Label" parent="VBoxContainer/PanelContainer/CookierBar"]
+layout_mode = 2
+theme = ExtResource("2_iriai")
+theme_type_variation = &"TextBox"
+text = "Available Cookies:   "
+
+[node name="Panel" type="Panel" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+theme = ExtResource("2_vlo32")
+
+[node name="Exit" type="Button" parent="."]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 158.0
+offset_bottom = 86.0
+theme = ExtResource("2_iriai")
+theme_override_font_sizes/font_size = 22
+text = "EXIT"
+
+[node name="Accept" type="Button" parent="."]
+layout_mode = 2
+anchor_left = 0.454
+anchor_top = 0.833
+anchor_right = 0.527
+anchor_bottom = 0.898
+offset_left = -0.164062
+offset_top = 0.255981
+offset_right = 0.117981
+offset_bottom = 0.335938
+theme = ExtResource("2_vlo32")
+text = "Accept
+"
+
+[node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 0
+offset_left = 455.0
+offset_top = 498.0
+offset_right = 917.0
+offset_bottom = 598.0
+theme_override_fonts/font = ExtResource("4_quo3h")
+theme_override_font_sizes/font_size = 33
+text = "Place Your Cookies Here"
+
+[connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="Accept" to="." method="_on_accept_pressed"]
