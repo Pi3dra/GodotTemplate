@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://dngx7vu22cd8o"]
+[gd_scene load_steps=19 format=3 uid="uid://dngx7vu22cd8o"]
 
 [ext_resource type="Script" uid="uid://hw6bytylistb" path="res://Scripts/GameScene/tavern.gd" id="1_273kw"]
 [ext_resource type="PackedScene" uid="uid://mbpwvbww4e0w" path="res://Scenes/GameScene/background.tscn" id="2_3swb4"]
 [ext_resource type="Texture2D" uid="uid://dj5n0440363ub" path="res://Assets/Sprites/UI/DoubleWooden sign.png" id="3_gkydx"]
 [ext_resource type="Texture2D" uid="uid://ducng482cqo0x" path="res://Assets/Sprites/Characters/Pnj/Alchemist_idle.png" id="4_abfkn"]
 [ext_resource type="Texture2D" uid="uid://dijmd1yb28d3g" path="res://Assets/Sprites/TileMap/RPG tileset (full) - 200%.png" id="4_upti4"]
+[ext_resource type="Shader" uid="uid://c4xsqigo7i03g" path="res://Shaders/transition.gdshader" id="6_e4y1a"]
 
 [sub_resource type="Animation" id="Animation_3swb4"]
 resource_name = "Transition"
@@ -16,7 +17,7 @@ tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(1.13333),
+"times": PackedFloat32Array(1.26667),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -30,14 +31,42 @@ tracks/1/path = NodePath("ColorRect:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(0.15, 1),
+"times": PackedFloat32Array(0, 0.0333333),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(-833, -5), Vector2(-833, 384)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ColorRect:material:shader_parameter/progress")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 39.0]
+}
+
+[sub_resource type="Animation" id="Animation_e4y1a"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_abfkn"]
 _data = {
+&"RESET": SubResource("Animation_e4y1a"),
 &"Transition": SubResource("Animation_3swb4")
 }
 
@@ -88,6 +117,28 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e4y1a"]
+shader = ExtResource("6_e4y1a")
+shader_parameter/use_sprite_alpha = true
+shader_parameter/use_transition_texture = false
+shader_parameter/transition_type = 2
+shader_parameter/position = Vector2(0, 0)
+shader_parameter/invert = true
+shader_parameter/grid_size = Vector2(24, 14)
+shader_parameter/rotation_angle = 0.0
+shader_parameter/stagger = Vector2(0, 0)
+shader_parameter/stagger_frequency = Vector2i(2, 2)
+shader_parameter/flip_frequency = Vector2i(1, 1)
+shader_parameter/basic_feather = 0.0
+shader_parameter/use_mask_size = false
+shader_parameter/mask_size = Vector2(100, 100)
+shader_parameter/edges = 4
+shader_parameter/shape_feather = 0.1
+shader_parameter/sectors = 1
+shader_parameter/clock_feather = 0.0
+shader_parameter/progress = 0.0
+shader_parameter/progress_bias = Vector2(10, 10)
 
 [node name="Tavern" type="Node2D"]
 script = ExtResource("1_273kw")
@@ -174,6 +225,7 @@ position = Vector2(-400, 492)
 position = Vector2(-240, 588)
 
 [node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_e4y1a")
 offset_left = -833.0
 offset_top = -5.0
 offset_right = -97.0
