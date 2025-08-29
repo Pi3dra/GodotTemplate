@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=22 format=3 uid="uid://b2ygb7ty6nyn7"]
+[gd_resource type="SpriteFrames" load_steps=26 format=3 uid="uid://b2ygb7ty6nyn7"]
 
 [ext_resource type="Texture2D" uid="uid://cypp722v6bebw" path="res://Assets/Sprites/Characters/Player/Paladin/Paladin_attack.png" id="1_k8mac"]
 [ext_resource type="Texture2D" uid="uid://dvwpsxeijpc14" path="res://Assets/Sprites/Characters/Player/Paladin/Paladin_die.png" id="2_lyu3g"]
@@ -25,6 +25,22 @@ region = Rect2(288, 224, 96, 112)
 [sub_resource type="AtlasTexture" id="AtlasTexture_rcl3n"]
 atlas = ExtResource("1_k8mac")
 region = Rect2(384, 224, 96, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k8mac"]
+atlas = ExtResource("4_gkarj")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lyu3g"]
+atlas = ExtResource("4_gkarj")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ggwhl"]
+atlas = ExtResource("4_gkarj")
+region = Rect2(64, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gkarj"]
+atlas = ExtResource("4_gkarj")
+region = Rect2(96, 0, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gylrf"]
 atlas = ExtResource("2_lyu3g")
@@ -91,6 +107,23 @@ animations = [{
 "loop": false,
 "name": &"attack",
 "speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k8mac")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lyu3g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ggwhl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gkarj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
