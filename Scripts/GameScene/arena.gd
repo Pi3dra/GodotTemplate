@@ -299,13 +299,11 @@ func win_anim_allies():
 	var lTween = create_tween().set_parallel(true)
 	for allies in spawned_allies:
 		lTween.tween_property(allies, "position", enemies_spawn_pos.pick_random(), 4)
-	area_ui.instance.hide()
 
 func win_anim_allies2():
 	var lTween = create_tween().set_parallel(true)
 	for allies in spawned_allies:
 		lTween.tween_property(allies, "position", enemies_spawn_pos2.pick_random(), 4)
-	area_ui.instance.hide()
 
 func spawn_ui():
 	area_ui.instance.show()

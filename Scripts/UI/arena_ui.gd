@@ -184,6 +184,7 @@ func erase_cookies():
 
 signal tutorial_exit
 func _on_tutorial_exit_pressed() -> void:
+	SoundManager.instance.play_sound("Click2", true)
 	emit_signal("tutorial_exit")
 	Globals.training = false
 	if tutorial.instance != null:
