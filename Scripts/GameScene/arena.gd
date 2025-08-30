@@ -234,10 +234,9 @@ func combat_handler(Attack_info : Array, pSide, pShooter, pSelf):
 	if lEnemy_to_attack.character.health <= 0:
 		if shaker.is_playing(): shaker.stop()
 		else : shaker.start()
-		if pSide == "Good":
-			# Here i need Hector type, do merge
-			#player_party.erase(lEnemy_to_attack.character) 
-			return
+		if pSide == "Bad": # Attackin side killed an ally
+			print("GOOD DIED", lEnemy_to_attack.character.type)
+			player_party.erase(lEnemy_to_attack.character.type) 
 		lList_to_pick.erase(lEnemy_to_attack)
 		print(lEnemy_to_attack, pSide)
 		

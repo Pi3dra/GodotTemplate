@@ -22,6 +22,13 @@ func send_level_start(wave_info, reward1, reward2):
 	emit_signal("start_level", wave_info, reward1, reward2)
 	hide()
 
+func regen():
+	instance = self
+	var levels = [lvl1, lvl2, lvl3]
+	lvl1.generate_level(level_panel.Difficulty.Easy)
+	lvl2.generate_level(level_panel.Difficulty.Medium)
+	lvl3.generate_level(level_panel.Difficulty.Hard)
+	
 # Array[Array[LogicalCharacter.TYPE]] = [[Goblin;,Skelet],[],[]]
 signal start_level(wave_info)
 

@@ -26,7 +26,7 @@ var risked_biscuits = {}
 var possibles_starter: Array = [LogicalCharacter.TYPES.Knight, LogicalCharacter.TYPES.Wizard, LogicalCharacter.TYPES.Farmer, LogicalCharacter.TYPES.Necromancer, LogicalCharacter.TYPES.Ranger]
 var available_cookies : Dictionary[Cookie.TYPE, int]= {Cookie.TYPE.Normal : 12}
 
-
+var finished_level = false
 var buyable_char_nodes : Dictionary
 
 #//////////function//////////
@@ -131,10 +131,11 @@ func switch_scene():
 
 
 func _on_board_pressed() -> void:
-	if level_select_ui.instance != null:
+	if level_select_ui.instance != null and !finished_level :
 		level_select_ui.instance.show()
 		return
-	print("ui quest")
+	if level_select_ui.instance != null and finished_level:
+		level_select_ui.instance.queue_free()
 	var quest_ui: Control = scene_quest_ui.instantiate()
 	UI.instance.add_child(quest_ui)
 	level_select_ui.instance.connect("start_level", cookie_selection)
@@ -219,4 +220,22 @@ func update_after_victory(characters,rewarded_cookies):
 	party_info = characters
 	for cookie in rewarded_cookies.keys():
 		if rewarded_cookies[cookie] > 0:
-			available_cookies.set(cookie ,rewarded_cookies[cookie])
+			if available_cookies.has(cookie):
+				available_cookies.set(cookie, available_cookies[cookie] + rewarded_cookies[cookie])
+			else:
+				available_cookies.set(cookie, rewarded_cookies[cookie])
+	update_party_sprites()
+	
+func update_party_sprites():
+	var party_slots = party.get_children()
+	for sprites in party_slots:
+		sprites.sprite_frames = null
+		
+	for char in party_info:
+		var chosen_slot = party_slots.pick_random()
+		chosen_slot.sprite_frames = LogicalCharacter.char_to_sprite(char)
+		chosen_slot.play("default")
+		party_slots.erase(chosen_slot)
+	finished_level = true
+			
+		
