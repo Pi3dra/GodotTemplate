@@ -2,8 +2,9 @@ extends Control
 
 class_name tutorial
 
-enum TUTORIALS {Tavern, Combat}
 
+static var instance
+enum TUTORIALS {Tavern, Combat}
 var current_tutorial : TUTORIALS 
 
 var full_text := ""
@@ -12,14 +13,25 @@ var full_text := ""
 @onready var arrow_1: TextureRect = $Arrow1
 @onready var arrow_2: TextureRect = $Arrow2
 @onready var arrow_3: TextureRect = $Arrow3
-@onready var arrows : Array = [arrow_1, arrow_2, arrow_3]
+@onready var arrow_4: TextureRect = $Arrow4
+
+@onready var arrows : Array = [arrow_1, arrow_2, arrow_3, arrow_4]
 
 var current_text_line : int = 0
 var tween : Tween
 
 func _ready():
+	instance = self
 	hide_arrows()
 	current_tutorial = Globals.current_tutorial
+	if current_tutorial == TUTORIALS.Combat:
+		hide()
+	match current_tutorial:
+		TUTORIALS.Combat:
+			$Label.text = "TRAINER"
+		TUTORIALS.Tavern:
+			$Label.text = "INNKEEPER"
+			
 	label.text = ""
 	full_text = get_dialog()
 	update()
@@ -60,14 +72,40 @@ func get_dialog():
 					arrow_3.show()
 					_animate_arrow(arrow_3)
 				3:
+					dialog = "I STRONGLY recommend you to see our knight here to train yourself first"
+					hide_arrows()
+					arrow_4.show()
+					_animate_arrow(arrow_4)
+				4:
 					dialog = "Also, people in the tavern might be interested to join your party if you have enough cookies."
 					hide_arrows()
-				4:
+				5:
 					dialog = "end"
-		_:
-			dialog = ""
-			
-	if dialog == "end" : queue_free()
+		TUTORIALS.Combat:
+			match current_text_line:
+				0:
+					dialog = "Welcome to the training area, here you can test out different cookie combos and playstyles."
+				1: 
+					dialog =  "As it is your first time here i'll give you a tour of how combat works"
+				2:
+					dialog = "As you can see, Combat happens automatically. To turn odds into your favor you need to use your cookies"
+				3:
+					dialog = "You can click and drag cookies from the top bar, into either the Head side, or Tails side"
+				4:
+					dialog = "When hitting the FLIP button, all cookies will perform a flip, if they land correctly on the side where you placed them, your party will be greatly buffed"
+				5:
+					dialog = "Your normal cookies here, make your party deal 50% more damage for a single blow"
+				6:
+					dialog = "All cookies have special and different powers, visit the merchant to learn more"
+				7:
+					dialog = "You can come back at any time to test your party and your cookies!"
+				8:
+					dialog = "end"
+	if dialog == "end" : 
+		Globals.current_tutorial = null
+		if current_tutorial == TUTORIALS.Combat:
+			Globals.already_trained = true
+		queue_free()
 	if dialog != "": current_text_line += 1
 	return dialog
 	

@@ -77,6 +77,7 @@ func _on_attack_timer_timeout():
 	var attack_info : Array = character.attack()
 	if character.attack_speed != timer.wait_time:
 		timer.wait_time = character.attack_speed
+	print("Attacked", character.type)
 	emit_signal("attack", character.attack(), character.side, character.shooter, self) # arena gets it
 #endregion
 

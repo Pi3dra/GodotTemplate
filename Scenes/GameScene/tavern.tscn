@@ -1,11 +1,13 @@
-[gd_scene load_steps=19 format=4 uid="uid://dngx7vu22cd8o"]
+[gd_scene load_steps=21 format=4 uid="uid://dngx7vu22cd8o"]
 
 [ext_resource type="Script" uid="uid://hw6bytylistb" path="res://Scripts/GameScene/tavern.gd" id="1_273kw"]
 [ext_resource type="PackedScene" uid="uid://mbpwvbww4e0w" path="res://Scenes/GameScene/background.tscn" id="2_3swb4"]
 [ext_resource type="Texture2D" uid="uid://dj5n0440363ub" path="res://Assets/Sprites/UI/DoubleWooden sign.png" id="3_gkydx"]
 [ext_resource type="Texture2D" uid="uid://ducng482cqo0x" path="res://Assets/Sprites/Characters/Pnj/Alchemist_idle.png" id="4_abfkn"]
 [ext_resource type="Texture2D" uid="uid://dijmd1yb28d3g" path="res://Assets/Sprites/TileMap/RPG tileset (full) - 200%.png" id="4_upti4"]
+[ext_resource type="SpriteFrames" uid="uid://b2ygb7ty6nyn7" path="res://Assets/SpritesFrames/Allies/Knight.tres" id="5_6qqgm"]
 [ext_resource type="Shader" uid="uid://c4xsqigo7i03g" path="res://Shaders/transition.gdshader" id="6_e4y1a"]
+[ext_resource type="Theme" uid="uid://koj3axa8mw8p" path="res://Assets/Themes/MerchantTheme.tres" id="8_8fg7r"]
 
 [sub_resource type="Animation" id="Animation_e4y1a"]
 length = 0.001
@@ -204,9 +206,10 @@ grow_vertical = 2
 size_flags_horizontal = 4
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Trainer"]
-position = Vector2(14, 19)
-sprite_frames = SubResource("SpriteFrames_p7d70")
-autoplay = "default"
+position = Vector2(13, 21)
+sprite_frames = ExtResource("5_6qqgm")
+animation = &"idle"
+autoplay = "idle"
 
 [node name="Merchant" type="TextureButton" parent="."]
 custom_minimum_size = Vector2(30, 45)
@@ -255,12 +258,38 @@ position = Vector2(-240, 588)
 
 [node name="ColorRect" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_e4y1a")
-offset_left = -824.0
+offset_left = -833.0
 offset_top = -5.0
-offset_right = -88.0
+offset_right = -97.0
 offset_bottom = 379.0
 mouse_filter = 2
 color = Color(0.0214346, 0.0214346, 0.0214346, 1)
+
+[node name="partyfull" type="Label" parent="."]
+offset_left = -454.0
+offset_top = 684.0
+offset_right = -300.0
+offset_bottom = 707.0
+theme = ExtResource("8_8fg7r")
+theme_type_variation = &"TextBox"
+text = "PARTY FULL!"
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_left = -792.0
+offset_top = 710.0
+offset_right = -611.0
+offset_bottom = 759.0
+theme = ExtResource("8_8fg7r")
+theme_type_variation = &"smallbar"
+
+[node name="CookierBar" type="HBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/CookierBar"]
+layout_mode = 2
+theme_type_variation = &"TextBox"
+theme_override_font_sizes/font_size = 11
+text = "Available Cookies:   "
 
 [connection signal="mouse_entered" from="Board" to="." method="_on_board_mouse_entered"]
 [connection signal="mouse_exited" from="Board" to="." method="_on_board_mouse_exited"]

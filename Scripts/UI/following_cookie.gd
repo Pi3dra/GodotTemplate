@@ -9,11 +9,26 @@ var flip_tween : Tween
 @onready var texture_rect : TextureRect = $cookie_texture
 @onready var shadow: TextureRect = $shadow
 
+var screen_middle : int
+
 func _ready() -> void:
 	texture_rect.texture = cookie.head_texture
 	shadow.texture = load("res://Assets/Sprites/cookie_shadow.png")
+	var screen_size = get_viewport().get_visible_rect().size
+	screen_middle = screen_size.x/2
 	
-	
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed and !following:
+			following = true
+		elif  event.button_index == MOUSE_BUTTON_LEFT and !event.pressed and following and get_global_mouse_position().y > 200:
+			print("Clicked:1")
+			following = false
+			if position.x < screen_middle:
+				cookie.side = Cookie.SCREENSIDE.Head
+			else:
+				cookie.side = Cookie.SCREENSIDE.Tail
+
 func _process(_delta: float) -> void:
 	if following:
 		var mouse_pos = get_global_mouse_position()

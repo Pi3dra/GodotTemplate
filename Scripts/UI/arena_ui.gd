@@ -17,9 +17,15 @@ var active_cookies = Cookie.type_dict() #Dictionary[TYPE, Array[Cookie]]
 @onready var cookie_holder = $PanelContainer/CookieHolder
 
 func _ready() -> void:
-	#hide()
+	hide()
+	var tutorialbutton = $TutorialExit
+	if Globals.training:
+		tutorialbutton.show()
+	else:
+		tutorialbutton.hide()
+	
+	$Flip.position.y -= 120
 	instance = self
-
 	screen_size = get_viewport().get_visible_rect().size
 	screen_middle = screen_size.x/2
 
@@ -34,18 +40,21 @@ func init(cookies : Dictionary):
 	cookie_holder.create_buttons(cookie_list)
 
 func _draw() -> void:
-	var to = Vector2(screen_middle, 0)
 	var from = Vector2(screen_middle, screen_size.y)
-	draw_line(from, to, Color.WHITE,2 )
+	var to = Vector2(screen_middle, 0)
+	
+	draw_line(to, from, Color.WHITE,2 )
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and !event.pressed and selected_cookie != null:
+		if event.button_index == MOUSE_BUTTON_LEFT and !event.pressed and selected_cookie != null and get_global_mouse_position().y > 200:
 			selected_cookie.following = false
 			if selected_cookie.position.x < screen_middle:
-				selected_cookie.cookie.side = Cookie.SCREENSIDE.Head
+				if selected_cookie.cookie.side == Cookie.SCREENSIDE.Unchosen:
+					selected_cookie.cookie.side = Cookie.SCREENSIDE.Head
 			else:
-				selected_cookie.cookie.side = Cookie.SCREENSIDE.Head
+				if selected_cookie.cookie.side == Cookie.SCREENSIDE.Unchosen:
+					selected_cookie.cookie.side = Cookie.SCREENSIDE.Head
 			selected_cookie = null
 			
 
@@ -57,15 +66,28 @@ func _on_cookie_holder_instantiate_cookie(cookie: Cookie, button: Button) -> voi
 	var cookie_instance = cookie_tscn.instantiate()
 	cookie_instance.cookie = cookie
 	
-	cookie_holder.free_button(button)
 	cookie_instances.append(cookie_instance)
 	
 	selected_cookie = cookie_instance
+	cookie_holder.free_button(button)
+
 	add_child(cookie_instance)
 	
 
-signal combat_cookies(cookies: Array[Cookie])
+func instantiate_cookie(cookie: Cookie, pos):
+	var cookie_instance = cookie_tscn.instantiate()
+	cookie_instance.cookie = cookie
+	cookie_instances.append(cookie_instance)
+	cookie_instance.global_position = pos
+	cookie_instance.following = false
+	selected_cookie = null
+	if cookie_instance.position.x < screen_middle:
+		cookie_instance.cookie.side = Cookie.SCREENSIDE.Head
+	else:
+		cookie_instance.cookie.side = Cookie.SCREENSIDE.Head
+	add_child(cookie_instance)
 
+signal combat_cookies(cookies: Array[Cookie])
 func _on_button_pressed() -> void:
 	if flip_button.text == "Flip":
 		
@@ -141,7 +163,17 @@ func _on_button_pressed() -> void:
 
 func erase_cookies():
 	for cookie in cookie_instances:
-		cookie.queue_free()
-	cookie_instances.clear()
+		if cookie.cookie.state != Cookie.STATE.Unflipped:
+			cookie_instances.erase(cookie)
+			cookie.queue_free()
+	#cookie_instances.clear()
 	flip_button.text = "Flip"
 		
+
+signal tutorial_exit
+func _on_tutorial_exit_pressed() -> void:
+	emit_signal("tutorial_exit")
+	Globals.training = false
+	if tutorial.instance != null:
+		tutorial.instance.queue_free()
+	queue_free()

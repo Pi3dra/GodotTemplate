@@ -1,7 +1,8 @@
-[gd_resource type="Theme" load_steps=23 format=4 uid="uid://koj3axa8mw8p"]
+[gd_resource type="Theme" load_steps=26 format=4 uid="uid://koj3axa8mw8p"]
 
 [ext_resource type="FontFile" uid="uid://b0ndjepym4tga" path="res://Assets/Themes/FantasyRPGtitle (size 11).ttf" id="1_48ogh"]
 [ext_resource type="Texture2D" uid="uid://dxcc6fps2vdnc" path="res://Assets/Themes/UI assets (3x).png" id="1_tflsn"]
+[ext_resource type="Texture2D" uid="uid://bbmwn81f77iqu" path="res://Assets/Themes/UI assets (2x).png" id="3_ym8ad"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cvl0a"]
 texture = ExtResource("1_tflsn")
@@ -1018,8 +1019,18 @@ region_rect = Rect2(1518, 720, 42, 60)
 texture = ExtResource("1_tflsn")
 region_rect = Rect2(1521, 876, 42, 60)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ym8ad"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ym8ad"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1ole8"]
+texture = ExtResource("3_ym8ad")
+texture_margin_left = 20.0
+texture_margin_top = 20.0
+texture_margin_right = 20.0
+texture_margin_bottom = 18.0
+region_rect = Rect2(486, 6, 84, 84)
 
 [resource]
 AcceptDialog/constants/buttons_separation = 0
@@ -1111,6 +1122,10 @@ SideButton/styles/disabled = SubResource("StyleBoxTexture_ym8ad")
 SideButton/styles/hover = SubResource("StyleBoxTexture_0r47a")
 SideButton/styles/normal = SubResource("StyleBoxTexture_50iu5")
 SideButton/styles/pressed = SubResource("StyleBoxTexture_sxaod")
+SmallTextBox/base_type = &"Label"
+SmallTextBox/font_sizes/font_size = 16
+SmallTextBox/fonts/font = ExtResource("1_48ogh")
+SmallTextBox/styles/normal = SubResource("StyleBoxEmpty_ym8ad")
 TextBox/base_type = &"Label"
 TextBox/font_sizes/font_size = 22
 TextBox/fonts/font = ExtResource("1_48ogh")
@@ -1120,3 +1135,5 @@ Window/constants/close_v_offset = 0
 Window/constants/resize_margin = 0
 Window/constants/title_height = 0
 Window/constants/title_outline_size = 0
+smallbar/base_type = &"PanelContainer"
+smallbar/styles/panel = SubResource("StyleBoxTexture_1ole8")

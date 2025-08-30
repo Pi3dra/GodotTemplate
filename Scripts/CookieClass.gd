@@ -2,7 +2,7 @@ class_name Cookie
 
 enum TYPE {Normal, Berserk, Crit, Golden, Replay, Healing, Vampire, Weighted, Fast, Head, Tail}
 enum EFFECTYPE {Chance, Combat}
-enum SCREENSIDE {Head, Tail}
+enum SCREENSIDE {Head, Tail, Unchosen}
 enum STATE {Head, Tail, Unflipped}
 
 var id
@@ -19,7 +19,9 @@ var shadow_texture = preload("res://Assets/Sprites/cookie_shadow.png")
 var spritesheet = preload("res://Assets/Sprites/CookieSheet.png")
 
 func _init(pId, pDescription, pCookie_type):
+	side = SCREENSIDE.Unchosen
 	id = pId
+	state = STATE.Unflipped
 	description = pDescription
 	cookie_type = pCookie_type
 	
