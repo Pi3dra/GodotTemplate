@@ -33,12 +33,17 @@ var buyable_char_nodes : Dictionary
 
 #//////////function//////////
 func _ready() -> void:
+	UI.instance.connect("beginning_finished", can_start)
+	
 	partyfull.hide()
 	spawn_characters()
 	spawn_party()
 	move_child($ColorRect, get_children().size())
 	launch_tutorial()
 	update_cookie_bar()
+	
+
+func can_start():
 	SoundManager.instance.play_sound("Tavern", true, false)
 
 func launch_tutorial():
