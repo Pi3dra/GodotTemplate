@@ -87,6 +87,12 @@ theme = ExtResource("1_hcs8x")
 theme_override_font_sizes/font_size = 22
 text = "EXIT"
 
+[connection signal="mouse_entered" from="VBoxContainer/HBoxContainer2/Left" to="." method="_on_left_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/HBoxContainer2/Left" to="." method="_on_left_mouse_exited"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/Left" to="." method="_on_left_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/HBoxContainer2/Right" to="." method="_on_right_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/HBoxContainer2/Right" to="." method="_on_right_mouse_exited"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/Right" to="." method="_on_right_pressed"]
+[connection signal="mouse_entered" from="Exit" to="." method="_on_exit_mouse_entered"]
+[connection signal="mouse_exited" from="Exit" to="." method="_on_exit_mouse_exited"]
 [connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]

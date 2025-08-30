@@ -103,5 +103,9 @@ custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 text = "Sell!"
 
+[connection signal="mouse_entered" from="HBoxContainer/Buy" to="." method="_on_buy_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/Buy" to="." method="_on_buy_mouse_exited"]
 [connection signal="pressed" from="HBoxContainer/Buy" to="." method="_on_buy_pressed"]
+[connection signal="mouse_entered" from="HBoxContainer/Sell" to="." method="_on_sell_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/Sell" to="." method="_on_sell_mouse_exited"]
 [connection signal="pressed" from="HBoxContainer/Sell" to="." method="_on_sell_pressed"]

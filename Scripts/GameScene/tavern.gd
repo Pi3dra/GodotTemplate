@@ -39,6 +39,7 @@ func _ready() -> void:
 	move_child($ColorRect, get_children().size())
 	launch_tutorial()
 	update_cookie_bar()
+	SoundManager.instance.play_sound("Tavern", true, false)
 
 func launch_tutorial():
 	if Globals.current_tutorial != null:
@@ -105,6 +106,7 @@ func spawn_characters() -> void:
 		char.global_position = positions[i]
 
 func buy_character(character, character_price):
+	SoundManager.instance.play_sound("Click4", true, false)
 	# TODO Handle case when party is full
 	var party_slots = $Party.get_children()
 	var spawned = false
@@ -145,6 +147,7 @@ func switch_scene():
 
 
 func _on_board_pressed() -> void:
+	SoundManager.instance.play_sound("Click1", true, true)
 	if level_select_ui.instance != null and !finished_level :
 		level_select_ui.instance.show()
 		return
@@ -186,9 +189,12 @@ func update_after_cookie_selection(cookies : Dictionary[Cookie.TYPE, int]):
 		
 func _on_door_pressed() -> void:
 	if !wave_info.is_empty() and !risked_biscuits.is_empty():
+		SoundManager.instance.play_sound("Tavern", false)
+		SoundManager.instance.play_sound("Transition", true, true)
 		animation_player.play("Transition") # This will trigger switch_scene
 
 func _on_merchant_pressed() -> void:
+	SoundManager.instance.play_sound("Click4", true, false)
 	var shop  : Control = shop_ui.instantiate()
 	shop.call_deferred("set_available_cookies", available_cookies)
 	UI.instance.add_child(shop)
@@ -207,28 +213,35 @@ func update_after_merchant(cookies):
 func _on_board_mouse_entered() -> void:
 	board.pivot_offset = board.size/2
 	board.scale = Vector2(1.5,1.5)
+	Cursor.instance.texture = Cursor.eye
 	
 func _on_board_mouse_exited() -> void:
 	board.pivot_offset = board.size/2
 	board.scale = Vector2(1,1)
+	Cursor.instance.texture = Cursor.basic
 
 @onready var merchant = $Merchant/AnimatedSprite2D
 func _on_merchant_mouse_entered() -> void:
 	merchant.scale  = Vector2(1.5,1.5)
+	Cursor.instance.texture = Cursor.chat
 func _on_merchant_mouse_exited() -> void:
 	merchant.scale  = Vector2(1,1)
+	Cursor.instance.texture = Cursor.basic
 
 @onready var door: TextureButton = $Door
 func _on_door_mouse_entered() -> void:
 	door.pivot_offset = door.size/2
 	door.scale  = Vector2(1.5,1.5)
+	Cursor.instance.texture = Cursor.step
 	
 func _on_door_mouse_exited() -> void:
 	door.pivot_offset = door.size/2
 	door.scale  = Vector2(1,1)
+	Cursor.instance.texture = Cursor.basic
 
 @onready var trainer = $Trainer/AnimatedSprite2D
 func _on_trainer_pressed() -> void:
+	SoundManager.instance.play_sound("Click4", true, false)
 	Globals.training = true
 	Globals.current_tutorial = tutorial.TUTORIALS.Combat
 	if !Globals.already_trained:
@@ -244,8 +257,10 @@ func _on_trainer_pressed() -> void:
 
 func _on_trainer_mouse_entered() -> void:
 	trainer.scale = Vector2(1.5,1.5)
+	Cursor.instance.texture = Cursor.chat
 func _on_trainer_mouse_exited() -> void:
 	trainer.scale = Vector2(1,1)
+	Cursor.instance.texture = Cursor.basic
 #endregion
 
 func update_after_victory(characters,rewarded_cookies):

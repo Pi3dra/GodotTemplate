@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c6xfskw07fivu"
+path="res://.godot/imported/Chiptune Vol5 Don't Call Me Main.wav-a41f745ddc1f73c6405ecbf8bd17537c.sample"
+
+[deps]
+
+source_file="res://Assets/Audio/Music/Chiptune Vol5 Don't Call Me Main.wav"
+dest_files=["res://.godot/imported/Chiptune Vol5 Don't Call Me Main.wav-a41f745ddc1f73c6405ecbf8bd17537c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
