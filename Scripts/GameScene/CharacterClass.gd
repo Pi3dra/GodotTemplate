@@ -8,6 +8,7 @@ var damage: float
 var attack_speed: float
 var crit: float
 var side: String
+var type: TYPES
 var shooter: bool
 
 var active_cookies : Dictionary = Cookie.type_dict()
@@ -20,7 +21,7 @@ func debug(to_print,confirm):
 		print(to_print)
 
 #//////////function//////////
-func _init(pHealth: int, pDamage: int, pAttack_speed: float, pCrit: float, pSprite_frame: String, pSide: String, pShooter: bool):
+func _init(pHealth: int, pDamage: int, pAttack_speed: float, pCrit: float, pSprite_frame: String, pSide: String, pShooter: bool, pType: TYPES):
 	health = pHealth
 	damage = pDamage
 	var random_offset : float = randf() * 0.5
@@ -29,6 +30,7 @@ func _init(pHealth: int, pDamage: int, pAttack_speed: float, pCrit: float, pSpri
 	sprite_frame = pSprite_frame
 	side = pSide
 	shooter = pShooter
+	type = pType
 
 func receive_cookie_POWER(received_cookies: Dictionary):
 	# Allow stacking cookies, if flipped in succesion before attacks
