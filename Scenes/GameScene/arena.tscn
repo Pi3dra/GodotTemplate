@@ -404,7 +404,7 @@ offset_left = 552.0
 offset_top = 32.0
 offset_right = 744.0
 offset_bottom = 120.0
-pivot_offset = Vector2(84, 40)
+pivot_offset = Vector2(96, 44)
 theme_override_colors/icon_focus_color = Color(0, 0, 0, 0)
 flat = true
 
@@ -416,7 +416,7 @@ offset_bottom = 80.0
 pivot_offset = Vector2(84, 40)
 mouse_filter = 2
 theme_override_fonts/normal_font = ExtResource("5_oyia7")
-theme_override_font_sizes/normal_font_size = 54
+theme_override_font_sizes/normal_font_size = 46
 bbcode_enabled = true
 text = "[pulse freq=1.0 color=#ffffff10 ease=-2.0]RETRY[/pulse]"
 

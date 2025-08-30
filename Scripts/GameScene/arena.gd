@@ -180,7 +180,7 @@ func add_to_array(pArray: Array, pNumb: int, pChar_name: Array):
 func create_character(pChar_name: LogicalCharacter.TYPES):
 	# Creation character Class (pas egal a character.tscn)
 	var lDict: Dictionary = GameScene.pokedex.get(pChar_name) # lDict = the character(pChar_name) dictionary of stat
-	var lChar: LogicalCharacter = LogicalCharacter.new(lDict["Health"], lDict["Damage"], lDict["Speed"], lDict["Crit"], lDict["Sprite"], lDict["Side"], lDict["Shooter"])
+	var lChar: LogicalCharacter = LogicalCharacter.new(lDict["Health"], lDict["Damage"], lDict["Speed"], lDict["Crit"], lDict["Sprite"], lDict["Side"], lDict["Shooter"], pChar_name)
 	# Instantiation of character tscn
 	var lCharScene : Node2D = char_scene.instantiate()
 	lCharScene.character = lChar # Attribution of the logical character to the physical tscn of character
@@ -198,7 +198,7 @@ func create_character(pChar_name: LogicalCharacter.TYPES):
 				spawned_enemies2.append(lCharScene)
 			else: spawned_enemies.append(lCharScene)
 
-func combat_handler(Attack_info : Array, pSide, pShooter):
+func combat_handler(Attack_info : Array, pSide, pShooter, pSelf):
 	var lList_to_pick : Array[Node2D] = []
 	
 	var lDamage = Attack_info[0]
@@ -220,7 +220,8 @@ func combat_handler(Attack_info : Array, pSide, pShooter):
 	
 	var lEnemy_to_attack: Node2D = lList_to_pick.pick_random()
 	
-	if pShooter == true: lEnemy_to_attack.shoot(lEnemy_to_attack.position)
+	if pShooter == true: 
+		pSelf.shoot(lEnemy_to_attack.position, pSelf.character.type)
 		
 	
 	print("Damage:", lDamage, " to Enemy :", lEnemy_to_attack.character.health)

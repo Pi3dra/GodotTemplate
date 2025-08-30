@@ -77,7 +77,7 @@ func _on_attack_timer_timeout():
 	var attack_info : Array = character.attack()
 	if character.attack_speed != timer.wait_time:
 		timer.wait_time = character.attack_speed
-	emit_signal("attack", character.attack(), character.side, character.shooter) # arena gets it
+	emit_signal("attack", character.attack(), character.side, character.shooter, self) # arena gets it
 #endregion
 
 
@@ -103,12 +103,37 @@ func receive_damage(pDamage, pCrit):
 	die()
 
 
-func shoot(pRival_pos: Vector2):
-	var lProjectile = scene_projectile.instantiate()
-	var lTween = create_tween()
+func shoot(pRival_pos: Vector2, pType):
+	var lProjectile: Node2D = scene_projectile.instantiate()
+	var lTween = create_tween().set_parallel(true).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	var lSprite: Sprite2D = lProjectile.get_child(0)
 	add_child(lProjectile)
 	
+	match pType:
+		character.TYPES.Cyclop:
+			lSprite.texture = load("uid://bwwklxfbmpjk3")
+			lSprite.flip_h
+		character.TYPES.Wizard:
+			lSprite.texture = load("uid://cjll7vd11gcj5")
+		character.TYPES.Necromancer:
+			lSprite.texture = load("uid://k1tqobuxqec")
+		character.TYPES.Pixie:
+			lSprite.texture = load("uid://clfd8c6pdss5l")
+		character.TYPES.Ranger:
+			lSprite.texture = load("uid://wvcuyen2nr6g")
+		character.TYPES.Dragon:
+			lSprite.texture = load("uid://b2h8juywe7h5p")
+			lSprite.flip_h
+		character.TYPES.Witch:
+			lSprite.texture = load("uid://bqf1kgtep7uwx")
+			lSprite.flip_h
 	
+	lTween.tween_property(lProjectile, "global_position", pRival_pos, 0.5).set
+	lTween.tween_property(lProjectile, "modulate:a", 0, 0.6)
+	lTween.set_parallel(false).tween_callback(projectile_finished.bind(lProjectile))
+
+func projectile_finished(pProjectile: Node2D):
+	pProjectile.queue_free()
 
 
 func show_damage(pIs_Crit: bool, pDamage: float):
