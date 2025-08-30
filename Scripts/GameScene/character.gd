@@ -73,6 +73,8 @@ func _on_attack_timer_timeout():
 	actual_state = States.ATTACKING
 	if previous_state == States.DYING: return # To avoid bug where attack can be done dying
 	var attack_info : Array = character.attack()
+	if character.attack_speed != timer.wait_time:
+		timer.wait_time = character.attack_speed
 	emit_signal("attack", character.attack(), character.side) # arena gets it
 #endregion
 

@@ -1,0 +1,33 @@
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://chwsh3tmrkdkb"]
+
+[ext_resource type="FontFile" uid="uid://b0ndjepym4tga" path="res://Assets/Themes/FantasyRPGtitle (size 11).ttf" id="1_gfruh"]
+[ext_resource type="Texture2D" uid="uid://dxcc6fps2vdnc" path="res://Assets/Themes/UI assets (3x).png" id="2_43nwt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7gux4"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_75ec0"]
+texture = ExtResource("2_43nwt")
+texture_margin_left = 30.0
+texture_margin_top = 30.0
+texture_margin_right = 30.0
+texture_margin_bottom = 30.0
+region_rect = Rect2(18, 18, 108, 108)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rpe3j"]
+texture = ExtResource("2_43nwt")
+texture_margin_left = 24.0
+texture_margin_top = 12.0
+texture_margin_right = 24.0
+texture_margin_bottom = 15.0
+region_rect = Rect2(0, 150, 144, 39)
+
+[resource]
+JustText/base_type = &"Label"
+JustText/font_sizes/font_size = 22
+JustText/fonts/font = ExtResource("1_gfruh")
+JustText/styles/normal = SubResource("StyleBoxEmpty_7gux4")
+Label/font_sizes/font_size = 22
+Label/fonts/font = ExtResource("1_gfruh")
+Label/styles/normal = SubResource("StyleBoxTexture_75ec0")
+Title/base_type = &"Label"
+Title/styles/normal = SubResource("StyleBoxTexture_rpe3j")

@@ -1,6 +1,7 @@
-[gd_resource type="Theme" load_steps=12 format=3 uid="uid://dadlocyhpxvuk"]
+[gd_resource type="Theme" load_steps=13 format=3 uid="uid://dadlocyhpxvuk"]
 
 [ext_resource type="Texture2D" uid="uid://bbmwn81f77iqu" path="res://Assets/Themes/UI assets (2x).png" id="1_gposl"]
+[ext_resource type="FontFile" uid="uid://b0ndjepym4tga" path="res://Assets/Themes/FantasyRPGtitle (size 11).ttf" id="2_7g1q8"]
 [ext_resource type="Texture2D" uid="uid://c8p7gyqg0toa4" path="res://Assets/Sprites/UI/Bar/Slider01_Bar02.png" id="2_pvb1u"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gposl"]
@@ -67,10 +68,14 @@ texture_margin_top = 50.0
 BoxContainer/styles/normal = SubResource("StyleBoxTexture_gposl")
 Button/colors/font_hover_color = Color(0.729412, 0.72549, 0.745098, 1)
 Button/colors/font_pressed_color = Color(0.494118, 0.494118, 0.494118, 1)
+Button/font_sizes/font_size = 22
+Button/fonts/font = ExtResource("2_7g1q8")
 Button/styles/focus = SubResource("StyleBoxEmpty_vnygf")
 Button/styles/hover = SubResource("StyleBoxTexture_iu3vn")
 Button/styles/normal = SubResource("StyleBoxTexture_k558t")
 Button/styles/pressed = SubResource("StyleBoxTexture_vnygf")
+Label/font_sizes/font_size = 22
+Label/fonts/font = ExtResource("2_7g1q8")
 Label/styles/normal = SubResource("StyleBoxTexture_86iin")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_pvb1u")
 ProgressBar/colors/font_color = Color(0.94902, 0.94902, 0.94902, 0)

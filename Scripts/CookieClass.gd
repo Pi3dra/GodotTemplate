@@ -1,6 +1,6 @@
 class_name Cookie
 
-enum TYPE {Normal, Berserk, Crit, Golden, Replay, Healing, Vampire, Weighted}
+enum TYPE {Normal, Berserk, Crit, Golden, Replay, Healing, Vampire, Weighted, Fast, Head, Tail}
 enum EFFECTYPE {Chance, Combat}
 enum SCREENSIDE {Head, Tail}
 enum STATE {Head, Tail, Unflipped}
@@ -88,6 +88,12 @@ static func type_description(cookie_type) -> String:
 			string = "When guessed correctly, during the next flip all the cookies placed on the same side have 25% bonus chance of landing correctly"
 		TYPE.Crit:
 			string = "When guessed correctly, party has 15% more chance of dealing a crit on next attack"
+		TYPE.Fast:
+			string = "If guessed correctly, party attacks 15% faster"
+		TYPE.Head:
+			string = "If guessed correctly, on next flip all cookies have 15% more chance of landing in heads"
+		TYPE.Tail:
+			string = "If guessed correctly, on next flip all cookies have 15% more chance of landing in tails"
 	return string
 
 static func type_price(cookie_type) -> int:
@@ -108,6 +114,10 @@ static func type_price(cookie_type) -> int:
 		TYPE.Weighted:
 			price = 5
 		TYPE.Crit:
+			price = 4
+		TYPE.Fast:
+			price = 4
+		TYPE.Head, TYPE.Tail:
 			price = 4
 	return price
 

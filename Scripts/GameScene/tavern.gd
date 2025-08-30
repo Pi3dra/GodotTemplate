@@ -14,11 +14,12 @@ var shop_ui : PackedScene = load("uid://duf7bdfx04xnu")
 var scene_quest_ui: PackedScene = load("uid://wn0rp33fbpef")
 var cookie_ui: PackedScene = load("res://Scenes/UI/cookie_select_ui.tscn")
 var pelo_tscn: PackedScene = load("res://Scenes/GameScene/tavern_char.tscn")
+var tutorial_tscn : PackedScene = load("res://Scenes/UI/tutorial.tscn")
 
 var wave_info: Array
 var party_info: Array
 var possibles_starter: Array = [LogicalCharacter.TYPES.Knight, LogicalCharacter.TYPES.Wizard, LogicalCharacter.TYPES.Farmer, LogicalCharacter.TYPES.Necromancer, LogicalCharacter.TYPES.Ranger]
-var available_cookies : Dictionary[Cookie.TYPE, int]= {Cookie.TYPE.Normal : 6}
+var available_cookies : Dictionary[Cookie.TYPE, int]= {Cookie.TYPE.Normal : 12}
 var risked_biscuits = {Cookie.TYPE.Normal : 20}
 
 var buyable_char_nodes : Dictionary
@@ -28,6 +29,12 @@ func _ready() -> void:
 	spawn_characters()
 	spawn_party()
 	move_child($ColorRect, get_children().size())
+	launch_tutorial()
+
+func launch_tutorial():
+	if Globals.current_tutorial != null:
+		var tuto = tutorial_tscn.instantiate()
+		UI.instance.add_child(tuto)
 
 func spawn_party():
 	var lPlayers_spawned: Array = party.get_children()

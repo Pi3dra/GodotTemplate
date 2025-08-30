@@ -74,16 +74,20 @@ func _on_button_pressed() -> void:
 		flip_button.text = "Accept"
 		
 		#### Handling pre flip Cookies
-		var weighted_cookies = active_cookies.get(Cookie.TYPE.Weighted,5)
-
+		var weighted_cookies = active_cookies.get(Cookie.TYPE.Weighted)
 		var head_chance = 0
 		var tail_chance = 0
 		for cookie in weighted_cookies:
 			# TODO put this to 15
 			if cookie.side == Cookie.SCREENSIDE.Head:
-				head_chance += 50
+				head_chance += 25
 			elif cookie.side == Cookie.SCREENSIDE.Tail:
-				tail_chance += 50
+				tail_chance += 25
+		var head_cookies = active_cookies.get(Cookie.TYPE.Head)
+		head_chance += 15*head_cookies.size()
+		
+		var tail_cookies = active_cookies.get(Cookie.TYPE.Tail)
+		tail_chance += 15*tail_cookies.size()
 		
 		#### Cookie flipping
 		var correct_guesses : Array[Control]
