@@ -18,9 +18,14 @@ var tutorial_tscn : PackedScene = load("res://Scenes/UI/tutorial.tscn")
 
 var wave_info: Array
 var party_info: Array
+var level_reward1 : int
+var level_reward2 :int
+
+var risked_biscuits = {}
+
 var possibles_starter: Array = [LogicalCharacter.TYPES.Knight, LogicalCharacter.TYPES.Wizard, LogicalCharacter.TYPES.Farmer, LogicalCharacter.TYPES.Necromancer, LogicalCharacter.TYPES.Ranger]
 var available_cookies : Dictionary[Cookie.TYPE, int]= {Cookie.TYPE.Normal : 12}
-var risked_biscuits = {Cookie.TYPE.Normal : 20}
+
 
 var buyable_char_nodes : Dictionary
 
@@ -35,6 +40,7 @@ func launch_tutorial():
 	if Globals.current_tutorial != null:
 		var tuto = tutorial_tscn.instantiate()
 		UI.instance.add_child(tuto)
+		Globals.current_tutorial = null
 
 func spawn_party():
 	var lPlayers_spawned: Array = party.get_children()
@@ -95,15 +101,12 @@ func spawn_characters() -> void:
 		char.global_position = positions[i]
 
 func buy_character(character, character_price):
-	if available_cookies[Cookie.TYPE.Normal] >= character_price:
-		available_cookies[Cookie.TYPE.Normal] -= character_price
-	else:
-		return
-		
+	# TODO Handle case when party is full
 	var party_slots = $Party.get_children()
 	for slot in party_slots:
-		if slot.sprite_frames == null: # Façon assez degueu de savoir si un slot est libre
-			slot.sprite_frames =  load("uid://web178x58oer")
+		if slot.sprite_frames == null and available_cookies[Cookie.TYPE.Normal] >= character_price : # Façon assez degueu de savoir si un slot est libre
+			available_cookies[Cookie.TYPE.Normal] -= character_price
+			slot.sprite_frames =  LogicalCharacter.char_to_sprite(character)
 			slot.play("default")
 			party_info.append(character)
 			buyable_char_nodes[character].queue_free()
@@ -124,7 +127,7 @@ func switch_scene():
 	hide()
 	camera_2d.enabled = false
 	
-	emit_signal("pass_info_to_arena", wave_info, party_info)
+	emit_signal("pass_info_to_arena", wave_info, party_info, level_reward1, level_reward2)
 
 
 func _on_board_pressed() -> void:
@@ -138,17 +141,24 @@ func _on_board_pressed() -> void:
 	
 # After _on_board_pressed() we launch the cookie selection UI
 
-func cookie_selection(pWave_info: Array):
+func cookie_selection(pWave_info: Array, reward1, reward2):
 	var cookie_selection_ui = cookie_ui.instantiate()
 	UI.instance.add_child(cookie_selection_ui)
 	cookie_select_ui.instance.connect("selected_cookie_deck", update_after_cookie_selection)
 	#TODO connect data
 	cookie_selection_ui.call_deferred("set_available_cookies", available_cookies.duplicate())
+	
+	print("rew ", reward1, " ", reward2)
+	level_reward1 = reward1
+	level_reward2 = reward2
 	wave_info = pWave_info
 
 func update_after_cookie_selection(cookies : Dictionary[Cookie.TYPE, int]):
 	risked_biscuits = cookies
-	
+	for biscuit in risked_biscuits.keys():
+		available_cookies[biscuit] -= risked_biscuits[biscuit]
+		print("todo")
+		
 func _on_door_pressed() -> void:
 	if wave_info != null and risked_biscuits != null:
 		animation_player.play("Transition") # This will trigger switch_scene
@@ -169,17 +179,12 @@ func update_after_merchant(cookies):
 
 @onready var board = $Board
 func _on_board_mouse_entered() -> void:
-	#board.set_pivot_offset = board.size/2
 	board.pivot_offset = board.size/2
 	board.scale = Vector2(1.5,1.5)
 	
-	#board.position.x = board.position.x + board.size.x/2
-	#board.position.y = board.position.y + board.size.y/2
 func _on_board_mouse_exited() -> void:
 	board.pivot_offset = board.size/2
 	board.scale = Vector2(1,1)
-	#board.position.x = board.position.x - board.size.x/2
-	#board.position.y = board.position.y - board.size.y/2
 
 @onready var merchant = $Merchant/AnimatedSprite2D
 func _on_merchant_mouse_entered() -> void:
@@ -191,7 +196,27 @@ func _on_merchant_mouse_exited() -> void:
 func _on_door_mouse_entered() -> void:
 	door.pivot_offset = door.size/2
 	door.scale  = Vector2(1.5,1.5)
+	
 func _on_door_mouse_exited() -> void:
 	door.pivot_offset = door.size/2
 	door.scale  = Vector2(1,1)
+
+@onready var trainer = $Trainer/AnimatedSprite2D
+func _on_trainer_pressed() -> void:
+	Globals.training = true
+	wave_info = [[LogicalCharacter.TYPES.Unkillable_Slime],[],[]]
+	if wave_info != null and risked_biscuits != null:
+		animation_player.play("Transition") # This will trigger switch_scene
+		
+
+func _on_trainer_mouse_entered() -> void:
+	trainer.scale = Vector2(1.5,1.5)
+func _on_trainer_mouse_exited() -> void:
+	trainer.scale = Vector2(1,1)
 #endregion
+
+func update_after_victory(characters,rewarded_cookies):
+	party_info = characters
+	for cookie in rewarded_cookies.keys():
+		if rewarded_cookies[cookie] > 0:
+			available_cookies.set(cookie ,rewarded_cookies[cookie])

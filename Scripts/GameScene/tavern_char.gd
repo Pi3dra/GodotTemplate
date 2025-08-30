@@ -29,23 +29,9 @@ func char_to_price(character_type: LogicalCharacter.TYPES):
 			return 2
 
 	
-## Ceci est degueu, on devrait plutot ecrire directement dans pokedex ou character class
-func char_to_sprite(char: LogicalCharacter.TYPES):
-	match char:
-			LogicalCharacter.TYPES.Knight:
-				return load("uid://b2ygb7ty6nyn7")
-			LogicalCharacter.TYPES.Wizard:
-				return load("uid://ceggmtt6ni5yw")
-			LogicalCharacter.TYPES.Farmer:
-				return load("uid://bsek4eo8s6x7f")
-			LogicalCharacter.TYPES.Necromancer:
-				return load("uid://b28w73d4lebir")
-			LogicalCharacter.TYPES.Ranger:
-				return load("uid://cd1mc8i0dxna8")
-				
 
 func init_char(pCharacter: LogicalCharacter.TYPES):
-	sprite_frames = char_to_sprite(pCharacter)
+	sprite_frames = LogicalCharacter.char_to_sprite(pCharacter)
 	play()
 	var pPrice : int = char_to_price(pCharacter)
 	label.text = str(pPrice) + "X"

@@ -128,3 +128,11 @@ static func type_sprite(cookie_type)  -> AtlasTexture:
 	head_atlas.region = Rect2(0, cookie_type * 32, 32, 32)
 	return head_atlas
 	
+
+# Mon pire cauchemar
+static func pick_random_special() -> Cookie.TYPE:
+	var random = Cookie.TYPE.values().pick_random()
+	if random == Cookie.TYPE.Normal:
+		return pick_random_special()
+	else:
+		return random

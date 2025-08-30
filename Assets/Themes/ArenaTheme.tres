@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=13 format=3 uid="uid://dadlocyhpxvuk"]
+[gd_resource type="Theme" load_steps=14 format=3 uid="uid://dadlocyhpxvuk"]
 
 [ext_resource type="Texture2D" uid="uid://bbmwn81f77iqu" path="res://Assets/Themes/UI assets (2x).png" id="1_gposl"]
 [ext_resource type="FontFile" uid="uid://b0ndjepym4tga" path="res://Assets/Themes/FantasyRPGtitle (size 11).ttf" id="2_7g1q8"]
@@ -64,6 +64,8 @@ region_rect = Rect2(486, 6, 84, 84)
 texture = ExtResource("2_pvb1u")
 texture_margin_top = 50.0
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fjjhf"]
+
 [resource]
 BoxContainer/styles/normal = SubResource("StyleBoxTexture_gposl")
 Button/colors/font_hover_color = Color(0.729412, 0.72549, 0.745098, 1)
@@ -81,3 +83,6 @@ PanelContainer/styles/panel = SubResource("StyleBoxTexture_pvb1u")
 ProgressBar/colors/font_color = Color(0.94902, 0.94902, 0.94902, 0)
 ProgressBar/styles/background = SubResource("StyleBoxEmpty_7g1q8")
 ProgressBar/styles/fill = SubResource("StyleBoxTexture_fjjhf")
+Text/base_type = &"Label"
+Text/fonts/font = ExtResource("2_7g1q8")
+Text/styles/normal = SubResource("StyleBoxEmpty_fjjhf")

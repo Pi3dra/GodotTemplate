@@ -30,7 +30,7 @@ static var pokedex = {
 	LogicalCharacter.TYPES.Dragon : {"Health": 40, "Damage": 10.0, "Speed": 1.9, "Crit": 0.1, "Sprite": "uid://cab6yfatfkggn", "Side": "Bad", "Shooter": true},
 	LogicalCharacter.TYPES.Cyclop : {"Health": 30, "Damage": 8.0, "Speed": 1.9, "Crit": 0.1, "Sprite": "uid://dis7wt2jwl2yo", "Side": "Bad", "Shooter": true},
 	
-	
+	LogicalCharacter.TYPES.Unkillable_Slime : {"Health": 10000, "Damage": 0.0, "Speed": 2.5, "Crit": 0.1, "Sprite": "uid://bo5odqepabyb0", "Side": "Bad", "Shooter": false}
 	
 	
 }

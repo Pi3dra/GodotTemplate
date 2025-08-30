@@ -137,4 +137,4 @@ func pick_enemies(waves : Array, difficulty : Difficulty):
 
 signal wave_information(wave)
 func _on_button_pressed() -> void:
-	emit_signal("wave_information", wave_info)
+	emit_signal("wave_information", wave_info, reward1, reward2)

@@ -16,11 +16,10 @@ func _ready():
 	lvl2.generate_level(level_panel.Difficulty.Medium)
 	lvl3.generate_level(level_panel.Difficulty.Hard)
 	for level in levels:
-		print(levels)
 		level.connect("wave_information", send_level_start)
 		
-func send_level_start(wave_info):
-	emit_signal("start_level", wave_info)
+func send_level_start(wave_info, reward1, reward2):
+	emit_signal("start_level", wave_info, reward1, reward2)
 	hide()
 
 # Array[Array[LogicalCharacter.TYPE]] = [[Goblin;,Skelet],[],[]]

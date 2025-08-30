@@ -26,6 +26,7 @@ var chosen_enemies: Array[LogicalCharacter.TYPES]
 var chosen_enemies2: Array[LogicalCharacter.TYPES]
 var chosen_enemies3: Array[LogicalCharacter.TYPES]
 
+# Engaged enemies
 var player_party: Array[LogicalCharacter.TYPES]
 
 var spawned_enemies: Array[Node2D]
@@ -48,15 +49,15 @@ var you_stop: bool = false # For the process
 var you_stop2: bool = false # For the process
 var you_stop3: bool = false # For the process
 
+var level_reward1: int
+var level_reward2:int
+var selected_special
 #//////////function//////////
 func _init():
 	area_ui.instance.connect("combat_cookies", update_active_cookies)
 	
-
-
 func _ready() -> void:
 	get_parent().get_child(0).connect("pass_info_to_arena", get_tavern_info)
-	
 	animation_player.play("Opening")
 	
 	
@@ -113,7 +114,7 @@ func _on_visibility_changed() -> void:
 		pass
 	
 
-func get_tavern_info(pWave_info, pParty_info):
+func get_tavern_info(pWave_info, pParty_info, reward1, reward2):
 	#region Wave_info
 	var lWaves_numb: int
 	var lEnnemies_par_wave = []
@@ -144,6 +145,9 @@ func get_tavern_info(pWave_info, pParty_info):
 	
 	#endregion
 	
+	level_reward1 = reward1
+	level_reward2 = reward2
+	print("Arena, " ,reward1, reward2)
 	#For player party
 	add_to_array(player_party, pParty_info.size(), pParty_info)
 	spawn_characters(player_party, allies_spawn_pos, spawned_allies)
@@ -298,7 +302,10 @@ func winning():
 		allies.animated_sprite.play("default")
 	
 	area_ui.instance.hide()
-	print(win)
+
+@onready var reward_1: Label = $ControlWin/PanelContainer/VBoxContainer/HBoxContainer/Reward1
+@onready var reward_2: Label = $ControlWin/PanelContainer/VBoxContainer/HBoxContainer2/Reward2
+@onready var special_texture: TextureRect = $ControlWin/PanelContainer/VBoxContainer/HBoxContainer2/TextureRect
 
 func win_screen():
 	move_child(control_win, get_children().size())
@@ -307,15 +314,26 @@ func win_screen():
 	lTween.tween_property(but_win, "position", but_win.position + lGo_Down,0.5)
 	lTween.tween_property(panel_container, "position", panel_container.position + lGo_Down,0.5)
 	lTween.tween_property(win, "position", win.position + lGo_Down,0.5)
+	
+	reward_1.text = str(level_reward1)+"X"
+	reward_2.text = str(level_reward2)+"X"
+	if level_reward2 < 1 : $ControlWin/PanelContainer/VBoxContainer/HBoxContainer2.hide()
+	selected_special = Cookie.pick_random_special()
+	special_texture.texture = Cookie.type_sprite(selected_special)
 
 func _on_but_retry_pressed() -> void:
 	Main.instance.queue_free()
 	var lMain: Main = main_scene.instantiate()
 	get_tree().root.add_child(lMain)
 
-
 func _on_but_win_pressed() -> void:
+	# mes yeux
+	var tavern = get_parent().get_child(0)
+	tavern.show()
+	tavern.get_node("Camera2D").enabled = true
+	tavern.get_node("AnimationPlayer").play("RESET")
+	
+	var reward = {Cookie.TYPE.Normal: level_reward1, selected_special: level_reward2}
+	tavern.update_after_victory(player_party,reward)
+	
 	queue_free()
-	get_parent().get_child(0).show()
-	get_parent().get_child(0).get_node("Camera2D").enabled = true
-	get_parent().get_child(0).get_node("AnimationPlayer").play("RESET")

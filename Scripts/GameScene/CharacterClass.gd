@@ -12,7 +12,7 @@ var shooter: bool
 
 var active_cookies : Dictionary = Cookie.type_dict()
 
-enum TYPES  {Knight, Goblin, Skeleton, Cyclop, Devil, Wizard, Farmer, Necromancer, Pixie, Ranger, Dragon, Orc, Slime, Spider, Witch}
+enum TYPES  {Knight, Goblin, Skeleton, Cyclop, Devil, Wizard, Farmer, Necromancer, Pixie, Ranger, Dragon, Orc, Slime, Spider, Witch,Unkillable_Slime}
 
 var DEBUG = true
 func debug(to_print,confirm):
@@ -100,3 +100,16 @@ func calculate_crit(pDamage: float, pBonus_chance: float) -> Array:
 		crit_triggered = true
 
 	return [pDamage, crit_triggered]
+
+static func char_to_sprite(char: LogicalCharacter.TYPES):
+	match char:
+			LogicalCharacter.TYPES.Knight:
+				return load("uid://b2ygb7ty6nyn7")
+			LogicalCharacter.TYPES.Wizard:
+				return load("uid://ceggmtt6ni5yw")
+			LogicalCharacter.TYPES.Farmer:
+				return load("uid://bsek4eo8s6x7f")
+			LogicalCharacter.TYPES.Necromancer:
+				return load("uid://b28w73d4lebir")
+			LogicalCharacter.TYPES.Ranger:
+				return load("uid://cd1mc8i0dxna8")
