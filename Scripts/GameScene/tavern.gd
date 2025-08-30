@@ -52,16 +52,16 @@ func spawn_party():
 				lPlayers_spawned[0].sprite_frames = load("uid://b2ygb7ty6nyn7")
 				lPlayers_spawned[0].play("default")
 			LogicalCharacter.TYPES.Wizard:
-				lPlayers_spawned[0].sprite_frames = load("uid://web178x58oer")
+				lPlayers_spawned[0].sprite_frames = load("uid://ceggmtt6ni5yw")
 				lPlayers_spawned[0].play("default")
 			LogicalCharacter.TYPES.Farmer:
-				lPlayers_spawned[0].sprite_frames = load("uid://d4bsbcou2jxx0")
+				lPlayers_spawned[0].sprite_frames = load("uid://bsek4eo8s6x7f")
 				lPlayers_spawned[0].play("default")
 			LogicalCharacter.TYPES.Necromancer:
-				lPlayers_spawned[0].sprite_frames = load("uid://devpvt8vd06qp")
+				lPlayers_spawned[0].sprite_frames = load("uid://b28w73d4lebir")
 				lPlayers_spawned[0].play("default")
 			LogicalCharacter.TYPES.Ranger:
-				lPlayers_spawned[0].sprite_frames = load("uid://3x72wu7mgqcc")
+				lPlayers_spawned[0].sprite_frames = load("uid://cd1mc8i0dxna8")
 				lPlayers_spawned[0].play("default")
 
 
@@ -151,7 +151,7 @@ func update_after_cookie_selection(cookies : Dictionary[Cookie.TYPE, int]):
 	
 func _on_door_pressed() -> void:
 	if wave_info != null and risked_biscuits != null:
-		animation_player.active = true # This will trigger switch_scene
+		animation_player.play("Transition") # This will trigger switch_scene
 
 func _on_merchant_pressed() -> void:
 	var shop  : Control = shop_ui.instantiate()

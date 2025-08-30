@@ -1,9 +1,110 @@
-[gd_scene load_steps=14 format=3 uid="uid://ccgdngh77m0hc"]
+[gd_scene load_steps=16 format=3 uid="uid://ccgdngh77m0hc"]
 
 [ext_resource type="Script" uid="uid://ctqaycr8567lg" path="res://Scripts/GameScene/arena.gd" id="1_ir3ek"]
 [ext_resource type="Shader" uid="uid://c4xsqigo7i03g" path="res://Shaders/transition.gdshader" id="1_m30qt"]
 [ext_resource type="PackedScene" uid="uid://mbpwvbww4e0w" path="res://Scenes/GameScene/background.tscn" id="2_jo8k4"]
 [ext_resource type="PackedScene" uid="uid://bxvt4j1mm8xyq" path="res://Scenes/shaker.tscn" id="3_6qpk1"]
+[ext_resource type="FontFile" uid="uid://b0ndjepym4tga" path="res://Assets/Themes/FantasyRPGtitle (size 11).ttf" id="5_oyia7"]
+[ext_resource type="Theme" uid="uid://dadlocyhpxvuk" path="res://Assets/Themes/ArenaTheme.tres" id="6_u8lxs"]
+
+[sub_resource type="Animation" id="Animation_m30qt"]
+resource_name = "Ending"
+length = 4.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"win_anim_allies"
+}, {
+"args": [],
+"method": &"wave2"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(661, 552), Vector2(1132, 552)]
+}
+
+[sub_resource type="Animation" id="Animation_vn728"]
+resource_name = "Ending2"
+length = 4.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3.96667),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"win_anim_allies2"
+}, {
+"args": [],
+"method": &"wave3"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1132, 552), Vector2(1437, 552)]
+}
+
+[sub_resource type="Animation" id="Animation_u8lxs"]
+resource_name = "Lose"
+length = 3.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.73333),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"lose"
+}, {
+"args": [],
+"method": &"death_screen"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect2:material:shader_parameter/progress")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-5.0, 2.0]
+}
 
 [sub_resource type="Animation" id="Animation_jo8k4"]
 resource_name = "Opening"
@@ -98,117 +199,9 @@ tracks/3/keys = {
 "values": [2.0]
 }
 
-[sub_resource type="Animation" id="Animation_m30qt"]
-resource_name = "Ending"
-length = 4.0
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 4),
-"transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [],
-"method": &"win_anim_allies"
-}, {
-"args": [],
-"method": &"wave2"
-}]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Camera2D:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(1, 4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(661, 552), Vector2(1132, 552)]
-}
-
-[sub_resource type="Animation" id="Animation_vn728"]
-resource_name = "Ending2"
-length = 4.0
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 3.96667),
-"transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [],
-"method": &"win_anim_allies2"
-}, {
-"args": [],
-"method": &"wave3"
-}]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Camera2D:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(1, 4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(1132, 552), Vector2(1437, 552)]
-}
-
 [sub_resource type="Animation" id="Animation_oyia7"]
 resource_name = "Win"
 length = 3.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0333333),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(-856, 352), Vector2(1096, 360)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ColorRect:material:shader_parameter/progress")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 39.0]
-}
-tracks/2/type = "method"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"win"
-}]
-}
-
-[sub_resource type="Animation" id="Animation_u8lxs"]
-resource_name = "Lose"
-length = 3.0
 tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -216,24 +209,15 @@ tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"lose"
-}]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ColorRect2:material:shader_parameter/progress")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0, 1.5),
 "transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [-5.0, 2.0]
+"values": [{
+"args": [],
+"method": &"winning"
+}, {
+"args": [],
+"method": &"win_screen"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_m30qt"]
@@ -371,9 +355,9 @@ position_smoothing_enabled = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_m30qt")
-offset_left = 320.0
+offset_left = 1096.0
 offset_top = 360.0
-offset_right = 1008.0
+offset_right = 1784.0
 offset_bottom = 744.0
 color = Color(0, 0, 0, 1)
 
@@ -384,10 +368,89 @@ amplitude = Vector2(3, 3)
 
 [node name="ColorRect2" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_vn728")
-offset_left = -833.0
-offset_top = 366.0
-offset_right = -97.0
-offset_bottom = 750.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -368.0
+offset_top = -192.0
+offset_right = 368.0
+offset_bottom = 192.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(368, 192)
 color = Color(0.0214346, 0.0214346, 0.0214346, 1)
 
+[node name="GAME OVER" type="RichTextLabel" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_left = 248.0
+offset_top = 16.0
+offset_right = 656.0
+offset_bottom = 112.0
+pivot_offset = Vector2(204, 48)
+theme_override_fonts/normal_font = ExtResource("5_oyia7")
+theme_override_font_sizes/normal_font_size = 68
+bbcode_enabled = true
+text = "[wave amp=50.0 freq=2.0 connected=1]GAME OVER[/wave]"
+
+[node name="ButRetry" type="Button" parent="."]
+offset_left = 552.0
+offset_top = 32.0
+offset_right = 744.0
+offset_bottom = 120.0
+pivot_offset = Vector2(84, 40)
+theme_override_colors/icon_focus_color = Color(0, 0, 0, 0)
+flat = true
+
+[node name="RETRY" type="RichTextLabel" parent="ButRetry"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_right = 168.0
+offset_bottom = 80.0
+pivot_offset = Vector2(84, 40)
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("5_oyia7")
+theme_override_font_sizes/normal_font_size = 54
+bbcode_enabled = true
+text = "[pulse freq=1.0 color=#ffffff10 ease=-2.0]RETRY[/pulse]"
+
+[node name="ControlWin" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ButWin" type="Button" parent="ControlWin"]
+layout_mode = 0
+offset_left = 1368.0
+offset_top = 222.0
+offset_right = 1499.0
+offset_bottom = 270.0
+theme = ExtResource("6_u8lxs")
+theme_override_fonts/font = ExtResource("5_oyia7")
+theme_override_font_sizes/font_size = 24
+text = "TAVERN"
+
+[node name="WIN" type="RichTextLabel" parent="ControlWin"]
+layout_mode = 0
+offset_left = 1320.0
+offset_top = -26.0
+offset_right = 1552.0
+offset_bottom = 46.0
+theme_override_fonts/normal_font = ExtResource("5_oyia7")
+theme_override_font_sizes/normal_font_size = 52
+bbcode_enabled = true
+text = "[rainbow freq=0.5 sat=0.8 val=0.8 speed=0.5][wave amp=50.0 freq=4.0 connected=1]YOU WIN[/wave][/rainbow]"
+
+[node name="PanelContainer" type="PanelContainer" parent="ControlWin"]
+layout_mode = 0
+offset_left = 1312.0
+offset_top = 64.0
+offset_right = 1552.0
+offset_bottom = 200.0
+theme = ExtResource("6_u8lxs")
+
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="pressed" from="ButRetry" to="." method="_on_but_retry_pressed"]
+[connection signal="pressed" from="ControlWin/ButWin" to="." method="_on_but_win_pressed"]

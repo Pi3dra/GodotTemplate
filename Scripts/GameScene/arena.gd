@@ -11,8 +11,16 @@ signal combat_over(is_combat_over: bool)
 @onready var color_rect: ColorRect = $ColorRect
 @onready var color_rect_2: ColorRect = $ColorRect2
 @onready var camera_2d: Camera2D = $Camera2D
+@onready var retry: RichTextLabel = $ButRetry/RETRY
+@onready var game_over: RichTextLabel = $"GAME OVER"
+@onready var but_retry: Button = $ButRetry
+@onready var but_win: Button = $ControlWin/ButWin
+@onready var win: RichTextLabel = $ControlWin/WIN
+@onready var panel_container: PanelContainer = $ControlWin/PanelContainer
+@onready var control_win: Control = $ControlWin
 
 var char_scene: PackedScene = load("uid://b3y2sr2uweroy")
+var main_scene: PackedScene = load("uid://dsrw2guvcxik7")
 
 var chosen_enemies: Array[LogicalCharacter.TYPES]
 var chosen_enemies2: Array[LogicalCharacter.TYPES]
@@ -168,7 +176,7 @@ func add_to_array(pArray: Array, pNumb: int, pChar_name: Array):
 func create_character(pChar_name: LogicalCharacter.TYPES):
 	# Creation character Class (pas egal a character.tscn)
 	var lDict: Dictionary = GameScene.pokedex.get(pChar_name) # lDict = the character(pChar_name) dictionary of stat
-	var lChar: LogicalCharacter = LogicalCharacter.new(lDict["Health"], lDict["Damage"], lDict["Speed"], lDict["Crit"], lDict["Sprite"], lDict["Side"])
+	var lChar: LogicalCharacter = LogicalCharacter.new(lDict["Health"], lDict["Damage"], lDict["Speed"], lDict["Crit"], lDict["Sprite"], lDict["Side"], lDict["Shooter"])
 	# Instantiation of character tscn
 	var lCharScene : Node2D = char_scene.instantiate()
 	lCharScene.character = lChar # Attribution of the logical character to the physical tscn of character
@@ -186,7 +194,7 @@ func create_character(pChar_name: LogicalCharacter.TYPES):
 				spawned_enemies2.append(lCharScene)
 			else: spawned_enemies.append(lCharScene)
 
-func combat_handler(Attack_info : Array, pSide):
+func combat_handler(Attack_info : Array, pSide, pShooter):
 	var lList_to_pick : Array[Node2D] = []
 	
 	var lDamage = Attack_info[0]
@@ -207,6 +215,9 @@ func combat_handler(Attack_info : Array, pSide):
 		#return
 	
 	var lEnemy_to_attack: Node2D = lList_to_pick.pick_random()
+	
+	if pShooter == true: lEnemy_to_attack.shoot(lEnemy_to_attack.position)
+		
 	
 	print("Damage:", lDamage, " to Enemy :", lEnemy_to_attack.character.health)
 	
@@ -269,9 +280,42 @@ func wave3():
 
 
 func lose():
-	color_rect_2.position = camera_2d.global_position
+	move_child(color_rect_2, get_children().size())
+	color_rect_2.position = camera_2d.global_position - Vector2(color_rect_2.pivot_offset.x,color_rect_2.pivot_offset.y)
 	area_ui.instance.hide()
 
+func death_screen():
+	move_child(but_retry, get_children().size())
+	move_child(game_over, get_children().size())
+	but_retry.position = camera_2d.position + Vector2(0,100) - Vector2(but_retry.pivot_offset.x,but_retry.pivot_offset.y)
+	game_over.position = camera_2d.position - Vector2(0,100) - Vector2(game_over.pivot_offset.x,game_over.pivot_offset.y)
+	var lTween = create_tween().set_parallel(true)
+	lTween.tween_property(retry, "modulate:a", 1, 3)
+	lTween.tween_property(game_over, "modulate:a", 1, 3)
 
-func win():
+func winning():
+	for allies in spawned_allies:
+		allies.animated_sprite.play("default")
+	
+	area_ui.instance.hide()
 	print(win)
+
+func win_screen():
+	move_child(control_win, get_children().size())
+	var lGo_Down: Vector2 = Vector2(0,440)
+	var lTween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SPRING)
+	lTween.tween_property(but_win, "position", but_win.position + lGo_Down,0.5)
+	lTween.tween_property(panel_container, "position", panel_container.position + lGo_Down,0.5)
+	lTween.tween_property(win, "position", win.position + lGo_Down,0.5)
+
+func _on_but_retry_pressed() -> void:
+	Main.instance.queue_free()
+	var lMain: Main = main_scene.instantiate()
+	get_tree().root.add_child(lMain)
+
+
+func _on_but_win_pressed() -> void:
+	queue_free()
+	get_parent().get_child(0).show()
+	get_parent().get_child(0).get_node("Camera2D").enabled = true
+	get_parent().get_child(0).get_node("AnimationPlayer").play("RESET")

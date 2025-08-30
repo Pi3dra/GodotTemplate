@@ -33,15 +33,15 @@ func char_to_price(character_type: LogicalCharacter.TYPES):
 func char_to_sprite(char: LogicalCharacter.TYPES):
 	match char:
 			LogicalCharacter.TYPES.Knight:
-				return load("uid://bya4yxuvdd8au")
+				return load("uid://b2ygb7ty6nyn7")
 			LogicalCharacter.TYPES.Wizard:
-				return load("uid://web178x58oer")
+				return load("uid://ceggmtt6ni5yw")
 			LogicalCharacter.TYPES.Farmer:
-				return load("uid://d4bsbcou2jxx0")
+				return load("uid://bsek4eo8s6x7f")
 			LogicalCharacter.TYPES.Necromancer:
-				return load("uid://devpvt8vd06qp")
+				return load("uid://b28w73d4lebir")
 			LogicalCharacter.TYPES.Ranger:
-				return load("uid://3x72wu7mgqcc")
+				return load("uid://cd1mc8i0dxna8")
 				
 
 func init_char(pCharacter: LogicalCharacter.TYPES):

@@ -8,6 +8,8 @@ signal attack(damage: int, team: String)
 @onready var hit_damage: Label = $HitDamage
 @onready var timer: Timer = $Timer
 
+var scene_projectile = load("uid://deduo5msnlka4")
+
 enum States {IDLE, WALKING, ATTACKING, DYING, HURT}
 
 var previous_state: States
@@ -75,7 +77,7 @@ func _on_attack_timer_timeout():
 	var attack_info : Array = character.attack()
 	if character.attack_speed != timer.wait_time:
 		timer.wait_time = character.attack_speed
-	emit_signal("attack", character.attack(), character.side) # arena gets it
+	emit_signal("attack", character.attack(), character.side, character.shooter) # arena gets it
 #endregion
 
 
@@ -101,32 +103,41 @@ func receive_damage(pDamage, pCrit):
 	die()
 
 
-func show_damage(pIs_Crit: bool, pDamage: float):
-	var lPos_array: Array[Vector2] = [Vector2(10,-45), Vector2(-5,-52), Vector2(-20,-47)]
+func shoot(pRival_pos: Vector2):
+	var lProjectile = scene_projectile.instantiate()
+	var lTween = create_tween()
+	add_child(lProjectile)
 	
-	hit_damage.text = str(pDamage as int)
-	hit_damage.modulate = Color.ORANGE
+	
+
+
+func show_damage(pIs_Crit: bool, pDamage: float):
+	var lLabel_damage = Label.new()
+	add_child(lLabel_damage)
+	
+	lLabel_damage.text = str(pDamage as int)
+	lLabel_damage.modulate = Color.ORANGE
 	
 	var lTween = create_tween()
 	if pIs_Crit == false:
-		lTween.tween_property(hit_damage, "position", lPos_array.pick_random(), 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
-		lTween.tween_property(hit_damage, "modulate", Color.TRANSPARENT, 0.2)
-		lTween.tween_property(hit_damage, "position", Vector2.ZERO, 0.1)
-		lTween.tween_callback(kill_tween.bind(lTween))
+		lTween.tween_property(lLabel_damage, "position", Vector2(randf_range(15,-20),randf_range(-44,-52)), 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+		lTween.tween_property(lLabel_damage, "modulate", Color.TRANSPARENT, 0.2)
+		lTween.tween_property(lLabel_damage, "position", Vector2.ZERO, 0.1)
+		lTween.tween_callback(kill_tween.bind(lTween, lLabel_damage))
 	else:
 		animated_sprite_fx.play("hit")
 		has_been_crit = false
 		
-		hit_damage.modulate = Color.RED
-		lTween.set_parallel(true).tween_property(hit_damage, "position", lPos_array.pick_random(), 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
-		lTween.tween_property(hit_damage, "scale", Vector2(2.4,2.4), 0.4)
-		lTween.set_parallel(false).tween_property(hit_damage, "modulate", Color.TRANSPARENT, 0.4)
-		lTween.tween_property(hit_damage, "position", Vector2.ZERO, 0.1)
-		lTween.tween_callback(kill_tween.bind(lTween))
+		lLabel_damage.modulate = Color.RED
+		lTween.set_parallel(true).tween_property(lLabel_damage, "position", Vector2(randf_range(15,-20),randf_range(-44,-52)), 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+		lTween.tween_property(lLabel_damage, "scale", Vector2(2.4,2.4), 0.4)
+		lTween.set_parallel(false).tween_property(lLabel_damage, "modulate", Color.TRANSPARENT, 0.4)
+		lTween.tween_property(lLabel_damage, "position", Vector2.ZERO, 0.1)
+		lTween.tween_callback(kill_tween.bind(lTween, lLabel_damage))
 
 
-func kill_tween(pTween: Tween):
-	hit_damage.scale = Vector2.ONE
+func kill_tween(pTween: Tween, pLabel: Label):
+	pLabel.queue_free()
 	pTween.kill()
 
 func no_attacking():
