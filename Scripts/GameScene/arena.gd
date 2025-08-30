@@ -233,7 +233,13 @@ func combat_handler(Attack_info : Array, pSide, pShooter):
 	if lEnemy_to_attack.character.health <= 0:
 		if shaker.is_playing(): shaker.stop()
 		else : shaker.start()
+		if pSide == "Good":
+			# Here i need Hector type, do merge
+			#player_party.erase(lEnemy_to_attack.character) 
+			return
 		lList_to_pick.erase(lEnemy_to_attack)
+		print(lEnemy_to_attack, pSide)
+		
 
 
 func update_active_cookies(combat_cookies):
@@ -334,6 +340,7 @@ func _on_but_win_pressed() -> void:
 	tavern.get_node("AnimationPlayer").play("RESET")
 	
 	var reward = {Cookie.TYPE.Normal: level_reward1, selected_special: level_reward2}
+	print("party " ,player_party)
 	tavern.update_after_victory(player_party,reward)
 	
 	queue_free()

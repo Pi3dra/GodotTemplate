@@ -8,7 +8,7 @@ static var instance
 static var pokedex = {
 							#6
 	# Good Ones
-	LogicalCharacter.TYPES.Knight : {"Health": 100, "Damage": 3.0, "Speed": 2.1, "Crit": 0.15, "Sprite": "uid://b2ygb7ty6nyn7", "Side": "Good", "Shooter": false},
+	LogicalCharacter.TYPES.Knight : {"Health": 1, "Damage": 3.0, "Speed": 2.1, "Crit": 0.15, "Sprite": "uid://b2ygb7ty6nyn7", "Side": "Good", "Shooter": false},
 	LogicalCharacter.TYPES.Farmer : {"Health": 100, "Damage": 2.0, "Speed": 1.9, "Crit": 0.1, "Sprite": "uid://bsek4eo8s6x7f", "Side": "Good", "Shooter": false},
 	LogicalCharacter.TYPES.Necromancer : {"Health": 100, "Damage": 4.0, "Speed": 1.9, "Crit": 0.1, "Sprite": "uid://b28w73d4lebir", "Side": "Good", "Shooter": true},
 	LogicalCharacter.TYPES.Pixie : {"Health": 100, "Damage": 5.0, "Speed": 1.9, "Crit": 0.1, "Sprite": "uid://x0ln8ilbb2yi", "Side": "Good", "Shooter": true},
