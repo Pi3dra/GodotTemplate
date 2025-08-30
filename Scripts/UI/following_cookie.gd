@@ -67,3 +67,18 @@ func _swap_side():
 		texture_rect.texture = cookie.head_texture
 	elif texture_rect.texture == cookie.head_texture:
 		texture_rect.texture = cookie.tail_texture
+
+
+func _on_mouse_entered() -> void:
+	Cursor.instance.texture = Cursor.can_grab
+
+
+func _on_mouse_exited() -> void:
+	Cursor.instance.texture = Cursor.basic
+
+
+func _on_gui_input(event: InputEvent) -> void:
+	if event.is_action_pressed("l_click"):
+		Cursor.instance.texture = Cursor.grab
+	elif event.is_action_released("l_click"):
+		Cursor.instance.texture = Cursor.can_grab

@@ -75,12 +75,14 @@ func update_panels():
 		panel.update_buttons(available_cookies)
 
 func _on_right_pressed() -> void:
+	SoundManager.instance.play_sound("Click1", true, true)
 	if current_index + 1 < Cookie.TYPE.values().size() - 2:
 		current_index +=1
 		update_panels()
 		update_button_status()
 
 func _on_left_pressed() -> void:
+	SoundManager.instance.play_sound("Click1", true, true)
 	if current_index - 1 >= 0:
 		current_index -=1
 		update_panels()
@@ -108,5 +110,30 @@ func set_available_cookies(cookies):
 
 signal update_cookies(cookies)
 func _on_exit_pressed() -> void:
+	SoundManager.instance.play_sound("Click2", true, false)
 	emit_signal("update_cookies", available_cookies )
 	queue_free()
+
+
+func _on_exit_mouse_entered() -> void:
+	Cursor.instance.texture = Cursor.point
+
+
+func _on_exit_mouse_exited() -> void:
+	Cursor.instance.texture = Cursor.basic
+
+
+func _on_right_mouse_entered() -> void:
+	Cursor.instance.texture = Cursor.point
+
+
+func _on_right_mouse_exited() -> void:
+	Cursor.instance.texture = Cursor.basic
+
+
+func _on_left_mouse_entered() -> void:
+	Cursor.instance.texture = Cursor.point
+
+
+func _on_left_mouse_exited() -> void:
+	Cursor.instance.texture = Cursor.basic

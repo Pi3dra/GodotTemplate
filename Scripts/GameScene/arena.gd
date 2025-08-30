@@ -118,7 +118,6 @@ func get_tavern_info(pWave_info, pParty_info, reward1, reward2):
 	#region Wave_info
 	var lWaves_numb: int
 	var lEnnemies_par_wave = []
-	var lChar_type: LogicalCharacter.TYPES
 	# Parce que ça marche pas avec le foooooooooor
 	var lWave_1: Array
 	var lWave_2: Array
@@ -151,6 +150,17 @@ func get_tavern_info(pWave_info, pParty_info, reward1, reward2):
 	#For player party
 	add_to_array(player_party, pParty_info.size(), pParty_info)
 	spawn_characters(player_party, allies_spawn_pos, spawned_allies)
+	
+	if lWave_1.has(LogicalCharacter.TYPES.Slime) or lWave_1.has(LogicalCharacter.TYPES.Skeleton) or lWave_1.has(LogicalCharacter.TYPES.Spider):
+		SoundManager.instance.play_sound("Tavern", false)
+		SoundManager.instance.play_sound("Level1", true, false)
+	elif lWave_1.has(LogicalCharacter.TYPES.Witch) or lWave_1.has(LogicalCharacter.TYPES.Goblin) or lWave_1.has(LogicalCharacter.TYPES.Orc):
+		SoundManager.instance.play_sound("Tavern", false)
+		SoundManager.instance.play_sound("Level2", true, false)
+	elif lWave_1.has(LogicalCharacter.TYPES.Devil) or lWave_1.has(LogicalCharacter.TYPES.Cyclop) or lWave_1.has(LogicalCharacter.TYPES.Dragon):
+		SoundManager.instance.play_sound("Tavern", false)
+		SoundManager.instance.play_sound("Level3", true, false)
+
 
 
 func spawn_characters(pStr_array: Array[LogicalCharacter.TYPES], pVec_array: Array[Vector2], pNode_array: Array[Node2D]):
@@ -223,7 +233,7 @@ func combat_handler(Attack_info : Array, pSide, pShooter, pSelf):
 	if pShooter == true: 
 		pSelf.shoot(lEnemy_to_attack.position, pSelf.character.type)
 		
-	
+	print("CHAR: ",pSelf.character.type)
 	print("Damage:", lDamage, " to Enemy :", lEnemy_to_attack.character.health)
 	
 	if lCrit == true:
@@ -248,13 +258,13 @@ func update_active_cookies(combat_cookies):
 
 
 func win_anim_allies():
-	var lTween = create_tween()
+	var lTween = create_tween().set_parallel(true)
 	for allies in spawned_allies:
 		lTween.tween_property(allies, "position", enemies_spawn_pos.pick_random(), 4)
 	area_ui.instance.hide()
 
 func win_anim_allies2():
-	var lTween = create_tween()
+	var lTween = create_tween().set_parallel(true)
 	for allies in spawned_allies:
 		lTween.tween_property(allies, "position", enemies_spawn_pos2.pick_random(), 4)
 	area_ui.instance.hide()
@@ -293,8 +303,13 @@ func lose():
 	move_child(color_rect_2, get_children().size())
 	color_rect_2.position = camera_2d.global_position - Vector2(color_rect_2.pivot_offset.x,color_rect_2.pivot_offset.y)
 	area_ui.instance.hide()
+	SoundManager.instance.play_sound("Level1", false)
+	SoundManager.instance.play_sound("Level2", false)
+	SoundManager.instance.play_sound("Level3", false)
+	SoundManager.instance.play_sound("Transition", true, true)
 
 func death_screen():
+	SoundManager.instance.play_sound("Lose", true)
 	move_child(but_retry, get_children().size())
 	move_child(game_over, get_children().size())
 	but_retry.position = camera_2d.position + Vector2(0,100) - Vector2(but_retry.pivot_offset.x,but_retry.pivot_offset.y)
@@ -304,6 +319,11 @@ func death_screen():
 	lTween.tween_property(game_over, "modulate:a", 1, 3)
 
 func winning():
+	SoundManager.instance.play_sound("Level1", false)
+	SoundManager.instance.play_sound("Level2", false)
+	SoundManager.instance.play_sound("Level3", false)
+	SoundManager.instance.play_sound("Winning", true, false)
+	
 	for allies in spawned_allies:
 		allies.animated_sprite.play("default")
 	
@@ -314,6 +334,7 @@ func winning():
 @onready var special_texture: TextureRect = $ControlWin/PanelContainer/VBoxContainer/HBoxContainer2/TextureRect
 
 func win_screen():
+	SoundManager.instance.play_sound("Win", true, false)
 	move_child(control_win, get_children().size())
 	var lGo_Down: Vector2 = Vector2(0,440)
 	var lTween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SPRING)
@@ -335,6 +356,8 @@ func _on_but_retry_pressed() -> void:
 func _on_but_win_pressed() -> void:
 	# mes yeux
 	var tavern = get_parent().get_child(0)
+	SoundManager.instance.play_sound("Win", false)
+	SoundManager.instance.play_sound("Tavern", true, false)
 	tavern.show()
 	tavern.get_node("Camera2D").enabled = true
 	tavern.get_node("AnimationPlayer").play("RESET")

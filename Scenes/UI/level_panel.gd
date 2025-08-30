@@ -56,7 +56,7 @@ func generate_level(difficulty : Difficulty):
 	
 	match difficulty:
 		Difficulty.Hard:
-			used_enemies = 15
+			used_enemies = 14
 			cookies = 6 + randi()%6
 			special_cookies = 1 + randi()%2
 		Difficulty.Medium:
@@ -106,8 +106,8 @@ func distribute_enemies(number_of_enemies):
 	var waves : Array = [0,0,0]
 	var counter = number_of_enemies
 	
-	if number_of_enemies == 15:
-		return [5,5,5]
+	if number_of_enemies == 14:
+		return [5,5,4]
 	
 	while counter > 0:
 		var selected_index = randi() % 3
@@ -137,4 +137,13 @@ func pick_enemies(waves : Array, difficulty : Difficulty):
 
 signal wave_information(wave)
 func _on_button_pressed() -> void:
+	SoundManager.instance.play_sound("Click1", true, true)
 	emit_signal("wave_information", wave_info, reward1, reward2)
+
+
+func _on_button_mouse_entered() -> void:
+	Cursor.instance.texture = Cursor.point
+
+
+func _on_button_mouse_exited() -> void:
+	Cursor.instance.texture = Cursor.basic

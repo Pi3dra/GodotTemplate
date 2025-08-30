@@ -34,5 +34,14 @@ signal start_level(wave_info)
 
 
 func _on_exit_pressed() -> void:
+	SoundManager.instance.play_sound("Click2", true, false)
 	hide()
 	#queue_free()
+
+
+func _on_exit_mouse_entered() -> void:
+	Cursor.instance.texture = Cursor.point
+
+
+func _on_exit_mouse_exited() -> void:
+	Cursor.instance.texture = Cursor.basic

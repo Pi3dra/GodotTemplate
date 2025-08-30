@@ -119,4 +119,6 @@ theme = ExtResource("2_kdjnp")
 text = "Battle!
 "
 
+[connection signal="mouse_entered" from="VBoxContainer/Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/Button" to="." method="_on_button_mouse_exited"]
 [connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]

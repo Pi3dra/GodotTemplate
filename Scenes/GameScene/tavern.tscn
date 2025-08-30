@@ -255,9 +255,9 @@ position = Vector2(-240, 588)
 
 [node name="ColorRect" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_e4y1a")
-offset_left = -824.0
+offset_left = -833.0
 offset_top = -5.0
-offset_right = -88.0
+offset_right = -97.0
 offset_bottom = 379.0
 mouse_filter = 2
 color = Color(0.0214346, 0.0214346, 0.0214346, 1)

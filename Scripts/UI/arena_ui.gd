@@ -67,6 +67,7 @@ func _on_cookie_holder_instantiate_cookie(cookie: Cookie, button: Button) -> voi
 signal combat_cookies(cookies: Array[Cookie])
 
 func _on_button_pressed() -> void:
+	SoundManager.instance.play_sound("Click3", true, false)
 	if flip_button.text == "Flip":
 		
 		if cookie_instances.size() < 1:
@@ -145,3 +146,11 @@ func erase_cookies():
 	cookie_instances.clear()
 	flip_button.text = "Flip"
 		
+
+
+func _on_flip_mouse_entered() -> void:
+	Cursor.instance.texture = Cursor.point
+
+
+func _on_flip_mouse_exited() -> void:
+	Cursor.instance.texture = Cursor.basic

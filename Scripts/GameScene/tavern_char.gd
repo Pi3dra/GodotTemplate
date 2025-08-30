@@ -50,9 +50,11 @@ func _on_area_2d_mouse_entered() -> void:
 	$HBoxContainer.show()
 	$TextureButton.show()
 	scale = Vector2(1.5,1.5)
+	Cursor.instance.texture = Cursor.point
 
 
 func _on_area_2d_mouse_exited() -> void:
 	$TextureButton.hide()
 	$HBoxContainer.hide()
 	scale = Vector2(1,1)
+	Cursor.instance.texture = Cursor.basic

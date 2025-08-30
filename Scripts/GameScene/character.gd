@@ -9,6 +9,7 @@ signal attack(damage: int, team: String)
 @onready var timer: Timer = $Timer
 
 var scene_projectile = load("uid://deduo5msnlka4")
+var font_theme = load("uid://dasqtqhyfj758")
 
 enum States {IDLE, WALKING, ATTACKING, DYING, HURT}
 
@@ -25,12 +26,15 @@ var actual_state: States = States.IDLE:
 				States.WALKING:
 					animated_sprite.play("walk")
 				States.ATTACKING:
+					if character.side == "Good": SoundManager.instance.play_sound("Attack1", true, true)
+					else: SoundManager.instance.play_sound("Attack2", true, true)
 					animated_sprite.play("attack")
 				States.DYING:
 					var lTween_die = create_tween()
 					lTween_die.tween_property(animated_sprite, "modulate", Color.TRANSPARENT, 0.8)
 					animated_sprite_fx.play("die")
 					animated_sprite.play("die")
+					SoundManager.instance.play_sound("Death", true, true)
 				States.HURT:
 					
 					animated_sprite.play("hit")
@@ -142,6 +146,7 @@ func show_damage(pIs_Crit: bool, pDamage: float):
 	
 	lLabel_damage.text = str(pDamage as int)
 	lLabel_damage.modulate = Color.ORANGE
+	lLabel_damage.theme = font_theme
 	
 	var lTween = create_tween()
 	if pIs_Crit == false:

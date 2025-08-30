@@ -75,12 +75,14 @@ func set_available_cookies(cookies):
 	update_cookie_bar()
 
 func _on_exit_pressed() -> void:
+	SoundManager.instance.play_sound("Click2", true, false)
 	#TODO: restart the selected battle
 	queue_free()
 
 
 signal selected_cookie_deck(cookies)
 func _on_accept_pressed() -> void:
+	SoundManager.instance.play_sound("Click1", true, true)
 	var chosen_cookies : Array = placed_cookies.map(func(cookie_node): return cookie_node.cookie.cookie_type)
 	var counted_cookies : Dictionary[Cookie.TYPE, int]= {}
 	for cookie in chosen_cookies:
@@ -88,3 +90,19 @@ func _on_accept_pressed() -> void:
 	print(counted_cookies)
 	emit_signal("selected_cookie_deck", counted_cookies)
 	queue_free()
+
+
+func _on_exit_mouse_entered() -> void:
+	Cursor.instance.texture = Cursor.point
+
+
+func _on_exit_mouse_exited() -> void:
+	Cursor.instance.texture = Cursor.basic
+
+
+func _on_accept_mouse_entered() -> void:
+	Cursor.instance.texture = Cursor.point
+
+
+func _on_accept_mouse_exited() -> void:
+	Cursor.instance.texture = Cursor.basic

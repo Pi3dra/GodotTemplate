@@ -57,11 +57,29 @@ func update_panel(cookie : Cookie.TYPE, locked : bool):
 
 signal buy_cookie(type, price)
 func _on_buy_pressed() -> void:
+	SoundManager.instance.play_sound("Click1", true, true)
 	print("emitted buy")
 	emit_signal("buy_cookie", cookie_type, cookie_price)
 
 
 signal sell_cookie(type, price)
 func _on_sell_pressed() -> void:
+	SoundManager.instance.play_sound("Click1", true, true)
 	print("emitted sell")
 	emit_signal("sell_cookie", cookie_type, cookie_price)
+
+
+func _on_sell_mouse_entered() -> void:
+	Cursor.instance.texture = Cursor.point
+
+
+func _on_sell_mouse_exited() -> void:
+	Cursor.instance.texture = Cursor.basic
+
+
+func _on_buy_mouse_entered() -> void:
+	Cursor.instance.texture = Cursor.point
+
+
+func _on_buy_mouse_exited() -> void:
+	Cursor.instance.texture = Cursor.basic

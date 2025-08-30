@@ -101,4 +101,6 @@ layout_mode = 2
 texture = SubResource("AtlasTexture_31k31")
 
 [connection signal="instantiate_cookie" from="PanelContainer/CookieHolder" to="." method="_on_cookie_holder_instantiate_cookie"]
+[connection signal="mouse_entered" from="Flip" to="." method="_on_flip_mouse_entered"]
+[connection signal="mouse_exited" from="Flip" to="." method="_on_flip_mouse_exited"]
 [connection signal="pressed" from="Flip" to="." method="_on_button_pressed"]
