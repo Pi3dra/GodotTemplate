@@ -81,6 +81,10 @@ func spawn_party():
 ### We also vary their prices a bit
 func choose_chars() ->  Array[LogicalCharacter.TYPES]:
 	var chars_not_picked_yet = possibles_starter.duplicate()
+	
+	for char in party_info:
+		chars_not_picked_yet.erase(char)
+		
 	var characters_to_spawn : Array[LogicalCharacter.TYPES] = []
 	
 	for i in range(3):

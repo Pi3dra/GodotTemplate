@@ -78,7 +78,7 @@ func instantiate_cookie(cookie: Cookie, pos):
 	var cookie_instance = cookie_tscn.instantiate()
 	cookie_instance.cookie = cookie
 	cookie_instances.append(cookie_instance)
-	cookie_instance.global_position = pos
+	cookie_instance.position = pos
 	cookie_instance.following = false
 	selected_cookie = null
 	if cookie_instance.position.x < screen_middle:
@@ -86,8 +86,9 @@ func instantiate_cookie(cookie: Cookie, pos):
 	else:
 		cookie_instance.cookie.side = Cookie.SCREENSIDE.Head
 	add_child(cookie_instance)
+	cookie_instance.animate_spawning()
 
-signal combat_cookies(cookies: Array[Cookie])
+signal combat_cookies(cookies: Array[Cookie], enemy: bool)
 func _on_button_pressed() -> void:
 	SoundManager.instance.play_sound("Click3", true, false)
 	if flip_button.text == "Flip":
@@ -142,33 +143,43 @@ func _on_button_pressed() -> void:
 		active_cookies.clear()
 		
 		# Handling correctly guessed cookies 
-		
 		var correct_guessed_cookies : Array[Cookie] = []
 		for cookie_node in correct_guesses:
 			correct_guessed_cookies.append(cookie_node.cookie)
-			
 		var active_cookie_list : Array[Cookie] = Cookie.filter_cookies_effect(correct_guessed_cookies, Cookie.EFFECTYPE.Chance)
 		active_cookies = Cookie.list_to_dict(active_cookie_list)
-		
 		var combat_cookie_list : Array[Cookie]  = Cookie.filter_cookies_effect(correct_guessed_cookies, Cookie.EFFECTYPE.Combat)
 		var combat_cookie = Cookie.list_to_dict(combat_cookie_list)
 		
+		
+		# Handling Incorrectly guessed ones
 		print("COMBAT: ", combat_cookie, combat_cookie_list, correct_guesses)
+		var incorrect_guessed_cookies : Array[Cookie] = []
+		for cookie_node in incorrect_guesses:
+			incorrect_guessed_cookies.append(cookie_node.cookie)
+
+		var enemy_combat_cookie_list : Array[Cookie]  = Cookie.filter_cookies_effect(incorrect_guessed_cookies, Cookie.EFFECTYPE.Combat)
+		var enemy_combat_cookie = Cookie.list_to_dict(enemy_combat_cookie_list)
 		
 		if combat_cookie.size() > 0:
-			emit_signal("combat_cookies", combat_cookie)
+			emit_signal("combat_cookies", combat_cookie, false)
+		if enemy_combat_cookie.size() > 0:
+			emit_signal("combat_cookies", enemy_combat_cookie, true)
 		
 	elif flip_button.text == "Accept":
 		erase_cookies()
 		
 
 func erase_cookies():
+	var erased_cookies = cookie_instances.duplicate()
 	for cookie in cookie_instances:
+		print("COOKIE" , cookie.cookie.state)
 		if cookie.cookie.state != Cookie.STATE.Unflipped:
-			cookie_instances.erase(cookie)
+			erased_cookies.erase(cookie)
 			cookie.queue_free()
 	#cookie_instances.clear()
 	flip_button.text = "Flip"
+	cookie_instances = erased_cookies
 		
 
 signal tutorial_exit

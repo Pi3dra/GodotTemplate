@@ -91,9 +91,20 @@ func _on_mouse_entered() -> void:
 func _on_mouse_exited() -> void:
 	Cursor.instance.texture = Cursor.basic
 
-
 func _on_gui_input(event: InputEvent) -> void:
 	if event.is_action_pressed("l_click"):
 		Cursor.instance.texture = Cursor.grab
 	elif event.is_action_released("l_click"):
 		Cursor.instance.texture = Cursor.can_grab
+
+func animate_spawning():
+	var texture = $cookie_texture
+	
+	# Ensure the pivot is at the center for Node2D, or adjust for Control nodes
+	if texture is Node2D:
+		texture.pivot_offset = texture.get_rect().size / 2
+	elif texture is Control:
+		texture.pivot_offset = texture.size / 2
+	
+	var tween = create_tween()
+	tween.tween_property(texture, "scale", Vector2(1, 1), 0.4).from(Vector2(0, 0)).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)

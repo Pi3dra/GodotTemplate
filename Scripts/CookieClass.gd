@@ -36,7 +36,7 @@ func _init(pId, pDescription, pCookie_type):
 	tail_texture = tail_atlas
 	head_texture = head_atlas
 	
-	if  cookie_type == TYPE.Weighted:
+	if  cookie_type == TYPE.Weighted or cookie_type == TYPE.Head or cookie_type == TYPE.Tail :
 		effect_type = EFFECTYPE.Chance
 	else:
 		effect_type = EFFECTYPE.Combat

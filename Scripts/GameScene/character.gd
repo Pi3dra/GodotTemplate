@@ -52,14 +52,17 @@ func _ready() -> void:
 	
 	actual_state = States.WALKING
 	
+	
 	life_bar.max_value = character.health
 	
 	attack_rate()
 
+func update_lifebar():
+	life_bar.value = character.health
+	life_bar.max_value = character.health
 
 func _process(delta: float) -> void:
 	pass
-
 
 #region Signals
 func _on_animated_sprite_2d_animation_finished() -> void:

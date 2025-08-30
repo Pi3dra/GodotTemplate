@@ -198,6 +198,7 @@ func create_character(pChar_name: LogicalCharacter.TYPES):
 	# Instantiation of character tscn
 	var lCharScene : Node2D = char_scene.instantiate()
 	lCharScene.character = lChar # Attribution of the logical character to the physical tscn of character
+	lCharScene.call_deferred("update_lifebar")
 	add_child(lCharScene)
 	
 	lCharScene.connect("attack", combat_handler) # Get the signal from character
@@ -217,12 +218,16 @@ func combat_handler(Attack_info : Array, pSide, pShooter, pSelf):
 	
 	var lDamage = Attack_info[0]
 	var lCrit = Attack_info[1]
-	
+	var wave =  Vector2(0,0) # Really weird and awful offsets
 	match pSide:
 		"Good":
 			lList_to_pick = spawned_enemies
-			if spawned_enemies.is_empty() == true: lList_to_pick = spawned_enemies2
-			if spawned_enemies2.is_empty() == true: lList_to_pick = spawned_enemies3
+			if spawned_enemies.is_empty() == true: 
+				lList_to_pick = spawned_enemies2
+				wave =Vector2(400,0)
+			if spawned_enemies2.is_empty() == true: 
+				lList_to_pick = spawned_enemies3
+				wave = Vector2(900,0)
 		"Bad":
 			lList_to_pick = spawned_allies
 			
@@ -249,22 +254,45 @@ func combat_handler(Attack_info : Array, pSide, pShooter, pSelf):
 	lEnemy_to_attack.receive_damage(lDamage, lCrit)
 	if lEnemy_to_attack.character.health <= 0:
 		if lEnemy_to_attack.character.side == "Bad":
-			#this line is just wrong
-			area_ui.instance.instantiate_cookie(Cookie.new("","",Cookie.TYPE.Normal),lEnemy_to_attack.position)
-			print("baddie died")
+			#this line is just wron
+			var enemy_world_pos = lEnemy_to_attack.global_position
+			var cam = get_viewport().get_camera_2d()
+# Convert world position to screen position
+			var screen_pos = cam.get_screen_center_position() - (cam.get_global_transform().origin - enemy_world_pos) * cam.zoom - Vector2(0,150)-wave
+
+
+			var random_cookie : Cookie.TYPE
+			if randf() > 0.8:
+				random_cookie = Cookie.pick_random_special()
+			else:
+				random_cookie = Cookie.TYPE.Normal
+			area_ui.instance.instantiate_cookie(Cookie.new("","",random_cookie),screen_pos)
+
 		if shaker.is_playing(): shaker.stop()
 		else : shaker.start()
 		if pSide == "Bad": # Attackin side killed an ally
-			print("GOOD DIED", lEnemy_to_attack.character.type)
 			player_party.erase(lEnemy_to_attack.character.type) 
 		lList_to_pick.erase(lEnemy_to_attack)
-		print(lEnemy_to_attack, pSide)
+
 		
 
 
-func update_active_cookies(combat_cookies):
-	for ally_node in spawned_allies:
-		ally_node.character.receive_cookie_POWER(combat_cookies)
+func update_active_cookies(combat_cookies,enemy):
+	if enemy:
+		if !spawned_enemies.is_empty():
+			for enemy_node in spawned_enemies:
+				enemy_node.character.receive_cookie_POWER(combat_cookies)
+		elif !spawned_enemies2.is_empty():
+			for enemy_node in spawned_enemies2:
+				enemy_node.character.receive_cookie_POWER(combat_cookies)
+		elif !spawned_enemies3.is_empty():
+			for enemy_node in spawned_enemies:
+				enemy_node.character.receive_cookie_POWER(combat_cookies)
+			
+			
+	else:
+		for ally_node in spawned_allies:
+			ally_node.character.receive_cookie_POWER(combat_cookies)
 
 
 func win_anim_allies():

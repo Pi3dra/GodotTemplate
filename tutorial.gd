@@ -90,7 +90,7 @@ func get_dialog():
 				2:
 					dialog = "As you can see, Combat happens automatically. To turn odds into your favor you need to use your cookies"
 				3:
-					dialog = "You can click and drag cookies from the top bar, into either the Head side, or Tails side"
+					dialog = "You can click and drag cookies from the top bar, into either the Head side, or Tails side, You can always move them before flipping"
 				4:
 					dialog = "When hitting the FLIP button, all cookies will perform a flip, if they land correctly on the side where you placed them, your party will be greatly buffed"
 				5:
@@ -98,8 +98,12 @@ func get_dialog():
 				6:
 					dialog = "All cookies have special and different powers, visit the merchant to learn more"
 				7:
-					dialog = "You can come back at any time to test your party and your cookies!"
+					dialog = "And if you don't guess correctly enemies will get their buffs instead. (Except for odd bending Cookies)"
 				8:
+					dialog = "Also if you kill enemies, they will drop cookies!"
+				9:
+					dialog = "You can come back at any time to test your party and your cookies!"
+				10:
 					dialog = "end"
 	if dialog == "end" : 
 		Globals.current_tutorial = null

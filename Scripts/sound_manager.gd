@@ -33,4 +33,4 @@ func play_sound(pSound_name:String, pPlay:bool, pPitch_var:bool = false):
 				childs.play()
 				
 		else:
-			print(pSound_name+" doesn't match an actual sound")
+			pass
