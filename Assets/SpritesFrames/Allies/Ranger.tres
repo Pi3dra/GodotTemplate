@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=20 format=3 uid="uid://cd1mc8i0dxna8"]
+[gd_resource type="SpriteFrames" load_steps=24 format=3 uid="uid://cd1mc8i0dxna8"]
 
 [ext_resource type="Texture2D" uid="uid://c2v61frkgnemq" path="res://Assets/Sprites/Characters/Player/Bandit/Bandit04_idle.png" id="1_kfdnn"]
 [ext_resource type="Texture2D" uid="uid://bn1it4ttdsg35" path="res://Assets/Sprites/Characters/Player/Bandit/Bandit04_die.png" id="2_s8lgu"]
@@ -20,6 +20,22 @@ region = Rect2(64, 64, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_nqh0a"]
 atlas = ExtResource("1_kfdnn")
 region = Rect2(96, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kfdnn"]
+atlas = ExtResource("1_kfdnn")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s8lgu"]
+atlas = ExtResource("1_kfdnn")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mb24w"]
+atlas = ExtResource("1_kfdnn")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bhgfm"]
+atlas = ExtResource("1_kfdnn")
+region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xrviw"]
 atlas = ExtResource("2_s8lgu")
@@ -83,6 +99,23 @@ animations = [{
 "loop": false,
 "name": &"attack",
 "speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kfdnn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s8lgu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mb24w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bhgfm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,

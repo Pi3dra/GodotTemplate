@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=22 format=3 uid="uid://bsek4eo8s6x7f"]
+[gd_resource type="SpriteFrames" load_steps=26 format=3 uid="uid://bsek4eo8s6x7f"]
 
 [ext_resource type="Texture2D" uid="uid://25rlw3xok0lr" path="res://Assets/Sprites/Characters/Player/Farmer/Peasant_attack.png" id="1_4xjxk"]
 [ext_resource type="Texture2D" uid="uid://bx77o3ssu400f" path="res://Assets/Sprites/Characters/Player/Farmer/Peasant_die.png" id="2_g56wt"]
@@ -25,6 +25,22 @@ region = Rect2(288, 224, 96, 112)
 [sub_resource type="AtlasTexture" id="AtlasTexture_j2clq"]
 atlas = ExtResource("1_4xjxk")
 region = Rect2(384, 224, 96, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4xjxk"]
+atlas = ExtResource("4_64nn3")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g56wt"]
+atlas = ExtResource("4_64nn3")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gmc2s"]
+atlas = ExtResource("4_64nn3")
+region = Rect2(64, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_64nn3"]
+atlas = ExtResource("4_64nn3")
+region = Rect2(96, 0, 32, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0o3yj"]
 atlas = ExtResource("2_g56wt")
@@ -91,6 +107,23 @@ animations = [{
 "loop": false,
 "name": &"attack",
 "speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4xjxk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g56wt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gmc2s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_64nn3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
