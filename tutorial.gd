@@ -114,13 +114,12 @@ func get_dialog():
 	return dialog
 	
 func _input(event):
-	if event is InputEventKey and event.pressed:
-		if event.keycode == KEY_ENTER or event.keycode == KEY_KP_ENTER:
-			label.text = ""
-			full_text = get_dialog()
-			if tween.is_running():
-				tween.stop()
-			update()
+	if event.is_action_pressed("skip"):
+		label.text = ""
+		full_text = get_dialog()
+		if tween.is_running():
+			tween.stop()
+		update()
 			
 
 func _animate_arrow(arrow: TextureRect):

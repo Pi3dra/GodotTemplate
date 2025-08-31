@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://budxutoolfgg5"]
+[gd_scene load_steps=21 format=3 uid="uid://budxutoolfgg5"]
 
 [ext_resource type="Script" uid="uid://olkdcudexq6q" path="res://Scripts/sound_manager.gd" id="1_32i44"]
 [ext_resource type="AudioStream" uid="uid://dyky0itgbekeu" path="res://Assets/Audio/Music/Chiptune Bounce Intensity 1.wav" id="2_25ke0"]
@@ -16,6 +16,10 @@
 [ext_resource type="AudioStream" uid="uid://cbi8nfqy5kxw2" path="res://Assets/Audio/SFX/Fight/Dreaming E.wav" id="14_w8ulo"]
 [ext_resource type="AudioStream" uid="uid://be4qrjris36w4" path="res://Assets/Audio/SFX/Fight/Block_Enemy_Punch_3.wav" id="15_kquec"]
 [ext_resource type="AudioStream" uid="uid://cul6lgsknilie" path="res://Assets/Audio/SFX/Fight/Block_Enemy_Punch_9.wav" id="16_lb7tw"]
+[ext_resource type="AudioStream" uid="uid://uufda60fgnrv" path="res://Assets/Audio/SFX/Intro.ogg" id="17_i418q"]
+[ext_resource type="AudioStream" uid="uid://bac5d5x2f6w3j" path="res://Assets/Audio/SFX/Label1.wav" id="18_y0hwn"]
+[ext_resource type="AudioStream" uid="uid://b2rci451c32le" path="res://Assets/Audio/SFX/Label2.wav" id="19_bhbga"]
+[ext_resource type="AudioStream" uid="uid://b74fqjrp644uo" path="res://Assets/Audio/SFX/Stopit.wav" id="20_y0hwn"]
 
 [node name="SoundManager" type="Node"]
 script = ExtResource("1_32i44")
@@ -80,3 +84,15 @@ max_polyphony = 2
 [node name="Attack2" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("16_lb7tw")
 max_polyphony = 2
+
+[node name="Intro" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("17_i418q")
+
+[node name="Label1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("18_y0hwn")
+
+[node name="Label2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("19_bhbga")
+
+[node name="Stopit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("20_y0hwn")

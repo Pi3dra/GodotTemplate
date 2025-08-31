@@ -201,6 +201,7 @@ func _on_door_pressed() -> void:
 		SoundManager.instance.play_sound("Tavern", false)
 		SoundManager.instance.play_sound("Transition", true, true)
 		animation_player.play("Transition") # This will trigger switch_scene
+	else: SoundManager.instance.play_sound("Stopit", true, false)
 
 func _on_merchant_pressed() -> void:
 	SoundManager.instance.play_sound("Click4", true, false)
