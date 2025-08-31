@@ -57,14 +57,14 @@ func generate_level(difficulty : Difficulty):
 	match difficulty:
 		Difficulty.Hard:
 			used_enemies = 14
-			cookies = 6 + randi()%6
+			cookies = 20 + randi()%6
 			special_cookies = 1 + randi()%2
 		Difficulty.Medium:
 			used_enemies = randi() % 4 + 8
 			cookies = 4 + randi()%3
 			special_cookies = 1
 		Difficulty.Easy:
-			used_enemies = randi() % 3 + 3
+			used_enemies = randi() % 2 + 3
 			cookies = 2 + randi()%3
 			special_cookies = 0
 			

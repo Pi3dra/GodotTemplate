@@ -145,10 +145,8 @@ func get_tavern_info(pWave_info, pParty_info, reward1, reward2):
 	
 	#endregion
 	
-	print("w1 ", lWave_1," w2 " , lWave_2," w3 ", lWave_3)
 	level_reward1 = reward1
 	level_reward2 = reward2
-	print("Arena, " ,reward1, reward2)
 	#For player party
 	add_to_array(player_party, pParty_info.size(), pParty_info)
 	spawn_characters(player_party, allies_spawn_pos, spawned_allies)
@@ -182,11 +180,9 @@ func spawn_characters(pStr_array: Array[LogicalCharacter.TYPES], pVec_array: Arr
 	for enemies in spawned_enemies3:
 			enemies.no_attacking()
 	move_child(color_rect, get_children().size())
-	print("sa",spawned_allies)
+
 
 func add_to_array(pArray: Array, pNumb: int, pChar_name: Array):
-	print("character" , pChar_name)
-	#pArray.clear()
 	for i in range(pNumb):
 		pArray.append(pChar_name[i])
 
@@ -243,9 +239,16 @@ func combat_handler(Attack_info : Array, pSide, pShooter, pSelf):
 	var lEnemy_to_attack: Node2D = lList_to_pick.pick_random()
 	if pShooter == true: 
 		pSelf.shoot(lEnemy_to_attack.position, pSelf.character.type)
-		
-	print("CHAR: ",pSelf.character.type)
-	print("Damage:", lDamage, " to Enemy :", lEnemy_to_attack.character.health)
+
+	print("Arena 
+	
+	
+	
+	
+	
+	
+	
+	CHAR: ",pSelf.character.type,"Damage:", lDamage, " to Enemy :", lEnemy_to_attack.character.health)
 	
 	if lCrit == true:
 		if shaker.is_playing(): shaker.stop()
@@ -402,7 +405,6 @@ func _on_but_win_pressed() -> void:
 	tavern.get_node("AnimationPlayer").play("RESET")
 	
 	var reward = {Cookie.TYPE.Normal: level_reward1, selected_special: level_reward2}
-	print("party " ,player_party)
 	tavern.update_after_victory(player_party,reward)
 	
 	queue_free()
