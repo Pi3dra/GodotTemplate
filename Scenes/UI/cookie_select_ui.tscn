@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://cgftnhlkpkt4h"]
 
-[ext_resource type="Script" uid="uid://5beqyelocfx3" path="res://cookie_select_ui.gd" id="1_nrv4p"]
+[ext_resource type="Script" uid="uid://5beqyelocfx3" path="res://Scripts/UI/cookie_select_ui.gd" id="1_nrv4p"]
 [ext_resource type="Theme" uid="uid://koj3axa8mw8p" path="res://Assets/Themes/MerchantTheme.tres" id="2_iriai"]
 [ext_resource type="Theme" uid="uid://c844w2sp1c2l7" path="res://Assets/Themes/LevelSelectTheme.tres" id="2_vlo32"]
-[ext_resource type="FontFile" uid="uid://b0ndjepym4tga" path="res://Assets/Themes/FantasyRPGtitle (size 11).ttf" id="4_quo3h"]
+[ext_resource type="FontFile" uid="uid://b0ndjepym4tga" path="res://Assets/Themes/Fonts/FantasyRPGtitle (size 11).ttf" id="4_quo3h"]
 
 [node name="CookieSelect" type="Control"]
 layout_mode = 3

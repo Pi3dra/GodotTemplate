@@ -1,16 +1,16 @@
 [gd_scene load_steps=6 format=3 uid="uid://b3y2sr2uweroy"]
 
-[ext_resource type="Script" uid="uid://6hi3fxftlshh" path="res://Scripts/GameScene/character.gd" id="1_lbk2d"]
-[ext_resource type="SpriteFrames" uid="uid://b2ygb7ty6nyn7" path="res://Assets/SpritesFrames/Allies/Knight.tres" id="2_qqnvc"]
-[ext_resource type="Theme" uid="uid://dadlocyhpxvuk" path="res://Assets/Themes/ArenaTheme.tres" id="3_garmb"]
-[ext_resource type="SpriteFrames" uid="uid://uu214ly4380a" path="res://Assets/SpritesFrames/FX/death.tres" id="4_garmb"]
-[ext_resource type="FontFile" uid="uid://b0ndjepym4tga" path="res://Assets/Themes/FantasyRPGtitle (size 11).ttf" id="5_igei5"]
+[ext_resource type="Script" uid="uid://6hi3fxftlshh" path="res://Scripts/GameScene/character.gd" id="1_eyo7j"]
+[ext_resource type="SpriteFrames" uid="uid://b2ygb7ty6nyn7" path="res://Assets/SpritesFrames/Allies/Knight.tres" id="2_51a4u"]
+[ext_resource type="Theme" uid="uid://dadlocyhpxvuk" path="res://Assets/Themes/ArenaTheme.tres" id="3_4r6qm"]
+[ext_resource type="SpriteFrames" uid="uid://uu214ly4380a" path="res://Assets/SpritesFrames/FX/death.tres" id="4_wd06k"]
+[ext_resource type="FontFile" uid="uid://b0ndjepym4tga" path="res://Assets/Themes/Fonts/FantasyRPGtitle (size 11).ttf" id="5_f6r2i"]
 
 [node name="Character" type="Node2D"]
-script = ExtResource("1_lbk2d")
+script = ExtResource("1_eyo7j")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = ExtResource("2_qqnvc")
+sprite_frames = ExtResource("2_51a4u")
 animation = &"die"
 
 [node name="LifeBar" type="ProgressBar" parent="."]
@@ -25,10 +25,10 @@ offset_right = 29.0
 offset_bottom = 53.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("3_garmb")
+theme = ExtResource("3_4r6qm")
 
 [node name="AnimatedSpriteFX" type="AnimatedSprite2D" parent="."]
-sprite_frames = ExtResource("4_garmb")
+sprite_frames = ExtResource("4_wd06k")
 animation = &"hit"
 
 [node name="HitDamage" type="Label" parent="."]
@@ -44,7 +44,7 @@ offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(5, 11.5)
-theme_override_fonts/font = ExtResource("5_igei5")
+theme_override_fonts/font = ExtResource("5_f6r2i")
 theme_override_font_sizes/font_size = 16
 
 [node name="Timer" type="Timer" parent="."]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bbmwn81f77iqu"
-path="res://.godot/imported/UI assets (2x).png-fc527edff0b27a472354bae8441983a6.ctex"
+uid="uid://dijmd1yb28d3g"
+path="res://.godot/imported/RPG tileset (full) - 200%.png-b07b6751859374610698e60c2b7f5a1d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Themes/UI assets (2x).png"
-dest_files=["res://.godot/imported/UI assets (2x).png-fc527edff0b27a472354bae8441983a6.ctex"]
+source_file="res://Assets/Sprites/SpriteSheet/RPG tileset (full) - 200%.png"
+dest_files=["res://.godot/imported/RPG tileset (full) - 200%.png-b07b6751859374610698e60c2b7f5a1d.ctex"]
 
 [params]
 

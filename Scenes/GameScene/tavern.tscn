@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://mbpwvbww4e0w" path="res://Scenes/GameScene/background.tscn" id="2_3swb4"]
 [ext_resource type="Texture2D" uid="uid://dj5n0440363ub" path="res://Assets/Sprites/UI/DoubleWooden sign.png" id="3_gkydx"]
 [ext_resource type="Texture2D" uid="uid://ducng482cqo0x" path="res://Assets/Sprites/Characters/Pnj/Alchemist_idle.png" id="4_abfkn"]
-[ext_resource type="Texture2D" uid="uid://dijmd1yb28d3g" path="res://Assets/Sprites/TileMap/RPG tileset (full) - 200%.png" id="4_upti4"]
+[ext_resource type="Texture2D" uid="uid://dijmd1yb28d3g" path="res://Assets/Sprites/SpriteSheet/RPG tileset (full) - 200%.png" id="4_upti4"]
 [ext_resource type="SpriteFrames" uid="uid://b2ygb7ty6nyn7" path="res://Assets/SpritesFrames/Allies/Knight.tres" id="5_6qqgm"]
 [ext_resource type="Shader" uid="uid://c4xsqigo7i03g" path="res://Shaders/transition.gdshader" id="6_e4y1a"]
 [ext_resource type="Theme" uid="uid://koj3axa8mw8p" path="res://Assets/Themes/MerchantTheme.tres" id="8_8fg7r"]

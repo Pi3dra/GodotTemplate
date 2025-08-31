@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cg5yimbr12qqr" path="res://Scenes/UI/cookie_panel_ui.tscn" id="1_fxqs8"]
 [ext_resource type="Theme" uid="uid://koj3axa8mw8p" path="res://Assets/Themes/MerchantTheme.tres" id="1_hcs8x"]
-[ext_resource type="Script" uid="uid://crbrpvnifj3bv" path="res://Scenes/UI/merchant_ui.gd" id="1_rggwi"]
+[ext_resource type="Script" uid="uid://crbrpvnifj3bv" path="res://Scripts/UI/merchant_ui.gd" id="1_rggwi"]
 
 [node name="MerchantUI" type="Control"]
 layout_mode = 3

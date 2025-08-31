@@ -8,7 +8,7 @@ class_name level_panel
 @onready var reward_title: Label = $VBoxContainer/RewardTitle
 @onready var reward_1: Label = $VBoxContainer/TextContainer/HBoxContainer/Reward1
 @onready var reward_2: Label = $VBoxContainer/TextContainer/HBoxContainer2/Reward2
-@onready var font = load("res://Assets/Themes/FantasyRPGtitle (size 11).ttf")
+@onready var font = load("uid://b0ndjepym4tga")
 
 var total_enemies = 3*5
 
@@ -31,7 +31,7 @@ var medium_enemies = [LogicalCharacter.TYPES.Orc, LogicalCharacter.TYPES.Witch, 
 var hard_enemies = [LogicalCharacter.TYPES.Cyclop, LogicalCharacter.TYPES.Devil, LogicalCharacter.TYPES.Dragon]
 var enemy_palette = { Difficulty.Easy : easy_enemies, Difficulty.Medium : medium_enemies, Difficulty.Hard : hard_enemies}
 
-var sprites = preload("res://Assets/Sprites/Heads.png")
+var sprites = preload("uid://damlxqw3n3qsv")
 
 # This would be way cleaner with a class
 # consisting of a:

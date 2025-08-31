@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://chp5viqsqdp74"
-path="res://.godot/imported/Waterfall tiles (32x32 - 5 frames).png-80ec4165e6077ddbbc3ad3c69ec4b2ec.ctex"
+uid="uid://cu2f2lwoupqox"
+path="res://.godot/imported/CookieSheet.png-b532506a2c9b13a0ee3cb47a9b386773.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/TileMap/Waterfall tiles (32x32 - 5 frames).png"
-dest_files=["res://.godot/imported/Waterfall tiles (32x32 - 5 frames).png-80ec4165e6077ddbbc3ad3c69ec4b2ec.ctex"]
+source_file="res://Assets/Sprites/SpriteSheet/CookieSheet.png"
+dest_files=["res://.godot/imported/CookieSheet.png-b532506a2c9b13a0ee3cb47a9b386773.ctex"]
 
 [params]
 

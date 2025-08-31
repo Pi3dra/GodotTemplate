@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://65kia0gndtv8"
-path="res://.godot/imported/Tileset_winter (free demo).png-d6a49b55d6bbb9075e75cb0f3fe7b2bd.ctex"
+uid="uid://bbmwn81f77iqu"
+path="res://.godot/imported/UI assets (2x).png-930c35138c5b005361c623d02742d870.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/TileMap/Tileset_winter (free demo).png"
-dest_files=["res://.godot/imported/Tileset_winter (free demo).png-d6a49b55d6bbb9075e75cb0f3fe7b2bd.ctex"]
+source_file="res://Assets/Sprites/SpriteSheet/UI assets (2x).png"
+dest_files=["res://.godot/imported/UI assets (2x).png-930c35138c5b005361c623d02742d870.ctex"]
 
 [params]
 

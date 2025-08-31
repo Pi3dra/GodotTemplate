@@ -15,8 +15,8 @@ var chance : int = 50
 
 var tail_texture : AtlasTexture
 var head_texture : AtlasTexture
-var shadow_texture = preload("res://Assets/Sprites/cookie_shadow.png")
-var spritesheet = preload("res://Assets/Sprites/CookieSheet.png")
+var shadow_texture = preload("uid://kc4ef7j3bwdl")
+var spritesheet = preload("uid://cu2f2lwoupqox")
 
 func _init(pId, pDescription, pCookie_type):
 	side = SCREENSIDE.Unchosen
@@ -126,7 +126,7 @@ static func type_price(cookie_type) -> int:
 static func type_sprite(cookie_type)  -> AtlasTexture:
 	var head_atlas = AtlasTexture.new()
 	# TODO: Ceci est assez degeu, Solution, creer les Cookies une fois, et les garder
-	head_atlas.atlas = load("res://Assets/Sprites/CookieSheet.png")
+	head_atlas.atlas = load("uid://cu2f2lwoupqox")
 	head_atlas.region = Rect2(0, cookie_type * 32, 32, 32)
 	return head_atlas
 	

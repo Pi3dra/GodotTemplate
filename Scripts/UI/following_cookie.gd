@@ -13,7 +13,7 @@ var screen_middle : int
 
 func _ready() -> void:
 	texture_rect.texture = cookie.head_texture
-	shadow.texture = load("res://Assets/Sprites/cookie_shadow.png")
+	shadow.texture = load("uid://kc4ef7j3bwdl")
 	var screen_size = get_viewport().get_visible_rect().size
 	screen_middle = screen_size.x/2
 	

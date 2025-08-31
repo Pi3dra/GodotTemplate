@@ -1,9 +1,6 @@
-[gd_scene load_steps=40 format=4 uid="uid://mbpwvbww4e0w"]
+[gd_scene load_steps=34 format=4 uid="uid://mbpwvbww4e0w"]
 
-[ext_resource type="Texture2D" uid="uid://dijmd1yb28d3g" path="res://Assets/Sprites/TileMap/RPG tileset (full) - 200%.png" id="1_nq4vw"]
-[ext_resource type="Texture2D" uid="uid://dqtjof6wf2ncp" path="res://Assets/Sprites/TileMap/Tileset_autumn (free demo).png" id="2_jt5vh"]
-[ext_resource type="Texture2D" uid="uid://dhnm7dgc7vuae" path="res://Assets/Sprites/TileMap/Tileset_desert (free demo).png" id="3_he2kk"]
-[ext_resource type="Texture2D" uid="uid://65kia0gndtv8" path="res://Assets/Sprites/TileMap/Tileset_winter (free demo).png" id="4_760fm"]
+[ext_resource type="Texture2D" uid="uid://dijmd1yb28d3g" path="res://Assets/Sprites/SpriteSheet/RPG tileset (full) - 200%.png" id="1_nq4vw"]
 [ext_resource type="Texture2D" uid="uid://ckbckn1xt4soi" path="res://Assets/Sprites/TileMap/Objects/Pot.png" id="5_n5g7c"]
 [ext_resource type="Texture2D" uid="uid://cpb7mmvoehvrj" path="res://Assets/Sprites/TileMap/Objects/Planks.png" id="6_6kjkm"]
 [ext_resource type="Texture2D" uid="uid://ehbnxopb4s6l" path="res://Assets/Sprites/TileMap/Objects/Cauldron.png" id="7_byy0m"]
@@ -19,7 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://dwtwbx3kd446i" path="res://Assets/Sprites/TileMap/Objects/Sword.png" id="18_kclar"]
 [ext_resource type="Texture2D" uid="uid://ds4qkc8uni770" path="res://Assets/Sprites/TileMap/Objects/Potion_blue.png" id="19_xqmjl"]
 [ext_resource type="Texture2D" uid="uid://dqratxj6pkldq" path="res://Assets/Sprites/TileMap/Objects/Potion_green.png" id="20_ctgib"]
-[ext_resource type="Texture2D" uid="uid://cu2f2lwoupqox" path="res://Assets/Sprites/CookieSheet.png" id="21_vgwlb"]
+[ext_resource type="Texture2D" uid="uid://cu2f2lwoupqox" path="res://Assets/Sprites/SpriteSheet/CookieSheet.png" id="21_vgwlb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jo8k4"]
 texture = ExtResource("1_nq4vw")
@@ -469,24 +466,9 @@ texture_region_size = Vector2i(32, 32)
 29:20/0 = 0
 29:20/0/modulate = Color(0.321728, 0.321728, 0.321728, 1)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_74ipd"]
-texture = ExtResource("2_jt5vh")
-texture_region_size = Vector2i(32, 32)
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w5vo3"]
-texture = ExtResource("3_he2kk")
-texture_region_size = Vector2i(32, 32)
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h8fhy"]
-texture = ExtResource("4_760fm")
-texture_region_size = Vector2i(32, 32)
-
 [sub_resource type="TileSet" id="TileSet_6qpk1"]
 tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_jo8k4")
-sources/2 = SubResource("TileSetAtlasSource_74ipd")
-sources/3 = SubResource("TileSetAtlasSource_w5vo3")
-sources/4 = SubResource("TileSetAtlasSource_h8fhy")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_h8e5d"]
 atlas = ExtResource("7_byy0m")

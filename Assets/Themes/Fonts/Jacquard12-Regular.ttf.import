@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://dof8pnvm3ew3v"
-path="res://.godot/imported/Jacquard12-Regular.ttf-15ae92d2d39a9037f76a28358e1f79e6.fontdata"
+path="res://.godot/imported/Jacquard12-Regular.ttf-996c9c79870e286bbf7986900cefc726.fontdata"
 
 [deps]
 
-source_file="res://Assets/Themes/Jacquard12-Regular.ttf"
-dest_files=["res://.godot/imported/Jacquard12-Regular.ttf-15ae92d2d39a9037f76a28358e1f79e6.fontdata"]
+source_file="res://Assets/Themes/Fonts/Jacquard12-Regular.ttf"
+dest_files=["res://.godot/imported/Jacquard12-Regular.ttf-996c9c79870e286bbf7986900cefc726.fontdata"]
 
 [params]
 

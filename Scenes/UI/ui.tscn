@@ -1,10 +1,10 @@
 [gd_scene load_steps=10 format=3 uid="uid://cdtnuw34na548"]
 
 [ext_resource type="Script" uid="uid://bqyiqkgchrden" path="res://Scripts/UI/ui.gd" id="1_de23q"]
-[ext_resource type="Texture2D" uid="uid://bbmwn81f77iqu" path="res://Assets/Themes/UI assets (2x).png" id="4_1c2ca"]
+[ext_resource type="Texture2D" uid="uid://bbmwn81f77iqu" path="res://Assets/Sprites/SpriteSheet/UI assets (2x).png" id="4_1c2ca"]
 [ext_resource type="Shader" uid="uid://c4xsqigo7i03g" path="res://Shaders/transition.gdshader" id="4_fo61o"]
-[ext_resource type="FontFile" uid="uid://b0ndjepym4tga" path="res://Assets/Themes/FantasyRPGtitle (size 11).ttf" id="5_duuxe"]
-[ext_resource type="FontFile" uid="uid://dof8pnvm3ew3v" path="res://Assets/Themes/Jacquard12-Regular.ttf" id="6_jfwrg"]
+[ext_resource type="FontFile" uid="uid://b0ndjepym4tga" path="res://Assets/Themes/Fonts/FantasyRPGtitle (size 11).ttf" id="5_duuxe"]
+[ext_resource type="FontFile" uid="uid://dof8pnvm3ew3v" path="res://Assets/Themes/Fonts/Jacquard12-Regular.ttf" id="6_jfwrg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_alcrr"]
 atlas = ExtResource("4_1c2ca")

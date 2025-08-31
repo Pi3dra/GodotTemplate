@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://damlxqw3n3qsv"
-path="res://.godot/imported/Heads.png-e54d206b921e8bc557c1cd8cafedd843.ctex"
+uid="uid://kc4ef7j3bwdl"
+path="res://.godot/imported/cookie_shadow.png-61f108bcd4f5a4fc1b44dda4d7fa16f7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Heads.png"
-dest_files=["res://.godot/imported/Heads.png-e54d206b921e8bc557c1cd8cafedd843.ctex"]
+source_file="res://Assets/Sprites/UI/cookie_shadow.png"
+dest_files=["res://.godot/imported/cookie_shadow.png-61f108bcd4f5a4fc1b44dda4d7fa16f7.ctex"]
 
 [params]
 

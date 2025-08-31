@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://dfqv3coroeoq8"
-path="res://.godot/imported/Jacquard12Charted-Regular.ttf-ba8fc64730c87bf17b6b3db2f9e38452.fontdata"
+uid="uid://b0ndjepym4tga"
+path="res://.godot/imported/FantasyRPGtitle (size 11).ttf-6a0b96b3c62533659191eafb2906d42c.fontdata"
 
 [deps]
 
-source_file="res://Assets/Themes/Jacquard12Charted-Regular.ttf"
-dest_files=["res://.godot/imported/Jacquard12Charted-Regular.ttf-ba8fc64730c87bf17b6b3db2f9e38452.fontdata"]
+source_file="res://Assets/Themes/Fonts/FantasyRPGtitle (size 11).ttf"
+dest_files=["res://.godot/imported/FantasyRPGtitle (size 11).ttf-6a0b96b3c62533659191eafb2906d42c.fontdata"]
 
 [params]
 
