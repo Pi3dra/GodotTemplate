@@ -22,7 +22,6 @@ func _gui_input(event: InputEvent) -> void:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed and !following:
 			following = true
 		elif  event.button_index == MOUSE_BUTTON_LEFT and !event.pressed and following and get_global_mouse_position().y > 200:
-			print("Clicked:1")
 			following = false
 			if position.x < screen_middle:
 				cookie.side = Cookie.SCREENSIDE.Head

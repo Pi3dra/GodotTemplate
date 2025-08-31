@@ -70,8 +70,8 @@ func generate_level(difficulty : Difficulty):
 			
 	reward_1.text = str(cookies) +" x Cookies"
 	reward_2.text = str(special_cookies) +" x Special Cookies"
-	var waves : Array = distribute_enemies(used_enemies)
-	var enemy_info = pick_enemies(waves, difficulty) #Array[Array[LogicalCharacter.TYPES]]
+	var waves_distribution : Array = distribute_enemies(used_enemies)
+	var enemy_info = pick_enemies(waves_distribution, difficulty) #Array[Array[LogicalCharacter.TYPES]]
 	var enemy_waves = enemy_info.get("Waves")
 	var enemy_count = enemy_info.get("Counter")
 	
@@ -103,7 +103,7 @@ func generate_level(difficulty : Difficulty):
 	
 func distribute_enemies(number_of_enemies):
 	randomize()
-	var waves : Array = [0,0,0]
+	var waves_distribution : Array = [0,0,0]
 	var counter = number_of_enemies
 	
 	if number_of_enemies == 14:
@@ -111,19 +111,19 @@ func distribute_enemies(number_of_enemies):
 	
 	while counter > 0:
 		var selected_index = randi() % 3
-		if waves[selected_index] < 5:
-			waves[selected_index] += 1
+		if waves_distribution[selected_index] < 5:
+			waves_distribution[selected_index] += 1
 			counter -= 1
 	
-	if 0 in waves:
+	if 0 in waves_distribution:
 		return distribute_enemies(number_of_enemies)
 	else:
-		return waves
+		return waves_distribution
 
-func pick_enemies(waves : Array, difficulty : Difficulty):
+func pick_enemies(waves_distribution : Array, difficulty : Difficulty):
 	var enemy_waves : Array = []
 	var enemy_counter : Dictionary[int, int]
-	for number_of_enemies in waves:
+	for number_of_enemies in waves_distribution:
 		var wave = []
 		for i in range(number_of_enemies):
 			var enemy = enemy_palette[difficulty].pick_random()

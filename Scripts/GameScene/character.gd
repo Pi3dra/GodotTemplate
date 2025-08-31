@@ -61,9 +61,6 @@ func update_lifebar():
 	life_bar.value = character.health
 	life_bar.max_value = character.health
 
-func _process(delta: float) -> void:
-	pass
-
 #region Signals
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if previous_state == States.DYING: queue_free() # To kill this mtf
@@ -119,7 +116,7 @@ func shoot(pRival_pos: Vector2, pType):
 	match pType:
 		character.TYPES.Cyclop:
 			lSprite.texture = load("uid://bwwklxfbmpjk3")
-			lSprite.flip_h
+			lSprite.flip_h = true
 		character.TYPES.Wizard:
 			lSprite.texture = load("uid://cjll7vd11gcj5")
 		character.TYPES.Necromancer:
@@ -130,12 +127,12 @@ func shoot(pRival_pos: Vector2, pType):
 			lSprite.texture = load("uid://wvcuyen2nr6g")
 		character.TYPES.Dragon:
 			lSprite.texture = load("uid://b2h8juywe7h5p")
-			lSprite.flip_h
+			lSprite.flip_h = true
 		character.TYPES.Witch:
 			lSprite.texture = load("uid://bqf1kgtep7uwx")
-			lSprite.flip_h
+			lSprite.flip_h = true
 	
-	lTween.tween_property(lProjectile, "global_position", pRival_pos, 0.5).set
+	lTween.tween_property(lProjectile, "global_position", pRival_pos, 0.5)
 	lTween.tween_property(lProjectile, "modulate:a", 0, 0.6)
 	lTween.set_parallel(false).tween_callback(projectile_finished.bind(lProjectile))
 

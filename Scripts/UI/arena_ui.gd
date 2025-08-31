@@ -2,6 +2,10 @@ extends Control
 
 class_name area_ui
 
+# TODO Enlever warnings
+# TODO Refactor 
+# TODO Enlever Heads or tails, keep only head for the user
+
 static var instance
 var cookie_tscn : PackedScene = load("res://Scenes/UI/cookie.tscn")
 var cookie_list : Array[Cookie]
@@ -30,10 +34,8 @@ func _ready() -> void:
 	screen_middle = screen_size.x/2
 
 
-# Called after instantiation
+# Called after instantiation Effet de BORD!
 func init(cookies : Dictionary):
-	print(cookies)
-	var cookie_list : Array[Cookie] = []
 	for cookie in cookies.keys():
 		for i in range(cookies.get(cookie)):
 			cookie_list.append(Cookie.new("","",cookie))
@@ -119,12 +121,11 @@ func _on_button_pressed() -> void:
 	
 		for cookie_node in cookie_instances:
 			var cookie_object : Cookie = cookie_node.cookie
-			var result : Cookie.STATE 
 			
 			if cookie_object.side == Cookie.SCREENSIDE.Head:
-				result = cookie_node.flip_coin(cookie_object.chance + head_chance)
+				cookie_node.flip_coin(cookie_object.chance + head_chance)
 			elif cookie_object.side == Cookie.SCREENSIDE.Tail:
-				result = cookie_node.flip_coin(cookie_object.chance - head_chance)
+				cookie_node.flip_coin(cookie_object.chance - tail_chance)
 			
 			if cookie_object.state == cookie_object.side:
 				correct_guesses.append(cookie_node)
@@ -153,13 +154,12 @@ func _on_button_pressed() -> void:
 		
 		
 		# Handling Incorrectly guessed ones
-		print("COMBAT: ", combat_cookie, combat_cookie_list, correct_guesses)
 		var incorrect_guessed_cookies : Array[Cookie] = []
 		for cookie_node in incorrect_guesses:
 			incorrect_guessed_cookies.append(cookie_node.cookie)
 
-		var enemy_combat_cookie_list : Array[Cookie]  = Cookie.filter_cookies_effect(incorrect_guessed_cookies, Cookie.EFFECTYPE.Combat)
-		var enemy_combat_cookie = Cookie.list_to_dict(enemy_combat_cookie_list)
+		#var enemy_combat_cookie_list : Array[Cookie]  = Cookie.filter_cookies_effect(incorrect_guessed_cookies, Cookie.EFFECTYPE.Combat)
+		#var enemy_combat_cookie = Cookie.list_to_dict(enemy_combat_cookie_list)
 		
 		if combat_cookie.size() > 0:
 			emit_signal("combat_cookies", combat_cookie, false)
@@ -173,7 +173,6 @@ func _on_button_pressed() -> void:
 func erase_cookies():
 	var erased_cookies = cookie_instances.duplicate()
 	for cookie in cookie_instances:
-		print("COOKIE" , cookie.cookie.state)
 		if cookie.cookie.state != Cookie.STATE.Unflipped:
 			erased_cookies.erase(cookie)
 			cookie.queue_free()

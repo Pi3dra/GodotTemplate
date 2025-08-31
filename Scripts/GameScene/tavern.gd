@@ -55,7 +55,7 @@ func spawn_party():
 	var lPlayers_spawned: Array = party.get_children()
 	#for players: AnimatedSprite2D in lPlayers_spawned:
 	if lPlayers_spawned[0].sprite_frames != null:
-		print("ya deja un joueur askip")
+		print("")
 		 #players exist ... le faire spawn et l'ajouter pour le spawn à l'arena
 	else:
 		randomize()
@@ -87,17 +87,17 @@ func spawn_party():
 func choose_chars() ->  Array[LogicalCharacter.TYPES]:
 	var chars_not_picked_yet = possibles_starter.duplicate()
 	
-	for char in party_info:
-		chars_not_picked_yet.erase(char)
+	for character in party_info:
+		chars_not_picked_yet.erase(character)
 		
 	var characters_to_spawn : Array[LogicalCharacter.TYPES] = []
 	
 	for i in range(3):
 		var spawn_enemy = randf() <= 0.75
 		if spawn_enemy:
-			var char = chars_not_picked_yet.pick_random()
-			chars_not_picked_yet.erase(char)
-			characters_to_spawn.append(char)
+			var character = chars_not_picked_yet.pick_random()
+			chars_not_picked_yet.erase(character)
+			characters_to_spawn.append(character)
 	return characters_to_spawn
 
 
@@ -107,12 +107,12 @@ func spawn_characters() -> void:
 	var markers = $Spawners.get_children()
 	var positions = markers.map(func(marker): return marker.position)
 	for i in range(characters_to_spawn.size()):
-		var char = pelo_tscn.instantiate()
-		char.call_deferred("init_char",characters_to_spawn[i])
-		add_child(char)
-		char.connect("buy_character", buy_character)
+		var character = pelo_tscn.instantiate()
+		character.call_deferred("init_char",characters_to_spawn[i])
+		add_child(character)
+		character.connect("buy_character", buy_character)
 		buyable_char_nodes.set(characters_to_spawn[i], char)
-		char.global_position = positions[i]
+		character.global_position = positions[i]
 
 func buy_character(character, character_price):
 	SoundManager.instance.play_sound("Click4", true, false)
@@ -128,7 +128,6 @@ func buy_character(character, character_price):
 			slot.play("default")
 			party_info.append(character)
 			buyable_char_nodes[character].queue_free()
-			print("ERASED has to be typee: ", character)
 			buyable_char_nodes.erase(character)
 			spawned = true #Add only one
 	update_cookie_bar()
@@ -145,6 +144,7 @@ func buy_character(character, character_price):
 #region Signal handler and UI
 func switch_scene():
 	# We sapwn the arenaUI before the arena to avoid signals bug
+	
 	var lArena_ui: Control = scene_arena_ui.instantiate()
 	UI.instance.add_child(lArena_ui)
 	UI.instance.move_child(lArena_ui,0)
@@ -186,8 +186,6 @@ func cookie_selection(pWave_info: Array, reward1, reward2):
 	
 	#TODO connect data
 	cookie_selection_ui.call_deferred("set_available_cookies", available_cookies.duplicate())
-	
-	print("rew ", reward1, " ", reward2)
 	level_reward1 = reward1
 	level_reward2 = reward2
 	wave_info = pWave_info
@@ -196,7 +194,6 @@ func update_after_cookie_selection(cookies : Dictionary[Cookie.TYPE, int]):
 	risked_biscuits = cookies
 	for biscuit in risked_biscuits.keys():
 		available_cookies[biscuit] -= risked_biscuits[biscuit]
-		print("todo")
 		
 func _on_door_pressed() -> void:
 	if !wave_info.is_empty() and !risked_biscuits.is_empty():
@@ -215,7 +212,6 @@ func _on_merchant_pressed() -> void:
 	#marchant menu
 	
 func update_after_merchant(cookies):
-	cookie_select_ui.instance
 	available_cookies = cookies
 	update_cookie_bar()
 #endregion
@@ -262,8 +258,7 @@ func _on_trainer_pressed() -> void:
 		
 	risked_biscuits = available_cookies
 	wave_info = [[LogicalCharacter.TYPES.Unkillable_Slime],[LogicalCharacter.TYPES.Unkillable_Slime],[LogicalCharacter.TYPES.Unkillable_Slime]]
-	print(party_info, wave_info)
-	if wave_info != null and risked_biscuits != null:
+	if !wave_info.is_empty() and !risked_biscuits.is_empty():
 		animation_player.play("Transition") # This will trigger switch_scene
 	
 		
@@ -288,8 +283,8 @@ func update_after_victory(characters,rewarded_cookies):
 	level_reward1 = 0
 	level_reward2 = 0
 	
-	for char in buyable_char_nodes.keys():
-		buyable_char_nodes[char].queue_free(
+	for character in buyable_char_nodes.keys():
+		buyable_char_nodes[character].queue_free(
 		)
 	buyable_char_nodes.clear()
 	finished_level = true
@@ -302,9 +297,9 @@ func update_party_sprites():
 	for sprites in party_slots:
 		sprites.sprite_frames = null
 		
-	for char in party_info:
+	for character in party_info:
 		var chosen_slot = party_slots.pick_random()
-		chosen_slot.sprite_frames = LogicalCharacter.char_to_sprite(char)
+		chosen_slot.sprite_frames = LogicalCharacter.char_to_sprite(character)
 		chosen_slot.play("default")
 		party_slots.erase(chosen_slot)
 	finished_level = true

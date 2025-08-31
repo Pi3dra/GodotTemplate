@@ -78,7 +78,7 @@ func attack() -> Array:
 	
 	var crit_info : Array  = calculate_crit(damage*damage_multiplier, critical_bonus)
 	var total_damage : float = crit_info[0]
-	print("CharClass x: ", damage_multiplier," d: ", total_damage," t: ", total_damage*damage_multiplier)
+	#print("CharClass x: ", damage_multiplier," d: ", total_damage," t: ", total_damage*damage_multiplier)
 	# Damage using cookies
 	# Vampire cookie
 	var vampire_cookies = active_cookies.get(Cookie.TYPE.Vampire)
@@ -103,8 +103,8 @@ func calculate_crit(pDamage: float, pBonus_chance: float) -> Array:
 
 	return [pDamage, crit_triggered]
 
-static func char_to_sprite(char: LogicalCharacter.TYPES):
-	match char:
+static func char_to_sprite(character: LogicalCharacter.TYPES):
+	match character:
 			LogicalCharacter.TYPES.Knight:
 				return load("uid://b2ygb7ty6nyn7")
 			LogicalCharacter.TYPES.Wizard:

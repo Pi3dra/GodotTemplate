@@ -17,7 +17,6 @@ static var instance
 func _ready() -> void:
 	instance = self
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	position = get_viewport().get_mouse_position()
+	

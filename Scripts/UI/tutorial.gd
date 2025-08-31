@@ -121,15 +121,15 @@ func _input(event):
 			
 
 func _animate_arrow(arrow: TextureRect):
-	var tween = create_tween().set_loops() # infinite loop
+	var spawn_tween = create_tween().set_loops() # infinite loop
 	var start_pos = arrow.position
 	var offset = Vector2(0, -10) # how much it should float up
 
-	tween.tween_property(arrow, "position", start_pos + offset, 0.5) \
+	spawn_tween.tween_property(arrow, "position", start_pos + offset, 0.5) \
 		 .set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	tween.tween_property(arrow, "position", start_pos, 0.5) \
+	spawn_tween.tween_property(arrow, "position", start_pos, 0.5) \
 		 .set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 	# make the tween only update if the arrow is visible
-	tween.set_process_mode(Tween.TWEEN_PROCESS_IDLE)
-	tween.connect("finished", func(): _animate_arrow(arrow)) # if not looping
+	spawn_tween.set_process_mode(Tween.TWEEN_PROCESS_IDLE)
+	spawn_tween.connect("finished", func(): _animate_arrow(arrow)) # if not looping

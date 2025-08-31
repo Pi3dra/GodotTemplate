@@ -22,12 +22,10 @@ func update_buttons(available_cookies : Dictionary[Cookie.TYPE,int]):
 		buy.disabled = false
 		
 	#This here might be bugged
-	#print( available_cookies.has(cookie_type)  && available_cookies[cookie_type], cookie_type)
 	if available_cookies.has(cookie_type) && available_cookies[cookie_type] > 0:
 		sell.disabled = false
 	else:
 		sell.disabled = true
-	#print(sell.disabled)
 	
 	
 func update_panel(cookie : Cookie.TYPE, locked : bool):
@@ -58,14 +56,12 @@ func update_panel(cookie : Cookie.TYPE, locked : bool):
 signal buy_cookie(type, price)
 func _on_buy_pressed() -> void:
 	SoundManager.instance.play_sound("Click1", true, true)
-	print("emitted buy")
 	emit_signal("buy_cookie", cookie_type, cookie_price)
 
 
 signal sell_cookie(type, price)
 func _on_sell_pressed() -> void:
 	SoundManager.instance.play_sound("Click1", true, true)
-	print("emitted sell")
 	emit_signal("sell_cookie", cookie_type, cookie_price)
 
 

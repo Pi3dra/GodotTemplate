@@ -87,7 +87,6 @@ func _on_accept_pressed() -> void:
 	var counted_cookies : Dictionary[Cookie.TYPE, int]= {}
 	for cookie in chosen_cookies:
 		counted_cookies.set(cookie, counted_cookies.get_or_add(cookie,0) + 1)
-	print(counted_cookies)
 	emit_signal("selected_cookie_deck", counted_cookies)
 	queue_free()
 

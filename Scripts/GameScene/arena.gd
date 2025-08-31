@@ -1,7 +1,5 @@
 extends Node2D
 
-signal combat_over(is_combat_over: bool)
-
 @onready var enemies_spawners: Node2D = $EnemiesSpawners
 @onready var enemies_spawners_2: Node2D = $EnemiesSpawners2
 @onready var enemies_spawner_3: Node2D = $EnemiesSpawner3
@@ -75,7 +73,7 @@ func _ready() -> void:
 	
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if spawned_enemies.is_empty() and you_stop == false:
 		animation_player.play("Ending")
 		you_stop = true
@@ -117,7 +115,6 @@ func _on_visibility_changed() -> void:
 
 func get_tavern_info(pWave_info, pParty_info, reward1, reward2):
 	#region Wave_info
-	var lWaves_numb: int
 	var lEnnemies_par_wave = []
 	# Parce que ça marche pas avec le foooooooooor
 	var lWave_1: Array
@@ -127,7 +124,6 @@ func get_tavern_info(pWave_info, pParty_info, reward1, reward2):
 	lWave_2 = pWave_info[1]
 	lWave_3 = pWave_info[2]
 	
-	lWaves_numb = pWave_info.size() # Nb of waves
 	
 	for wave in pWave_info:
 		lEnnemies_par_wave.append(wave.size()) # This stock the nb of ennemies per wave
@@ -240,16 +236,6 @@ func combat_handler(Attack_info : Array, pSide, pShooter, pSelf):
 	if pShooter == true: 
 		pSelf.shoot(lEnemy_to_attack.position, pSelf.character.type)
 
-	print("Arena 
-	
-	
-	
-	
-	
-	
-	
-	CHAR: ",pSelf.character.type,"Damage:", lDamage, " to Enemy :", lEnemy_to_attack.character.health)
-	
 	if lCrit == true:
 		if shaker.is_playing(): shaker.stop()
 		else : shaker.start()

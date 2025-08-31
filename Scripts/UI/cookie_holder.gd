@@ -31,7 +31,6 @@ func create_button(cookie):
 
 ## Called when a child button is pressed
 func _on_button_down(button):
-	print("lol")
 	emit_signal("instantiate_cookie", button_cookies[button], button)
 	
 ## This is called by parent to prevent pulling cookies on accept phase

@@ -27,12 +27,6 @@ func _ready() -> void:
 	lTween.tween_callback(spawn_tavern).set_delay(1)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-
-
 func spawn_tavern():
 	var lTween: Tween = create_tween().set_parallel(true)
 	lTween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SPRING).tween_property(title, "scale", Vector2.ONE, 1)

@@ -53,13 +53,11 @@ static func filter_cookies_effect(cookie_list : Array, pCookie_effect :EFFECTYPE
 
 
 static func list_to_dict(cookie_list : Array[Cookie]) -> Dictionary:
-	print("Adding:", cookie_list)
 	var dict = {}
 	for value in TYPE.values():
 		dict[value] = []
 	for cookie in cookie_list:
 		dict[cookie.cookie_type].append(cookie)
-	print("Result:", dict)
 	return dict
 	
 ## Returns an empty dict of type Dictionary[COOKIETYPE, Array[Cookie]
@@ -71,9 +69,9 @@ static func type_dict() -> Dictionary:
 	
 #TODO: Might be good to have a function that returns the sprite of a given cookie type
 
-static func type_description(cookie_type) -> String:
+static func type_description(type) -> String:
 	var string = "defaultstring"
-	match cookie_type:
+	match type:
 		TYPE.Normal:
 			string = "Party Deals 100% more damage when this cookie lands on the correct side"
 		TYPE.Berserk:
@@ -98,9 +96,9 @@ static func type_description(cookie_type) -> String:
 			string = "If guessed correctly, on next flip all cookies have 25% more chance of landing in tails"
 	return string
 
-static func type_price(cookie_type) -> int:
+static func type_price(type) -> int:
 	var price = 0
-	match cookie_type:
+	match type:
 		TYPE.Normal:
 			price = 1
 		TYPE.Berserk:
@@ -123,11 +121,11 @@ static func type_price(cookie_type) -> int:
 			price = 4
 	return price
 
-static func type_sprite(cookie_type)  -> AtlasTexture:
+static func type_sprite(type)  -> AtlasTexture:
 	var head_atlas = AtlasTexture.new()
 	# TODO: Ceci est assez degeu, Solution, creer les Cookies une fois, et les garder
 	head_atlas.atlas = load("uid://cu2f2lwoupqox")
-	head_atlas.region = Rect2(0, cookie_type * 32, 32, 32)
+	head_atlas.region = Rect2(0, type * 32, 32, 32)
 	return head_atlas
 	
 

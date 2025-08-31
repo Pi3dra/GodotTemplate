@@ -42,11 +42,8 @@ func init_char(pCharacter: LogicalCharacter.TYPES):
 signal buy_character(character, price )
 func _on_texture_button_button_down() -> void:
 	emit_signal("buy_character", character, price)
-	print("bought")
-
 
 func _on_area_2d_mouse_entered() -> void:
-	print("test")
 	$HBoxContainer.show()
 	$TextureButton.show()
 	scale = Vector2(1.5,1.5)
