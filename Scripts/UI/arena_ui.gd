@@ -60,7 +60,7 @@ func _input(event: InputEvent) -> void:
 
 
 func _on_cookie_holder_instantiate_cookie(cookie: Cookie, button: Button) -> void:
-	if flip_button.text == "Accept":
+	if flip_button.text == "Next":
 		return
 		
 	var cookie_instance = cookie_tscn.instantiate()
@@ -95,7 +95,7 @@ func _on_button_pressed() -> void:
 		
 		if cookie_instances.size() < 1:
 			return
-		flip_button.text = "Accept"
+		flip_button.text = "Next"
 		
 		#### Handling pre flip Cookies
 		var weighted_cookies = active_cookies.get(Cookie.TYPE.Weighted)
@@ -108,10 +108,10 @@ func _on_button_pressed() -> void:
 			elif cookie.side == Cookie.SCREENSIDE.Tail:
 				tail_chance += 25
 		var head_cookies = active_cookies.get(Cookie.TYPE.Head)
-		head_chance += 15*head_cookies.size()
+		head_chance += 30*head_cookies.size()
 		
 		var tail_cookies = active_cookies.get(Cookie.TYPE.Tail)
-		tail_chance += 15*tail_cookies.size()
+		tail_chance += 30*tail_cookies.size()
 		
 		#### Cookie flipping
 		var correct_guesses : Array[Control]
@@ -163,10 +163,10 @@ func _on_button_pressed() -> void:
 		
 		if combat_cookie.size() > 0:
 			emit_signal("combat_cookies", combat_cookie, false)
-		if enemy_combat_cookie.size() > 0:
-			emit_signal("combat_cookies", enemy_combat_cookie, true)
+		#if enemy_combat_cookie.size() > 0:
+			#emit_signal("combat_cookies", enemy_combat_cookie, true)
 		
-	elif flip_button.text == "Accept":
+	elif flip_button.text == "Next":
 		erase_cookies()
 		
 

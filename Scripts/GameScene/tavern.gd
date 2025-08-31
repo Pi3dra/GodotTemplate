@@ -24,7 +24,7 @@ var level_reward2 :int
 var risked_biscuits = {}
 
 var possibles_starter: Array = [LogicalCharacter.TYPES.Knight, LogicalCharacter.TYPES.Wizard, LogicalCharacter.TYPES.Farmer, LogicalCharacter.TYPES.Necromancer, LogicalCharacter.TYPES.Ranger]
-var available_cookies : Dictionary[Cookie.TYPE, int]= {Cookie.TYPE.Normal : 12}
+var available_cookies : Dictionary[Cookie.TYPE, int]= {Cookie.TYPE.Normal : 5, Cookie.TYPE.Berserk : 2, Cookie.TYPE.Head : 2, Cookie.TYPE.Weighted: 1}
 @onready var partyfull: Label = $partyfull
 
 var finished_level = false

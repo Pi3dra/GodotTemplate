@@ -60,12 +60,12 @@ func attack() -> Array:
 	# Damage Boosting cookies
 	
 	var normal_cookies = active_cookies.get(Cookie.TYPE.Normal)
-	damage_multiplier += 0.5 * normal_cookies.size()
+	damage_multiplier += 2 * normal_cookies.size()
 	debug("Normal!", normal_cookies.size() > 0)
 	
 	# Berserk Cookie
 	var berserk_cookies = active_cookies.get(Cookie.TYPE.Berserk)
-	damage_multiplier += 2 * berserk_cookies.size()
+	damage_multiplier += 3 * berserk_cookies.size()
 	debug("Berserk!", berserk_cookies.size() > 0)
 	
 	# Critical Boosting Cookies
@@ -78,7 +78,7 @@ func attack() -> Array:
 	
 	var crit_info : Array  = calculate_crit(damage*damage_multiplier, critical_bonus)
 	var total_damage : float = crit_info[0]
-	print("x: ", damage_multiplier," d: ", total_damage, damage_multiplier," t: ", total_damage*damage_multiplier)
+	print("CharClass x: ", damage_multiplier," d: ", total_damage," t: ", total_damage*damage_multiplier)
 	# Damage using cookies
 	# Vampire cookie
 	var vampire_cookies = active_cookies.get(Cookie.TYPE.Vampire)
@@ -91,14 +91,14 @@ func attack() -> Array:
 	
 
 func calculate_crit(pDamage: float, pBonus_chance: float) -> Array:
-	randomize() # TODO Faut bouger ce truc qui pue ailleurs
+	randomize() 
 	pBonus_chance = clamp(pBonus_chance, 0.0, 1.0)
 	var lCrit_chance: float = crit 
 	var total_chance: float = clamp(lCrit_chance + pBonus_chance, 0.0, 1)
 	
 	var crit_triggered : bool = false
 	if randf() <= total_chance:
-		pDamage *= 1.5 
+		pDamage *= 2
 		crit_triggered = true
 
 	return [pDamage, crit_triggered]

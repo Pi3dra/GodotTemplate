@@ -16,15 +16,15 @@ func _ready() -> void:
 func char_to_price(character_type: LogicalCharacter.TYPES):
 	match character_type:
 		LogicalCharacter.TYPES.Wizard:
-			return 2
+			return 12 + randi()%4
 		LogicalCharacter.TYPES.Knight:
-			return 2
+			return 10 + randi()%4
 		LogicalCharacter.TYPES.Farmer:
-			return 2
+			return 3 + randi()%4
 		LogicalCharacter.TYPES.Pixie:
-			return 2
+			return 2 + randi()%4
 		LogicalCharacter.TYPES.Necromancer:
-			return 2
+			return 10 + randi()%4
 		_:
 			return 2
 

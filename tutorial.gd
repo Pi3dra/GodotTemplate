@@ -98,12 +98,10 @@ func get_dialog():
 				6:
 					dialog = "All cookies have special and different powers, visit the merchant to learn more"
 				7:
-					dialog = "And if you don't guess correctly enemies will get their buffs instead. (Except for odd bending Cookies)"
-				8:
 					dialog = "Also if you kill enemies, they will drop cookies!"
-				9:
+				8:
 					dialog = "You can come back at any time to test your party and your cookies!"
-				10:
+				9:
 					dialog = "end"
 	if dialog == "end" : 
 		Globals.current_tutorial = null
