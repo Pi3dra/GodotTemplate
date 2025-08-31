@@ -13,7 +13,9 @@ config_version=5
 config/name="New Game Project"
 run/main_scene="uid://dsrw2guvcxik7"
 config/features=PackedStringArray("4.4", "GL Compatibility")
+boot_splash/image="uid://cttmer8rfy4yu"
 config/icon="res://Assets/Sprites/icon.svg"
+boot_splash/minimum_display_time=10
 
 [audio]
 
