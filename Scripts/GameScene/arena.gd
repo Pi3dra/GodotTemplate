@@ -390,6 +390,7 @@ func _on_but_retry_pressed() -> void:
 	Main.instance.queue_free()
 	var lMain: Main = main_scene.instantiate()
 	get_tree().root.add_child(lMain)
+	
 
 func _on_but_win_pressed() -> void:
 	# mes yeux
