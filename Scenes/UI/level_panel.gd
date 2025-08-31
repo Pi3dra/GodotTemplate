@@ -57,15 +57,15 @@ func generate_level(difficulty : Difficulty):
 	match difficulty:
 		Difficulty.Hard:
 			used_enemies = 14
-			cookies = 20 + randi()%6
-			special_cookies = 1 + randi()%2
+			cookies = 60 + randi()%6
+			special_cookies = 5 + randi()%2
 		Difficulty.Medium:
 			used_enemies = randi() % 4 + 8
-			cookies = 4 + randi()%3
-			special_cookies = 1
+			cookies = 30 + randi()%3
+			special_cookies = 3 + randi()%2
 		Difficulty.Easy:
 			used_enemies = randi() % 2 + 3
-			cookies = 2 + randi()%3
+			cookies = 20 + randi()%3
 			special_cookies = 0
 			
 	reward_1.text = str(cookies) +" x Cookies"

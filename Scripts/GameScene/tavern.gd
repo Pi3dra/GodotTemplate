@@ -116,6 +116,8 @@ func spawn_characters() -> void:
 
 func buy_character(character, character_price):
 	SoundManager.instance.play_sound("Click4", true, false)
+	if character_price > available_cookies[Cookie.TYPE.Normal]:
+		return
 	# TODO Handle case when party is full
 	var party_slots = $Party.get_children()
 	var spawned = false
@@ -174,7 +176,7 @@ func cookie_selection(pWave_info: Array, reward1, reward2):
 	cookie_select_ui.instance.connect("selected_cookie_deck", update_after_cookie_selection)
 	
 	#restore cookies in case the player decides to choose something else
-	if !risked_biscuits.is_empty():
+	if !risked_biscuits.is_empty() and !finished_level:
 		for cookie in risked_biscuits.keys():
 			if available_cookies.has(cookie):
 				available_cookies[cookie] += risked_biscuits[cookie]
@@ -202,6 +204,7 @@ func _on_door_pressed() -> void:
 		SoundManager.instance.play_sound("Transition", true, true)
 		animation_player.play("Transition") # This will trigger switch_scene
 	else: SoundManager.instance.play_sound("Stopit", true, false)
+	finished_level = false
 
 func _on_merchant_pressed() -> void:
 	SoundManager.instance.play_sound("Click4", true, false)
@@ -289,7 +292,7 @@ func update_after_victory(characters,rewarded_cookies):
 		buyable_char_nodes[char].queue_free(
 		)
 	buyable_char_nodes.clear()
-	
+	finished_level = true
 	update_cookie_bar()
 	spawn_characters()
 	update_party_sprites()

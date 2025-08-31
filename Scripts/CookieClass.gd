@@ -75,9 +75,9 @@ static func type_description(cookie_type) -> String:
 	var string = "defaultstring"
 	match cookie_type:
 		TYPE.Normal:
-			string = "Party Deals 50% more damage when this cookie lands on the correct side"
+			string = "Party Deals 100% more damage when this cookie lands on the correct side"
 		TYPE.Berserk:
-			string ="Party Deals 100% more damage when this cookie lands on the correct side"
+			string ="Party Deals 200% more damage when this cookie lands on the correct side"
 		TYPE.Golden:
 			string = "10% more reward per mission if cookie lands correctly"
 		TYPE.Replay:
@@ -85,7 +85,7 @@ static func type_description(cookie_type) -> String:
 		TYPE.Healing:
 			string = "Heals the party by 35%, if guessed correctly"
 		TYPE.Vampire:
-			string = "Heals the party by a 35% of dealt damage, if guessed correctly"
+			string = "Heals the party by a 30% of dealt damage, if guessed correctly"
 		TYPE.Weighted:
 			string = "When guessed correctly, during the next flip all the cookies placed on the same side have 25% bonus chance of landing correctly"
 		TYPE.Crit:
@@ -93,9 +93,9 @@ static func type_description(cookie_type) -> String:
 		TYPE.Fast:
 			string = "If guessed correctly, party attacks 15% faster"
 		TYPE.Head:
-			string = "If guessed correctly, on next flip all cookies have 15% more chance of landing in heads"
+			string = "If guessed correctly, on next flip all cookies have 25% more chance of landing in heads"
 		TYPE.Tail:
-			string = "If guessed correctly, on next flip all cookies have 15% more chance of landing in tails"
+			string = "If guessed correctly, on next flip all cookies have 25% more chance of landing in tails"
 	return string
 
 static func type_price(cookie_type) -> int:

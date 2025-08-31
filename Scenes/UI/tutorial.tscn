@@ -35,9 +35,9 @@ autowrap_mode = 3
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
 offset_left = 32.0
-offset_top = 637.0
+offset_top = 623.0
 offset_right = 326.0
-offset_bottom = 687.0
+offset_bottom = 679.0
 theme = ExtResource("2_u8alk")
 theme_type_variation = &"Title"
 text = "INNKEEPER"
