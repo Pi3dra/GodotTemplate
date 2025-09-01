@@ -154,9 +154,9 @@ func _on_button_pressed() -> void:
 		
 		
 		# Handling Incorrectly guessed ones
-		var incorrect_guessed_cookies : Array[Cookie] = []
-		for cookie_node in incorrect_guesses:
-			incorrect_guessed_cookies.append(cookie_node.cookie)
+		#var incorrect_guessed_cookies : Array[Cookie] = []
+		#for cookie_node in incorrect_guesses:
+		#incorrect_guessed_cookies.append(cookie_node.cookie)
 
 		#var enemy_combat_cookie_list : Array[Cookie]  = Cookie.filter_cookies_effect(incorrect_guessed_cookies, Cookie.EFFECTYPE.Combat)
 		#var enemy_combat_cookie = Cookie.list_to_dict(enemy_combat_cookie_list)

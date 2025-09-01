@@ -223,12 +223,6 @@ func combat_handler(Attack_info : Array, pSide, pShooter, pSelf):
 		"Bad":
 			lList_to_pick = spawned_allies
 			
-	# TODO rajouter cas ou la liste est des allies ou des ennemis
-	#if spawned_enemies == []:
-		#return
-	#elif spawned_allies == []:
-		#return
-	# Erreur normale
 	if lList_to_pick.is_empty():
 		return
 	

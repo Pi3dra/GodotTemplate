@@ -5,7 +5,7 @@ signal pass_info_to_arena(ennemies_infos, party_info)
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var party: Node2D = $Party
-
+@onready var trainer = $Trainer/AnimatedSprite2D
 
 var char_scene: PackedScene = load("uid://b3y2sr2uweroy")
 var scene_arena: PackedScene = load("uid://ccgdngh77m0hc")
@@ -34,7 +34,6 @@ var buyable_char_nodes : Dictionary
 #//////////function//////////
 func _ready() -> void:
 	UI.instance.connect("beginning_finished", can_start)
-	
 	partyfull.hide()
 	spawn_characters()
 	spawn_party()
@@ -62,22 +61,10 @@ func spawn_party():
 		var lPlayer_type = possibles_starter.pick_random()
 		possibles_starter.erase(lPlayer_type)
 		party_info.append(lPlayer_type)
-		match lPlayer_type:
-			LogicalCharacter.TYPES.Knight:
-				lPlayers_spawned[0].sprite_frames = load("uid://b2ygb7ty6nyn7")
-				lPlayers_spawned[0].play("default")
-			LogicalCharacter.TYPES.Wizard:
-				lPlayers_spawned[0].sprite_frames = load("uid://ceggmtt6ni5yw")
-				lPlayers_spawned[0].play("default")
-			LogicalCharacter.TYPES.Farmer:
-				lPlayers_spawned[0].sprite_frames = load("uid://bsek4eo8s6x7f")
-				lPlayers_spawned[0].play("default")
-			LogicalCharacter.TYPES.Necromancer:
-				lPlayers_spawned[0].sprite_frames = load("uid://b28w73d4lebir")
-				lPlayers_spawned[0].play("default")
-			LogicalCharacter.TYPES.Ranger:
-				lPlayers_spawned[0].sprite_frames = load("uid://cd1mc8i0dxna8")
-				lPlayers_spawned[0].play("default")
+		#TODO This could be done easily with tavern_tscn and used 
+		lPlayers_spawned[0].sprite_frames = LogicalCharacter.char_to_sprite(lPlayer_type)
+		lPlayers_spawned[0].play("default")
+
 
 
 #region Random Character Spawner
@@ -111,10 +98,11 @@ func spawn_characters() -> void:
 		character.call_deferred("init_char",characters_to_spawn[i])
 		add_child(character)
 		character.connect("buy_character", buy_character)
-		buyable_char_nodes.set(characters_to_spawn[i], char)
+		buyable_char_nodes.set(characters_to_spawn[i], character)
 		character.global_position = positions[i]
 
 func buy_character(character, character_price):
+	print(character)
 	SoundManager.instance.play_sound("Click4", true, false)
 	if character_price > available_cookies[Cookie.TYPE.Normal]:
 		return
@@ -127,7 +115,7 @@ func buy_character(character, character_price):
 			slot.sprite_frames =  LogicalCharacter.char_to_sprite(character)
 			slot.play("default")
 			party_info.append(character)
-			buyable_char_nodes[character].queue_free()
+			buyable_char_nodes.get(character).queue_free()
 			buyable_char_nodes.erase(character)
 			spawned = true #Add only one
 	update_cookie_bar()
@@ -157,16 +145,7 @@ func switch_scene():
 	emit_signal("pass_info_to_arena", wave_info, party_info, level_reward1, level_reward2)
 
 
-func _on_board_pressed() -> void:
-	SoundManager.instance.play_sound("Click1", true, true)
-	if level_select_ui.instance != null and !finished_level :
-		level_select_ui.instance.show()
-		return
-	if level_select_ui.instance != null and finished_level:
-		level_select_ui.instance.queue_free()
-	var quest_ui: Control = scene_quest_ui.instantiate()
-	UI.instance.add_child(quest_ui)
-	level_select_ui.instance.connect("start_level", cookie_selection)
+
 	
 # After _on_board_pressed() we launch the cookie selection UI
 
@@ -194,7 +173,19 @@ func update_after_cookie_selection(cookies : Dictionary[Cookie.TYPE, int]):
 	risked_biscuits = cookies
 	for biscuit in risked_biscuits.keys():
 		available_cookies[biscuit] -= risked_biscuits[biscuit]
-		
+
+
+func _on_board_pressed() -> void:
+	SoundManager.instance.play_sound("Click1", true, true)
+	if level_select_ui.instance != null and !finished_level :
+		level_select_ui.instance.show()
+		return
+	if level_select_ui.instance != null and finished_level:
+		level_select_ui.instance.queue_free()
+	var quest_ui: Control = scene_quest_ui.instantiate()
+	UI.instance.add_child(quest_ui)
+	level_select_ui.instance.connect("start_level", cookie_selection)
+
 func _on_door_pressed() -> void:
 	if !wave_info.is_empty() and !risked_biscuits.is_empty():
 		SoundManager.instance.play_sound("Tavern", false)
@@ -210,6 +201,18 @@ func _on_merchant_pressed() -> void:
 	UI.instance.add_child(shop)
 	merchant_ui.instance.connect("update_cookies", update_after_merchant)
 	#marchant menu
+
+func _on_trainer_pressed() -> void:
+	SoundManager.instance.play_sound("Click4", true, false)
+	Globals.training = true
+	Globals.current_tutorial = tutorial.TUTORIALS.Combat
+	if !Globals.already_trained:
+		launch_tutorial()
+		
+	risked_biscuits = available_cookies
+	wave_info = [[LogicalCharacter.TYPES.Unkillable_Slime],[LogicalCharacter.TYPES.Unkillable_Slime],[LogicalCharacter.TYPES.Unkillable_Slime]]
+	if !wave_info.is_empty() and !risked_biscuits.is_empty():
+		animation_player.play("Transition") # This will trigger switch_scene
 	
 func update_after_merchant(cookies):
 	available_cookies = cookies
@@ -223,7 +226,7 @@ func _on_board_mouse_entered() -> void:
 	board.pivot_offset = board.size/2
 	board.scale = Vector2(1.5,1.5)
 	Cursor.instance.texture = Cursor.eye
-	
+
 func _on_board_mouse_exited() -> void:
 	board.pivot_offset = board.size/2
 	board.scale = Vector2(1,1)
@@ -242,26 +245,11 @@ func _on_door_mouse_entered() -> void:
 	door.pivot_offset = door.size/2
 	door.scale  = Vector2(1.5,1.5)
 	Cursor.instance.texture = Cursor.step
-	
+
 func _on_door_mouse_exited() -> void:
 	door.pivot_offset = door.size/2
 	door.scale  = Vector2(1,1)
 	Cursor.instance.texture = Cursor.basic
-
-@onready var trainer = $Trainer/AnimatedSprite2D
-func _on_trainer_pressed() -> void:
-	SoundManager.instance.play_sound("Click4", true, false)
-	Globals.training = true
-	Globals.current_tutorial = tutorial.TUTORIALS.Combat
-	if !Globals.already_trained:
-		launch_tutorial()
-		
-	risked_biscuits = available_cookies
-	wave_info = [[LogicalCharacter.TYPES.Unkillable_Slime],[LogicalCharacter.TYPES.Unkillable_Slime],[LogicalCharacter.TYPES.Unkillable_Slime]]
-	if !wave_info.is_empty() and !risked_biscuits.is_empty():
-		animation_player.play("Transition") # This will trigger switch_scene
-	
-		
 
 func _on_trainer_mouse_entered() -> void:
 	trainer.scale = Vector2(1.5,1.5)
@@ -294,9 +282,10 @@ func update_after_victory(characters,rewarded_cookies):
 	
 func update_party_sprites():
 	var party_slots = party.get_children()
+	
+	# TODO: this should rather be done in spawn_characters
 	for sprites in party_slots:
 		sprites.sprite_frames = null
-		
 	for character in party_info:
 		var chosen_slot = party_slots.pick_random()
 		chosen_slot.sprite_frames = LogicalCharacter.char_to_sprite(character)
@@ -305,6 +294,11 @@ func update_party_sprites():
 	finished_level = true
 			
 
+
+
+
+
+# TODO Rethink this
 var cookie_nodes = {}
 @onready var cookie_bar = $PanelContainer/CookierBar
 func update_cookie_bar():
