@@ -224,11 +224,6 @@ position = Vector2(453, 573)
 [node name="Marker2D3" type="Marker2D" parent="AllySpawners"]
 position = Vector2(438, 616)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_m30qt")
-}
-
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(661, 552)
 zoom = Vector2(2, 2)
@@ -238,5 +233,10 @@ position_smoothing_enabled = true
 _targets = [NodePath("../Camera2D")]
 duration = 0.2
 amplitude = Vector2(3, 3)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_m30qt")
+}
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

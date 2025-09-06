@@ -2,7 +2,7 @@ extends CanvasLayer
 
 class_name UI
 
-enum NAME { Merchant, CookieSelection, LevelSelection, Arena, Tutorial, Intro}
+enum NAME { Merchant, CookieSelection, LevelSelection, Arena, Tutorial, Intro, WinScreen, GameOver}
 
 var key_to_path : Dictionary[NAME,String] = {
 	NAME.Merchant : "uid://duf7bdfx04xnu",
@@ -10,7 +10,9 @@ var key_to_path : Dictionary[NAME,String] = {
 	NAME.CookieSelection : "uid://cgftnhlkpkt4h",
 	NAME.Arena : "uid://dpnhc72tu6qee",
 	NAME.Tutorial : "uid://blkj8daistf6e",
-	NAME.Intro : "uid://sfxssv6d0hly"
+	NAME.Intro : "uid://sfxssv6d0hly",
+	NAME.WinScreen : "uid://1cnkhmktcngn",
+	NAME.GameOver : "uid://b43j4xlbwfwoo"
 }
 
 static var manager : UIManager
@@ -22,6 +24,7 @@ func _ready() -> void:
 	instance = self
 	manager = UIManager.new()
 	manager.init_manager(key_to_path, self)
+	
 	UI.manager.call_overlay(NAME.Intro,self)
 	UI.manager.connect_to_caller(NAME.Intro, {"beginning_finished":after_ready})
 

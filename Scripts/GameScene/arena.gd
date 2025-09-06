@@ -89,9 +89,8 @@ func _check_wave_end(wave_index: int) -> void:
 			1:
 				animation_player.play("Ending2")
 			2:
-				var lWin_screen: Control = win_scene.instantiate()
-				add_child(lWin_screen)
-				lWin_screen.position = camera_2d.position #TODO remplacer ça par le ui layer
+				UI.manager.call_overlay(UI.NAME.WinScreen, self)
+				UI.manager.connect_to_caller(UI.NAME.WinScreen,{"switch_to_tavern":level_victory})
 		
 		wave_stopped[wave_index] = true
 		_for_each_spawned(spawned_allies, "no_attacking")
@@ -99,14 +98,17 @@ func _check_wave_end(wave_index: int) -> void:
 
 	# cas défaite si plus d'alliés
 	if spawned_allies.is_empty():
-		
-		var lGame_over: Control = game_over_scene.instantiate()
-		add_child(lGame_over)
-		lGame_over.position = camera_2d.position #TODO remplacer ça par la pos du UI layer
-		
+		UI.manager.call_overlay(UI.NAME.GameOver, self)
 		wave_stopped[wave_index] = true
 		_for_each_spawned(enemies_list, "no_attacking")
 		return
+# Goes back to tavern
+func level_victory():
+	var tavern = get_parent().get_child(0)
+	tavern.show()
+	tavern.get_node("Camera2D").enabled = true
+	tavern.get_node("AnimationPlayer").play("RESET")
+	queue_free()
 
 # Helper pour appeler une méthode sur tous les nodes d'un tableau
 func _for_each_spawned(nodes: Array, method_name: String) -> void:
@@ -346,4 +348,6 @@ func quit_tutorial() -> void:
 	tavern.show()
 	tavern.get_node("Camera2D").enabled = true
 	tavern.get_node("AnimationPlayer").play("RESET")
+	SoundManager.instance.play_sound("Level3", false)
+	SoundManager.instance.play_sound("Tavern", true)
 	queue_free()

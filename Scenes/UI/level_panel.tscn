@@ -62,10 +62,13 @@ offset_left = -0.121994
 offset_top = 0.143982
 offset_right = 0.0130005
 offset_bottom = -135.808
+alignment = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
 custom_minimum_size = Vector2(250, 128)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme = ExtResource("2_kdjnp")
 
 [node name="EnemyDisplay" type="BoxContainer" parent="VBoxContainer/PanelContainer"]
@@ -79,9 +82,15 @@ layout_mode = 2
 
 [node name="RewardTitle" type="Label" parent="VBoxContainer"]
 layout_mode = 2
+theme = ExtResource("2_kdjnp")
+theme_type_variation = &"TextBox"
 text = "REWARDS"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Spacer2" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
 
 [node name="TextContainer" type="BoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -96,6 +105,8 @@ texture = SubResource("AtlasTexture_cigow")
 
 [node name="Reward1" type="Label" parent="VBoxContainer/TextContainer/HBoxContainer"]
 layout_mode = 2
+theme = ExtResource("2_kdjnp")
+theme_type_variation = &"TextBox"
 text = "Cookies : "
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/TextContainer"]
@@ -107,10 +118,12 @@ texture = SubResource("AtlasTexture_vpru0")
 
 [node name="Reward2" type="Label" parent="VBoxContainer/TextContainer/HBoxContainer2"]
 layout_mode = 2
+theme = ExtResource("2_kdjnp")
+theme_type_variation = &"TextBox"
 text = "Special :"
 
 [node name="Spacer2" type="Control" parent="VBoxContainer/TextContainer"]
-custom_minimum_size = Vector2(0, 100)
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 
 [node name="Button" type="Button" parent="VBoxContainer"]
