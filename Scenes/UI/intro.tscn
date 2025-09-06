@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://sfxssv6d0hly"]
 
-[ext_resource type="Script" uid="uid://bqyiqkgchrden" path="res://Scripts/UI/ui.gd" id="1_mgno7"]
 [ext_resource type="Texture2D" uid="uid://bbmwn81f77iqu" path="res://Assets/Sprites/SpriteSheet/UI assets (2x).png" id="2_8vcrw"]
+[ext_resource type="Script" uid="uid://blc2ttvvl054x" path="res://Scenes/UI/intro.gd" id="2_mgno7"]
 [ext_resource type="FontFile" uid="uid://b0ndjepym4tga" path="res://Assets/Themes/Fonts/FantasyRPGtitle (size 11).ttf" id="3_x8gbl"]
 [ext_resource type="FontFile" uid="uid://dof8pnvm3ew3v" path="res://Assets/Themes/Fonts/Jacquard12-Regular.ttf" id="4_tkstg"]
 [ext_resource type="Shader" uid="uid://c4xsqigo7i03g" path="res://Shaders/transition.gdshader" id="5_djce0"]
@@ -38,10 +38,7 @@ shader_parameter/clock_feather = 0.0
 shader_parameter/progress = -1.0
 shader_parameter/progress_bias = Vector2(0, 0)
 
-[node name="Ui" type="CanvasLayer"]
-script = ExtResource("1_mgno7")
-
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -55,8 +52,9 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(386.5, 261)
 texture = SubResource("AtlasTexture_alcrr")
+script = ExtResource("2_mgno7")
 
-[node name="Title" type="TextureRect" parent="TextureRect"]
+[node name="Title" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -71,7 +69,7 @@ pivot_offset = Vector2(169.5, 75.5)
 theme = SubResource("Theme_mbl0m")
 texture = SubResource("AtlasTexture_s3gqk")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="TextureRect/Title"]
+[node name="RichTextLabel" type="RichTextLabel" parent="Title"]
 layout_mode = 0
 offset_left = 58.0
 offset_top = 3.0
@@ -84,7 +82,7 @@ theme_override_font_sizes/bold_font_size = 94
 bbcode_enabled = true
 text = "[b][shake rate=10.0 level=5 connected=1]Risky[/shake][/b]"
 
-[node name="Title2" type="TextureRect" parent="TextureRect"]
+[node name="Title2" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -102,7 +100,7 @@ pivot_offset = Vector2(213.5, 72)
 theme = SubResource("Theme_mbl0m")
 texture = SubResource("AtlasTexture_s3gqk")
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="TextureRect/Title2"]
+[node name="RichTextLabel2" type="RichTextLabel" parent="Title2"]
 layout_mode = 0
 offset_left = 78.0
 offset_top = 3.0
@@ -116,11 +114,15 @@ bbcode_enabled = true
 text = "[b][shake rate=10.0 level=5 connected=1]Cookies[/shake][/b]"
 
 [node name="ColorRect" type="ColorRect" parent="."]
-visible = false
 material = SubResource("ShaderMaterial_alcrr")
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -298.0
+offset_top = -133.0
+offset_right = 303.0
+offset_bottom = 120.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.0177324, 0.0177324, 0.0177324, 1)
+color = Color(0.0196078, 0.0196078, 0.0196078, 1)

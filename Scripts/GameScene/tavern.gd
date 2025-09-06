@@ -27,7 +27,6 @@ var buyable_char_nodes : Dictionary
 
 #//////////function//////////
 func _ready() -> void:
-	UI.instance.connect("beginning_finished", can_start)
 	partyfull.hide()
 	choose_starter_character()
 	spawn_characters()
@@ -36,15 +35,9 @@ func _ready() -> void:
 	update_cookie_bar()
 	
 
-func can_start():
-	SoundManager.instance.play_sound("Tavern", true, false)
-
 func launch_tutorial():
 	if Globals.current_tutorial != null:
 		UI.manager.call_overlay(UI.NAME.Tutorial,self)
-
-
-
 
 #region Random Character Spawner
 
@@ -160,7 +153,7 @@ func update_after_cookie_selection(risked_biscuits : Dictionary[Cookie.TYPE, int
 	else: 
 		SoundManager.instance.play_sound("Stopit", true, false)
 	finished_level = false
-	
+
 	
 func switch_scene():
 	var level_information : Dictionary
@@ -186,7 +179,8 @@ func _on_merchant_pressed() -> void:
 	var ui_name = UI.NAME.Merchant
 	UI.manager.call_overlay(ui_name,self,available_cookies)
 	UI.manager.connect_signals(ui_name, {} , {"exited_merchant" : update_after_merchant})
-	
+
+
 func update_after_merchant(cookies):
 	available_cookies = cookies
 	update_cookie_bar()
@@ -309,8 +303,8 @@ func update_cookie_bar():
 
 func data_is_empty(data):
 	var empty : bool = true
-	for key in level_data.keys():
-		empty = empty and level_data[key].is_empty()
+	for key in data.keys():
+		empty = empty and data[key].is_empty()
 	return empty
 
 #endregion
