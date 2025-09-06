@@ -1,25 +1,25 @@
 extends Control
 
-class_name merchant_ui
-
-static var instance 
-
 var current_index = 0
 var current_panels = []
+
 @onready var right_button = $VBoxContainer/HBoxContainer2/Right
 @onready var left_button = $VBoxContainer/HBoxContainer2/Left 
 @onready var cookie_bar: HBoxContainer = $VBoxContainer/PanelContainer/CookierBar
 
-var available_cookies : Dictionary[Cookie.TYPE, int] = {}
+var available_cookies : Dictionary = {} #[Cookie.Type, int]
 var cookie_nodes : Dictionary [Cookie.TYPE, Array]= {} # [Cookie.TYPE, [Label, TextureRect]
 
 func _ready():
-	instance = self
+	available_cookies = UI.manager.get_data(UI.NAME.Merchant) 
 	for child in $VBoxContainer/HBoxContainer2.get_children():
 		if child is not Button:
 			current_panels.append(child)
 			child.connect("buy_cookie", buy_cookie)
 			child.connect("sell_cookie", sell_cookie)
+	update_panels()
+	update_button_status()
+	update_cookie_bar()
 	
 func buy_cookie(cookietype, price):
 	available_cookies[Cookie.TYPE.Normal] -= price
@@ -99,20 +99,12 @@ func update_button_status():
 	elif current_index  < Cookie.TYPE.values().size() - 2:
 		right_button.disabled = false
 	
-func set_available_cookies(cookies):
-	available_cookies = cookies
-	#cookie_nodes = init_cookie_bar(available_cookies)
-	update_panels()
-	update_button_status()
-	update_cookie_bar()
-	
-	
 
-signal update_cookies(cookies)
+signal exited_merchant(cookies)
 func _on_exit_pressed() -> void:
 	SoundManager.instance.play_sound("Click2", true, false)
-	emit_signal("update_cookies", available_cookies )
-	queue_free()
+	emit_signal("exited_merchant", available_cookies )
+	UI.manager.remove_overlay(UI.NAME.Merchant)
 
 
 func _on_exit_mouse_entered() -> void:

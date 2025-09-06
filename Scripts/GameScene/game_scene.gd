@@ -6,7 +6,8 @@ static var instance
 
 ## Register of all the characters existing
 static var pokedex = {
-							#6
+	#TODO Move this to resources!
+							
 	# Good Ones
 	LogicalCharacter.TYPES.Knight : {"Health": 210, "Damage": 20.0, "Speed": 4.1, "Crit": 0.2, "Sprite": "uid://b2ygb7ty6nyn7", "Side": "Good", "Shooter": false},
 	LogicalCharacter.TYPES.Farmer : {"Health": 190, "Damage": 10.0, "Speed": 4.3, "Crit": 0.1, "Sprite": "uid://bsek4eo8s6x7f", "Side": "Good", "Shooter": false},

@@ -51,9 +51,7 @@ var level_reward1: int
 var level_reward2:int
 var selected_special
 #//////////function//////////
-func _init():
-	area_ui.instance.connect("combat_cookies", update_active_cookies)
-	area_ui.instance.connect("tutorial_exit", quit_tutorial)
+
 	
 func _ready() -> void:
 	get_parent().get_child(0).connect("pass_info_to_arena", get_tavern_info)
@@ -69,7 +67,12 @@ func _ready() -> void:
 	
 	for pos: Marker2D in ally_spawners.get_children():
 		allies_spawn_pos.append(pos.position)
-	
+		
+	var signal_mappings = {
+		"combat_cookies" : update_active_cookies,
+		"tutorial_exit" : quit_tutorial,
+	}
+	UI.manager.connect_to_caller(UI.NAME.Arena, signal_mappings)
 	
 
 
@@ -113,7 +116,11 @@ func _on_visibility_changed() -> void:
 		pass
 	
 
-func get_tavern_info(pWave_info, pParty_info, reward1, reward2):
+func get_tavern_info(level_data):
+	var pWave_info = level_data["WaveInfo"]
+	var pParty_info = level_data["PartyInfo"]
+	var reward1 = level_data["Rewards"].values()[0]
+	var reward2 = level_data["Rewards"].values()[1]
 	#region Wave_info
 	var lEnnemies_par_wave = []
 	# Parce que ça marche pas avec le foooooooooor
@@ -205,6 +212,7 @@ func create_character(pChar_name: LogicalCharacter.TYPES):
 				spawned_enemies2.append(lCharScene)
 			else: spawned_enemies.append(lCharScene)
 
+signal drop_cookie(cookie : Cookie, drop_position : Vector2)
 func combat_handler(Attack_info : Array, pSide, pShooter, pSelf):
 	var lList_to_pick : Array[Node2D] = []
 	
@@ -249,7 +257,7 @@ func combat_handler(Attack_info : Array, pSide, pShooter, pSelf):
 				random_cookie = Cookie.pick_random_special()
 			else:
 				random_cookie = Cookie.TYPE.Normal
-			area_ui.instance.instantiate_cookie(Cookie.new("","",random_cookie),screen_pos)
+			emit_signal("drop_cookie",Cookie.new(random_cookie), screen_pos )
 
 		if shaker.is_playing(): shaker.stop()
 		else : shaker.start()
@@ -289,7 +297,7 @@ func win_anim_allies2():
 		lTween.tween_property(allies, "position", enemies_spawn_pos2.pick_random(), 4)
 
 func spawn_ui():
-	area_ui.instance.show()
+	UI.manager.show_overlay(UI.NAME.Arena)
 	if Globals.training and !Globals.already_trained :
 		tutorial.instance.show()
 	for enemies in spawned_enemies:
@@ -298,7 +306,7 @@ func spawn_ui():
 			allies.attacking()
 
 func wave2():
-	area_ui.instance.show()
+	UI.manager.show_overlay(UI.NAME.Arena)
 	for enemies in spawned_enemies2:
 			enemies.attacking()
 	for allies in spawned_allies:
@@ -309,7 +317,7 @@ func wave2():
 	shaker.origins.append(camera_2d.position)
 
 func wave3():
-	area_ui.instance.show()
+	UI.manager.show_overlay(UI.NAME.Arena)
 	for enemies in spawned_enemies3:
 			enemies.attacking()
 	for allies in spawned_allies:
@@ -323,7 +331,7 @@ func wave3():
 func lose():
 	move_child(color_rect_2, get_children().size())
 	color_rect_2.position = camera_2d.global_position - Vector2(color_rect_2.pivot_offset.x,color_rect_2.pivot_offset.y)
-	area_ui.instance.hide()
+	UI.manager.hide_overlay(UI.NAME.Arena)
 	SoundManager.instance.play_sound("Level1", false)
 	SoundManager.instance.play_sound("Level2", false)
 	SoundManager.instance.play_sound("Level3", false)
@@ -348,7 +356,7 @@ func winning():
 	for allies in spawned_allies:
 		allies.animated_sprite.play("default")
 	
-	area_ui.instance.hide()
+	UI.manager.hide_overlay(UI.NAME.Arena)
 
 @onready var reward_1: Label = $ControlWin/PanelContainer/VBoxContainer/HBoxContainer/Reward1
 @onready var reward_2: Label = $ControlWin/PanelContainer/VBoxContainer/HBoxContainer2/Reward2

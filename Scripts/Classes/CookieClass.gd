@@ -2,14 +2,10 @@ class_name Cookie
 
 enum TYPE {Normal, Berserk, Crit, Golden, Replay, Healing, Vampire, Weighted, Fast, Head, Tail}
 enum EFFECTYPE {Chance, Combat}
-enum SCREENSIDE {Head, Tail, Unchosen}
 enum STATE {Head, Tail, Unflipped}
 
-var id
-var description
 var cookie_type : TYPE
 var effect_type : EFFECTYPE
-var side : SCREENSIDE
 var state : STATE
 var chance : int = 50
 
@@ -18,11 +14,8 @@ var head_texture : AtlasTexture
 var shadow_texture = preload("uid://kc4ef7j3bwdl")
 var spritesheet = preload("uid://cu2f2lwoupqox")
 
-func _init(pId, pDescription, pCookie_type):
-	side = SCREENSIDE.Unchosen
-	id = pId
+func _init( pCookie_type):
 	state = STATE.Unflipped
-	description = pDescription
 	cookie_type = pCookie_type
 	
 	var head_atlas = AtlasTexture.new()

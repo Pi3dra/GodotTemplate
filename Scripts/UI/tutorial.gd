@@ -49,6 +49,7 @@ func hide_arrows():
 	for arrow in arrows:
 		arrow.hide()
 
+#TODO This could easily be translated into resources
 func get_dialog():
 	var dialog : String = ""
 	match current_tutorial:
@@ -107,7 +108,8 @@ func get_dialog():
 		Globals.current_tutorial = null
 		if current_tutorial == TUTORIALS.Combat:
 			Globals.already_trained = true
-		queue_free()
+		
+		UI.manager.remove_overlay(UI.NAME.Tutorial)
 	if dialog != "": current_text_line += 1
 	return dialog
 	

@@ -16,11 +16,15 @@ enum Difficulty { Easy, Medium, Hard}
 
 # This is bubbled up to the arena
 var waves
-
 var level_difficulty
+
+
 var reward1
 var reward2
 var wave_info
+
+var level_data = {"WaveInfo" : [] , "Rewards" : {}}
+
 
 var spriteorder = {LogicalCharacter.TYPES.Skeleton : 1, LogicalCharacter.TYPES.Slime : 4, LogicalCharacter.TYPES.Spider : 3,
 	LogicalCharacter.TYPES.Orc : 5, LogicalCharacter.TYPES.Witch : 2, LogicalCharacter.TYPES.Goblin:0,
@@ -96,10 +100,10 @@ func generate_level(difficulty : Difficulty):
 		head_display.add_child(label)
 		
 	# This gets sent through signal
-	wave_info = enemy_waves 
 	level_difficulty = difficulty
-	reward1 = cookies
-	reward2 = special_cookies
+	
+	level_data["WaveInfo"] = enemy_waves 
+	level_data["Rewards"] = {Cookie.TYPE.Normal : cookies, Cookie.pick_random_special() : special_cookies}
 	
 func distribute_enemies(number_of_enemies):
 	randomize()
@@ -135,10 +139,10 @@ func pick_enemies(waves_distribution : Array, difficulty : Difficulty):
 	return {"Waves" : enemy_waves, "Counter" : enemy_counter}
 	
 
-signal wave_information(wave)
+signal wave_information(level_data)
 func _on_button_pressed() -> void:
 	SoundManager.instance.play_sound("Click1", true, true)
-	emit_signal("wave_information", wave_info, reward1, reward2)
+	emit_signal("wave_information", level_data)
 
 
 func _on_button_mouse_entered() -> void:

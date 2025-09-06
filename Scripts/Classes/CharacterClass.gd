@@ -46,11 +46,19 @@ func receive_cookie_POWER(received_cookies: Dictionary):
 			
 	var healing_cookies = active_cookies.get(Cookie.TYPE.Healing)
 	health += (health/3)*healing_cookies.size()
-	debug("Healed!", healing_cookies.size() > 0)
+	debug("Healed! " + str(health), healing_cookies.size() > 0)
 	
+	
+	# TODO: this is bugged if timer reduction > attack_speed
 	var fast_cookies = active_cookies.get(Cookie.TYPE.Fast)
-	var timer_reduction = (attack_speed*0.15) * fast_cookies.size()
+	#var timer_reduction = (attack_speed*0.15) * fast_cookies.size()
+
+	var timer_reduction = 0
+	for i in range(fast_cookies.size()):
+		timer_reduction = attack_speed*0.15
+		attack_speed = attack_speed - timer_reduction
 	attack_speed -= timer_reduction #this might possibly make it permanent between runs lol, It's a feature
+	debug("Speed! " + str(attack_speed), fast_cookies.size() > 0)
 			
 
 

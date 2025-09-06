@@ -1,19 +1,12 @@
 extends Control
 
-class_name area_ui
 
-# TODO Enlever warnings
-# TODO Refactor 
-# TODO Enlever Heads or tails, keep only head for the user
 
-static var instance
 var cookie_tscn : PackedScene = load("res://Scenes/UI/cookie.tscn")
 var cookie_list : Array[Cookie]
 var cookie_instances : Array [Control] = []
 var selected_cookie : Control
 
-var screen_size : Vector2 
-var screen_middle : float
 
 var active_cookies = Cookie.type_dict() #Dictionary[TYPE, Array[Cookie]]
 
@@ -21,42 +14,26 @@ var active_cookies = Cookie.type_dict() #Dictionary[TYPE, Array[Cookie]]
 @onready var cookie_holder = $PanelContainer/CookieHolder
 
 func _ready() -> void:
-	hide()
+	var cookies = UI.manager.get_data(UI.NAME.Arena)
+	for cookie in cookies.keys():
+		for i in range(cookies.get(cookie)):
+			cookie_list.append(Cookie.new(cookie))
+	cookie_holder.create_buttons(cookie_list)
+	
+	UI.manager.connect_to_ui(UI.NAME.Arena,{"drop_cookie":instantiate_cookie})
+	
+	#hide()
 	var tutorialbutton = $TutorialExit
 	if Globals.training:
 		tutorialbutton.show()
 	else:
 		tutorialbutton.hide()
-	
 	$Flip.position.y -= 120
-	instance = self
-	screen_size = get_viewport().get_visible_rect().size
-	screen_middle = screen_size.x/2
-
-
-# Called after instantiation Effet de BORD!
-func init(cookies : Dictionary):
-	for cookie in cookies.keys():
-		for i in range(cookies.get(cookie)):
-			cookie_list.append(Cookie.new("","",cookie))
-	cookie_holder.create_buttons(cookie_list)
-
-func _draw() -> void:
-	var from = Vector2(screen_middle, screen_size.y)
-	var to = Vector2(screen_middle, 0)
-	
-	draw_line(to, from, Color.WHITE,2 )
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and !event.pressed and selected_cookie != null and get_global_mouse_position().y > 200:
 			selected_cookie.following = false
-			if selected_cookie.position.x < screen_middle:
-				if selected_cookie.cookie.side == Cookie.SCREENSIDE.Unchosen:
-					selected_cookie.cookie.side = Cookie.SCREENSIDE.Head
-			else:
-				if selected_cookie.cookie.side == Cookie.SCREENSIDE.Unchosen:
-					selected_cookie.cookie.side = Cookie.SCREENSIDE.Head
 			selected_cookie = null
 			
 
@@ -83,10 +60,6 @@ func instantiate_cookie(cookie: Cookie, pos):
 	cookie_instance.position = pos
 	cookie_instance.following = false
 	selected_cookie = null
-	if cookie_instance.position.x < screen_middle:
-		cookie_instance.cookie.side = Cookie.SCREENSIDE.Head
-	else:
-		cookie_instance.cookie.side = Cookie.SCREENSIDE.Head
 	add_child(cookie_instance)
 	cookie_instance.animate_spawning()
 
@@ -102,18 +75,17 @@ func _on_button_pressed() -> void:
 		#### Handling pre flip Cookies
 		var weighted_cookies = active_cookies.get(Cookie.TYPE.Weighted)
 		var head_chance = 0
-		var tail_chance = 0
-		for cookie in weighted_cookies:
-			# TODO put this to 15
-			if cookie.side == Cookie.SCREENSIDE.Head:
-				head_chance += 25
-			elif cookie.side == Cookie.SCREENSIDE.Tail:
-				tail_chance += 25
-		var head_cookies = active_cookies.get(Cookie.TYPE.Head)
-		head_chance += 30*head_cookies.size()
+		#for cookie in weighted_cookies:
+		#	# TODO put this to 15
+		#	if cookie.side == Cookie.SCREENSIDE.Head:
+		#		head_chance += 25
 		
-		var tail_cookies = active_cookies.get(Cookie.TYPE.Tail)
-		tail_chance += 30*tail_cookies.size()
+		var head_cookies = active_cookies.get(Cookie.TYPE.Head)
+		head_chance += 15*head_cookies.size()
+		
+		# TODO: Leave only weihgted cookie
+		#var tail_cookies = active_cookies.get(Cookie.TYPE.Tail)
+		#tail_chance += 30*tail_cookies.size()
 		
 		#### Cookie flipping
 		var correct_guesses : Array[Control]
@@ -121,28 +93,21 @@ func _on_button_pressed() -> void:
 	
 		for cookie_node in cookie_instances:
 			var cookie_object : Cookie = cookie_node.cookie
+			cookie_node.flip_coin(cookie_object.chance + head_chance)
 			
-			if cookie_object.side == Cookie.SCREENSIDE.Head:
-				cookie_node.flip_coin(cookie_object.chance + head_chance)
-			elif cookie_object.side == Cookie.SCREENSIDE.Tail:
-				cookie_node.flip_coin(cookie_object.chance - tail_chance)
-			
-			if cookie_object.state == cookie_object.side:
+			if cookie_object.state == Cookie.STATE.Head:
 				correct_guesses.append(cookie_node)
-			else:
+			elif cookie_object.state == Cookie.STATE.Tail:
 				incorrect_guesses.append(cookie_node)
-			
+
 			match cookie_object.cookie_type:
 				Cookie.TYPE.Replay:
 					if randf() > 0.5:
 						cookie_holder.create_button(cookie_object)
-				
-		for cookie in incorrect_guesses:
-			cookie.make_red()
-			
+
 		# Clear old effects:
 		active_cookies.clear()
-		
+
 		# Handling correctly guessed cookies 
 		var correct_guessed_cookies : Array[Cookie] = []
 		for cookie_node in correct_guesses:
@@ -188,7 +153,7 @@ func _on_tutorial_exit_pressed() -> void:
 	Globals.training = false
 	if tutorial.instance != null:
 		tutorial.instance.queue_free()
-	queue_free()
+	UI.manager.remove_overlay(UI.NAME.Arena)
 
 func _on_flip_mouse_entered() -> void:
 	Cursor.instance.texture = Cursor.point

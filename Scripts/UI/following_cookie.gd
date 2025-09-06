@@ -23,10 +23,6 @@ func _gui_input(event: InputEvent) -> void:
 			following = true
 		elif  event.button_index == MOUSE_BUTTON_LEFT and !event.pressed and following and get_global_mouse_position().y > 200:
 			following = false
-			if position.x < screen_middle:
-				cookie.side = Cookie.SCREENSIDE.Head
-			else:
-				cookie.side = Cookie.SCREENSIDE.Tail
 
 func _process(_delta: float) -> void:
 	if following:
@@ -55,17 +51,19 @@ func do_flip_animation():
 	up_tween.set_trans(Tween.TRANS_CUBIC)
 	up_tween.tween_property(texture_rect, "position:y", texture_rect.position.y - 126, 0.02*10 )
 	var duration = 0.02
+	# FLipping
 	for i in range(5):
 		flip_tween.tween_property(texture_rect, "scale:y", 0, duration)
 		flip_tween.tween_callback(Callable(self, "_swap_side"))
 		flip_tween.tween_property(texture_rect, "scale:y", 1, duration)
 		duration += 0.02
 	up_tween.tween_property(texture_rect, "position:y", texture_rect.position.y, 0.02*10 ) 
-	update_sprite()
+	#update_sprite()
+	flip_tween.tween_callback(update_sprite)
+	flip_tween.tween_callback(make_red)
 
 ## Waits for the tween to stop to display the correct sprite
 func update_sprite():
-	await flip_tween.finished
 	if cookie.state == Cookie.STATE.Head:
 		texture_rect.texture = cookie.head_texture
 	elif cookie.state == Cookie.STATE.Tail :
@@ -74,7 +72,8 @@ func update_sprite():
 ## Makes Cookie red when guessed wrong 
 func make_red():
 	await flip_tween.finished
-	texture_rect.modulate = Color(1, 0, 0, 1)
+	if cookie.state == Cookie.STATE.Tail:
+		texture_rect.modulate = Color(1, 0, 0, 1)
 
 func _swap_side():
 	if texture_rect.texture == cookie.tail_texture:
@@ -85,8 +84,6 @@ func _swap_side():
 
 func _on_mouse_entered() -> void:
 	Cursor.instance.texture = Cursor.can_grab
-
-
 func _on_mouse_exited() -> void:
 	Cursor.instance.texture = Cursor.basic
 
