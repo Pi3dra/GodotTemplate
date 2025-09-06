@@ -1,0 +1,84 @@
+[gd_scene load_steps=6 format=3 uid="uid://1cnkhmktcngn"]
+
+[ext_resource type="Script" uid="uid://bowb2vfviis7r" path="res://Scripts/UI/win.gd" id="1_cgn5s"]
+[ext_resource type="Theme" uid="uid://dadlocyhpxvuk" path="res://Assets/Themes/ArenaTheme.tres" id="1_vnfq8"]
+[ext_resource type="FontFile" uid="uid://b0ndjepym4tga" path="res://Assets/Themes/Fonts/FantasyRPGtitle (size 11).ttf" id="2_cgn5s"]
+[ext_resource type="Texture2D" uid="uid://cu2f2lwoupqox" path="res://Assets/Sprites/SpriteSheet/CookieSheet.png" id="3_7bgfe"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tsjor"]
+atlas = ExtResource("3_7bgfe")
+region = Rect2(0, 0, 32, 31)
+
+[node name="Win" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cgn5s")
+
+[node name="ButWin" type="Button" parent="."]
+layout_mode = 0
+offset_left = 626.0
+offset_top = 504.0
+offset_right = 757.0
+offset_bottom = 552.0
+theme = ExtResource("1_vnfq8")
+theme_override_fonts/font = ExtResource("2_cgn5s")
+theme_override_font_sizes/font_size = 24
+text = "TAVERN"
+
+[node name="WIN" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 578.0
+offset_top = 256.0
+offset_right = 818.0
+offset_bottom = 328.0
+theme_override_fonts/normal_font = ExtResource("2_cgn5s")
+theme_override_font_sizes/normal_font_size = 52
+bbcode_enabled = true
+text = "[rainbow freq=0.5 sat=0.8 val=0.8 speed=0.5][wave amp=50.0 freq=4.0 connected=1]YOU WIN[/wave][/rainbow]"
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = 570.0
+offset_top = 346.0
+offset_right = 810.0
+offset_bottom = 491.0
+theme = ExtResource("1_vnfq8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Rewards"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Reward1" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_vnfq8")
+theme_type_variation = &"Text"
+text = "10X"
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_tsjor")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Reward2" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme = ExtResource("1_vnfq8")
+theme_type_variation = &"Text"
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[connection signal="pressed" from="ButWin" to="." method="_on_but_win_pressed"]

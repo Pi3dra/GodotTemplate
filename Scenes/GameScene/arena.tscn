@@ -1,12 +1,8 @@
-[gd_scene load_steps=18 format=3 uid="uid://ccgdngh77m0hc"]
+[gd_scene load_steps=11 format=3 uid="uid://ccgdngh77m0hc"]
 
 [ext_resource type="Script" uid="uid://ctqaycr8567lg" path="res://Scripts/GameScene/arena.gd" id="1_ir3ek"]
-[ext_resource type="Shader" uid="uid://c4xsqigo7i03g" path="res://Shaders/transition.gdshader" id="1_m30qt"]
 [ext_resource type="PackedScene" uid="uid://mbpwvbww4e0w" path="res://Scenes/GameScene/background.tscn" id="2_jo8k4"]
 [ext_resource type="PackedScene" uid="uid://bxvt4j1mm8xyq" path="res://Scenes/Tools/shaker.tscn" id="3_6qpk1"]
-[ext_resource type="FontFile" uid="uid://b0ndjepym4tga" path="res://Assets/Themes/Fonts/FantasyRPGtitle (size 11).ttf" id="5_oyia7"]
-[ext_resource type="Theme" uid="uid://dadlocyhpxvuk" path="res://Assets/Themes/ArenaTheme.tres" id="6_u8lxs"]
-[ext_resource type="Texture2D" uid="uid://cu2f2lwoupqox" path="res://Assets/Sprites/SpriteSheet/CookieSheet.png" id="7_u8lxs"]
 
 [sub_resource type="Animation" id="Animation_m30qt"]
 resource_name = "Ending"
@@ -94,41 +90,17 @@ tracks/0/keys = {
 "method": &"death_screen"
 }]
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ColorRect2:material:shader_parameter/progress")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [-5.0, 2.0]
-}
 
 [sub_resource type="Animation" id="Animation_jo8k4"]
 resource_name = "Opening"
 length = 1.7
-tracks/0/type = "value"
+tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:position")
+tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 0.6, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1, 0.15),
-"update": 0,
-"values": [Vector2(320, 360), Vector2(320, 360), Vector2(-856, 744), Vector2(-856, 352)]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(1),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -136,68 +108,20 @@ tracks/1/keys = {
 "method": &"spawn_ui"
 }]
 }
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("ColorRect:material:shader_parameter/progress")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [39.0, 0.0]
-}
 
 [sub_resource type="Animation" id="Animation_6qpk1"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:position")
+tracks/0/path = NodePath("Camera2D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-856, 352)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ColorRect:material:shader_parameter/progress")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [15.0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Camera2D:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
 "values": [Vector2(661, 552)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("ColorRect2:material:shader_parameter/progress")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [2.0]
 }
 
 [sub_resource type="Animation" id="Animation_oyia7"]
@@ -230,54 +154,6 @@ _data = {
 &"RESET": SubResource("Animation_6qpk1"),
 &"Win": SubResource("Animation_oyia7")
 }
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_m30qt"]
-shader = ExtResource("1_m30qt")
-shader_parameter/use_sprite_alpha = true
-shader_parameter/use_transition_texture = false
-shader_parameter/transition_type = 2
-shader_parameter/position = Vector2(0, 0)
-shader_parameter/invert = true
-shader_parameter/grid_size = Vector2(24, 14)
-shader_parameter/rotation_angle = 0.0
-shader_parameter/stagger = Vector2(0, 0)
-shader_parameter/stagger_frequency = Vector2i(2, 2)
-shader_parameter/flip_frequency = Vector2i(1, 1)
-shader_parameter/basic_feather = 0.0
-shader_parameter/use_mask_size = false
-shader_parameter/mask_size = Vector2(100, 100)
-shader_parameter/edges = 4
-shader_parameter/shape_feather = 0.1
-shader_parameter/sectors = 1
-shader_parameter/clock_feather = 0.0
-shader_parameter/progress = 15.0
-shader_parameter/progress_bias = Vector2(10, 10)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vn728"]
-shader = ExtResource("1_m30qt")
-shader_parameter/use_sprite_alpha = true
-shader_parameter/use_transition_texture = false
-shader_parameter/transition_type = 0
-shader_parameter/position = Vector2(0, 0)
-shader_parameter/invert = true
-shader_parameter/grid_size = Vector2(12, 6)
-shader_parameter/rotation_angle = 0.0
-shader_parameter/stagger = Vector2(6, 4)
-shader_parameter/stagger_frequency = Vector2i(6, 4)
-shader_parameter/flip_frequency = Vector2i(4, 3)
-shader_parameter/basic_feather = 0.0
-shader_parameter/use_mask_size = false
-shader_parameter/mask_size = Vector2(100, 100)
-shader_parameter/edges = 4
-shader_parameter/shape_feather = 0.0
-shader_parameter/sectors = 1
-shader_parameter/clock_feather = 0.0
-shader_parameter/progress = 2.0
-shader_parameter/progress_bias = Vector2(0, -10)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tsjor"]
-atlas = ExtResource("7_u8lxs")
-region = Rect2(0, 0, 32, 31)
 
 [node name="Arena" type="Node2D"]
 script = ExtResource("1_ir3ek")
@@ -358,137 +234,9 @@ position = Vector2(661, 552)
 zoom = Vector2(2, 2)
 position_smoothing_enabled = true
 
-[node name="ColorRect" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_m30qt")
-offset_left = 320.0
-offset_top = 360.0
-offset_right = 1008.0
-offset_bottom = 744.0
-color = Color(0, 0, 0, 1)
-
 [node name="Shaker" parent="." node_paths=PackedStringArray("_targets") instance=ExtResource("3_6qpk1")]
 _targets = [NodePath("../Camera2D")]
 duration = 0.2
 amplitude = Vector2(3, 3)
 
-[node name="ColorRect2" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_vn728")
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -368.0
-offset_top = -192.0
-offset_right = 368.0
-offset_bottom = 192.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(368, 192)
-color = Color(0.0214346, 0.0214346, 0.0214346, 1)
-
-[node name="GAME OVER" type="RichTextLabel" parent="."]
-modulate = Color(1, 1, 1, 0)
-offset_left = 248.0
-offset_top = 16.0
-offset_right = 656.0
-offset_bottom = 112.0
-pivot_offset = Vector2(204, 48)
-theme_override_fonts/normal_font = ExtResource("5_oyia7")
-theme_override_font_sizes/normal_font_size = 68
-bbcode_enabled = true
-text = "[wave amp=50.0 freq=2.0 connected=1]GAME OVER[/wave]"
-
-[node name="ButRetry" type="Button" parent="."]
-offset_left = 552.0
-offset_top = 32.0
-offset_right = 744.0
-offset_bottom = 120.0
-pivot_offset = Vector2(96, 44)
-theme_override_colors/icon_focus_color = Color(0, 0, 0, 0)
-flat = true
-
-[node name="RETRY" type="RichTextLabel" parent="ButRetry"]
-modulate = Color(1, 1, 1, 0)
-layout_mode = 0
-offset_right = 168.0
-offset_bottom = 80.0
-pivot_offset = Vector2(84, 40)
-mouse_filter = 2
-theme_override_fonts/normal_font = ExtResource("5_oyia7")
-theme_override_font_sizes/normal_font_size = 46
-bbcode_enabled = true
-text = "[pulse freq=1.0 color=#ffffff10 ease=-2.0]RETRY[/pulse]"
-
-[node name="ControlWin" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="ButWin" type="Button" parent="ControlWin"]
-layout_mode = 0
-offset_left = 1368.0
-offset_top = 222.0
-offset_right = 1499.0
-offset_bottom = 270.0
-theme = ExtResource("6_u8lxs")
-theme_override_fonts/font = ExtResource("5_oyia7")
-theme_override_font_sizes/font_size = 24
-text = "TAVERN"
-
-[node name="WIN" type="RichTextLabel" parent="ControlWin"]
-layout_mode = 0
-offset_left = 1320.0
-offset_top = -26.0
-offset_right = 1552.0
-offset_bottom = 46.0
-theme_override_fonts/normal_font = ExtResource("5_oyia7")
-theme_override_font_sizes/normal_font_size = 52
-bbcode_enabled = true
-text = "[rainbow freq=0.5 sat=0.8 val=0.8 speed=0.5][wave amp=50.0 freq=4.0 connected=1]YOU WIN[/wave][/rainbow]"
-
-[node name="PanelContainer" type="PanelContainer" parent="ControlWin"]
-layout_mode = 0
-offset_left = 1312.0
-offset_top = 64.0
-offset_right = 1552.0
-offset_bottom = 200.0
-theme = ExtResource("6_u8lxs")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="ControlWin/PanelContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="ControlWin/PanelContainer/VBoxContainer"]
-layout_mode = 2
-text = "Rewards"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="ControlWin/PanelContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Reward1" type="Label" parent="ControlWin/PanelContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-theme = ExtResource("6_u8lxs")
-theme_type_variation = &"Text"
-text = "10X"
-
-[node name="TextureRect" type="TextureRect" parent="ControlWin/PanelContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-texture = SubResource("AtlasTexture_tsjor")
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="ControlWin/PanelContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Reward2" type="Label" parent="ControlWin/PanelContainer/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-theme = ExtResource("6_u8lxs")
-theme_type_variation = &"Text"
-
-[node name="TextureRect" type="TextureRect" parent="ControlWin/PanelContainer/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
-[connection signal="pressed" from="ButRetry" to="." method="_on_but_retry_pressed"]
-[connection signal="pressed" from="ControlWin/ButWin" to="." method="_on_but_win_pressed"]
