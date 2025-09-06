@@ -3,7 +3,7 @@ extends ColorRect
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	area_ui.instance.hide()
+	UI.manager.hide_overlay(UI.NAME.Arena)
 	
 	SoundManager.instance.play_sound("Level1", false)
 	SoundManager.instance.play_sound("Level2", false)

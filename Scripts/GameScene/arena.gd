@@ -36,32 +36,14 @@ var level_reward1: int = 0
 var level_reward2: int = 0
 var selected_special
 
-	
-
 # ------------------------
 # Signals / Init
 # ------------------------
+
 func _ready() -> void:
 	# Connexion pour recevoir les infos depuis le parent (Tavern)
 	get_parent().get_child(0).connect("pass_info_to_arena", get_tavern_info)
 	animation_player.play("Opening")
-	
-	for pos: Marker2D in enemies_spawners.get_children():
-		enemies_spawn_pos.append(pos.position)
-	for pos2: Marker2D in enemies_spawners_2.get_children():
-		enemies_spawn_pos2.append(pos2.position)
-	for pos3: Marker2D in enemies_spawner_3.get_children():
-		enemies_spawn_pos3.append(pos3.position)
-	
-	for pos: Marker2D in ally_spawners.get_children():
-		allies_spawn_pos.append(pos.position)
-		
-	var signal_mappings = {
-		"combat_cookies" : update_active_cookies,
-		"tutorial_exit" : quit_tutorial,
-	}
-	UI.manager.connect_to_caller(UI.NAME.Arena, signal_mappings)
-	
 
 	# Remplir les positions d'apparition ennemies
 	_fill_spawn_positions()
@@ -70,6 +52,13 @@ func _ready() -> void:
 	for m in ally_spawners.get_children():
 		if m is Marker2D:
 			allies_spawn_pos.append(m.position)
+			
+	
+	var signal_mappings = {
+		"combat_cookies" : update_active_cookies,
+		"tutorial_exit" : quit_tutorial,
+	}
+	UI.manager.connect_to_caller(UI.NAME.Arena, signal_mappings)
 
 # Remplit spawn_positions à partir de enemies_spawners_nodes
 func _fill_spawn_positions() -> void:
@@ -91,24 +80,6 @@ func _check_wave_end(wave_index: int) -> void:
 	if wave_stopped[wave_index]:
 		return
 
-func get_tavern_info(level_data):
-	var pWave_info = level_data["WaveInfo"]
-	var pParty_info = level_data["PartyInfo"]
-	var reward1 = level_data["Rewards"].values()[0]
-	var reward2 = level_data["Rewards"].values()[1]
-	#region Wave_info
-	var lEnnemies_par_wave = []
-	# Parce que ça marche pas avec le foooooooooor
-	var lWave_1: Array
-	var lWave_2: Array
-	var lWave_3: Array
-	lWave_1 = pWave_info[0]
-	lWave_2 = pWave_info[1]
-	lWave_3 = pWave_info[2]
-	
-	
-	for wave in pWave_info:
-		lEnnemies_par_wave.append(wave.size()) # This stock the nb of ennemies per wave
 	var enemies_list: Array = spawned[wave_index]
 	# cas victoire pour la vague
 	if enemies_list.is_empty():
@@ -224,25 +195,6 @@ func _create_character_for_wave(pChar_type: LogicalCharacter.TYPES, wave_index: 
 		"Bad":
 			spawned[wave_index].append(lCharScene)
 
-signal drop_cookie(cookie : Cookie, drop_position : Vector2)
-func combat_handler(Attack_info : Array, pSide, pShooter, pSelf):
-	var lList_to_pick : Array[Node2D] = []
-	
-	var lDamage = Attack_info[0]
-	var lCrit = Attack_info[1]
-	var wave =  Vector2(0,0) # Really weird and awful offsets
-	match pSide:
-		"Good":
-			lList_to_pick = spawned_enemies
-			if spawned_enemies.is_empty() == true: 
-				lList_to_pick = spawned_enemies2
-				wave =Vector2(400,0)
-			if spawned_enemies2.is_empty() == true: 
-				lList_to_pick = spawned_enemies3
-				wave = Vector2(900,0)
-		"Bad":
-			lList_to_pick = spawned_allies
-			
 # Pour les alliés (utilisé si on veut explicitement spawn des alliés)
 func _create_character_for_ally(pChar_type: LogicalCharacter.TYPES) -> void:
 	var lDict: Dictionary = GameScene.pokedex.get(pChar_type)
@@ -257,6 +209,7 @@ func _create_character_for_ally(pChar_type: LogicalCharacter.TYPES) -> void:
 # ------------------------
 # Combat handler
 # ------------------------
+signal drop_cookie(cookie : Cookie, drop_position : Vector2)
 func combat_handler(Attack_info: Array, pSide, pShooter, pSelf) -> void:
 	var lDamage = Attack_info[0]
 	var lCrit = Attack_info[1]
@@ -275,6 +228,7 @@ func combat_handler(Attack_info: Array, pSide, pShooter, pSelf) -> void:
 			wave_offset = Vector2(900, 0)
 	elif pSide == "Bad":
 		lList_to_pick = spawned_allies
+
 	if lList_to_pick.is_empty():
 		return
 
@@ -305,7 +259,6 @@ func combat_handler(Attack_info: Array, pSide, pShooter, pSelf) -> void:
 			else:
 				random_cookie = Cookie.TYPE.Normal
 			emit_signal("drop_cookie",Cookie.new(random_cookie), screen_pos )
-			area_ui.instance.instantiate_cookie(Cookie.new("","", random_cookie), screen_pos)
 
 		# shake on death
 		if shaker.is_playing():
@@ -358,20 +311,20 @@ func win_anim_allies2() -> void:
 		lTween.tween_property(ally, "position", spawn_positions[1].pick_random(), 4)
 
 func spawn_ui() -> void:
-	area_ui.instance.show()
+	UI.manager.show_overlay(UI.NAME.Arena)
 	if Globals.training and not Globals.already_trained:
 		tutorial.instance.show()
 	_for_each_spawned(spawned[0], "attacking")
 	_for_each_spawned(spawned_allies, "attacking")
 
 func wave2() -> void:
-	area_ui.instance.show()
+	UI.manager.show_overlay(UI.NAME.Arena)
 	_for_each_spawned(spawned[1], "attacking")
 	_for_each_spawned(spawned_allies, "attacking")
 	_setup_shaker_for_camera()
 
 func wave3() -> void:
-	area_ui.instance.show()
+	UI.manager.show_overlay(UI.NAME.Arena)
 	_for_each_spawned(spawned[2], "attacking")
 	_for_each_spawned(spawned_allies, "attacking")
 	_setup_shaker_for_camera()
@@ -383,34 +336,9 @@ func _setup_shaker_for_camera() -> void:
 	shaker.origins.append(camera_2d.position)
 
 
-func lose():
-	move_child(color_rect_2, get_children().size())
-	color_rect_2.position = camera_2d.global_position - Vector2(color_rect_2.pivot_offset.x,color_rect_2.pivot_offset.y)
-	UI.manager.hide_overlay(UI.NAME.Arena)
-	SoundManager.instance.play_sound("Level1", false)
-	SoundManager.instance.play_sound("Level2", false)
-	SoundManager.instance.play_sound("Level3", false)
-	SoundManager.instance.play_sound("Transition", true, true)
-
-func death_screen():
-	SoundManager.instance.play_sound("Lose", true)
-	move_child(but_retry, get_children().size())
-	move_child(game_over, get_children().size())
-	but_retry.position = camera_2d.position + Vector2(0,100) - Vector2(but_retry.pivot_offset.x,but_retry.pivot_offset.y)
-	game_over.position = camera_2d.position - Vector2(0,100) - Vector2(game_over.pivot_offset.x,game_over.pivot_offset.y)
-	var lTween = create_tween().set_parallel(true)
-	lTween.tween_property(retry, "modulate:a", 1, 3)
-	lTween.tween_property(game_over, "modulate:a", 1, 3)
-
-func winning():
-	SoundManager.instance.play_sound("Level1", false)
-	SoundManager.instance.play_sound("Level2", false)
-	SoundManager.instance.play_sound("Level3", false)
-	SoundManager.instance.play_sound("Winning", true, false)
-	
-	for allies in spawned_allies:
-		allies.animated_sprite.play("default")
-	
-	UI.manager.hide_overlay(UI.NAME.Arena)
-
-
+func quit_tutorial() -> void:
+	var tavern = get_parent().get_child(0)
+	tavern.show()
+	tavern.get_node("Camera2D").enabled = true
+	tavern.get_node("AnimationPlayer").play("RESET")
+	queue_free()
