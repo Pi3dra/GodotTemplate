@@ -44,6 +44,24 @@ func launch_tutorial():
 		UI.manager.call_overlay(UI.NAME.Tutorial,self)
 
 
+<<<<<<< HEAD
+=======
+func spawn_party():
+	var lPlayers_spawned: Array = party.get_children()
+	#for players: AnimatedSprite2D in lPlayers_spawned:
+	if lPlayers_spawned[0].sprite_frames != null:
+		print("")
+		 #players exist ... le faire spawn et l'ajouter pour le spawn à l'arena
+	else:
+		randomize()
+		var lPlayer_type = possibles_starter.pick_random()
+		possibles_starter.erase(lPlayer_type)
+		party_info.append(lPlayer_type)
+		#TODO This could be done easily with tavern_tscn and used 
+		lPlayers_spawned[0].sprite_frames = LogicalCharacter.char_to_sprite(lPlayer_type)
+		lPlayers_spawned[0].play("default")
+
+>>>>>>> origin/Hec
 
 
 #region Random Character Spawner
@@ -154,13 +172,26 @@ func update_after_cookie_selection(risked_biscuits : Dictionary[Cookie.TYPE, int
 	
 	# Launch combat
 	if !level_data["WaveInfo"].is_empty() and !risked_biscuits.is_empty():
-		SoundManager.instance.play_sound("Tavern", false)
-		SoundManager.instance.play_sound("Transition", true, true)
-		animation_player.play("Transition") # This will trigger switch_scene
-	else: 
-		SoundManager.instance.play_sound("Stopit", true, false)
-	finished_level = false
 	
+	#TODO connect data
+	cookie_selection_ui.call_deferred("set_available_cookies", available_cookies.duplicate())
+	level_reward1 = reward1
+	level_reward2 = reward2
+	wave_info = pWave_info
+
+
+
+func _on_board_pressed() -> void:
+	SoundManager.instance.play_sound("Click1", true, true)
+	if level_select_ui.instance != null and !finished_level :
+		level_select_ui.instance.show()
+		return
+	if level_select_ui.instance != null and finished_level:
+		level_select_ui.instance.queue_free()
+	var quest_ui: Control = scene_quest_ui.instantiate()
+	UI.instance.add_child(quest_ui)
+	level_select_ui.instance.connect("start_level", cookie_selection)
+
 	
 func switch_scene():
 	var level_information : Dictionary
@@ -186,7 +217,8 @@ func _on_merchant_pressed() -> void:
 	var ui_name = UI.NAME.Merchant
 	UI.manager.call_overlay(ui_name,self,available_cookies)
 	UI.manager.connect_signals(ui_name, {} , {"exited_merchant" : update_after_merchant})
-	
+
+
 func update_after_merchant(cookies):
 	available_cookies = cookies
 	update_cookie_bar()
