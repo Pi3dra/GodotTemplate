@@ -309,13 +309,17 @@ func update_active_cookies(combat_cookies, enemy) -> void:
 # ------------------------
 func win_anim_allies() -> void:
 	var lTween = create_tween().set_parallel(true)
-	for ally in spawned_allies:
-		lTween.tween_property(ally, "position", spawn_positions[0].pick_random(), 4)
+	for i in range(min(spawned_allies.size(), spawn_positions[0].size())):
+		var ally = spawned_allies[i]
+		var pos = spawn_positions[0][i]
+		lTween.tween_property(ally, "position", pos, 4)
 
 func win_anim_allies2() -> void:
 	var lTween = create_tween().set_parallel(true)
-	for ally in spawned_allies:
-		lTween.tween_property(ally, "position", spawn_positions[1].pick_random(), 4)
+	for i in range(min(spawned_allies.size(), spawn_positions[0].size())):
+		var ally = spawned_allies[i]
+		var pos = spawn_positions[1][i]
+		lTween.tween_property(ally, "position", pos, 4)
 
 func spawn_ui() -> void:
 	UI.manager.show_overlay(UI.NAME.Arena)

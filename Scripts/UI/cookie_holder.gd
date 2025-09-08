@@ -26,6 +26,8 @@ func create_button(cookie):
 		add_child(button)  # the BoxContainer will place it automatically
 		
 		button.button_down.connect(_on_button_down.bind(button))
+		button.mouse_entered.connect(_on_mouse_entered.bind(button))
+		button.mouse_exited.connect(_on_mouse_exited.bind(button))
 		button_cookies[button] = cookie
 	
 
@@ -38,3 +40,22 @@ func free_button(button):
 	button.queue_free()
 	
 signal instantiate_cookie(cookie,button)
+
+
+func _on_mouse_entered(pButton: Button = null) -> void:
+	Engine.time_scale = 0.4
+	AudioServer.playback_speed_scale = 0.4
+	if pButton != null:
+		pButton.pivot_offset = pButton.size/2
+		var lTween = create_tween()
+		lTween.tween_property(pButton, "scale", Vector2.ONE*2, 0.1)
+		#TODO rajouter la fiche info des effets du cookie
+
+
+func _on_mouse_exited(pButton: Button = null) -> void:
+	Engine.time_scale = 1
+	AudioServer.playback_speed_scale = 1
+	if pButton != null:
+		var lTween = create_tween()
+		lTween.tween_property(pButton, "scale", Vector2.ONE*1, 0.1)
+		#TODO enlever la fiche info des effets du cookie

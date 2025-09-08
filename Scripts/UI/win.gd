@@ -11,11 +11,11 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#UI.manager.hide_overlay(UI.NAME.Arena)
-	#SoundManager.instance.play_sound("Level1", false)
-	#SoundManager.instance.play_sound("Level2", false)
-	#SoundManager.instance.play_sound("Level3", false)
-	#SoundManager.instance.play_sound("Winning", true, false)
+	UI.manager.hide_overlay(UI.NAME.Arena)
+	SoundManager.instance.play_sound("Level1", false)
+	SoundManager.instance.play_sound("Level2", false)
+	SoundManager.instance.play_sound("Level3", false)
+	SoundManager.instance.play_sound("Winning", true, false)
 	
 	#for a in spawned_allies:
 		#if a.has_node("AnimatedSprite2D") or a.has_method("animated_sprite"):
@@ -25,7 +25,7 @@ func _ready() -> void:
 	
 	await get_tree().create_timer(2.2).timeout
 	
-	#SoundManager.instance.play_sound("Win", true, false)
+	SoundManager.instance.play_sound("Win", true, false)
 	var lGo_Down: Vector2 = Vector2(0,550)
 	var lTween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SPRING)
 	lTween.tween_property(but_win, "position", but_win.position + lGo_Down, 0.5)
@@ -41,8 +41,8 @@ func _ready() -> void:
 
 signal switch_to_tavern
 func _on_but_win_pressed() -> void:
-	#SoundManager.instance.play_sound("Win", false)
-	#SoundManager.instance.play_sound("Tavern", true, false)
+	SoundManager.instance.play_sound("Win", false)
+	SoundManager.instance.play_sound("Tavern", true, false)
 	emit_signal("switch_to_tavern")
-	#UI.manager.remove_overlay(UI.NAME.Arena)
-	#UI.manager.remove_overlay(UI.NAME.WinScreen)
+	UI.manager.remove_overlay(UI.NAME.Arena)
+	UI.manager.remove_overlay(UI.NAME.WinScreen)
