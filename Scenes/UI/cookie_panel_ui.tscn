@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cg5yimbr12qqr"]
+[gd_scene load_steps=6 format=3 uid="uid://cg5yimbr12qqr"]
 
 [ext_resource type="Script" uid="uid://gnhal6n8bo5e" path="res://Scripts/UI/cookie_panel.gd" id="1_jy74s"]
 [ext_resource type="Theme" uid="uid://koj3axa8mw8p" path="res://Assets/Themes/MerchantTheme.tres" id="2_oe5k4"]
@@ -8,8 +8,6 @@
 [sub_resource type="AtlasTexture" id="AtlasTexture_ydj01"]
 atlas = ExtResource("3_5nqhw")
 region = Rect2(0, 4, 32, 26)
-
-[sub_resource type="LabelSettings" id="LabelSettings_5nqhw"]
 
 [node name="CookiePanel" type="Control"]
 custom_minimum_size = Vector2(280, 400)
@@ -73,10 +71,11 @@ texture = SubResource("AtlasTexture_ydj01")
 [node name="Description" type="Label" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 180)
 layout_mode = 2
+theme = ExtResource("2_oe5k4")
+theme_type_variation = &"TextBox"
 theme_override_fonts/font = ExtResource("3_elliq")
 theme_override_font_sizes/font_size = 0
 text = "LOREM aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-label_settings = SubResource("LabelSettings_5nqhw")
 autowrap_mode = 3
 clip_text = true
 

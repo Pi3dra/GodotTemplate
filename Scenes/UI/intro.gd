@@ -17,7 +17,7 @@ func _ready() -> void:
 	instance = self
 	
 	if Globals.current_tutorial == null: 
-		call_deferred("tween_finished",true)
+		call_deferred("tween_finished")
 		return
 	
 	var lTween: Tween = create_tween().set_parallel(true)

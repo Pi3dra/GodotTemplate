@@ -11,7 +11,7 @@ script = ExtResource("1_eyo7j")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_51a4u")
-animation = &"die"
+animation = &"attack"
 
 [node name="LifeBar" type="ProgressBar" parent="."]
 anchors_preset = 8

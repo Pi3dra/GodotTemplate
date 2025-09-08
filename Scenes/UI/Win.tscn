@@ -20,10 +20,10 @@ script = ExtResource("1_cgn5s")
 
 [node name="ButWin" type="Button" parent="."]
 layout_mode = 0
-offset_left = 626.0
-offset_top = 504.0
-offset_right = 757.0
-offset_bottom = 552.0
+offset_left = 610.0
+offset_top = -77.0
+offset_right = 773.0
+offset_bottom = -7.0
 theme = ExtResource("1_vnfq8")
 theme_override_fonts/font = ExtResource("2_cgn5s")
 theme_override_font_sizes/font_size = 24
@@ -31,21 +31,21 @@ text = "TAVERN"
 
 [node name="WIN" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = 578.0
-offset_top = 256.0
-offset_right = 818.0
-offset_bottom = 328.0
+offset_left = 501.0
+offset_top = -426.0
+offset_right = 895.0
+offset_bottom = -308.0
 theme_override_fonts/normal_font = ExtResource("2_cgn5s")
-theme_override_font_sizes/normal_font_size = 52
+theme_override_font_sizes/normal_font_size = 86
 bbcode_enabled = true
 text = "[rainbow freq=0.5 sat=0.8 val=0.8 speed=0.5][wave amp=50.0 freq=4.0 connected=1]YOU WIN[/wave][/rainbow]"
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 0
-offset_left = 570.0
-offset_top = 346.0
-offset_right = 810.0
-offset_bottom = 491.0
+offset_left = 485.0
+offset_top = -303.0
+offset_right = 895.0
+offset_bottom = -84.0
 theme = ExtResource("1_vnfq8")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]

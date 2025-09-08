@@ -6,25 +6,25 @@
 [ext_resource type="Texture2D" uid="uid://c8rc00vqgdqwu" path="res://Assets/Sprites/Characters/Player/Farmer/Peasant_idle.png" id="4_64nn3"]
 [ext_resource type="Texture2D" uid="uid://cnkdebgpexau4" path="res://Assets/Sprites/Characters/Player/Farmer/Peasant_walk.png" id="5_nrpel"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_nrpel"]
+atlas = ExtResource("1_4xjxk")
+region = Rect2(0, 235, 96, 70)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_208dr"]
 atlas = ExtResource("1_4xjxk")
-region = Rect2(0, 224, 96, 112)
+region = Rect2(96, 235, 96, 70)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kaot3"]
 atlas = ExtResource("1_4xjxk")
-region = Rect2(96, 224, 96, 112)
+region = Rect2(192, 235, 96, 70)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l7yfq"]
 atlas = ExtResource("1_4xjxk")
-region = Rect2(192, 224, 96, 112)
+region = Rect2(288, 235, 96, 70)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ystyp"]
 atlas = ExtResource("1_4xjxk")
-region = Rect2(288, 224, 96, 112)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_j2clq"]
-atlas = ExtResource("1_4xjxk")
-region = Rect2(384, 224, 96, 112)
+region = Rect2(384, 235, 96, 70)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4xjxk"]
 atlas = ExtResource("4_64nn3")
@@ -90,6 +90,9 @@ region = Rect2(96, 96, 32, 48)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_nrpel")
+}, {
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_208dr")
 }, {
 "duration": 1.0,
@@ -100,9 +103,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ystyp")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_j2clq")
 }],
 "loop": false,
 "name": &"attack",

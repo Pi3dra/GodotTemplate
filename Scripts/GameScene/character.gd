@@ -36,9 +36,7 @@ var actual_state: States = States.IDLE:
 					animated_sprite.play("die")
 					SoundManager.instance.play_sound("Death", true, true)
 				States.HURT:
-					
 					animated_sprite.play("hit")
-
 
 var character : LogicalCharacter 
 
@@ -56,7 +54,7 @@ func _ready() -> void:
 	life_bar.max_value = character.health
 	
 	attack_rate()
-
+	
 func update_lifebar():
 	life_bar.value = character.health
 	life_bar.max_value = character.health
@@ -151,7 +149,7 @@ func show_damage(pIs_Crit: bool, pDamage: float):
 	var lTween = create_tween()
 	if pIs_Crit == false:
 		lTween.tween_property(lLabel_damage, "position", Vector2(randf_range(15,-20),randf_range(-44,-52)), 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
-		lTween.tween_property(lLabel_damage, "modulate", Color.TRANSPARENT, 0.2)
+		lTween.tween_property(lLabel_damage, "modulate", Color.TRANSPARENT, 0.2).set_delay(1.0)
 		lTween.tween_property(lLabel_damage, "position", Vector2.ZERO, 0.1)
 		lTween.tween_callback(kill_tween.bind(lTween, lLabel_damage))
 	else:
@@ -161,7 +159,7 @@ func show_damage(pIs_Crit: bool, pDamage: float):
 		lLabel_damage.modulate = Color.RED
 		lTween.set_parallel(true).tween_property(lLabel_damage, "position", Vector2(randf_range(15,-20),randf_range(-44,-52)), 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 		lTween.tween_property(lLabel_damage, "scale", Vector2(2.4,2.4), 0.4)
-		lTween.set_parallel(false).tween_property(lLabel_damage, "modulate", Color.TRANSPARENT, 0.4)
+		lTween.set_parallel(false).tween_property(lLabel_damage, "modulate", Color.TRANSPARENT, 0.4).set_delay(1.0)
 		lTween.tween_property(lLabel_damage, "position", Vector2.ZERO, 0.1)
 		lTween.tween_callback(kill_tween.bind(lTween, lLabel_damage))
 

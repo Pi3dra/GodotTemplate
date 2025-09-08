@@ -8,6 +8,7 @@ var flip_tween : Tween
 
 @onready var texture_rect : TextureRect = $cookie_texture
 @onready var shadow: TextureRect = $shadow
+@onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
 
 var screen_middle : int
 
@@ -23,6 +24,7 @@ func _gui_input(event: InputEvent) -> void:
 			following = true
 		elif  event.button_index == MOUSE_BUTTON_LEFT and !event.pressed and following and get_global_mouse_position().y > 200:
 			following = false
+			gpu_particles_2d.emitting = false
 
 func _process(_delta: float) -> void:
 	if following:
@@ -62,12 +64,51 @@ func do_flip_animation():
 	flip_tween.tween_callback(update_sprite)
 	flip_tween.tween_callback(make_red)
 
-## Waits for the tween to stop to display the correct sprite
+## Change and emit particles for flip anim
+func explo_particles():
+	# ↓Save the default values
+	var emitter: GPUParticles2D = gpu_particles_2d
+	var base_one_shot := emitter.one_shot
+	var base_explosiveness := emitter.explosiveness
+	var base_lifetime := emitter.lifetime
+	var base_preprocess := emitter.preprocess
+	var base_emitting := emitter.emitting
+	var base_mat := emitter.process_material as ParticleProcessMaterial
+	var expl_mat := base_mat.duplicate(true) as ParticleProcessMaterial
+	# ↓Change particles to be explosive
+	expl_mat.initial_velocity_min = 115.0
+	expl_mat.initial_velocity_max = 210.0
+	emitter.one_shot = true
+	emitter.explosiveness = 1.0
+	emitter.lifetime = 1.0
+	emitter.preprocess = 0.05
+	emitter.process_material = expl_mat
+	# ↓Start reliably
+	emitter.restart()
+	emitter.emitting = true
+	# ↓Wait
+	var timeout := get_tree().create_timer(emitter.lifetime + emitter.preprocess + 0.2)
+	await timeout.timeout
+	# ↓Restore base state
+	emitter.emitting = false
+	emitter.one_shot = base_one_shot
+	emitter.explosiveness = base_explosiveness
+	emitter.lifetime = base_lifetime
+	emitter.preprocess = base_preprocess
+	emitter.process_material = base_mat
+	# ↓Force the emitter to reinitialize with the restored material/props
+	emitter.restart()
+	emitter.emitting = base_emitting
+
+## Waits for the tween to stop to display the correct sprite + start particles
 func update_sprite():
 	if cookie.state == Cookie.STATE.Head:
 		texture_rect.texture = cookie.head_texture
+		explo_particles()
 	elif cookie.state == Cookie.STATE.Tail :
 		texture_rect.texture = cookie.tail_texture
+		explo_particles()
+		gpu_particles_2d.modulate = Color.RED
 
 ## Makes Cookie red when guessed wrong 
 func make_red():
@@ -84,8 +125,12 @@ func _swap_side():
 
 func _on_mouse_entered() -> void:
 	Cursor.instance.texture = Cursor.can_grab
+	gpu_particles_2d.emitting = true
+	
 func _on_mouse_exited() -> void:
 	Cursor.instance.texture = Cursor.basic
+	gpu_particles_2d.emitting = false
+	
 
 func _on_gui_input(event: InputEvent) -> void:
 	if event.is_action_pressed("l_click"):
