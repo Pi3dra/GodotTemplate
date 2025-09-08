@@ -27,7 +27,6 @@ var buyable_char_nodes : Dictionary
 
 #//////////function//////////
 func _ready() -> void:
-	UI.instance.connect("beginning_finished", can_start)
 	partyfull.hide()
 	choose_starter_character()
 	spawn_characters()
@@ -35,9 +34,6 @@ func _ready() -> void:
 	launch_tutorial()
 	update_cookie_bar()
 	
-
-func can_start():
-	SoundManager.instance.play_sound("Tavern", true, false)
 
 func launch_tutorial():
 	if Globals.current_tutorial != null:
@@ -307,8 +303,8 @@ func update_cookie_bar():
 
 func data_is_empty(data):
 	var empty : bool = true
-	for key in level_data.keys():
-		empty = empty and level_data[key].is_empty()
+	for key in data.keys():
+		empty = empty and data[key].is_empty()
 	return empty
 
 #endregion

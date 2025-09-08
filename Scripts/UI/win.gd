@@ -39,10 +39,6 @@ func _ready() -> void:
 		#selected_special = Cookie.pick_random_special()
 		#special_texture.texture = Cookie.type_sprite(selected_special)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
 
 func _on_but_win_pressed() -> void:
 	var tavern = get_parent().get_child(0)

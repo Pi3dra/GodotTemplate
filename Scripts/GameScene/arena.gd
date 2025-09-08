@@ -117,7 +117,12 @@ func _for_each_spawned(nodes: Array, method_name: String) -> void:
 # ------------------------
 # Recevoir les données du Tavern et initialiser la scène
 # ------------------------
-func get_tavern_info(pWave_info: Array, pParty_info: Array, reward1, reward2) -> void:
+func get_tavern_info(level_data : Dictionary) -> void:
+	var pWave_info = level_data["WaveInfo"]
+	var pParty_info = level_data["PartyInfo"]
+	var reward1 = level_data["Rewards"].values()[0]
+	var reward2 = level_data["Rewards"].values()[1]
+	
 	# pWave_info attend 3 arrays (une par vague)
 	for i in range(3):
 		var wave_arr = pWave_info[i]
