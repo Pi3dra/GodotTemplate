@@ -1,6 +1,6 @@
 extends AnimatedSprite2D
 
-var character : LogicalCharacter.TYPES
+var character : LogicalCharacter.TYPE
 var price : int
 
 @onready var label = $HBoxContainer/Label
@@ -13,24 +13,24 @@ func _ready() -> void:
 	play()
 
 ### Ceci aussi est bien degueu, a mettre dans pokedex ou characterclass.gd
-func char_to_price(character_type: LogicalCharacter.TYPES):
+func char_to_price(character_type: LogicalCharacter.TYPE):
 	match character_type:
-		LogicalCharacter.TYPES.Wizard:
+		LogicalCharacter.TYPE.Wizard:
 			return 12 + randi()%4
-		LogicalCharacter.TYPES.Knight:
+		LogicalCharacter.TYPE.Knight:
 			return 10 + randi()%4
-		LogicalCharacter.TYPES.Farmer:
+		LogicalCharacter.TYPE.Farmer:
 			return 3 + randi()%4
-		LogicalCharacter.TYPES.Pixie:
+		LogicalCharacter.TYPE.Pixie:
 			return 2 + randi()%4
-		LogicalCharacter.TYPES.Necromancer:
+		LogicalCharacter.TYPE.Necromancer:
 			return 10 + randi()%4
 		_:
 			return 2
 
 	
 
-func init_char(pCharacter: LogicalCharacter.TYPES):
+func init_char(pCharacter: LogicalCharacter.TYPE):
 	sprite_frames = LogicalCharacter.char_to_sprite(pCharacter)
 	play()
 	var pPrice : int = char_to_price(pCharacter)

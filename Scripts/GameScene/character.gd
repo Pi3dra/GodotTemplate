@@ -125,21 +125,21 @@ func shoot(pRival_pos: Vector2, pType):
 	add_child(lProjectile)
 	
 	match pType:
-		character.TYPES.Cyclop:
+		character.TYPE.Cyclop:
 			lSprite.texture = load("uid://bwwklxfbmpjk3")
 			lSprite.flip_h = true
-		character.TYPES.Wizard:
+		character.TYPE.Wizard:
 			lSprite.texture = load("uid://cjll7vd11gcj5")
-		character.TYPES.Necromancer:
+		character.TYPE.Necromancer:
 			lSprite.texture = load("uid://k1tqobuxqec")
-		character.TYPES.Pixie:
+		character.TYPE.Pixie:
 			lSprite.texture = load("uid://clfd8c6pdss5l")
-		character.TYPES.Ranger:
+		character.TYPE.Ranger:
 			lSprite.texture = load("uid://wvcuyen2nr6g")
-		character.TYPES.Dragon:
+		character.TYPE.Dragon:
 			lSprite.texture = load("uid://b2h8juywe7h5p")
 			lSprite.flip_h = true
-		character.TYPES.Witch:
+		character.TYPE.Witch:
 			lSprite.texture = load("uid://bqf1kgtep7uwx")
 			lSprite.flip_h = true
 	

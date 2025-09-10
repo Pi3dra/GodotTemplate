@@ -16,12 +16,12 @@ var win_scene: PackedScene = load("uid://1cnkhmktcngn")
 var game_over_scene: PackedScene = load("uid://b43j4xlbwfwoo")
 
 # --- Data structures (indexed by wave 0..2) ---
-var chosen_enemies: Array = [[], [], []]                # Array[Array[LogicalCharacter.TYPES]]
+var chosen_enemies: Array = [[], [], []]                # Array[Array[LogicalCharacter.TYPE]]
 var spawn_positions: Array = [[], [], []]              # Array[Array[Vector2]]
 var spawned: Array = [[], [], []]                      # spawned[0] = enemies wave1, spawned[1] = wave2, spawned[2] = wave3
 
 # allies (separate)
-var player_party: Array = []                           # Array[LogicalCharacter.TYPES]
+var player_party: Array = []                           # Array[LogicalCharacter.TYPE]
 var spawned_allies: Array = []                         # Array[Node2D]
 var allies_spawn_pos: Array = []                       # Array[Vector2]
 
@@ -146,9 +146,9 @@ func get_tavern_info(level_data : Dictionary) -> void:
 
 func _play_music_for_wave0(lWave_1: Array) -> void:
 	SoundManager.instance.play_sound("Tavern", false)
-	if lWave_1.has(LogicalCharacter.TYPES.Slime) or lWave_1.has(LogicalCharacter.TYPES.Skeleton) or lWave_1.has(LogicalCharacter.TYPES.Spider):
+	if lWave_1.has(LogicalCharacter.TYPE.Slime) or lWave_1.has(LogicalCharacter.TYPE.Skeleton) or lWave_1.has(LogicalCharacter.TYPE.Spider):
 		SoundManager.instance.play_sound("Level1", true, false)
-	elif lWave_1.has(LogicalCharacter.TYPES.Witch) or lWave_1.has(LogicalCharacter.TYPES.Goblin) or lWave_1.has(LogicalCharacter.TYPES.Orc):
+	elif lWave_1.has(LogicalCharacter.TYPE.Witch) or lWave_1.has(LogicalCharacter.TYPE.Goblin) or lWave_1.has(LogicalCharacter.TYPE.Orc):
 		SoundManager.instance.play_sound("Level2", true, false)
 	else:
 		SoundManager.instance.play_sound("Level3", true, false)
@@ -186,7 +186,7 @@ func spawn_characters_allies(party_types: Array) -> void:
 	_for_each_spawned(spawned_allies, "no_attacking")
 
 # Crée un personnage et l'ajoute au bon tableau (wave_index pour "Bad", allies pour "Good")
-func _create_character_for_wave(pChar_type: LogicalCharacter.TYPES, wave_index: int) -> void:
+func _create_character_for_wave(pChar_type: LogicalCharacter.TYPE, wave_index: int) -> void:
 	var lDict: Dictionary = GameScene.pokedex.get(pChar_type)
 	var lChar := LogicalCharacter.new(lDict["Health"], lDict["Damage"], lDict["Speed"], lDict["Crit"], lDict["Sprite"], lDict["Side"], lDict["Shooter"], pChar_type)
 	var lCharScene: Node2D = char_scene.instantiate()
@@ -203,7 +203,7 @@ func _create_character_for_wave(pChar_type: LogicalCharacter.TYPES, wave_index: 
 			spawned[wave_index].append(lCharScene)
 
 # Pour les alliés (utilisé si on veut explicitement spawn des alliés)
-func _create_character_for_ally(pChar_type: LogicalCharacter.TYPES) -> void:
+func _create_character_for_ally(pChar_type: LogicalCharacter.TYPE) -> void:
 	var lDict: Dictionary = GameScene.pokedex.get(pChar_type)
 	var lChar := LogicalCharacter.new(lDict["Health"], lDict["Damage"], lDict["Speed"], lDict["Crit"], lDict["Sprite"], lDict["Side"], lDict["Shooter"], pChar_type)
 	var lCharScene: Node2D = char_scene.instantiate()

@@ -26,13 +26,13 @@ var wave_info
 var level_data = {"WaveInfo" : [] , "Rewards" : {}}
 
 
-var spriteorder = {LogicalCharacter.TYPES.Skeleton : 1, LogicalCharacter.TYPES.Slime : 4, LogicalCharacter.TYPES.Spider : 3,
-	LogicalCharacter.TYPES.Orc : 5, LogicalCharacter.TYPES.Witch : 2, LogicalCharacter.TYPES.Goblin:0,
-	LogicalCharacter.TYPES.Cyclop : 8, LogicalCharacter.TYPES.Devil : 7, LogicalCharacter.TYPES.Dragon : 6
+var spriteorder = {LogicalCharacter.TYPE.Skeleton : 1, LogicalCharacter.TYPE.Slime : 4, LogicalCharacter.TYPE.Spider : 3,
+	LogicalCharacter.TYPE.Orc : 5, LogicalCharacter.TYPE.Witch : 2, LogicalCharacter.TYPE.Goblin:0,
+	LogicalCharacter.TYPE.Cyclop : 8, LogicalCharacter.TYPE.Devil : 7, LogicalCharacter.TYPE.Dragon : 6
 }
-var easy_enemies = [LogicalCharacter.TYPES.Skeleton, LogicalCharacter.TYPES.Slime, LogicalCharacter.TYPES.Spider]
-var medium_enemies = [LogicalCharacter.TYPES.Orc, LogicalCharacter.TYPES.Witch, LogicalCharacter.TYPES.Goblin]
-var hard_enemies = [LogicalCharacter.TYPES.Cyclop, LogicalCharacter.TYPES.Devil, LogicalCharacter.TYPES.Dragon]
+var easy_enemies = [LogicalCharacter.TYPE.Skeleton, LogicalCharacter.TYPE.Slime, LogicalCharacter.TYPE.Spider]
+var medium_enemies = [LogicalCharacter.TYPE.Orc, LogicalCharacter.TYPE.Witch, LogicalCharacter.TYPE.Goblin]
+var hard_enemies = [LogicalCharacter.TYPE.Cyclop, LogicalCharacter.TYPE.Devil, LogicalCharacter.TYPE.Dragon]
 var enemy_palette = { Difficulty.Easy : easy_enemies, Difficulty.Medium : medium_enemies, Difficulty.Hard : hard_enemies}
 
 var sprites = preload("uid://damlxqw3n3qsv")
@@ -46,7 +46,7 @@ var sprites = preload("uid://damlxqw3n3qsv")
 
 #func _ready():
 #   For some reason when ready is called the panel layout gets fd up
-#	set_panel(Difficulty.Hard, [[LogicalCharacter.TYPES.Goblin]], [5,5])
+#	set_panel(Difficulty.Hard, [[LogicalCharacter.TYPE.Goblin]], [5,5])
 
 func generate_level(difficulty : Difficulty):
 	reward_title.add_theme_font_override("font",font)
@@ -75,7 +75,7 @@ func generate_level(difficulty : Difficulty):
 	reward_1.text = str(cookies) +" x Cookies"
 	reward_2.text = str(special_cookies) +" x Special Cookies"
 	var waves_distribution : Array = distribute_enemies(used_enemies)
-	var enemy_info = pick_enemies(waves_distribution, difficulty) #Array[Array[LogicalCharacter.TYPES]]
+	var enemy_info = pick_enemies(waves_distribution, difficulty) #Array[Array[LogicalCharacter.TYPE]]
 	var enemy_waves = enemy_info.get("Waves")
 	var enemy_count = enemy_info.get("Counter")
 	

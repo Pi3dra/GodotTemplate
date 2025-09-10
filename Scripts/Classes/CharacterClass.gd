@@ -2,6 +2,9 @@ extends Node
 
 class_name LogicalCharacter
 
+enum TYPE  {Knight, Goblin, Skeleton, Cyclop, Devil, Wizard, Farmer, Necromancer, Pixie, Ranger, Dragon, Orc, Slime, Spider, Witch,Unkillable_Slime}
+enum SIDE {Good,Bad}
+
 var sprite_frame: String
 var total_health : float
 var health: float
@@ -9,13 +12,12 @@ var damage: float
 var attack_speed: float
 var crit: float
 var side: String
-var type: TYPES
+var type: TYPE
 var shooter: bool
 var char_instance : Node
 
 var active_cookies : Dictionary = Cookie.type_dict()
 
-enum TYPES  {Knight, Goblin, Skeleton, Cyclop, Devil, Wizard, Farmer, Necromancer, Pixie, Ranger, Dragon, Orc, Slime, Spider, Witch,Unkillable_Slime}
 
 var DEBUG = true
 func debug(to_print,confirm):
@@ -23,7 +25,7 @@ func debug(to_print,confirm):
 		print(to_print)
 
 #//////////function//////////
-func _init(pHealth: int, pDamage: int, pAttack_speed: float, pCrit: float, pSprite_frame: String, pSide: String, pShooter: bool, pType: TYPES):
+func _init(pHealth: int, pDamage: int, pAttack_speed: float, pCrit: float, pSprite_frame: String, pSide: String, pShooter: bool, pType: TYPE):
 	health = pHealth
 	total_health = pHealth
 	damage = pDamage
@@ -59,11 +61,7 @@ func receive_cookie_POWER(received_cookies: Dictionary):
 		
 	debug("Healed! " + str(health), healing_cookies.size() > 0)
 	
-	
-	# TODO: this is bugged if timer reduction > attack_speed
 	var fast_cookies = active_cookies.get(Cookie.TYPE.Fast)
-	#var timer_reduction = (attack_speed*0.15) * fast_cookies.size()
-
 	var timer_reduction = 0
 	for i in range(fast_cookies.size()):
 		timer_reduction = attack_speed*0.15
@@ -122,15 +120,15 @@ func calculate_crit(pDamage: float, pBonus_chance: float) -> Array:
 
 	return [pDamage, crit_triggered]
 
-static func char_to_sprite(character: LogicalCharacter.TYPES):
+static func char_to_sprite(character: LogicalCharacter.TYPE):
 	match character:
-			LogicalCharacter.TYPES.Knight:
+			LogicalCharacter.TYPE.Knight:
 				return load("uid://b2ygb7ty6nyn7")
-			LogicalCharacter.TYPES.Wizard:
+			LogicalCharacter.TYPE.Wizard:
 				return load("uid://ceggmtt6ni5yw")
-			LogicalCharacter.TYPES.Farmer:
+			LogicalCharacter.TYPE.Farmer:
 				return load("uid://bsek4eo8s6x7f")
-			LogicalCharacter.TYPES.Necromancer:
+			LogicalCharacter.TYPE.Necromancer:
 				return load("uid://b28w73d4lebir")
-			LogicalCharacter.TYPES.Ranger:
+			LogicalCharacter.TYPE.Ranger:
 				return load("uid://cd1mc8i0dxna8")

@@ -1,0 +1,147 @@
+[gd_resource type="Resource" script_class="CharacterData" load_steps=22 format=3 uid="uid://baw54iv70k8pc"]
+
+[ext_resource type="Texture2D" uid="uid://cy2gn7nad2af0" path="res://Assets/Sprites/Characters/Enemies/Cyclop/Cyclops_attack.png" id="1_47war"]
+[ext_resource type="Script" uid="uid://uyc85ts7rtyg" path="res://Resources/CharacterData.gd" id="1_thiop"]
+[ext_resource type="Texture2D" uid="uid://ck4h720urc3of" path="res://Assets/Sprites/Characters/Enemies/Cyclop/Cyclops_die.png" id="2_x4gif"]
+[ext_resource type="Texture2D" uid="uid://c6dcq5xxf2rud" path="res://Assets/Sprites/Characters/Enemies/Cyclop/Cyclops_hit.png" id="3_3lb1q"]
+[ext_resource type="Texture2D" uid="uid://bqsxixap8f7y5" path="res://Assets/Sprites/Characters/Enemies/Cyclop/Cyclops_idle.png" id="4_du8pf"]
+[ext_resource type="Texture2D" uid="uid://j32xftuhrt7y" path="res://Assets/Sprites/Characters/Enemies/Cyclop/Cyclops_walk.png" id="5_i0v0p"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fdmj5"]
+atlas = ExtResource("1_47war")
+region = Rect2(0, 64, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_83swr"]
+atlas = ExtResource("1_47war")
+region = Rect2(96, 64, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hruwn"]
+atlas = ExtResource("1_47war")
+region = Rect2(192, 64, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ki7n"]
+atlas = ExtResource("2_x4gif")
+region = Rect2(0, 64, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_50i5i"]
+atlas = ExtResource("3_3lb1q")
+region = Rect2(0, 64, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vlmld"]
+atlas = ExtResource("3_3lb1q")
+region = Rect2(32, 64, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hafhc"]
+atlas = ExtResource("4_du8pf")
+region = Rect2(0, 64, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vhqy8"]
+atlas = ExtResource("4_du8pf")
+region = Rect2(32, 64, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8f4ya"]
+atlas = ExtResource("4_du8pf")
+region = Rect2(64, 64, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1cq5q"]
+atlas = ExtResource("4_du8pf")
+region = Rect2(96, 64, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n8jc7"]
+atlas = ExtResource("5_i0v0p")
+region = Rect2(0, 64, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5f4pe"]
+atlas = ExtResource("5_i0v0p")
+region = Rect2(32, 64, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m02de"]
+atlas = ExtResource("5_i0v0p")
+region = Rect2(64, 64, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vnysa"]
+atlas = ExtResource("5_i0v0p")
+region = Rect2(96, 64, 32, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_iddxc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fdmj5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_83swr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hruwn")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ki7n")
+}],
+"loop": false,
+"name": &"die",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_50i5i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vlmld")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hafhc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vhqy8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8f4ya")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1cq5q")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n8jc7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5f4pe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m02de")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vnysa")
+}],
+"loop": false,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[resource]
+script = ExtResource("1_thiop")
+type = 3
+side = 1
+price = 0
+health = 300.0
+damage = 20.0
+speed = 5.1
+crit = 0.1
+shooter = true
+animations = SubResource("SpriteFrames_iddxc")
+metadata/_custom_type_script = "uid://uyc85ts7rtyg"

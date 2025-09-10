@@ -14,10 +14,10 @@ var pelo_tscn: PackedScene = load("res://Scenes/GameScene/tavern_char.tscn")
 
 var level_data = {"WaveInfo" : [], "PartyInfo" : [], "Rewards" : {} , "RiskedBiscuits" : {}}
 
-var party_info : Array[LogicalCharacter.TYPES] = []
+var party_info : Array[LogicalCharacter.TYPE] = []
 
 
-var possibles_starter: Array = [LogicalCharacter.TYPES.Knight, LogicalCharacter.TYPES.Wizard, LogicalCharacter.TYPES.Farmer, LogicalCharacter.TYPES.Necromancer, LogicalCharacter.TYPES.Ranger]
+var possibles_starter: Array = [LogicalCharacter.TYPE.Knight, LogicalCharacter.TYPE.Wizard, LogicalCharacter.TYPE.Farmer, LogicalCharacter.TYPE.Necromancer, LogicalCharacter.TYPE.Ranger]
 var available_cookies : Dictionary[Cookie.TYPE, int]= {Cookie.TYPE.Normal : 10, Cookie.TYPE.Berserk : 2, Cookie.TYPE.Head : 2, Cookie.TYPE.Weighted: 1}
 @onready var partyfull: Label = $partyfull
 
@@ -55,13 +55,13 @@ func choose_starter_character():
 
 ### For each 4 characters we spawn, we first decide if we spawn it, and if we do we pick a character randomly
 ### We also vary their prices a bit
-func choose_chars() ->  Array[LogicalCharacter.TYPES]:
+func choose_chars() ->  Array[LogicalCharacter.TYPE]:
 	### TODO: this is supposed to not make
 	var chars_not_picked_yet = possibles_starter.duplicate()
 	for character in party_info:
 		chars_not_picked_yet.erase(character)
 		
-	var characters_to_spawn : Array[LogicalCharacter.TYPES] = []
+	var characters_to_spawn : Array[LogicalCharacter.TYPE] = []
 	
 	for i in range(3):
 		var spawn_enemy = randf() <= 0.75
@@ -72,7 +72,7 @@ func choose_chars() ->  Array[LogicalCharacter.TYPES]:
 			characters_to_spawn.append(character)
 	return characters_to_spawn
 
-func spawn_character(character :LogicalCharacter.TYPES, char_position):
+func spawn_character(character :LogicalCharacter.TYPE, char_position):
 		var character_instance = pelo_tscn.instantiate()
 		character_instance.call_deferred("init_char",character)
 		character_instance.connect("buy_character", buy_character)
@@ -159,7 +159,7 @@ func switch_scene():
 	var level_information : Dictionary
 	if Globals.training:
 		level_information = {
-		"WaveInfo" : [[LogicalCharacter.TYPES.Unkillable_Slime],[LogicalCharacter.TYPES.Unkillable_Slime],[LogicalCharacter.TYPES.Unkillable_Slime]],
+		"WaveInfo" : [[LogicalCharacter.TYPE.Unkillable_Slime],[LogicalCharacter.TYPE.Unkillable_Slime],[LogicalCharacter.TYPE.Unkillable_Slime]],
 		"RiskedBiscuits" : available_cookies.duplicate(),
 		"PartyInfo": party_info,
 		"Rewards" : {"":0," ":0}
