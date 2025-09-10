@@ -1,8 +1,17 @@
-[gd_resource type="Theme" load_steps=14 format=3 uid="uid://dadlocyhpxvuk"]
+[gd_resource type="Theme" load_steps=15 format=3 uid="uid://dadlocyhpxvuk"]
 
 [ext_resource type="Texture2D" uid="uid://bbmwn81f77iqu" path="res://Assets/Sprites/SpriteSheet/UI assets (2x).png" id="1_gposl"]
 [ext_resource type="FontFile" uid="uid://b0ndjepym4tga" path="res://Assets/Themes/Fonts/FantasyRPGtitle (size 11).ttf" id="2_7g1q8"]
-[ext_resource type="Texture2D" uid="uid://c8p7gyqg0toa4" path="res://Assets/Sprites/UI/Bar/Slider01_Bar02.png" id="2_pvb1u"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pvb1u"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7g1q8"]
+texture = ExtResource("1_gposl")
+texture_margin_left = 2.03185
+texture_margin_top = 0.893427
+texture_margin_right = 1.87556
+texture_margin_bottom = 0.989877
+region_rect = Rect2(104.021, 462.014, 79.9012, 4.021)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gposl"]
 texture = ExtResource("1_gposl")
@@ -61,12 +70,19 @@ region_rect = Rect2(486, 6, 84, 84)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7g1q8"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fjjhf"]
-texture = ExtResource("2_pvb1u")
-texture_margin_top = 50.0
+texture = ExtResource("1_gposl")
+texture_margin_left = 2.0
+texture_margin_top = 1.01526
+texture_margin_right = 2.17772
+texture_margin_bottom = 0.830666
+region_rect = Rect2(199.898, 429.972, 80.168, 3.95688)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fjjhf"]
 
 [resource]
+AttackBar/base_type = &"ProgressBar"
+AttackBar/styles/background = SubResource("StyleBoxEmpty_pvb1u")
+AttackBar/styles/fill = SubResource("StyleBoxTexture_7g1q8")
 BoxContainer/styles/normal = SubResource("StyleBoxTexture_gposl")
 Button/colors/font_hover_color = Color(0.729412, 0.72549, 0.745098, 1)
 Button/colors/font_pressed_color = Color(0.494118, 0.494118, 0.494118, 1)
@@ -81,6 +97,7 @@ Label/fonts/font = ExtResource("2_7g1q8")
 Label/styles/normal = SubResource("StyleBoxTexture_86iin")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_pvb1u")
 ProgressBar/colors/font_color = Color(0.94902, 0.94902, 0.94902, 0)
+ProgressBar/font_sizes/font_size = 16
 ProgressBar/styles/background = SubResource("StyleBoxEmpty_7g1q8")
 ProgressBar/styles/fill = SubResource("StyleBoxTexture_fjjhf")
 Text/base_type = &"Label"

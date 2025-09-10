@@ -3,10 +3,12 @@ extends  Node2D
 signal attack(damage: int, team: String)
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var life_bar: ProgressBar = $LifeBar
+@onready var life_bar: ProgressBar = $VBoxContainer/LifeBar
 @onready var animated_sprite_fx: AnimatedSprite2D = $AnimatedSpriteFX
 @onready var hit_damage: Label = $HitDamage
 @onready var timer: Timer = $Timer
+@onready var attack_bar: ProgressBar = $VBoxContainer/AttackTime
+
 
 var scene_projectile = load("uid://deduo5msnlka4")
 var font_theme = load("uid://dasqtqhyfj758")
@@ -77,12 +79,24 @@ func _on_attack_timer_timeout():
 	if character.attack_speed != timer.wait_time:
 		timer.wait_time = character.attack_speed
 	emit_signal("attack", attack_info, character.side, character.shooter, self) # arena gets it
+	
+	start_attack_bar()
 #endregion
 
 
 func attack_rate():
 	timer.wait_time = character.attack_speed
-	timer.timeout.connect(_on_attack_timer_timeout) # Pareil que lTimer.timout += _on_...
+	timer.timeout.connect(_on_attack_timer_timeout)
+	start_attack_bar()
+	
+var bar_tween : Tween
+func start_attack_bar():
+	if bar_tween != null:
+		bar_tween.kill()
+	attack_bar.value = 0
+	attack_bar.max_value = character.attack_speed
+	bar_tween = create_tween()
+	bar_tween.tween_property(attack_bar, "value", character.attack_speed, timer.wait_time)
 
 
 func die():
