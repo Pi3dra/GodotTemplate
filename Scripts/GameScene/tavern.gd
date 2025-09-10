@@ -18,7 +18,7 @@ var party_info : Array[LogicalCharacter.TYPES] = []
 
 
 var possibles_starter: Array = [LogicalCharacter.TYPES.Knight, LogicalCharacter.TYPES.Wizard, LogicalCharacter.TYPES.Farmer, LogicalCharacter.TYPES.Necromancer, LogicalCharacter.TYPES.Ranger]
-var available_cookies : Dictionary[Cookie.TYPE, int]= {Cookie.TYPE.Normal : 100, Cookie.TYPE.Berserk : 2, Cookie.TYPE.Head : 2, Cookie.TYPE.Weighted: 1}
+var available_cookies : Dictionary[Cookie.TYPE, int]= {Cookie.TYPE.Normal : 10, Cookie.TYPE.Berserk : 2, Cookie.TYPE.Head : 2, Cookie.TYPE.Weighted: 1}
 @onready var partyfull: Label = $partyfull
 
 var finished_level = false
@@ -160,7 +160,7 @@ func switch_scene():
 	if Globals.training:
 		level_information = {
 		"WaveInfo" : [[LogicalCharacter.TYPES.Unkillable_Slime],[LogicalCharacter.TYPES.Unkillable_Slime],[LogicalCharacter.TYPES.Unkillable_Slime]],
-		"RiskedBiscuits" : available_cookies,
+		"RiskedBiscuits" : available_cookies.duplicate(),
 		"PartyInfo": party_info,
 		"Rewards" : {"":0," ":0}
 		}
@@ -271,18 +271,13 @@ func update_cookie_bar():
 			label.text = "  " +str(available_cookies[cookietype]) + "X"
 			label.theme_type_variation = "TextBox"
 			var texture = TextureRect.new()
-			texture.texture = Cookie.type_sprite(cookietype)
-			
+			texture.texture = Globals.get_cookie_data(cookietype).head_texture
 			label.theme_type_variation = "SmallTextBox"
-			#texture.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
-			#texture.expand_mode = TextureRect.EXPAND_KEEP_SIZE
 			texture.custom_minimum_size = Vector2(16, 16)  # 11x11
-			#texture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 			texture.expand_mode = TextureRect.EXPAND_FIT_HEIGHT
 			texture.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 			texture.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 			texture.scale = Vector2(0.5,0.5)
-			#texture.expand = false
 			cookie_nodes[cookietype] = [label,texture]
 			cookie_bar.add_child(label)
 			cookie_bar.add_child(texture)

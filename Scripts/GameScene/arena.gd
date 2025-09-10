@@ -216,6 +216,8 @@ func _create_character_for_ally(pChar_type: LogicalCharacter.TYPES) -> void:
 # ------------------------
 # Combat handler
 # ------------------------
+
+#TODO break this u p into mulitple funcs
 signal drop_cookie(cookie : Cookie, drop_position : Vector2)
 func combat_handler(Attack_info: Array, pSide, pShooter, pSelf) -> void:
 	var lDamage = Attack_info[0]
@@ -256,16 +258,15 @@ func combat_handler(Attack_info: Array, pSide, pShooter, pSelf) -> void:
 	if lEnemy_to_attack.character.health <= 0:
 		if lEnemy_to_attack.character.side == "Bad":
 			# position écran correcte
-			var enemy_world_pos = lEnemy_to_attack.global_position
-			var cam = get_viewport().get_camera_2d()
-			var screen_pos = cam.get_screen_center_position() - (cam.get_global_transform().origin - enemy_world_pos) * cam.zoom - Vector2(0, 150) - wave_offset
-
+			# FOUND this in an old forum, only god knows how it works
+			var enemy_pos : Vector2 = lEnemy_to_attack.get_global_transform_with_canvas().get_origin()
+			var final_pos = enemy_pos - Vector2(32,32)
 			var random_cookie : Cookie.TYPE
 			if randf() > 0.8:
 				random_cookie = Cookie.pick_random_special()
 			else:
 				random_cookie = Cookie.TYPE.Normal
-			emit_signal("drop_cookie",Cookie.new(random_cookie), screen_pos )
+			emit_signal("drop_cookie",random_cookie, final_pos )
 
 		# shake on death
 		if shaker.is_playing():

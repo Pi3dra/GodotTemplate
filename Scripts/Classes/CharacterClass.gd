@@ -3,6 +3,7 @@ extends Node
 class_name LogicalCharacter
 
 var sprite_frame: String
+var total_health : float
 var health: float
 var damage: float
 var attack_speed: float
@@ -10,6 +11,7 @@ var crit: float
 var side: String
 var type: TYPES
 var shooter: bool
+var char_instance : Node
 
 var active_cookies : Dictionary = Cookie.type_dict()
 
@@ -23,6 +25,7 @@ func debug(to_print,confirm):
 #//////////function//////////
 func _init(pHealth: int, pDamage: int, pAttack_speed: float, pCrit: float, pSprite_frame: String, pSide: String, pShooter: bool, pType: TYPES):
 	health = pHealth
+	total_health = pHealth
 	damage = pDamage
 	var random_offset : float = randf() * 0.5
 	attack_speed = pAttack_speed + random_offset
@@ -45,7 +48,15 @@ func receive_cookie_POWER(received_cookies: Dictionary):
 	#		active_cookies[key].append(cookie)
 			
 	var healing_cookies = active_cookies.get(Cookie.TYPE.Healing)
-	health += (health/3)*healing_cookies.size()
+	var healing = (total_health/3)*healing_cookies.size()
+	if health + healing > total_health:
+		health = total_health
+	else:
+		health += healing 
+	
+	if healing_cookies.size() > 0:
+		char_instance.animate_health_bar()
+		
 	debug("Healed! " + str(health), healing_cookies.size() > 0)
 	
 	

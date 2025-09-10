@@ -45,7 +45,7 @@ func update_cookie_bar():
 			label.text = "  " +str(available_cookies[cookietype]) + "X"
 			label.theme_type_variation = "TextBox"
 			var texture = TextureRect.new()
-			texture.texture = Cookie.type_sprite(cookietype)
+			texture.texture = Globals.get_cookie_data(cookietype).head_texture
 			texture.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
 			texture.expand_mode = TextureRect.EXPAND_KEEP_SIZE
 	

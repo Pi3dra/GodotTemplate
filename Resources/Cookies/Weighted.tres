@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="CookieData" load_steps=5 format=3 uid="uid://b667qv4oq74rx"]
+
+[ext_resource type="Texture2D" uid="uid://cu2f2lwoupqox" path="res://Assets/Sprites/SpriteSheet/CookieSheet.png" id="1_646bw"]
+[ext_resource type="Script" uid="uid://dbern728vjl5n" path="res://Resources/CookieData.gd" id="1_hm017"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f6nbj"]
+atlas = ExtResource("1_646bw")
+region = Rect2(0, 224, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t84ix"]
+atlas = ExtResource("1_646bw")
+region = Rect2(32, 224, 32, 32)
+
+[resource]
+script = ExtResource("1_hm017")
+type = 6
+effect = 1
+price = 5
+description = "Has 75% chance of landing correctly, deals %50 more damage for a single blow"
+head_texture = SubResource("AtlasTexture_f6nbj")
+tails_texture = SubResource("AtlasTexture_t84ix")
+metadata/_custom_type_script = "uid://dbern728vjl5n"

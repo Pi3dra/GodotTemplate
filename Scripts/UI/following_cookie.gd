@@ -2,7 +2,6 @@ extends Control
 
 var cookie : Cookie
 var following := true
-
 var up_tween : Tween
 var flip_tween : Tween
 
@@ -18,6 +17,7 @@ func _ready() -> void:
 	var screen_size = get_viewport().get_visible_rect().size
 	screen_middle = screen_size.x/2
 	
+signal return_cookie(cookie: Control)
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed and !following:
@@ -25,6 +25,9 @@ func _gui_input(event: InputEvent) -> void:
 		elif  event.button_index == MOUSE_BUTTON_LEFT and !event.pressed and following and get_global_mouse_position().y > 200:
 			following = false
 			gpu_particles_2d.emitting = false
+		elif event.button_index == MOUSE_BUTTON_RIGHT and event.pressed and cookie.state == Cookie.STATE.Unflipped:
+			shadow.queue_free()
+			emit_signal("return_cookie",self)
 
 func _process(_delta: float) -> void:
 	if following:

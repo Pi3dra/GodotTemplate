@@ -47,12 +47,9 @@ var has_been_crit: bool = false
 func _ready() -> void:
 	animated_sprite = get_child(0) as AnimatedSprite2D # Because it's AnimSprite2D is the only child
 	animated_sprite.sprite_frames = load(character.sprite_frame) as SpriteFrames # Load accordingly to the logical character
-	
 	actual_state = States.WALKING
-	
-	
-	life_bar.max_value = character.health
-	
+	life_bar.max_value = character.total_health
+	character.char_instance = self
 	attack_rate()
 	
 func update_lifebar():
@@ -99,11 +96,13 @@ func receive_damage(pDamage, pCrit):
 	actual_state = States.HURT
 	if pCrit == true: has_been_crit = true
 	show_damage(has_been_crit, pDamage) # Anim numb damage
-	var lTween_health = create_tween()
 	character.health -= pDamage
-	lTween_health.tween_property(life_bar, "value", character.health ,0.5)
+	animate_health_bar()
 	die()
 
+func animate_health_bar():
+	var lTween_health = create_tween()
+	lTween_health.tween_property(life_bar, "value", character.health ,0.5)
 
 func shoot(pRival_pos: Vector2, pType):
 	var lProjectile: Node2D = scene_projectile.instantiate()

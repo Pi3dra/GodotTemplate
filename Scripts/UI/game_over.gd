@@ -16,19 +16,6 @@ func _ready() -> void:
 	lTween.tween_property(game_over, "modulate:a", 1, 3)
 	
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-
-#func lose() -> void:
-	#move_child(parent_game_over, get_children().size())
-	#color_rect_2.position = camera_2d.global_position - Vector2(color_rect_2.pivot_offset.x, color_rect_2.pivot_offset.y)
-	
-	
-
-
-
 func _on_but_retry_pressed() -> void:
 	Main.instance.queue_free()
 	

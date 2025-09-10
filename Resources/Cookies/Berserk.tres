@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="CookieData" load_steps=5 format=3 uid="uid://df8fammdwgce5"]
+
+[ext_resource type="Texture2D" uid="uid://cu2f2lwoupqox" path="res://Assets/Sprites/SpriteSheet/CookieSheet.png" id="1_yb8wx"]
+[ext_resource type="Script" uid="uid://dbern728vjl5n" path="res://Resources/CookieData.gd" id="2_yb8wx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_twpac"]
+atlas = ExtResource("1_yb8wx")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cfbyu"]
+atlas = ExtResource("1_yb8wx")
+region = Rect2(32, 32, 32, 32)
+
+[resource]
+script = ExtResource("2_yb8wx")
+type = 1
+effect = 1
+price = 3
+description = "Party Deals 200% more damage when this cookie lands on the correct side"
+head_texture = SubResource("AtlasTexture_twpac")
+tails_texture = SubResource("AtlasTexture_cfbyu")
+metadata/_custom_type_script = "uid://dbern728vjl5n"

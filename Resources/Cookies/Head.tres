@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="CookieData" load_steps=5 format=3 uid="uid://bqjjawqprtmvp"]
+
+[ext_resource type="Script" uid="uid://dbern728vjl5n" path="res://Resources/CookieData.gd" id="1_jbh3f"]
+[ext_resource type="Texture2D" uid="uid://cu2f2lwoupqox" path="res://Assets/Sprites/SpriteSheet/CookieSheet.png" id="1_tqpr0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u863c"]
+atlas = ExtResource("1_tqpr0")
+region = Rect2(0, 288, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_md32v"]
+atlas = ExtResource("1_tqpr0")
+region = Rect2(32, 288, 32, 32)
+
+[resource]
+script = ExtResource("1_jbh3f")
+type = 8
+effect = 0
+price = 4
+description = "If guessed correctly, on next flip all cookies have 25% more chance of landing on Heads"
+head_texture = SubResource("AtlasTexture_u863c")
+tails_texture = SubResource("AtlasTexture_md32v")
+metadata/_custom_type_script = "uid://dbern728vjl5n"

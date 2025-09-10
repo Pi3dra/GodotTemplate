@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="CookieData" load_steps=5 format=3 uid="uid://n1c0wlvx1iqj"]
+
+[ext_resource type="Script" uid="uid://dbern728vjl5n" path="res://Resources/CookieData.gd" id="1_mhv0y"]
+[ext_resource type="Texture2D" uid="uid://cu2f2lwoupqox" path="res://Assets/Sprites/SpriteSheet/CookieSheet.png" id="1_qmffd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_513f0"]
+atlas = ExtResource("1_qmffd")
+region = Rect2(0, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p36c7"]
+atlas = ExtResource("1_qmffd")
+region = Rect2(32, 160, 32, 32)
+
+[resource]
+script = ExtResource("1_mhv0y")
+type = 4
+effect = 1
+price = 3
+description = "Heals the party by 35%, if guessed correctly"
+head_texture = SubResource("AtlasTexture_513f0")
+tails_texture = SubResource("AtlasTexture_p36c7")
+metadata/_custom_type_script = "uid://dbern728vjl5n"

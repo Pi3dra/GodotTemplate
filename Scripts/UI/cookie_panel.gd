@@ -30,8 +30,9 @@ func update_buttons(available_cookies : Dictionary[Cookie.TYPE,int]):
 	
 func update_panel(cookie : Cookie.TYPE, locked : bool):
 	cookie_type = cookie
-	cookie_price = Cookie.type_price(cookie)
-
+	var cookie_data = Globals.get_cookie_data(cookie_type)
+	cookie_price = cookie_data.price
+	
 	if cookie_type == Cookie.TYPE.Normal:
 		buy.hide()
 		sell.hide()
@@ -47,10 +48,10 @@ func update_panel(cookie : Cookie.TYPE, locked : bool):
 		cookie_title.text = "Locked"
 		price.text = ""
 	else:
-		texture_panel.texture = Cookie.type_sprite(cookie)
-		description_box.text = Cookie.type_description(cookie)
+		texture_panel.texture = cookie_data.head_texture
+		description_box.text = cookie_data.description
 		cookie_title.text = Cookie.TYPE.keys()[cookie] + " Cookie"
-		price.text = "Price: " +  str(Cookie.type_price(cookie)) + "X"
+		price.text = "Price: " +  str(cookie_data.price) + "X"
 
 
 signal buy_cookie(type, price)

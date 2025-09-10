@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="CookieData" load_steps=5 format=3 uid="uid://cy48k1vfbwph5"]
+
+[ext_resource type="Texture2D" uid="uid://cu2f2lwoupqox" path="res://Assets/Sprites/SpriteSheet/CookieSheet.png" id="1_cbumo"]
+[ext_resource type="Script" uid="uid://dbern728vjl5n" path="res://Resources/CookieData.gd" id="1_n5qiu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d6dv0"]
+atlas = ExtResource("1_cbumo")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eemlg"]
+atlas = ExtResource("1_cbumo")
+region = Rect2(32, 64, 32, 32)
+
+[resource]
+script = ExtResource("1_n5qiu")
+type = 2
+effect = 1
+price = 4
+description = "When guessed correctly, party has 15% more chance of dealing a crit, for the whole run"
+head_texture = SubResource("AtlasTexture_d6dv0")
+tails_texture = SubResource("AtlasTexture_eemlg")
+metadata/_custom_type_script = "uid://dbern728vjl5n"
