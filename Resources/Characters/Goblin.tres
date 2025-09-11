@@ -149,8 +149,8 @@ animations = [{
 
 [resource]
 script = ExtResource("1_p17t5")
-type = 0
-side = 0
+type = 1
+side = 1
 price = 10
 health = 200.0
 damage = 15.0

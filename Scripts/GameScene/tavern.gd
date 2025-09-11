@@ -49,7 +49,8 @@ func choose_starter_character():
 	possibles_starter.erase(lPlayer_type)
 	party_info.append(lPlayer_type)
 	#TODO This could be done easily with tavern_tscn and used 
-	lPlayers_spawned[0].sprite_frames = LogicalCharacter.char_to_sprite(lPlayer_type)
+	var char_data : CharacterData = Globals.get_character_data(lPlayer_type)
+	lPlayers_spawned[0].sprite_frames =  char_data.animations
 	lPlayers_spawned[0].play("default")
 
 
@@ -99,7 +100,7 @@ func buy_character(character, character_price):
 	for slot in party_slots:
 		if slot.sprite_frames == null and available_cookies[Cookie.TYPE.Normal] >= character_price and !spawned : # Façon assez degueu de savoir si un slot est libre
 			available_cookies[Cookie.TYPE.Normal] -= character_price
-			slot.sprite_frames =  LogicalCharacter.char_to_sprite(character)
+			slot.sprite_frames =  Globals.get_character_data(character).animations
 			slot.play("default")
 			party_info.append(character)
 			buyable_char_nodes.get(character).queue_free()
@@ -255,7 +256,7 @@ func update_party_sprites():
 		sprites.sprite_frames = null
 	for character in party_info:
 		var chosen_slot = party_slots.pick_random()
-		chosen_slot.sprite_frames = LogicalCharacter.char_to_sprite(character)
+		chosen_slot.sprite_frames = Globals.get_character_data(character).animations
 		chosen_slot.play("default")
 		party_slots.erase(chosen_slot)
 	finished_level = true

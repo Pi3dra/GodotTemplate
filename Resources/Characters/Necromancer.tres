@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CharacterData" load_steps=28 format=3 uid="uid://colujltb0q5o5"]
+[gd_resource type="Resource" script_class="CharacterData" load_steps=29 format=3 uid="uid://colujltb0q5o5"]
 
 [ext_resource type="Texture2D" uid="uid://bh4ilchbbvvjq" path="res://Assets/Sprites/Characters/Player/Necromancer/Necromancer_attack (player).png" id="1_kt66m"]
 [ext_resource type="Script" uid="uid://uyc85ts7rtyg" path="res://Resources/CharacterData.gd" id="1_th58o"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cyiguvr5snv7i" path="res://Assets/Sprites/Characters/Player/Necromancer/Necromancer_die (player).png" id="3_l21cq"]
 [ext_resource type="Texture2D" uid="uid://dmrtuyfktapo8" path="res://Assets/Sprites/Characters/Player/Necromancer/Necromancer_hit (player).png" id="4_us7xe"]
 [ext_resource type="Texture2D" uid="uid://b8wlj3yr8nj64" path="res://Assets/Sprites/Characters/Player/Necromancer/Necromancer_walk (player).png" id="5_w3f7t"]
+[ext_resource type="Texture2D" uid="uid://k1tqobuxqec" path="res://Assets/Sprites/Projectiles/WhiteOrb.png" id="6_iw70u"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qmb3q"]
 atlas = ExtResource("1_kt66m")
@@ -189,6 +190,7 @@ health = 170.0
 damage = 25.0
 speed = 3.0
 crit = 0.1
-shooter = false
+shooter = true
 animations = SubResource("SpriteFrames_sblqm")
+projectile = ExtResource("6_iw70u")
 metadata/_custom_type_script = "uid://uyc85ts7rtyg"

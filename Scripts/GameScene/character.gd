@@ -28,8 +28,10 @@ var actual_state: States = States.IDLE:
 				States.WALKING:
 					animated_sprite.play("walk")
 				States.ATTACKING:
-					if character.side == "Good": SoundManager.instance.play_sound("Attack1", true, true)
-					else: SoundManager.instance.play_sound("Attack2", true, true)
+					if character.side == LogicalCharacter.SIDE.Good: 
+						SoundManager.instance.play_sound("Attack1", true, true)
+					else: 
+						SoundManager.instance.play_sound("Attack2", true, true)
 					animated_sprite.play("attack")
 				States.DYING:
 					var lTween_die = create_tween()
@@ -48,7 +50,7 @@ var has_been_crit: bool = false
 #//////////function//////////
 func _ready() -> void:
 	animated_sprite = get_child(0) as AnimatedSprite2D # Because it's AnimSprite2D is the only child
-	animated_sprite.sprite_frames = load(character.sprite_frame) as SpriteFrames # Load accordingly to the logical character
+	animated_sprite.sprite_frames = character.sprite_frame 
 	actual_state = States.WALKING
 	life_bar.max_value = character.total_health
 	character.char_instance = self
@@ -124,24 +126,9 @@ func shoot(pRival_pos: Vector2, pType):
 	var lSprite: Sprite2D = lProjectile.get_child(0)
 	add_child(lProjectile)
 	
-	match pType:
-		character.TYPE.Cyclop:
-			lSprite.texture = load("uid://bwwklxfbmpjk3")
-			lSprite.flip_h = true
-		character.TYPE.Wizard:
-			lSprite.texture = load("uid://cjll7vd11gcj5")
-		character.TYPE.Necromancer:
-			lSprite.texture = load("uid://k1tqobuxqec")
-		character.TYPE.Pixie:
-			lSprite.texture = load("uid://clfd8c6pdss5l")
-		character.TYPE.Ranger:
-			lSprite.texture = load("uid://wvcuyen2nr6g")
-		character.TYPE.Dragon:
-			lSprite.texture = load("uid://b2h8juywe7h5p")
-			lSprite.flip_h = true
-		character.TYPE.Witch:
-			lSprite.texture = load("uid://bqf1kgtep7uwx")
-			lSprite.flip_h = true
+	var char_data = Globals.get_character_data(pType)
+	lSprite.texture = char_data.projectile
+	lSprite.flip_h = char_data.side == LogicalCharacter.SIDE.Bad
 	
 	lTween.tween_property(lProjectile, "global_position", pRival_pos, 0.5)
 	lTween.tween_property(lProjectile, "modulate:a", 0, 0.6)

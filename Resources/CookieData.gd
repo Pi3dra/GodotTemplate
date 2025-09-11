@@ -1,5 +1,6 @@
-class_name CookieData
+
 extends Resource
+class_name CookieData
 
 @export var type : Cookie.TYPE
 @export var effect : Cookie.EFFECTYPE

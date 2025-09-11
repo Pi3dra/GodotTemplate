@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CharacterData" load_steps=33 format=3 uid="uid://b54uifwdhilti"]
+[gd_resource type="Resource" script_class="CharacterData" load_steps=34 format=3 uid="uid://b54uifwdhilti"]
 
 [ext_resource type="Script" uid="uid://uyc85ts7rtyg" path="res://Resources/CharacterData.gd" id="1_a86tn"]
 [ext_resource type="Texture2D" uid="uid://daonvnjd7sgxj" path="res://Assets/Sprites/Characters/Enemies/Dragon/AncientBlackDragon_attack.png" id="1_oi28r"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://jr730bxtjxx7" path="res://Assets/Sprites/Characters/Enemies/Dragon/AncientBlackDragon_hit.png" id="3_4q313"]
 [ext_resource type="Texture2D" uid="uid://cmu63dk7bqs0w" path="res://Assets/Sprites/Characters/Enemies/Dragon/AncientBlackDragon_idle.png" id="4_bctcq"]
 [ext_resource type="Texture2D" uid="uid://kedg5hwii6fi" path="res://Assets/Sprites/Characters/Enemies/Dragon/AncientBlackDragon_fly.png" id="5_ifll0"]
+[ext_resource type="Texture2D" uid="uid://b2h8juywe7h5p" path="res://Assets/Sprites/Projectiles/DeathCoil.png" id="6_kk1fj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ku2rt"]
 atlas = ExtResource("1_oi28r")
@@ -219,6 +220,7 @@ health = 300.0
 damage = 20.0
 speed = 5.3
 crit = 0.1
-shooter = false
+shooter = true
 animations = SubResource("SpriteFrames_4at7c")
+projectile = ExtResource("6_kk1fj")
 metadata/_custom_type_script = "uid://uyc85ts7rtyg"

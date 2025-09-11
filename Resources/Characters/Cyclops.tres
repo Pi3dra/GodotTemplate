@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CharacterData" load_steps=22 format=3 uid="uid://baw54iv70k8pc"]
+[gd_resource type="Resource" script_class="CharacterData" load_steps=23 format=3 uid="uid://baw54iv70k8pc"]
 
 [ext_resource type="Texture2D" uid="uid://cy2gn7nad2af0" path="res://Assets/Sprites/Characters/Enemies/Cyclop/Cyclops_attack.png" id="1_47war"]
 [ext_resource type="Script" uid="uid://uyc85ts7rtyg" path="res://Resources/CharacterData.gd" id="1_thiop"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://c6dcq5xxf2rud" path="res://Assets/Sprites/Characters/Enemies/Cyclop/Cyclops_hit.png" id="3_3lb1q"]
 [ext_resource type="Texture2D" uid="uid://bqsxixap8f7y5" path="res://Assets/Sprites/Characters/Enemies/Cyclop/Cyclops_idle.png" id="4_du8pf"]
 [ext_resource type="Texture2D" uid="uid://j32xftuhrt7y" path="res://Assets/Sprites/Characters/Enemies/Cyclop/Cyclops_walk.png" id="5_i0v0p"]
+[ext_resource type="Texture2D" uid="uid://bwwklxfbmpjk3" path="res://Assets/Sprites/Projectiles/Rock_big.png" id="6_x4gif"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fdmj5"]
 atlas = ExtResource("1_47war")
@@ -144,4 +145,5 @@ speed = 5.1
 crit = 0.1
 shooter = true
 animations = SubResource("SpriteFrames_iddxc")
+projectile = ExtResource("6_x4gif")
 metadata/_custom_type_script = "uid://uyc85ts7rtyg"

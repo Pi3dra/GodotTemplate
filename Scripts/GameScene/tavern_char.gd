@@ -31,7 +31,7 @@ func char_to_price(character_type: LogicalCharacter.TYPE):
 	
 
 func init_char(pCharacter: LogicalCharacter.TYPE):
-	sprite_frames = LogicalCharacter.char_to_sprite(pCharacter)
+	sprite_frames = Globals.get_character_data(pCharacter).animations
 	play()
 	var pPrice : int = char_to_price(pCharacter)
 	label.text = str(pPrice) + "X"
