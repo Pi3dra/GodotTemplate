@@ -10,7 +10,8 @@ extends Resource
 		if side == LogicalCharacter.SIDE.Good:
 			price = value
 		else:
-			push_warning("Only Allies should have a price")
+			price = -1
+			#push_warning("Only Allies should have a price")
 		
 @export_category("Combat")
 @export var health : float

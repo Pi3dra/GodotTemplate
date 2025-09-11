@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CharacterData" load_steps=24 format=3 uid="uid://cqyy1iwgybnkr"]
+[gd_resource type="Resource" script_class="CharacterData" load_steps=25 format=3 uid="uid://cqyy1iwgybnkr"]
 
 [ext_resource type="Texture2D" uid="uid://dcgpoo8lh1oto" path="res://Assets/Sprites/Characters/Enemies/Witch/Witch_attack.png" id="1_enfv4"]
 [ext_resource type="Script" uid="uid://uyc85ts7rtyg" path="res://Resources/CharacterData.gd" id="1_x4ee5"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b367e6o5jrgk2" path="res://Assets/Sprites/Characters/Enemies/Witch/Witch_hit.png" id="3_s2sfw"]
 [ext_resource type="Texture2D" uid="uid://dsecghbbvpwk2" path="res://Assets/Sprites/Characters/Enemies/Witch/Witch_idle.png" id="4_kx6s1"]
 [ext_resource type="Texture2D" uid="uid://cqir1s86aemuv" path="res://Assets/Sprites/Characters/Enemies/Witch/Witch_walk.png" id="5_uutr1"]
+[ext_resource type="Texture2D" uid="uid://bqf1kgtep7uwx" path="res://Assets/Sprites/Projectiles/DeathCoil_initial.png" id="6_he115"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g7dnk"]
 atlas = ExtResource("1_enfv4")
@@ -158,4 +159,5 @@ speed = 4.2
 crit = 0.05
 shooter = true
 animations = SubResource("SpriteFrames_eodjl")
+projectile = ExtResource("6_he115")
 metadata/_custom_type_script = "uid://uyc85ts7rtyg"

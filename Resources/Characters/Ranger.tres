@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="CharacterData" load_steps=26 format=3 uid="uid://b3vvrcgunr1kr"]
+[gd_resource type="Resource" script_class="CharacterData" load_steps=27 format=3 uid="uid://b3vvrcgunr1kr"]
 
 [ext_resource type="Script" uid="uid://uyc85ts7rtyg" path="res://Resources/CharacterData.gd" id="1_atywd"]
 [ext_resource type="Texture2D" uid="uid://c2v61frkgnemq" path="res://Assets/Sprites/Characters/Player/Bandit/Bandit04_idle.png" id="1_v1by3"]
 [ext_resource type="Texture2D" uid="uid://bn1it4ttdsg35" path="res://Assets/Sprites/Characters/Player/Bandit/Bandit04_die.png" id="2_quqv3"]
 [ext_resource type="Texture2D" uid="uid://b0pybkueh1oot" path="res://Assets/Sprites/Characters/Player/Bandit/Bandit04_hit.png" id="3_iurht"]
 [ext_resource type="Texture2D" uid="uid://8hd1bccskav2" path="res://Assets/Sprites/Characters/Player/Bandit/Bandit04_walk.png" id="4_ig5xo"]
+[ext_resource type="Texture2D" uid="uid://cm5ppu7lqev84" path="res://Assets/Sprites/TileMap/Objects/Arrow.png" id="5_quqv3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k1e4q"]
 atlas = ExtResource("1_v1by3")
@@ -183,4 +184,5 @@ speed = 3.9
 crit = 0.2
 shooter = true
 animations = SubResource("SpriteFrames_hjqxq")
+projectile = ExtResource("5_quqv3")
 metadata/_custom_type_script = "uid://uyc85ts7rtyg"

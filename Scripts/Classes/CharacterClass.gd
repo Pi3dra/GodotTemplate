@@ -5,13 +5,14 @@ class_name LogicalCharacter
 enum TYPE  {Knight, Goblin, Skeleton, Cyclop, Devil, Wizard, Farmer, Necromancer, Pixie, Ranger, Dragon, Orc, Slime, Spider, Witch,Unkillable_Slime}
 enum SIDE {Good,Bad}
 
-var sprite_frame: String
+var sprite_frame: SpriteFrames
+var projectile: CompressedTexture2D
 var total_health : float
 var health: float
 var damage: float
 var attack_speed: float
 var crit: float
-var side: String
+var side: SIDE
 var type: TYPE
 var shooter: bool
 var char_instance : Node
@@ -25,18 +26,24 @@ func debug(to_print,confirm):
 		print(to_print)
 
 #//////////function//////////
-func _init(pHealth: int, pDamage: int, pAttack_speed: float, pCrit: float, pSprite_frame: String, pSide: String, pShooter: bool, pType: TYPE):
-	health = pHealth
-	total_health = pHealth
-	damage = pDamage
+func _init(character_type : LogicalCharacter.TYPE):
+	type = character_type
+	var char_data : CharacterData = Globals.get_character_data(character_type)
+	#Combat
+	health = char_data.health
+	total_health = char_data.health
+	damage = char_data.damage
 	var random_offset : float = randf() * 0.5
-	attack_speed = pAttack_speed + random_offset
-	crit = pCrit
-	sprite_frame = pSprite_frame
-	side = pSide
-	shooter = pShooter
-	type = pType
+	attack_speed = char_data.speed + random_offset
+	crit = char_data.crit
+	side = char_data.side
+	shooter = char_data.shooter
+	#Animation
+	sprite_frame = char_data.animations
+	projectile = char_data.projectile
 
+
+	
 func receive_cookie_POWER(received_cookies: Dictionary):
 	# Allow stacking cookies, if flipped in succesion before attacks
 	# We add them to the currently existing ones, if any needs to be triggered instantly
@@ -119,16 +126,3 @@ func calculate_crit(pDamage: float, pBonus_chance: float) -> Array:
 		crit_triggered = true
 
 	return [pDamage, crit_triggered]
-
-static func char_to_sprite(character: LogicalCharacter.TYPE):
-	match character:
-			LogicalCharacter.TYPE.Knight:
-				return load("uid://b2ygb7ty6nyn7")
-			LogicalCharacter.TYPE.Wizard:
-				return load("uid://ceggmtt6ni5yw")
-			LogicalCharacter.TYPE.Farmer:
-				return load("uid://bsek4eo8s6x7f")
-			LogicalCharacter.TYPE.Necromancer:
-				return load("uid://b28w73d4lebir")
-			LogicalCharacter.TYPE.Ranger:
-				return load("uid://cd1mc8i0dxna8")

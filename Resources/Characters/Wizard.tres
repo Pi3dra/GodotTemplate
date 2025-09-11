@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CharacterData" load_steps=28 format=3 uid="uid://cffr06e6o2np5"]
+[gd_resource type="Resource" script_class="CharacterData" load_steps=29 format=3 uid="uid://cffr06e6o2np5"]
 
 [ext_resource type="Script" uid="uid://uyc85ts7rtyg" path="res://Resources/CharacterData.gd" id="1_jr6em"]
 [ext_resource type="Texture2D" uid="uid://c41hi0hiqldr5" path="res://Assets/Sprites/Characters/Player/Wizard/Wizard_attack.png" id="1_t13ul"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://np5uwgjqvkqs" path="res://Assets/Sprites/Characters/Player/Wizard/Wizard_die.png" id="3_c6xfe"]
 [ext_resource type="Texture2D" uid="uid://cb8l6wawdd287" path="res://Assets/Sprites/Characters/Player/Wizard/Wizard_hit.png" id="4_ed6hh"]
 [ext_resource type="Texture2D" uid="uid://d0458w3n3cyx5" path="res://Assets/Sprites/Characters/Player/Wizard/Wizard_walk.png" id="5_el1o3"]
+[ext_resource type="Texture2D" uid="uid://cjll7vd11gcj5" path="res://Assets/Sprites/Projectiles/Fireball.png" id="6_pikrw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tmhl4"]
 atlas = ExtResource("1_t13ul")
@@ -189,6 +190,7 @@ health = 180.0
 damage = 25.0
 speed = 3.9
 crit = 0.1
-shooter = false
+shooter = true
 animations = SubResource("SpriteFrames_fvypp")
+projectile = ExtResource("6_pikrw")
 metadata/_custom_type_script = "uid://uyc85ts7rtyg"

@@ -153,6 +153,7 @@ func add_to_bar(cookie: Cookie.TYPE) -> void:
 		var label: Label = cookie_widgets[cookie]["label"]
 		label.text = "  " + str(available_cookies[cookie]) + "X"
 		label.show()
+		
 		var button: Button = cookie_widgets[cookie]["button"]
 		button.show()
 		return

@@ -187,8 +187,7 @@ func spawn_characters_allies(party_types: Array) -> void:
 
 # Crée un personnage et l'ajoute au bon tableau (wave_index pour "Bad", allies pour "Good")
 func _create_character_for_wave(pChar_type: LogicalCharacter.TYPE, wave_index: int) -> void:
-	var lDict: Dictionary = GameScene.pokedex.get(pChar_type)
-	var lChar := LogicalCharacter.new(lDict["Health"], lDict["Damage"], lDict["Speed"], lDict["Crit"], lDict["Sprite"], lDict["Side"], lDict["Shooter"], pChar_type)
+	var lChar := LogicalCharacter.new(pChar_type)
 	var lCharScene: Node2D = char_scene.instantiate()
 	lCharScene.character = lChar
 	lCharScene.call_deferred("update_lifebar")
@@ -196,16 +195,15 @@ func _create_character_for_wave(pChar_type: LogicalCharacter.TYPE, wave_index: i
 	lCharScene.connect("attack", combat_handler)
 
 	# Ajout selon le Side
-	match lDict["Side"]:
-		"Good":
+	match lChar.side:
+		LogicalCharacter.SIDE.Good:
 			spawned_allies.append(lCharScene)
-		"Bad":
+		LogicalCharacter.SIDE.Bad:
 			spawned[wave_index].append(lCharScene)
 
 # Pour les alliés (utilisé si on veut explicitement spawn des alliés)
 func _create_character_for_ally(pChar_type: LogicalCharacter.TYPE) -> void:
-	var lDict: Dictionary = GameScene.pokedex.get(pChar_type)
-	var lChar := LogicalCharacter.new(lDict["Health"], lDict["Damage"], lDict["Speed"], lDict["Crit"], lDict["Sprite"], lDict["Side"], lDict["Shooter"], pChar_type)
+	var lChar := LogicalCharacter.new(pChar_type)
 	var lCharScene: Node2D = char_scene.instantiate()
 	lCharScene.character = lChar
 	lCharScene.call_deferred("update_lifebar")
@@ -217,25 +215,22 @@ func _create_character_for_ally(pChar_type: LogicalCharacter.TYPE) -> void:
 # Combat handler
 # ------------------------
 
-#TODO break this u p into mulitple funcs
+#TODO break this up into mulitple funcs
 signal drop_cookie(cookie : Cookie, drop_position : Vector2)
 func combat_handler(Attack_info: Array, pSide, pShooter, pSelf) -> void:
 	var lDamage = Attack_info[0]
 	var lCrit = Attack_info[1]
 	var lList_to_pick: Array = []
-	var wave_offset = Vector2.ZERO
 
-	if pSide == "Good":
+	if pSide == LogicalCharacter.SIDE.Good:
 		# priorités : wave0 -> wave1 -> wave2
 		if not spawned[0].is_empty():
 			lList_to_pick = spawned[0]
 		elif not spawned[1].is_empty():
 			lList_to_pick = spawned[1]
-			wave_offset = Vector2(400, 0)
 		elif not spawned[2].is_empty():
 			lList_to_pick = spawned[2]
-			wave_offset = Vector2(900, 0)
-	elif pSide == "Bad":
+	elif pSide == LogicalCharacter.SIDE.Bad:
 		lList_to_pick = spawned_allies
 
 	if lList_to_pick.is_empty():
@@ -256,7 +251,7 @@ func combat_handler(Attack_info: Array, pSide, pShooter, pSelf) -> void:
 
 	# Gestion de la mort
 	if lEnemy_to_attack.character.health <= 0:
-		if lEnemy_to_attack.character.side == "Bad":
+		if lEnemy_to_attack.character.side == LogicalCharacter.SIDE.Bad:
 			# position écran correcte
 			# FOUND this in an old forum, only god knows how it works
 			var enemy_pos : Vector2 = lEnemy_to_attack.get_global_transform_with_canvas().get_origin()
@@ -275,7 +270,7 @@ func combat_handler(Attack_info: Array, pSide, pShooter, pSelf) -> void:
 			shaker.start()
 
 		# si c'est un allié tué, l'enlever de la player_party
-		if pSide == "Bad":
+		if pSide == LogicalCharacter.SIDE.Bad:
 			player_party.erase(lEnemy_to_attack.character.type)
 
 		# enlever l'instance du tableau de la vague appropriée ou des alliés
