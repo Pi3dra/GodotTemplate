@@ -1,6 +1,7 @@
 extends Control
 
-var cookie_tscn : PackedScene = load("res://Scenes/UI/cookie.tscn")
+var cookie_tscn : PackedScene = load("uid://b5dekwm16iqx0")
+var cookie_info_tscn: PackedScene = load("uid://dffxgoej8clrw")
 
 var available_cookies : Dictionary[Cookie.TYPE,int] 
 var placed_cookies : Array [Control] = []
@@ -169,13 +170,42 @@ func add_to_bar(cookie: Cookie.TYPE) -> void:
 	button.add_theme_stylebox_override("pressed", style)
 	button.add_theme_stylebox_override("hover", style)
 	button.gui_input.connect(_handle_bar_input.bind(button, label, cookie))
-	
+
+	button.mouse_entered.connect(show_cookie_infos.bind(button, cookie))
 	cookie_bar.add_child(label)
 	cookie_bar.add_child(button)
 	
 	# Save references
 	cookie_widgets[cookie] = {"label": label, "button": button}
+
+func show_cookie_infos(pButton: Button, pCookie: Cookie.TYPE):
+	var cookie_info_panel: Control = cookie_info_tscn.instantiate()
+	var lGood_position: Vector2 = Vector2(30,55)
+	pButton.mouse_exited.connect(erase_panel.bind(cookie_info_panel, pButton))
 	
+	pButton.pivot_offset = pButton.size/2
+	var lTween = create_tween()
+	lTween.tween_property(pButton, "scale", Vector2.ONE*2, 0.1)
+	await get_tree().create_timer(1.0).timeout
+	if is_instance_valid(cookie_info_panel):
+		Engine.time_scale = 0.4
+		AudioServer.playback_speed_scale = 0.4
+		add_child(cookie_info_panel)
+		cookie_info_panel.update_panel(pCookie)
+		cookie_info_panel.scale = Vector2.ZERO
+		cookie_info_panel.global_position = pButton.global_position + lGood_position
+		var lTween_panel = create_tween()
+		lTween_panel.tween_property(cookie_info_panel, "scale", Vector2.ONE, 0.2)
+	
+func erase_panel(panel:Control, pButton):
+	if is_instance_valid(panel):
+		Engine.time_scale = 1
+		AudioServer.playback_speed_scale = 1
+		var lTween = create_tween()
+		lTween.tween_property(pButton, "scale", Vector2.ONE*1, 0.1)
+		pButton.mouse_exited.disconnect(erase_panel.bind(panel, pButton))
+		panel.queue_free()
+
 func update_cookie_bar():
 	for cookie in available_cookies.keys():
 		if available_cookies[cookie] > 0:
