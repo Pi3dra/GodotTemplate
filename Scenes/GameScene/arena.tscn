@@ -167,13 +167,13 @@ position = Vector2(24, 16)
 position = Vector2(889, 552)
 
 [node name="2Marker2D2" type="Marker2D" parent="EnemiesSpawners"]
-position = Vector2(850, 595)
+position = Vector2(936, 568)
 
 [node name="3Marker2D3" type="Marker2D" parent="EnemiesSpawners"]
 position = Vector2(908, 601)
 
 [node name="4Marker2D4" type="Marker2D" parent="EnemiesSpawners"]
-position = Vector2(928, 568)
+position = Vector2(856, 592)
 
 [node name="5Marker2D5" type="Marker2D" parent="EnemiesSpawners"]
 position = Vector2(872, 632)
@@ -181,45 +181,45 @@ position = Vector2(872, 632)
 [node name="EnemiesSpawners2" type="Node2D" parent="."]
 
 [node name="2Marker2D" type="Marker2D" parent="EnemiesSpawners2"]
-position = Vector2(1240, 568)
+position = Vector2(1248, 568)
 
 [node name="2Marker2D2" type="Marker2D" parent="EnemiesSpawners2"]
-position = Vector2(1224, 608)
+position = Vector2(1288, 584)
 
 [node name="2Marker2D3" type="Marker2D" parent="EnemiesSpawners2"]
-position = Vector2(1256, 640)
+position = Vector2(1248, 616)
 
 [node name="2Marker2D4" type="Marker2D" parent="EnemiesSpawners2"]
-position = Vector2(1280, 592)
+position = Vector2(1312, 616)
 
 [node name="2Marker2D5" type="Marker2D" parent="EnemiesSpawners2"]
-position = Vector2(1304, 624)
+position = Vector2(1288, 648)
 
 [node name="EnemiesSpawner3" type="Node2D" parent="."]
 
 [node name="3Marker2D" type="Marker2D" parent="EnemiesSpawner3"]
-position = Vector2(1568, 600)
+position = Vector2(1568, 584)
 
 [node name="3Marker2D2" type="Marker2D" parent="EnemiesSpawner3"]
-position = Vector2(1600, 584)
+position = Vector2(1624, 568)
 
 [node name="3Marker2D3" type="Marker2D" parent="EnemiesSpawner3"]
-position = Vector2(1632, 592)
+position = Vector2(1600, 600)
 
 [node name="3Marker2D4" type="Marker2D" parent="EnemiesSpawner3"]
-position = Vector2(1656, 624)
+position = Vector2(1632, 616)
 
 [node name="3Marker2D5" type="Marker2D" parent="EnemiesSpawner3"]
-position = Vector2(1608, 624)
+position = Vector2(1576, 632)
 
 [node name="AllySpawners" type="Node2D" parent="."]
 position = Vector2(0, 8)
 
 [node name="Marker2D" type="Marker2D" parent="AllySpawners"]
-position = Vector2(490, 601)
+position = Vector2(456, 576)
 
 [node name="Marker2D2" type="Marker2D" parent="AllySpawners"]
-position = Vector2(453, 573)
+position = Vector2(480, 600)
 
 [node name="Marker2D3" type="Marker2D" parent="AllySpawners"]
 position = Vector2(438, 616)

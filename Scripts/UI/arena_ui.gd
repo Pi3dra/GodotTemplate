@@ -27,7 +27,9 @@ func _ready() -> void:
 	else:
 		tutorialbutton.hide()
 	$Flip.position.y -= 120
-			
+	
+	if Globals.training and not Globals.already_trained:
+		UI.manager.call_overlay(UI.NAME.Tutorial,self)
 
 	
 #region INPUT HANDLING

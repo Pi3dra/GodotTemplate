@@ -50,3 +50,8 @@ func tween_finished():
 	color_rect.queue_free()
 	texture_rect.queue_free()
 	emit_signal("beginning_finished")
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("skip"):
+		emit_signal("beginning_finished")
+		queue_free()
