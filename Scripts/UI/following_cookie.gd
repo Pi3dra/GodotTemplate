@@ -12,6 +12,7 @@ var flip_tween : Tween
 var screen_middle : int
 
 func _ready() -> void:
+	mouse_filter = Control.MOUSE_FILTER_STOP
 	texture_rect.texture = cookie.head_texture
 	shadow.texture = load("uid://kc4ef7j3bwdl")
 	var screen_size = get_viewport().get_visible_rect().size
@@ -20,19 +21,31 @@ func _ready() -> void:
 signal return_cookie(cookie: Control)
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed and !following:
-			following = true
-		elif  event.button_index == MOUSE_BUTTON_LEFT and !event.pressed and following and get_global_mouse_position().y > 200:
-			following = false
-			gpu_particles_2d.emitting = false
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if event.pressed:
+				Cursor.instance.texture = Cursor.grab
+				following = true
+			else:
+				if following and get_global_mouse_position().y > 200:
+					Cursor.instance.texture = Cursor.can_grab
+					following = false
+					gpu_particles_2d.emitting = false
 		elif event.button_index == MOUSE_BUTTON_RIGHT and event.pressed and cookie.state == Cookie.STATE.Unflipped:
 			shadow.queue_free()
-			emit_signal("return_cookie",self)
+			emit_signal("return_cookie", self)
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and !event.pressed:
+		if following and get_global_mouse_position().y > 200:
+			Cursor.instance.texture = Cursor.can_grab
+			following = false
+			gpu_particles_2d.emitting = false
+	
 
 func _process(_delta: float) -> void:
 	if following:
 		var mouse_pos = get_global_mouse_position()
-		var new_pos = Vector2(mouse_pos.x - 32, mouse_pos.y - 32)
+		var new_pos = mouse_pos 
 		position = new_pos
 
 func flip_coin(headpercent: int) -> Cookie.STATE:
@@ -127,20 +140,24 @@ func _swap_side():
 
 
 func _on_mouse_entered() -> void:
-	Cursor.instance.texture = Cursor.can_grab
-	gpu_particles_2d.emitting = true
+	if not following:
+		Cursor.instance.texture = Cursor.can_grab
+		gpu_particles_2d.emitting = true
 	
 func _on_mouse_exited() -> void:
-	Cursor.instance.texture = Cursor.basic
-	gpu_particles_2d.emitting = false
+	#To prevent weird false exits
+	if not following:
+		Cursor.instance.texture = Cursor.basic
+		gpu_particles_2d.emitting = false
+
+#region
+func disappearing_animation() -> void:
+	texture_rect.pivot_offset = size / 2
+	var return_tween = create_tween()
+	return_tween.tween_property(self, "scale", Vector2(0,0), 1)
+	return_tween.tween_callback(queue_free)
+#endregion
 	
-
-func _on_gui_input(event: InputEvent) -> void:
-	if event.is_action_pressed("l_click"):
-		Cursor.instance.texture = Cursor.grab
-	elif event.is_action_released("l_click"):
-		Cursor.instance.texture = Cursor.can_grab
-
 func animate_spawning():
 	var texture = $cookie_texture
 	

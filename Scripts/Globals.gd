@@ -31,7 +31,6 @@ func load_resources(path: String, expected_class: String = "Resource") -> Dictio
 			var res: Resource = ResourceLoader.load(resource_path)
 
 			# Compare using class_name (from your Resource script)
-			print(res)
 			if res and res.is_class(expected_class):
 				result[res.type] = res
 			else:

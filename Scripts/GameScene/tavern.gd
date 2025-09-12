@@ -198,7 +198,6 @@ func _on_trainer_pressed() -> void:
 #endregion
 
 #region button signal land, careful to not get lost, this is utter madness
-
 # TODO: this could be abstracted by a simple signal
 @onready var board = $Board
 func _on_board_mouse_entered() -> void:

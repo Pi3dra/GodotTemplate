@@ -1,7 +1,8 @@
-[gd_resource type="Theme" load_steps=15 format=3 uid="uid://dadlocyhpxvuk"]
+[gd_resource type="Theme" load_steps=17 format=3 uid="uid://dadlocyhpxvuk"]
 
 [ext_resource type="Texture2D" uid="uid://bbmwn81f77iqu" path="res://Assets/Sprites/SpriteSheet/UI assets (2x).png" id="1_gposl"]
 [ext_resource type="FontFile" uid="uid://b0ndjepym4tga" path="res://Assets/Themes/Fonts/FantasyRPGtitle (size 11).ttf" id="2_7g1q8"]
+[ext_resource type="Texture2D" uid="uid://dxcc6fps2vdnc" path="res://Assets/Sprites/SpriteSheet/UI assets (3x).png" id="3_7g1q8"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pvb1u"]
 
@@ -21,35 +22,44 @@ texture_margin_right = 18.0
 texture_margin_bottom = 18.0
 region_rect = Rect2(486, 6, 84, 84)
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nvu70"]
+texture = ExtResource("3_7g1q8")
+texture_margin_left = 24.0
+texture_margin_top = 9.0
+texture_margin_right = 24.0
+texture_margin_bottom = 9.0
+region_rect = Rect2(291, 579, 138, 45)
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vnygf"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_iu3vn"]
-texture = ExtResource("1_gposl")
-texture_margin_left = 16.0
-texture_margin_top = 6.0
-texture_margin_right = 16.0
-texture_margin_bottom = 6.0
+texture = ExtResource("3_7g1q8")
+texture_margin_left = 27.0
+texture_margin_top = 12.0
+texture_margin_right = 27.0
+texture_margin_bottom = 12.0
 expand_margin_left = 2.0
 expand_margin_top = 1.0
 expand_margin_right = 2.0
 expand_margin_bottom = 1.0
-region_rect = Rect2(96, 384, 96, 32)
+region_rect = Rect2(144, 576, 144, 48)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_k558t"]
-texture = ExtResource("1_gposl")
-texture_margin_left = 14.0
-texture_margin_top = 4.0
-texture_margin_right = 14.0
-texture_margin_bottom = 6.0
-region_rect = Rect2(2, 386, 92, 30)
+texture = ExtResource("3_7g1q8")
+texture_margin_left = 24.1182
+texture_margin_top = 9.1889
+texture_margin_right = 24.1415
+texture_margin_bottom = 12.0266
+axis_stretch_horizontal = 1
+region_rect = Rect2(2.9198, 578.999, 138.217, 44.9604)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vnygf"]
-texture = ExtResource("1_gposl")
-texture_margin_left = 14.0
-texture_margin_top = 4.0
-texture_margin_right = 14.0
-texture_margin_bottom = 6.0
-region_rect = Rect2(194, 386, 92, 30)
+texture = ExtResource("3_7g1q8")
+texture_margin_left = 24.0
+texture_margin_top = 9.0
+texture_margin_right = 24.0
+texture_margin_bottom = 12.0
+region_rect = Rect2(291, 579, 138, 45)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_86iin"]
 texture = ExtResource("1_gposl")
@@ -88,6 +98,7 @@ Button/colors/font_hover_color = Color(0.729412, 0.72549, 0.745098, 1)
 Button/colors/font_pressed_color = Color(0.494118, 0.494118, 0.494118, 1)
 Button/font_sizes/font_size = 38
 Button/fonts/font = ExtResource("2_7g1q8")
+Button/styles/disabled = SubResource("StyleBoxTexture_nvu70")
 Button/styles/focus = SubResource("StyleBoxEmpty_vnygf")
 Button/styles/hover = SubResource("StyleBoxTexture_iu3vn")
 Button/styles/normal = SubResource("StyleBoxTexture_k558t")

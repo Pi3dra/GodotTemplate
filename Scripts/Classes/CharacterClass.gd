@@ -17,7 +17,7 @@ var type: TYPE
 var shooter: bool
 var char_instance : Node
 
-var active_cookies : Dictionary = Cookie.type_dict()
+var active_cookies : Dictionary = {}
 
 
 var DEBUG = true
@@ -52,29 +52,25 @@ func receive_cookie_POWER(received_cookies: Dictionary):
 	# cookies : Dictionary [COOKIETYPE, Array[Cookie]]
 	
 	active_cookies = received_cookies
-	#for key in received_cookies.keys():
-	#	for cookie in received_cookies[key]:
-	#		active_cookies[key].append(cookie)
-			
-	var healing_cookies = active_cookies.get(Cookie.TYPE.Healing)
-	var healing = (total_health/3)*healing_cookies.size()
+	var healing_cookies = active_cookies.get(Cookie.TYPE.Healing, 0)
+	var healing = (total_health/3)*healing_cookies
 	if health + healing > total_health:
 		health = total_health
 	else:
 		health += healing 
 	
-	if healing_cookies.size() > 0:
+	if healing_cookies > 0:
 		char_instance.animate_health_bar()
 		
-	debug("Healed! " + str(health), healing_cookies.size() > 0)
+	debug("Healed! " + str(health), healing_cookies > 0)
 	
-	var fast_cookies = active_cookies.get(Cookie.TYPE.Fast)
+	var fast_cookies = active_cookies.get(Cookie.TYPE.Fast, 0)
 	var timer_reduction = 0
-	for i in range(fast_cookies.size()):
+	for i in range(fast_cookies):
 		timer_reduction = attack_speed*0.15
 		attack_speed = attack_speed - timer_reduction
 	attack_speed -= timer_reduction #this might possibly make it permanent between runs lol, It's a feature
-	debug("Speed! " + str(attack_speed), fast_cookies.size() > 0)
+	debug("Speed! " + str(attack_speed), fast_cookies > 0)
 			
 
 
@@ -82,21 +78,20 @@ func attack() -> Array:
 	var damage_multiplier = 1
 	
 	# Damage Boosting cookies
-	
-	var normal_cookies = active_cookies.get(Cookie.TYPE.Normal)
-	damage_multiplier += 2 * normal_cookies.size()
-	debug("Normal!", normal_cookies.size() > 0)
+	var normal_cookies = active_cookies.get(Cookie.TYPE.Normal, 0)
+	damage_multiplier += 2 * normal_cookies
+	debug("Normal!", normal_cookies > 0)
 	
 	# Berserk Cookie
-	var berserk_cookies = active_cookies.get(Cookie.TYPE.Berserk)
-	damage_multiplier += 3 * berserk_cookies.size()
-	debug("Berserk!", berserk_cookies.size() > 0)
+	var berserk_cookies = active_cookies.get(Cookie.TYPE.Berserk, 0)
+	damage_multiplier += 3 * berserk_cookies
+	debug("Berserk!", berserk_cookies > 0)
 	
 	# Critical Boosting Cookies
 	var critical_bonus := 0.0
-	var critical_cookies = active_cookies.get(Cookie.TYPE.Crit)
-	critical_bonus += 0.2 * critical_cookies.size()
-	debug("Critical!", critical_cookies.size() > 0)
+	var critical_cookies = active_cookies.get(Cookie.TYPE.Crit, 0)
+	critical_bonus += 0.2 * critical_cookies
+	debug("Critical!", critical_cookies > 0)
 	
 	# Array Float Bool
 	
@@ -105,11 +100,10 @@ func attack() -> Array:
 	#print("CharClass x: ", damage_multiplier," d: ", total_damage," t: ", total_damage*damage_multiplier)
 	# Damage using cookies
 	# Vampire cookie
-	var vampire_cookies = active_cookies.get(Cookie.TYPE.Vampire)
-	health += (total_damage/3) * vampire_cookies.size()
-	debug("Vampire!", vampire_cookies.size() > 0)
+	var vampire_cookies = active_cookies.get(Cookie.TYPE.Vampire, 0)
+	health += (total_damage/3) * vampire_cookies
+	debug("Vampire!", vampire_cookies > 0)
 	
-	active_cookies = Cookie.type_dict() # Resetting to empty
 	return [total_damage, crit_info[1]]
 	
 	

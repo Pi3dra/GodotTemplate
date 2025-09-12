@@ -1,11 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://dpnhc72tu6qee"]
+[gd_scene load_steps=8 format=3 uid="uid://dpnhc72tu6qee"]
 
 [ext_resource type="Script" uid="uid://ci1pj1mqdc2i5" path="res://Scripts/UI/arena_ui.gd" id="1_0jrm8"]
 [ext_resource type="Script" uid="uid://b2yp7yuei5lgc" path="res://Scripts/UI/cookie_holder.gd" id="2_y73w7"]
 [ext_resource type="Theme" uid="uid://dadlocyhpxvuk" path="res://Assets/Themes/ArenaTheme.tres" id="3_enddi"]
 [ext_resource type="Texture2D" uid="uid://cu2f2lwoupqox" path="res://Assets/Sprites/SpriteSheet/CookieSheet.png" id="4_a7d03"]
 [ext_resource type="Theme" uid="uid://koj3axa8mw8p" path="res://Assets/Themes/MerchantTheme.tres" id="5_q6rnn"]
-[ext_resource type="Script" uid="uid://da7i0oeu65w08" path="res://Scripts/UI/cookie_receiver.gd" id="6_31k31"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q6rnn"]
 atlas = ExtResource("4_a7d03")
@@ -49,7 +48,7 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -72.0
-offset_top = -53.0
+offset_top = -69.0
 offset_right = 72.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -135,20 +134,18 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -654.0
-offset_top = 154.0
-offset_right = -556.0
-offset_bottom = 641.0
+offset_left = -217.5
+offset_top = 90.0
+offset_right = 217.5
+offset_bottom = 168.0
 grow_horizontal = 2
 theme = ExtResource("3_enddi")
 
 [node name="CookieHolder" type="BoxContainer" parent="PanelContainer2"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme = ExtResource("5_q6rnn")
-vertical = true
-script = ExtResource("6_31k31")
+theme = ExtResource("3_enddi")
+alignment = 1
+script = ExtResource("2_y73w7")
 
 [connection signal="mouse_entered" from="PanelContainer/CookieHolder" to="PanelContainer/CookieHolder" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="PanelContainer/CookieHolder" to="PanelContainer/CookieHolder" method="_on_mouse_exited"]

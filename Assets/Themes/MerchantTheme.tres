@@ -1098,6 +1098,7 @@ LeftArrow/styles/normal = SubResource("StyleBoxTexture_67t6l")
 LeftArrow/styles/pressed = SubResource("StyleBoxTexture_x66b1")
 Panel/styles/panel = SubResource("StyleBoxTexture_3f6d3")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_g01tv")
+RichTextLabel/fonts/normal_font = ExtResource("1_48ogh")
 SideButton/base_type = &"Button"
 SideButton/colors/font_color = Color(0, 0, 0, 1)
 SideButton/colors/font_disabled_color = Color(0, 0, 0, 1)

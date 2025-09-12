@@ -14,7 +14,6 @@ var scene_projectile = load("uid://deduo5msnlka4")
 var font_theme = load("uid://dasqtqhyfj758")
 
 enum States {IDLE, WALKING, ATTACKING, DYING, HURT}
-
 var previous_state: States
 
 # This variable keeps track of the character's current state.
@@ -162,7 +161,6 @@ func show_damage(pIs_Crit: bool, pDamage: float):
 		lTween.set_parallel(false).tween_property(lLabel_damage, "modulate", Color.TRANSPARENT, 0.4).set_delay(1.0)
 		lTween.tween_property(lLabel_damage, "position", Vector2.ZERO, 0.1)
 		lTween.tween_callback(kill_tween.bind(lTween, lLabel_damage))
-
 
 func kill_tween(pTween: Tween, pLabel: Label):
 	pLabel.queue_free()
