@@ -4,11 +4,12 @@ extends Control
 @onready var lvl1 = $HBoxContainer/Level1
 @onready var lvl2 = $HBoxContainer/Level2
 @onready var lvl3 = $HBoxContainer/Level3
+@onready var level_boss: Control = $LevelBoss
 
 static var instance
 
 func _ready():
-	var levels = [lvl1, lvl2, lvl3]
+	var levels = [lvl1, lvl2, lvl3, level_boss]
 	lvl1.generate_level(level_panel.Difficulty.Easy)
 	lvl2.generate_level(level_panel.Difficulty.Medium)
 	lvl3.generate_level(level_panel.Difficulty.Hard)

@@ -33,7 +33,7 @@ var spriteorder = {LogicalCharacter.TYPE.Skeleton : 1, LogicalCharacter.TYPE.Sli
 
 var easy_enemies = [LogicalCharacter.TYPE.Skeleton, LogicalCharacter.TYPE.Slime, LogicalCharacter.TYPE.Spider]
 var medium_enemies = [LogicalCharacter.TYPE.Orc, LogicalCharacter.TYPE.Witch, LogicalCharacter.TYPE.Goblin]
-var hard_enemies = [LogicalCharacter.TYPE.Cyclop, LogicalCharacter.TYPE.Devil]
+var hard_enemies = [LogicalCharacter.TYPE.Cyclop, LogicalCharacter.TYPE.Devil] # Rajouter un nouveau à la place du dragon
 var enemy_palette = { Difficulty.Easy : easy_enemies, Difficulty.Medium : medium_enemies, Difficulty.Hard : hard_enemies}
 
 var sprites = preload("uid://damlxqw3n3qsv")
