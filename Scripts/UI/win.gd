@@ -3,25 +3,32 @@ extends Control
 @onready var but_win: Button = $ButWin
 @onready var win_label: RichTextLabel = $WIN
 @onready var panel_container: PanelContainer = $PanelContainer
-@onready var reward_1: Label = $PanelContainer/VBoxContainer/HBoxContainer/Reward1
-@onready var reward_2: Label = $PanelContainer/VBoxContainer/HBoxContainer2/Reward2
-
-
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	UI.manager.hide_overlay(UI.NAME.Arena)
+	var rewards = UI.manager.get_data(UI.NAME.WinScreen)
+	
+	for cookie_type in rewards.keys():
+		if rewards[cookie_type] > 0:
+			var cookie_data = Globals.get_cookie_data(cookie_type)
+			var richlabel = RichTextLabel.new()
+			richlabel.bbcode_enabled = true
+			richlabel.fit_content = true
+			richlabel.scroll_active = false
+			richlabel.clip_contents = false
+			richlabel.autowrap_mode = TextServer.AUTOWRAP_OFF
+			
+			# Register the cookie texture as an inline image
+			richlabel.add_image(cookie_data.head_texture)
+			richlabel.append_text("x%d  " % rewards[cookie_type])
+			$PanelContainer/VBoxContainer.add_child(richlabel)
+			
 	SoundManager.instance.play_sound("Level1", false)
 	SoundManager.instance.play_sound("Level2", false)
 	SoundManager.instance.play_sound("Level3", false)
 	SoundManager.instance.play_sound("Winning", true, false)
-	
-	#for a in spawned_allies:
-		#if a.has_node("AnimatedSprite2D") or a.has_method("animated_sprite"):
-			## tentative safe play
-			#if a.animated_sprite:
-				#a.animated_sprite.play("default")
 	
 	await get_tree().create_timer(2.2).timeout
 	
@@ -31,13 +38,6 @@ func _ready() -> void:
 	lTween.tween_property(but_win, "position", but_win.position + lGo_Down, 0.5)
 	lTween.tween_property(panel_container, "position", panel_container.position + lGo_Down, 0.5)
 	lTween.tween_property(win_label, "position", win_label.position + lGo_Down, 0.5)
-
-	#reward_1.text = str(level_reward1) + "X"
-	#reward_2.text = str(level_reward2) + "X"
-	#if level_reward2 < 1:
-		#$ControlWin/PanelContainer/VBoxContainer/HBoxContainer2.hide()
-		#selected_special = Cookie.pick_random_special()
-		#special_texture.texture = Cookie.type_sprite(selected_special)
 
 signal switch_to_tavern
 func _on_but_win_pressed() -> void:

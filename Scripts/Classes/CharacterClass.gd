@@ -52,17 +52,6 @@ func receive_cookie_POWER(received_cookies: Dictionary):
 	# cookies : Dictionary [COOKIETYPE, Array[Cookie]]
 	
 	active_cookies = received_cookies
-	var healing_cookies = active_cookies.get(Cookie.TYPE.Healing, 0)
-	var healing = (total_health/3)*healing_cookies
-	if health + healing > total_health:
-		health = total_health
-	else:
-		health += healing 
-	
-	if healing_cookies > 0:
-		char_instance.animate_health_bar()
-		
-	debug("Healed! " + str(health), healing_cookies > 0)
 	
 	var fast_cookies = active_cookies.get(Cookie.TYPE.Fast, 0)
 	var timer_reduction = 0
@@ -82,26 +71,24 @@ func attack() -> Array:
 	damage_multiplier += 2 * normal_cookies
 	debug("Normal!", normal_cookies > 0)
 	
-	# Berserk Cookie
-	var berserk_cookies = active_cookies.get(Cookie.TYPE.Berserk, 0)
-	damage_multiplier += 3 * berserk_cookies
-	debug("Berserk!", berserk_cookies > 0)
-	
+
 	# Critical Boosting Cookies
 	var critical_bonus := 0.0
 	var critical_cookies = active_cookies.get(Cookie.TYPE.Crit, 0)
-	critical_bonus += 0.2 * critical_cookies
+	critical_bonus = clamp(critical_bonus + .2 * critical_cookies, 0.0, 1.0)
 	debug("Critical!", critical_cookies > 0)
 	
 	# Array Float Bool
-	
 	var crit_info : Array  = calculate_crit(damage*damage_multiplier, critical_bonus)
 	var total_damage : float = crit_info[0]
-	#print("CharClass x: ", damage_multiplier," d: ", total_damage," t: ", total_damage*damage_multiplier)
-	# Damage using cookies
+
 	# Vampire cookie
 	var vampire_cookies = active_cookies.get(Cookie.TYPE.Vampire, 0)
-	health += (total_damage/3) * vampire_cookies
+	var healing = (total_damage/3) * vampire_cookies 
+	health = clamp(health + healing, 0, total_health)
+	if vampire_cookies > 0:
+		char_instance.animate_health_bar()
+		char_instance.show_damage(crit_info[1], healing, true)
 	debug("Vampire!", vampire_cookies > 0)
 	
 	return [total_damage, crit_info[1]]

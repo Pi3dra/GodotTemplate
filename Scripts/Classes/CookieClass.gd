@@ -1,6 +1,6 @@
 class_name Cookie
 
-enum TYPE {Normal, Berserk, Crit, Replay, Healing, Vampire, Weighted, Fast, Head}
+enum TYPE {Normal, Crit, Replay, Vampire, Weighted, Fast}
 enum EFFECTYPE {Chance, Combat}
 enum STATE {Head, Tail, Unflipped}
 

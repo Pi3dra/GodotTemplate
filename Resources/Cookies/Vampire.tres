@@ -13,7 +13,7 @@ region = Rect2(32, 192, 32, 32)
 
 [resource]
 script = ExtResource("1_0uoj3")
-type = 5
+type = 3
 effect = 1
 price = 4
 description = "Heals the party by a 30% of dealt damage, if guessed correctly"

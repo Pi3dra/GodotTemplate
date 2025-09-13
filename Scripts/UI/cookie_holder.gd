@@ -51,7 +51,7 @@ func _on_button_shift_click(button: Button, label: Label, cookie: Cookie.TYPE) -
 		var random_pos = _spawn_and_animate_cookie(button, label, cookie, container_pos, rect, positions)
 		positions.append(random_pos)
 
-func _on_button_down(button: Button, label: Label, cookie: Cookie.TYPE) -> void:
+func _on_button_down(_button: Button, _label: Label, cookie: Cookie.TYPE) -> void:
 	Cursor.instance.texture = Cursor.grab
 	available_cookies[cookie] -= 1
 	update_cookie_widget(cookie)
@@ -82,7 +82,7 @@ func update_cookie_bar():
 		if available_cookies[cookie] > 0:
 			add_to_bar(cookie)
 
-func add_to_bar(cookie: Cookie.TYPE, hidden = false) -> void:
+func add_to_bar(cookie: Cookie.TYPE) -> void:
 	if cookie_widgets.has(cookie):
 		update_cookie_widget(cookie)
 		return
@@ -100,10 +100,6 @@ func add_to_bar(cookie: Cookie.TYPE, hidden = false) -> void:
 	button.add_theme_stylebox_override("hover", style)
 	button.gui_input.connect(_handle_bar_input.bind(button, label, cookie))
 	button.mouse_entered.connect(show_cookie_infos.bind(button, cookie))
-	
-	if hidden:
-		button.hide()
-		label.hide()
 	
 	add_child(label)
 	add_child(button)
@@ -127,7 +123,7 @@ func _calculate_duration(origin: Vector2,end :Vector2, reference_distance := 400
 	duration = max(duration, 0.05)  
 	return duration
 	
-func _spawn_and_animate_cookie(button: Button, label: Label, cookie: Cookie.TYPE, container_pos: Vector2, rect: Rect2, positions: Array = []) -> Vector2:
+func _spawn_and_animate_cookie(button: Button, _label: Label, cookie: Cookie.TYPE, container_pos: Vector2, rect: Rect2, positions: Array = []) -> Vector2:
 	available_cookies[cookie] -= 1
 	update_cookie_widget(cookie)
 	
@@ -150,7 +146,7 @@ func _on_cookie_returned(cookie_instance: Control) -> void:
 	var return_tween = create_tween()
 	available_cookies[cookie_type] = available_cookies.get(cookie_type,0) + 1
 	if not cookie_widgets.has(cookie_type):
-		add_to_bar(cookie_type, true)
+		add_to_bar(cookie_type)
 		
 	var return_position = cookie_widgets[cookie_type]["button"].global_position
 	

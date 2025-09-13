@@ -214,14 +214,11 @@ func _on_accept_pressed() -> void:
 func _on_exit_mouse_entered() -> void:
 	Cursor.instance.texture = Cursor.point
 
-
 func _on_exit_mouse_exited() -> void:
 	Cursor.instance.texture = Cursor.basic
 
-
 func _on_accept_mouse_entered() -> void:
 	Cursor.instance.texture = Cursor.point
-
 
 func _on_accept_mouse_exited() -> void:
 	Cursor.instance.texture = Cursor.basic

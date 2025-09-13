@@ -8,8 +8,6 @@ var current_tutorial = tutorial.TUTORIALS.Tavern
 var cookies : Dictionary  = {}  #[Cookie.TYPE,CookieData]
 var characters : Dictionary  = {} #[LogicalCharacter.TYPE, CharacterData]
 
-
-
 func _ready():
 	cookies = load_resources("res://Resources/Cookies/")
 	characters = load_resources("res://Resources/Characters/")

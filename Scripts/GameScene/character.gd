@@ -137,30 +137,61 @@ func projectile_finished(pProjectile: Node2D):
 	pProjectile.queue_free()
 
 
-func show_damage(pIs_Crit: bool, pDamage: float):
-	var lLabel_damage = Label.new()
+func show_damage(pIs_Crit: bool, pDamage: float, healing := false):
+	var lLabel_damage := Label.new()
 	add_child(lLabel_damage)
-	
-	lLabel_damage.text = str(pDamage as int)
-	lLabel_damage.modulate = Color.ORANGE
+
+	# Color depending on healing / crit
+	if healing:
+		lLabel_damage.modulate = Color.GREEN
+	else:
+		lLabel_damage.modulate = Color.RED if pIs_Crit else Color.ORANGE
+
 	lLabel_damage.theme = font_theme
-	
-	var lTween = create_tween()
-	if pIs_Crit == false:
-		lTween.tween_property(lLabel_damage, "position", Vector2(randf_range(15,-20),randf_range(-44,-52)), 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
-		lTween.tween_property(lLabel_damage, "modulate", Color.TRANSPARENT, 0.2).set_delay(1.0)
-		lTween.tween_property(lLabel_damage, "position", Vector2.ZERO, 0.1)
-		lTween.tween_callback(kill_tween.bind(lTween, lLabel_damage))
+	lLabel_damage.position = Vector2.ZERO
+	lLabel_damage.scale = Vector2.ONE
+
+	# Animate the number (0 → pDamage)
+	var tween_num := create_tween()
+	tween_num.tween_method(
+		func(value):
+			lLabel_damage.text = str(int(round(value))),
+		0.0, pDamage, 1.0
+	).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
+
+	# Animate position + fade
+	var tween_fx := create_tween()
+
+	if not pIs_Crit:
+		tween_fx.tween_property(
+			lLabel_damage, "position",
+			Vector2(randf_range(-20, 15), randf_range(-52, -44)), 0.5
+		).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+
+		tween_fx.tween_property(
+			lLabel_damage, "modulate",
+			Color.TRANSPARENT, 0.2
+		).set_delay(1.0)
 	else:
 		animated_sprite_fx.play("hit")
 		has_been_crit = false
-		
-		lLabel_damage.modulate = Color.RED
-		lTween.set_parallel(true).tween_property(lLabel_damage, "position", Vector2(randf_range(15,-20),randf_range(-44,-52)), 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
-		lTween.tween_property(lLabel_damage, "scale", Vector2(2.4,2.4), 0.4)
-		lTween.set_parallel(false).tween_property(lLabel_damage, "modulate", Color.TRANSPARENT, 0.4).set_delay(1.0)
-		lTween.tween_property(lLabel_damage, "position", Vector2.ZERO, 0.1)
-		lTween.tween_callback(kill_tween.bind(lTween, lLabel_damage))
+
+		tween_fx.set_parallel(true).tween_property(
+			lLabel_damage, "position",
+			Vector2(randf_range(-20, 15), randf_range(-52, -44)), 0.5
+		).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+
+		tween_fx.tween_property(
+			lLabel_damage, "scale",
+			Vector2(2.4, 2.4), 0.4
+		)
+
+		tween_fx.set_parallel(false).tween_property(
+			lLabel_damage, "modulate",
+			Color.TRANSPARENT, 0.4
+		).set_delay(1.0)
+
+	tween_fx.tween_callback(lLabel_damage.queue_free)
 
 func kill_tween(pTween: Tween, pLabel: Label):
 	pLabel.queue_free()

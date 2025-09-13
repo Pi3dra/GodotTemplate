@@ -435,6 +435,7 @@ text = "PARTY FULL!"
 
 [node name="PanelContainer2" type="PanelContainer" parent="."]
 layout_direction = 2
+anchors_preset = -1
 offset_left = -832.0
 offset_top = 704.0
 offset_right = -606.0

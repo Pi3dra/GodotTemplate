@@ -2,12 +2,6 @@ extends BoxContainer
 
 var cookie_widgets := {} # { Cookie.TYPE: {"label": Label, "button": Button} }
 var available_cookies : Dictionary #[Cookie.TYPE,int] 
-@onready var cookie_container: ReferenceRect = $"../../CookieContainer"
-
-func _ready() -> void:
-	pass
-
-
 
 func update_cookie_widget(cookie: Cookie.TYPE):
 	var widget = cookie_widgets.get(cookie, null)
@@ -15,8 +9,12 @@ func update_cookie_widget(cookie: Cookie.TYPE):
 		var label: RichTextLabel = widget.label
 		label.clear()
 		label.add_image(Globals.get_cookie_data(cookie).head_texture)
-		label.append_text("  x%d" % available_cookies[cookie])
+		label.append_text("x%d  " % available_cookies[cookie])
 		label.visible = available_cookies[cookie] > 0
+
+func erase_cookie(cookie_type):
+	if cookie_widgets.has(cookie_type):
+		cookie_widgets[cookie_type]["label"].hide()
 
 func update_cookie_bar():
 	for cookie in available_cookies.keys():
@@ -39,7 +37,7 @@ func add_to_bar(cookie: Cookie.TYPE) -> void:
 	
 	# Register the cookie texture as an inline image
 	richlabel.add_image(cookie_data.head_texture)
-	richlabel.append_text("  x%d" % available_cookies[cookie])
+	richlabel.append_text("x%d  " % available_cookies[cookie])
 
 	add_child(richlabel)
 	

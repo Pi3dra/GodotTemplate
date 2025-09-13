@@ -1,13 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://1cnkhmktcngn"]
+[gd_scene load_steps=4 format=3 uid="uid://1cnkhmktcngn"]
 
 [ext_resource type="Script" uid="uid://bowb2vfviis7r" path="res://Scripts/UI/win.gd" id="1_cgn5s"]
 [ext_resource type="Theme" uid="uid://dadlocyhpxvuk" path="res://Assets/Themes/ArenaTheme.tres" id="1_vnfq8"]
 [ext_resource type="FontFile" uid="uid://b0ndjepym4tga" path="res://Assets/Themes/Fonts/FantasyRPGtitle (size 11).ttf" id="2_cgn5s"]
-[ext_resource type="Texture2D" uid="uid://cu2f2lwoupqox" path="res://Assets/Sprites/SpriteSheet/CookieSheet.png" id="3_7bgfe"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tsjor"]
-atlas = ExtResource("3_7bgfe")
-region = Rect2(0, 0, 32, 31)
 
 [node name="Win" type="Control"]
 layout_mode = 3
@@ -56,29 +51,5 @@ layout_mode = 2
 text = "Rewards"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Reward1" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-theme = ExtResource("1_vnfq8")
-theme_type_variation = &"Text"
-text = "10X"
-
-[node name="TextureRect" type="TextureRect" parent="PanelContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-texture = SubResource("AtlasTexture_tsjor")
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Reward2" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-theme = ExtResource("1_vnfq8")
-theme_type_variation = &"Text"
-
-[node name="TextureRect" type="TextureRect" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
 
 [connection signal="pressed" from="ButWin" to="." method="_on_but_win_pressed"]

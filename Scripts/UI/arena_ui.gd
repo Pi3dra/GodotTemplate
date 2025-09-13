@@ -30,6 +30,8 @@ func _ready() -> void:
 	if Globals.training and not Globals.already_trained:
 		UI.manager.call_overlay(UI.NAME.Tutorial,self)
 
+
+	
 #region FLIPPING COOKIES
 signal combat_cookies(cookies: Array[Cookie], enemy: bool)
 func _on_button_pressed() -> void:
@@ -39,20 +41,14 @@ func _on_button_pressed() -> void:
 		
 	if placed_cookies.size() < 1:
 		return
-	#### Handling pre flip Cookies
+		
+	#### Handling Weighted cookie
 	var weighted_cookies = active_cookies.get(Cookie.TYPE.Weighted, 0)
-	var head_chance = 0
-	#for cookie in weighted_cookies:
-	#	# TODO put this to 15
-	#	if cookie.side == Cookie.SCREENSIDE.Head:
-	#		head_chance += 25
+	var head_chance = 25*weighted_cookies
 	
-	var head_cookies = active_cookies.get(Cookie.TYPE.Head, 0)
-	head_chance += 15*head_cookies
-	
-	# TODO: Leave only weihgted cookie
-	#var tail_cookies = active_cookies.get(Cookie.TYPE.Tail)
-	#tail_chance += 30*tail_cookies.size()
+	active_cookies.erase(Cookie.TYPE.Weighted)
+	cookie_receiver.erase_cookie(Cookie.TYPE.Weighted)
+	print(head_chance)
 	
 	#### Cookie flipping
 	var correct_guesses : Array[Control]
@@ -70,10 +66,7 @@ func _on_button_pressed() -> void:
 			Cookie.TYPE.Replay:
 				if randf() > 0.5:
 					cookie_bar.create_button(cookie_object)
-	# Clear old effects:
-	#active_cookies.clear()
-	
-	
+
 
 	#if enemy_combat_cookie.size() > 0:
 		#emit_signal("combat_cookies", enemy_combat_cookie, true)
@@ -90,6 +83,7 @@ func _on_button_pressed() -> void:
 	placed_cookies.clear()
 	
 	if cookie_receiver.available_cookies.size() > 0:
+		print(active_cookies)
 		emit_signal("combat_cookies", active_cookies, false)
 	
 #endregion

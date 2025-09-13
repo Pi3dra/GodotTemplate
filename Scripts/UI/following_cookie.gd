@@ -9,15 +9,13 @@ var flip_tween : Tween
 @onready var shadow: TextureRect = $shadow
 @onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
 
-var screen_middle : int
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	texture_rect.texture = cookie.head_texture
 	shadow.texture = load("uid://kc4ef7j3bwdl")
-	var screen_size = get_viewport().get_visible_rect().size
-	screen_middle = screen_size.x/2
 	
+#region INPUT
 signal return_cookie(cookie: Control)
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -47,6 +45,7 @@ func _process(_delta: float) -> void:
 		var mouse_pos = get_global_mouse_position()
 		var new_pos = mouse_pos 
 		position = new_pos
+#endregion
 
 func flip_coin(headpercent: int) -> Cookie.STATE:
 	# Clamp to 0–100 just in case
@@ -62,23 +61,7 @@ func flip_coin(headpercent: int) -> Cookie.STATE:
 		
 	return cookie.state
 	
-func do_flip_animation():
-	flip_tween = get_tree().create_tween()
-	up_tween = get_tree().create_tween()
-	up_tween.set_ease(Tween.EASE_OUT_IN)
-	up_tween.set_trans(Tween.TRANS_CUBIC)
-	up_tween.tween_property(texture_rect, "position:y", texture_rect.position.y - 126, 0.02*10 )
-	var duration = 0.02
-	# FLipping
-	for i in range(5):
-		flip_tween.tween_property(texture_rect, "scale:y", 0, duration)
-		flip_tween.tween_callback(Callable(self, "_swap_side"))
-		flip_tween.tween_property(texture_rect, "scale:y", 1, duration)
-		duration += 0.02
-	up_tween.tween_property(texture_rect, "position:y", texture_rect.position.y, 0.02*10 ) 
-	#update_sprite()
-	flip_tween.tween_callback(update_sprite)
-	flip_tween.tween_callback(make_red)
+
 
 ## Change and emit particles for flip anim
 func explo_particles():
@@ -116,7 +99,54 @@ func explo_particles():
 	emitter.restart()
 	emitter.emitting = base_emitting
 
-## Waits for the tween to stop to display the correct sprite + start particles
+
+func _on_mouse_entered() -> void:
+	if not following:
+		Cursor.instance.texture = Cursor.can_grab
+		gpu_particles_2d.emitting = true
+	
+func _on_mouse_exited() -> void:
+	#To prevent weird false exits
+	if not following:
+		Cursor.instance.texture = Cursor.basic
+		gpu_particles_2d.emitting = false
+
+#region ANIMATIONS
+func disappearing_animation() -> void:
+	texture_rect.pivot_offset = size / 2
+	var return_tween = create_tween()
+	return_tween.tween_property(self, "scale", Vector2(0,0), 1)
+	return_tween.tween_callback(queue_free)
+
+func animate_spawning():
+	var texture = $cookie_texture
+	# Ensure the pivot is at the center for Node2D, or adjust for Control nodes
+	if texture is Node2D:
+		texture.pivot_offset = texture.get_rect().size / 2
+	elif texture is Control:
+		texture.pivot_offset = texture.size / 2
+	
+	var tween = create_tween()
+	tween.tween_property(texture, "scale", Vector2(1, 1), 0.4).from(Vector2(0, 0)).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+
+func do_flip_animation():
+	flip_tween = get_tree().create_tween()
+	up_tween = get_tree().create_tween()
+	up_tween.set_ease(Tween.EASE_OUT_IN)
+	up_tween.set_trans(Tween.TRANS_CUBIC)
+	up_tween.tween_property(texture_rect, "position:y", texture_rect.position.y - 126, 0.02*10 )
+	var duration = 0.02
+	# FLipping
+	for i in range(5):
+		flip_tween.tween_property(texture_rect, "scale:y", 0, duration)
+		flip_tween.tween_callback(Callable(self, "_swap_side"))
+		flip_tween.tween_property(texture_rect, "scale:y", 1, duration)
+		duration += 0.02
+	up_tween.tween_property(texture_rect, "position:y", texture_rect.position.y, 0.02*10 ) 
+	#update_sprite()
+	flip_tween.tween_callback(update_sprite)
+	flip_tween.tween_callback(make_red)
+	
 func update_sprite():
 	if cookie.state == Cookie.STATE.Head:
 		texture_rect.texture = cookie.head_texture
@@ -137,35 +167,4 @@ func _swap_side():
 		texture_rect.texture = cookie.head_texture
 	elif texture_rect.texture == cookie.head_texture:
 		texture_rect.texture = cookie.tail_texture
-
-
-func _on_mouse_entered() -> void:
-	if not following:
-		Cursor.instance.texture = Cursor.can_grab
-		gpu_particles_2d.emitting = true
-	
-func _on_mouse_exited() -> void:
-	#To prevent weird false exits
-	if not following:
-		Cursor.instance.texture = Cursor.basic
-		gpu_particles_2d.emitting = false
-
-#region
-func disappearing_animation() -> void:
-	texture_rect.pivot_offset = size / 2
-	var return_tween = create_tween()
-	return_tween.tween_property(self, "scale", Vector2(0,0), 1)
-	return_tween.tween_callback(queue_free)
 #endregion
-	
-func animate_spawning():
-	var texture = $cookie_texture
-	
-	# Ensure the pivot is at the center for Node2D, or adjust for Control nodes
-	if texture is Node2D:
-		texture.pivot_offset = texture.get_rect().size / 2
-	elif texture is Control:
-		texture.pivot_offset = texture.size / 2
-	
-	var tween = create_tween()
-	tween.tween_property(texture, "scale", Vector2(1, 1), 0.4).from(Vector2(0, 0)).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)

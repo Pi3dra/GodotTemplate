@@ -20,7 +20,7 @@ func _ready():
 signal start_level(level_data)
 func send_level_start(level_data):
 	emit_signal("start_level", level_data)
-	UI.manager.remove_overlay(UI.NAME.LevelSelection)
+	UI.manager.hide_overlay(UI.NAME.LevelSelection)
 
 func regen():
 	instance = self

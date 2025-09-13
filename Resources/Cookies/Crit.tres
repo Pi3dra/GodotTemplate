@@ -13,7 +13,7 @@ region = Rect2(32, 64, 32, 32)
 
 [resource]
 script = ExtResource("1_n5qiu")
-type = 2
+type = 1
 effect = 1
 price = 4
 description = "When guessed correctly, party has 15% more chance of dealing a crit, for the whole run"

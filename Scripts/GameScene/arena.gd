@@ -30,10 +30,10 @@ var max_wave: Array[int] = [0, 0, 0]
 
 # flags pour arrêter le process pour chaque vague
 var wave_stopped: Array[bool] = [false, false, false]
+var rewards
 
 # rewards & selection
-var level_reward1: int = 0
-var level_reward2: int = 0
+
 var selected_special
 
 # ------------------------
@@ -90,7 +90,7 @@ func _check_wave_end(wave_index: int) -> void:
 			1:
 				animation_player.play("Ending2")
 			2:
-				UI.manager.call_overlay(UI.NAME.WinScreen, self)
+				UI.manager.call_overlay(UI.NAME.WinScreen, self, rewards )
 				UI.manager.connect_to_caller(UI.NAME.WinScreen,{"switch_to_tavern":level_victory})
 		
 		wave_stopped[wave_index] = true
@@ -103,12 +103,14 @@ func _check_wave_end(wave_index: int) -> void:
 		wave_stopped[wave_index] = true
 		_for_each_spawned(enemies_list, "no_attacking")
 		return
+		
 # Goes back to tavern
 func level_victory():
 	var tavern = get_parent().get_child(0)
 	tavern.show()
 	tavern.get_node("Camera2D").enabled = true
 	tavern.get_node("AnimationPlayer").play("RESET")
+	tavern.update_after_victory(player_party,rewards)
 	queue_free()
 
 # Helper pour appeler une méthode sur tous les nodes d'un tableau
@@ -124,9 +126,8 @@ func _for_each_spawned(nodes: Array, method_name: String) -> void:
 func get_tavern_info(level_data : Dictionary) -> void:
 	var pWave_info = level_data["WaveInfo"]
 	var pParty_info = level_data["PartyInfo"]
-	var reward1 = level_data["Rewards"].values()[0]
-	var reward2 = level_data["Rewards"].values()[1]
-	
+	rewards = level_data["Rewards"]
+
 	# pWave_info attend 3 arrays (une par vague)
 	for i in range(3):
 		var wave_arr = pWave_info[i]
@@ -138,8 +139,7 @@ func get_tavern_info(level_data : Dictionary) -> void:
 		spawn_characters_for_wave(i)
 
 	# Récompenses et équipe du joueur
-	level_reward1 = reward1
-	level_reward2 = reward2
+
 	player_party = pParty_info.duplicate()
 	spawn_characters_allies(player_party)
 
@@ -293,7 +293,8 @@ func _remove_node_from_spawn_lists(node: Node2D) -> void:
 # Cookies / buffs
 # ------------------------
 # Si enemy == true, on ajoute aux ennemis actifs (vérifie vagues dans l'ordre). Sinon aux alliés.
-func update_active_cookies(combat_cookies, enemy) -> void:
+func update_active_cookies(combat_cookies, _enemy) -> void:
+	print("Added,", combat_cookies)
 	#if enemy:
 	#	for i in range(3):
 	#		if not spawned[i].is_empty():
@@ -301,8 +302,8 @@ func update_active_cookies(combat_cookies, enemy) -> void:
 	#				enemy_node.character.receive_cookie_POWER(combat_cookies)
 	#			return
 	#else:
-		for ally_node in spawned_allies:
-			ally_node.character.receive_cookie_POWER(combat_cookies)
+	for ally_node in spawned_allies:
+		ally_node.character.receive_cookie_POWER(combat_cookies)
 
 # ------------------------
 # Animations & UI helpers

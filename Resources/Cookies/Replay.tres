@@ -13,7 +13,7 @@ region = Rect2(32, 128, 32, 32)
 
 [resource]
 script = ExtResource("1_lmuoh")
-type = 3
+type = 2
 effect = 1
 price = 3
 description = "50% chance to not loose it upon use. Party deals 25% more damage if guessed correctly"
