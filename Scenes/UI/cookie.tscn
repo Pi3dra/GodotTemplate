@@ -26,6 +26,7 @@ spread = 180.0
 flatness = 0.321
 angular_velocity_min = 75.85
 angular_velocity_max = 75.85
+gravity = Vector3(0, 100, 0)
 radial_accel_min = 50.0
 radial_accel_max = 50.0
 scale_min = 4.5
@@ -48,6 +49,7 @@ script = ExtResource("1_nelwp")
 emitting = false
 amount = 50
 lifetime = 0.85
+preprocess = 0.1
 process_material = SubResource("ParticleProcessMaterial_y4bsx")
 
 [node name="shadow" type="TextureRect" parent="."]

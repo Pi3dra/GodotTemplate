@@ -31,14 +31,14 @@ text = "TAVERN"
 
 [node name="WIN" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = 501.0
+offset_left = 477.0
 offset_top = -426.0
-offset_right = 895.0
+offset_right = 898.0
 offset_bottom = -308.0
 theme_override_fonts/normal_font = ExtResource("2_cgn5s")
 theme_override_font_sizes/normal_font_size = 86
 bbcode_enabled = true
-text = "[rainbow freq=0.5 sat=0.8 val=0.8 speed=0.5][wave amp=50.0 freq=4.0 connected=1]YOU WIN[/wave][/rainbow]"
+text = "[rainbow freq=0.5 sat=0.8 val=0.8 speed=0.5][wave amp=50.0 freq=4.0 connected=1]YOU   WIN[/wave][/rainbow]"
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 0

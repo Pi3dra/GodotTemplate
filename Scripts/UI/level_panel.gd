@@ -30,9 +30,10 @@ var spriteorder = {LogicalCharacter.TYPE.Skeleton : 1, LogicalCharacter.TYPE.Sli
 	LogicalCharacter.TYPE.Orc : 5, LogicalCharacter.TYPE.Witch : 2, LogicalCharacter.TYPE.Goblin:0,
 	LogicalCharacter.TYPE.Cyclop : 8, LogicalCharacter.TYPE.Devil : 7, LogicalCharacter.TYPE.Dragon : 6
 }
+
 var easy_enemies = [LogicalCharacter.TYPE.Skeleton, LogicalCharacter.TYPE.Slime, LogicalCharacter.TYPE.Spider]
 var medium_enemies = [LogicalCharacter.TYPE.Orc, LogicalCharacter.TYPE.Witch, LogicalCharacter.TYPE.Goblin]
-var hard_enemies = [LogicalCharacter.TYPE.Cyclop, LogicalCharacter.TYPE.Devil, LogicalCharacter.TYPE.Dragon]
+var hard_enemies = [LogicalCharacter.TYPE.Cyclop, LogicalCharacter.TYPE.Devil]
 var enemy_palette = { Difficulty.Easy : easy_enemies, Difficulty.Medium : medium_enemies, Difficulty.Hard : hard_enemies}
 
 var sprites = preload("uid://damlxqw3n3qsv")
@@ -60,7 +61,7 @@ func generate_level(difficulty : Difficulty):
 	
 	match difficulty:
 		Difficulty.Hard:
-			used_enemies = 14
+			used_enemies = 8
 			cookies = 60 + randi()%6
 			special_cookies = 5 + randi()%2
 		Difficulty.Medium:
@@ -136,6 +137,7 @@ func pick_enemies(waves_distribution : Array, difficulty : Difficulty):
 			enemy_counter.set(enemy,enemy_counter.get(enemy) + 1)  
 			wave.append(enemy)
 		enemy_waves.append(wave)
+		
 	return {"Waves" : enemy_waves, "Counter" : enemy_counter}
 	
 

@@ -324,8 +324,6 @@ func win_anim_allies2() -> void:
 
 func spawn_ui() -> void:
 	UI.manager.show_overlay(UI.NAME.Arena)
-	if Globals.training and not Globals.already_trained:
-		tutorial.instance.show()
 	_for_each_spawned(spawned[0], "attacking")
 	_for_each_spawned(spawned_allies, "attacking")
 

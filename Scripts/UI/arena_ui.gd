@@ -1,5 +1,6 @@
 extends Control
 
+
 var placed_cookies : Array [Control] = []
 var active_cookies = Cookie.type_dict() #Dictionary[TYPE, Array[Cookie]]
 
@@ -25,7 +26,9 @@ func _ready() -> void:
 	else:
 		tutorialbutton.hide()
 	$Flip.position.y -= 120
-
+	
+	if Globals.training and not Globals.already_trained:
+		UI.manager.call_overlay(UI.NAME.Tutorial,self)
 
 #region FLIPPING COOKIES
 signal combat_cookies(cookies: Array[Cookie], enemy: bool)
