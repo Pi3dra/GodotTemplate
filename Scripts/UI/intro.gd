@@ -7,10 +7,7 @@ signal beginning_finished
 @onready var title_2: TextureRect = $Title2
 @onready var title: TextureRect = $Title
 
-
-
 static var instance
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

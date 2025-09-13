@@ -33,7 +33,7 @@ func char_to_price(character_type: LogicalCharacter.TYPE):
 		_:
 			return 2
 
-	
+
 
 func init_char(pCharacter: LogicalCharacter.TYPE):
 	sprite_frames = Globals.get_character_data(pCharacter).animations
@@ -47,7 +47,7 @@ func init_char(pCharacter: LogicalCharacter.TYPE):
 	ally_infos.speed_bar.value = Globals.get_character_data(pCharacter).speed
 	ally_infos.crit_bar.value = Globals.get_character_data(pCharacter).crit
 	
-	
+
 
 signal buy_character(character, price )
 func _on_texture_button_button_down() -> void:
