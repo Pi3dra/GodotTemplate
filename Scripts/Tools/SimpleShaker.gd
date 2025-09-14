@@ -47,6 +47,7 @@ func start():
 	targets.clear()
 	origins.clear()
 
+	print(_targets)
 	for t in _targets:
 		if t is Node2D or t is Control:
 			targets.append(t)

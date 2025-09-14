@@ -3,6 +3,12 @@ extends BoxContainer
 var cookie_widgets := {} # { Cookie.TYPE: {"label": Label, "button": Button} }
 var available_cookies : Dictionary #[Cookie.TYPE,int] 
 
+@onready var shaker: SimpleShaker = $"../../Shaker"
+
+func _ready() -> void:
+	if shaker != null:
+		shaker._targets.append($"..")
+
 func update_cookie_widget(cookie: Cookie.TYPE):
 	var widget = cookie_widgets.get(cookie, null)
 	if widget:
@@ -50,6 +56,7 @@ func _end_of_return_animation(cookie_instance : Control):
 	var cookie_object = cookie_instance.cookie
 	var cookie_type = cookie_object.cookie_type
 	cookie_instance.queue_free()
+	shaker.start()
 	#TODO: This or update_cookie_widget? 
 	add_to_bar(cookie_type) 
 	
