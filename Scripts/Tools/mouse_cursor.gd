@@ -13,10 +13,11 @@ static var point = load("uid://6fwvqeuj7i76")
 
 static var instance
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	instance = self
 
+
 func _process(_delta):
 	position = get_viewport().get_mouse_position()
-	

@@ -1,4 +1,5 @@
 extends Node
+
 class_name SimpleShaker
 
 @export_group("Targets")
@@ -35,8 +36,10 @@ var intensity: float = 0.0
 
 var random := RandomNumberGenerator.new()
 
+
 func _ready():
 	random.randomize()
+
 
 func start():
 	stop()
@@ -71,6 +74,7 @@ func start():
 
 	loop_func()
 
+
 func stop():
 	if targets.is_empty():
 		return
@@ -83,8 +87,10 @@ func stop():
 		shake.kill()
 	shake = null
 
+
 func is_playing() -> bool:
 	return shake != null
+
 
 func loop_func():
 	next = -Vector2.from_angle(current.angle() + deg_to_rad(random.randf_range(-noise, noise))) * amplitude_max
