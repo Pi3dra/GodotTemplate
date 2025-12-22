@@ -8,29 +8,35 @@ extends Control
 
 static var instance
 
+
 func _ready():
 	var levels = [lvl1, lvl2, lvl3, level_boss]
-	lvl1.generate_level(level_panel.Difficulty.Easy)
-	lvl2.generate_level(level_panel.Difficulty.Medium)
-	lvl3.generate_level(level_panel.Difficulty.Hard)
+	lvl1.generate_level(LevelPanel.Difficulty.EASY)
+	lvl2.generate_level(LevelPanel.Difficulty.MEDIUM)
+	lvl3.generate_level(LevelPanel.Difficulty.HARD)
 	for level in levels:
 		level.connect("wave_information", send_level_start)
 
 # Array[Array[LogicalCharacter.TYPE]] = [[Goblin;,Skelet],[],[]]
 signal start_level(level_data)
+
+
 func send_level_start(level_data):
 	emit_signal("start_level", level_data)
-	UI.manager.hide_overlay(UI.NAME.LevelSelection)
+	UI.manager.hide_overlay(UI.NAME.LEVEL_SELECTION)
+
 
 func regen():
 	instance = self
-	lvl1.generate_level(level_panel.Difficulty.Easy)
-	lvl2.generate_level(level_panel.Difficulty.Medium)
-	lvl3.generate_level(level_panel.Difficulty.Hard)
-	
+	lvl1.generate_level(LevelPanel.Difficulty.EASY)
+	lvl2.generate_level(LevelPanel.Difficulty.MEDIUM)
+	lvl3.generate_level(LevelPanel.Difficulty.HARD)
+
+
 func _on_exit_pressed() -> void:
 	SoundManager.instance.play_sound("Click2", true, false)
-	UI.manager.hide_overlay(UI.NAME.LevelSelection)
+	UI.manager.hide_overlay(UI.NAME.LEVEL_SELECTION)
+
 
 func _on_exit_mouse_entered() -> void:
 	Cursor.instance.texture = Cursor.point

@@ -23,14 +23,13 @@ func char_to_price(character_type: LogicalCharacter.TYPE):
 	return Globals.get_character_data(character_type).price + randi() % 4
 
 
-func init_char(pCharacter: LogicalCharacter.TYPE):
-	var char_data = Globals.get_character_data(pCharacter)
+func init_char(char_type: LogicalCharacter.TYPE):
+	var char_data = Globals.get_character_data(char_type)
 	sprite_frames = char_data.animations
 	play()
-	var pPrice: int = char_to_price(pCharacter)
-	label.text = str(pPrice) + "X"
-	character = pCharacter
-	price = pPrice
+	price = char_to_price(char_type)
+	label.text = str(price) + "X"
+	character = char_type
 
 	ally_infos.health_bar.value = char_data.health
 	ally_infos.damage_bar.value = char_data.damage

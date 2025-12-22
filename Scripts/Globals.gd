@@ -2,7 +2,7 @@ extends Node
 
 var already_trained = false
 var training = false
-var current_tutorial = tutorial.TUTORIALS.Tavern
+var current_tutorial = Tutorial.TUTORIALS.TAVERN
 
 var cookies: Dictionary = { } #[Cookie.TYPE,CookieData]
 var characters: Dictionary = { } #[LogicalCharacter.TYPE, CharacterData]

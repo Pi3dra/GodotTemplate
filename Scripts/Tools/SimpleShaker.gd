@@ -67,9 +67,11 @@ func start():
 	intensity = 0.0
 
 	shake = create_tween()
-	shake.tween_property(self, "intensity", 1.0, duration_attack).set_trans(transition_attack).set_ease(ease_attack)
+	shake.tween_property(self, "intensity", 1.0, duration_attack)
+	shake.set_trans(transition_attack).set_ease(ease_attack)
 	shake.tween_interval(duration)
-	shake.tween_property(self, "intensity", 0.0, duration_release).set_trans(transition_release).set_ease(ease_release)
+	shake.tween_property(self, "intensity", 0.0, duration_release)
+	shake.set_trans(transition_release).set_ease(ease_release)
 	shake.finished.connect(stop)
 
 	loop_func()
@@ -93,7 +95,8 @@ func is_playing() -> bool:
 
 
 func loop_func():
-	next = -Vector2.from_angle(current.angle() + deg_to_rad(random.randf_range(-noise, noise))) * amplitude_max
+	var angle = current.angle() + deg_to_rad(random.randf_range(-noise, noise))
+	next = -Vector2.from_angle(angle) * amplitude_max
 
 	if amplitude.x < amplitude_max and abs(next.x) > amplitude.x:
 		next.x = sign(next.x) * amplitude.x

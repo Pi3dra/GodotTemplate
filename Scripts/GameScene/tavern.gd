@@ -13,7 +13,10 @@ var scene_arena_ui: PackedScene = load("uid://dpnhc72tu6qee")
 
 var level_data = { "WaveInfo": [], "PartyInfo": [], "Rewards": { }, "RiskedBiscuits": { } }
 var party_info: Array[LogicalCharacter.TYPE] = []
-var available_cookies: Dictionary[Cookie.TYPE, int] = { Cookie.TYPE.Normal: 30, Cookie.TYPE.Weighted: 1 }
+var available_cookies: Dictionary[Cookie.TYPE, int] = {
+	Cookie.TYPE.NORMAL: 30,
+	Cookie.TYPE.WEIGHTED: 1,
+}
 var finished_level = false
 
 
@@ -33,7 +36,7 @@ func _ready() -> void:
 
 func launch_tutorial():
 	if Globals.current_tutorial != null:
-		UI.manager.call_overlay(UI.NAME.Tutorial, self)
+		UI.manager.call_overlay(UI.NAME.TUTORIAL, self)
 
 #region Signal handler and UI
 
@@ -43,16 +46,20 @@ func launch_tutorial():
 
 func _on_board_pressed() -> void:
 	SoundManager.instance.play_sound("Click1", true, true)
-	var ui_name = UI.NAME.LevelSelection
+	var ui_name = UI.NAME.LEVEL_SELECTION
 	UI.manager.call_overlay(ui_name, self)
 	UI.manager.connect_signals(ui_name, { }, { "start_level": cookie_selection })
 
 
 # After _on_board_pressed() we launch the cookie selection UI
 func cookie_selection(data: Dictionary):
-	var ui_name = UI.NAME.CookieSelection
+	var ui_name = UI.NAME.COOKIE_SELECTION
 	UI.manager.call_overlay(ui_name, self, available_cookies.duplicate())
-	UI.manager.connect_signals(ui_name, { }, { "selected_cookie_deck": update_after_cookie_selection })
+	UI.manager.connect_signals(
+		ui_name,
+		{ },
+		{ "selected_cookie_deck": update_after_cookie_selection },
+	)
 	level_data["WaveInfo"] = data["WaveInfo"]
 	level_data["Rewards"] = data["Rewards"]
 	level_data["PartyInfo"] = party_info
@@ -74,7 +81,7 @@ func update_after_cookie_selection(risked_biscuits: Dictionary[Cookie.TYPE, int]
 	else:
 		SoundManager.instance.play_sound("Stopit", true, false)
 
-	UI.manager.remove_overlay(UI.NAME.LevelSelection)
+	UI.manager.remove_overlay(UI.NAME.LEVEL_SELECTION)
 	finished_level = false
 
 
@@ -82,7 +89,12 @@ func switch_scene():
 	var level_information: Dictionary
 	if Globals.training:
 		level_information = {
-			"WaveInfo": [[LogicalCharacter.TYPE.Unkillable_Slime], [LogicalCharacter.TYPE.Unkillable_Slime], [LogicalCharacter.TYPE.Unkillable_Slime]],
+			#TODO: This is weird, big bug if < 3 slimes
+			"WaveInfo": [
+				[LogicalCharacter.TYPE.UNKILLABLE_SLIME],
+				[LogicalCharacter.TYPE.UNKILLABLE_SLIME],
+				[LogicalCharacter.TYPE.UNKILLABLE_SLIME],
+			],
 			"RiskedBiscuits": available_cookies.duplicate(),
 			"PartyInfo": party_info,
 			"Rewards": { "": 0, " ": 0 },
@@ -90,9 +102,9 @@ func switch_scene():
 	else:
 		level_information = level_data
 
-	var lArena: Node2D = scene_arena.instantiate()
-	UI.manager.call_overlay(UI.NAME.Arena, lArena, level_information["RiskedBiscuits"])
-	get_parent().add_child(lArena)
+	var arena: Node2D = scene_arena.instantiate()
+	UI.manager.call_overlay(UI.NAME.ARENA, arena, level_information["RiskedBiscuits"])
+	get_parent().add_child(arena)
 	hide()
 	camera_2d.enabled = false
 	emit_signal("pass_info_to_arena", level_information)
@@ -100,7 +112,7 @@ func switch_scene():
 
 func _on_merchant_pressed() -> void:
 	SoundManager.instance.play_sound("Click4", true, false)
-	var ui_name = UI.NAME.Merchant
+	var ui_name = UI.NAME.MERCHANT
 	UI.manager.call_overlay(ui_name, self, available_cookies)
 	UI.manager.connect_signals(ui_name, { }, { "exited_merchant": update_after_merchant })
 
@@ -108,7 +120,7 @@ func _on_merchant_pressed() -> void:
 func _on_trainer_pressed() -> void:
 	SoundManager.instance.play_sound("Click4", true, false)
 	Globals.training = true
-	Globals.current_tutorial = tutorial.TUTORIALS.Combat
+	Globals.current_tutorial = Tutorial.TUTORIALS.COMBAT
 	if !Globals.already_trained:
 		launch_tutorial()
 	animation_player.play("Transition") # This will trigger switch_scene
@@ -151,7 +163,7 @@ func attempt_to_buy_char(character_instance):
 	var character_data: CharacterData = Globals.get_character_data(character_type)
 	var character_price: int = character_data.price
 
-	if character_price > available_cookies[Cookie.TYPE.Normal]:
+	if character_price > available_cookies[Cookie.TYPE.NORMAL]:
 		return
 
 	if party.is_party_full():
@@ -161,8 +173,8 @@ func attempt_to_buy_char(character_instance):
 		tween.tween_callback(Callable(partyfull, "hide")) # hide after delay
 		return
 
-	if character_price <= available_cookies[Cookie.TYPE.Normal]:
-		available_cookies[Cookie.TYPE.Normal] -= character_price
+	if character_price <= available_cookies[Cookie.TYPE.NORMAL]:
+		available_cookies[Cookie.TYPE.NORMAL] -= character_price
 		update_cookie_bar()
 		party_info.append(character_type)
 		party.clear_npc(character_type)

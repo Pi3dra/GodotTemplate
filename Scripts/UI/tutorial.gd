@@ -1,11 +1,10 @@
 extends Control
 
-class_name tutorial
-
+class_name Tutorial
 
 static var instance
-enum TUTORIALS {Tavern, Combat}
-var current_tutorial : TUTORIALS 
+enum TUTORIALS { TAVERN, COMBAT }
+var current_tutorial: TUTORIALS
 
 var full_text := ""
 
@@ -15,45 +14,49 @@ var full_text := ""
 @onready var arrow_3: TextureRect = $Arrow3
 @onready var arrow_4: TextureRect = $Arrow4
 
-@onready var arrows : Array = [arrow_1, arrow_2, arrow_3, arrow_4]
+@onready var arrows: Array = [arrow_1, arrow_2, arrow_3, arrow_4]
 
-var current_text_line : int = 0
-var tween : Tween
+var current_text_line: int = 0
+var tween: Tween
+
 
 func _ready():
 	instance = self
 	hide_arrows()
 	current_tutorial = Globals.current_tutorial
-	if current_tutorial == TUTORIALS.Combat:
+	if current_tutorial == TUTORIALS.COMBAT:
 		hide()
 	match current_tutorial:
-		TUTORIALS.Combat:
+		TUTORIALS.COMBAT:
 			$Label.text = "TRAINER"
-		TUTORIALS.Tavern:
+		TUTORIALS.TAVERN:
 			$Label.text = "INNKEEPER"
-			
+
 	label.text = ""
 	full_text = get_dialog()
 	update()
-	
-	
+
+
 func update():
 	tween = create_tween()
 	for i in range(full_text.length()):
 		tween.parallel().tween_callback(Callable(self, "_show_char").bind(i)).set_delay(0.05 * i)
-		
+
+
 func _show_char(i):
 	label.text += full_text[i]
+
 
 func hide_arrows():
 	for arrow in arrows:
 		arrow.hide()
 
+
 #TODO This could easily be translated into resources
 func get_dialog():
-	var dialog : String = ""
+	var dialog: String = ""
 	match current_tutorial:
-		TUTORIALS.Tavern:
+		TUTORIALS.TAVERN:
 			match current_text_line:
 				0:
 					dialog = "Hello! I'm the Inkeeper, welcome to my tavern, I can sell you powerful cookies
@@ -61,8 +64,7 @@ func get_dialog():
 					hide_arrows()
 					arrow_1.show()
 					_animate_arrow(arrow_1)
-					
-				1: 
+				1:
 					dialog = "This is the quest board, here you can select quests to do, and prepare your supplies."
 					hide_arrows()
 					arrow_2.show()
@@ -82,12 +84,12 @@ func get_dialog():
 					hide_arrows()
 				5:
 					dialog = "end"
-		TUTORIALS.Combat:
+		TUTORIALS.COMBAT:
 			match current_text_line:
 				0:
 					dialog = "Welcome to the training area, here you can test out different cookie combos and playstyles."
-				1: 
-					dialog =  "As it is your first time here i'll give you a tour of how combat works"
+				1:
+					dialog = "As it is your first time here i'll give you a tour of how combat works"
 				2:
 					dialog = "As you can see, Combat happens automatically. To turn odds into your favor you need to use your cookies"
 				3:
@@ -104,15 +106,17 @@ func get_dialog():
 					dialog = "You can come back at any time to test your party and your cookies!"
 				9:
 					dialog = "end"
-	if dialog == "end" : 
+	if dialog == "end":
 		Globals.current_tutorial = null
-		if current_tutorial == TUTORIALS.Combat:
+		if current_tutorial == TUTORIALS.COMBAT:
 			Globals.already_trained = true
-		
-		UI.manager.remove_overlay(UI.NAME.Tutorial)
-	if dialog != "": current_text_line += 1
+
+		UI.manager.remove_overlay(UI.NAME.TUTORIAL)
+	if dialog != "":
+		current_text_line += 1
 	return dialog
-	
+
+
 func _input(event):
 	if event.is_action_pressed("skip"):
 		label.text = ""
@@ -120,7 +124,7 @@ func _input(event):
 		if tween.is_running():
 			tween.stop()
 		update()
-			
+
 
 func _animate_arrow(arrow: TextureRect):
 	var spawn_tween = create_tween().set_loops() # infinite loop
@@ -128,9 +132,9 @@ func _animate_arrow(arrow: TextureRect):
 	var offset = Vector2(0, -10) # how much it should float up
 
 	spawn_tween.tween_property(arrow, "position", start_pos + offset, 0.5) \
-		 .set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	spawn_tween.tween_property(arrow, "position", start_pos, 0.5) \
-		 .set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 	# make the tween only update if the arrow is visible
 	spawn_tween.set_process_mode(Tween.TWEEN_PROCESS_IDLE)

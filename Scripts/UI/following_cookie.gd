@@ -1,11 +1,11 @@
 extends Control
 
-var cookie : Cookie
+var cookie: Cookie
 var following := true
-var up_tween : Tween
-var flip_tween : Tween
+var up_tween: Tween
+var flip_tween: Tween
 
-@onready var texture_rect : TextureRect = $cookie_texture
+@onready var texture_rect: TextureRect = $cookie_texture
 @onready var shadow: TextureRect = $shadow
 @onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
 
@@ -14,9 +14,11 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	texture_rect.texture = cookie.head_texture
 	shadow.texture = load("uid://kc4ef7j3bwdl")
-	
+
 #region INPUT
 signal return_cookie(cookie: Control)
+
+
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
@@ -28,39 +30,43 @@ func _gui_input(event: InputEvent) -> void:
 					Cursor.instance.texture = Cursor.can_grab
 					following = false
 					gpu_particles_2d.emitting = false
-		elif event.button_index == MOUSE_BUTTON_RIGHT and event.pressed and cookie.state == Cookie.STATE.Unflipped:
+		elif (event.button_index == MOUSE_BUTTON_RIGHT and
+			event.pressed and
+			cookie.state == Cookie.STATE.UNFLIPPED ):
 			shadow.queue_free()
 			emit_signal("return_cookie", self)
 
+
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and !event.pressed:
+	if (event is InputEventMouseButton and
+		event.button_index == MOUSE_BUTTON_LEFT and
+		!event.pressed ):
 		if following and get_global_mouse_position().y > 200:
 			Cursor.instance.texture = Cursor.can_grab
 			following = false
 			gpu_particles_2d.emitting = false
-	
+
 
 func _process(_delta: float) -> void:
 	if following:
 		var mouse_pos = get_global_mouse_position()
-		var new_pos = mouse_pos 
+		var new_pos = mouse_pos
 		position = new_pos
 #endregion
 
 func flip_coin(headpercent: int) -> Cookie.STATE:
 	# Clamp to 0–100 just in case
 	headpercent = clamp(headpercent, 0, 100)
-	
+
 	var roll = randi() % 100 + 1
 	if roll <= headpercent:
-		cookie.state = Cookie.STATE.Head
+		cookie.state = Cookie.STATE.HEAD
 	else:
-		cookie.state = Cookie.STATE.Tail
-	
+		cookie.state = Cookie.STATE.TAIL
+
 	do_flip_animation()
-		
+
 	return cookie.state
-	
 
 
 ## Change and emit particles for flip anim
@@ -104,7 +110,8 @@ func _on_mouse_entered() -> void:
 	if not following:
 		Cursor.instance.texture = Cursor.can_grab
 		gpu_particles_2d.emitting = true
-	
+
+
 func _on_mouse_exited() -> void:
 	#To prevent weird false exits
 	if not following:
@@ -115,8 +122,9 @@ func _on_mouse_exited() -> void:
 func disappearing_animation() -> void:
 	texture_rect.pivot_offset = size / 2
 	var return_tween = create_tween()
-	return_tween.tween_property(self, "scale", Vector2(0,0), 1)
+	return_tween.tween_property(self, "scale", Vector2(0, 0), 1)
 	return_tween.tween_callback(queue_free)
+
 
 func animate_spawning():
 	var texture = $cookie_texture
@@ -125,16 +133,19 @@ func animate_spawning():
 		texture.pivot_offset = texture.get_rect().size / 2
 	elif texture is Control:
 		texture.pivot_offset = texture.size / 2
-	
+
 	var tween = create_tween()
-	tween.tween_property(texture, "scale", Vector2(1, 1), 0.4).from(Vector2(0, 0)).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+	tween.tween_property(texture, "scale", Vector2(1, 1), 0.4)
+	tween.from(Vector2(0, 0))
+	tween.set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+
 
 func do_flip_animation():
 	flip_tween = get_tree().create_tween()
 	up_tween = get_tree().create_tween()
 	up_tween.set_ease(Tween.EASE_OUT_IN)
 	up_tween.set_trans(Tween.TRANS_CUBIC)
-	up_tween.tween_property(texture_rect, "position:y", texture_rect.position.y - 126, 0.02*10 )
+	up_tween.tween_property(texture_rect, "position:y", texture_rect.position.y - 126, 0.02 * 10)
 	var duration = 0.02
 	# FLipping
 	for i in range(5):
@@ -142,25 +153,28 @@ func do_flip_animation():
 		flip_tween.tween_callback(Callable(self, "_swap_side"))
 		flip_tween.tween_property(texture_rect, "scale:y", 1, duration)
 		duration += 0.02
-	up_tween.tween_property(texture_rect, "position:y", texture_rect.position.y, 0.02*10 ) 
+	up_tween.tween_property(texture_rect, "position:y", texture_rect.position.y, 0.02 * 10)
 	#update_sprite()
 	flip_tween.tween_callback(update_sprite)
 	flip_tween.tween_callback(make_red)
-	
+
+
 func update_sprite():
-	if cookie.state == Cookie.STATE.Head:
+	if cookie.state == Cookie.STATE.HEAD:
 		texture_rect.texture = cookie.head_texture
 		explo_particles()
-	elif cookie.state == Cookie.STATE.Tail :
+	elif cookie.state == Cookie.STATE.TAIL:
 		texture_rect.texture = cookie.tail_texture
 		explo_particles()
 		gpu_particles_2d.modulate = Color.RED
 
-## Makes Cookie red when guessed wrong 
+
+## Makes Cookie red when guessed wrong
 func make_red():
 	await flip_tween.finished
-	if cookie.state == Cookie.STATE.Tail:
+	if cookie.state == Cookie.STATE.TAIL:
 		texture_rect.modulate = Color(1, 0, 0, 1)
+
 
 func _swap_side():
 	if texture_rect.texture == cookie.tail_texture:

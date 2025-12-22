@@ -5,6 +5,7 @@ extends Control
 @onready var speed_bar: TextureProgressBar = $Panel/HBoxContainer/SpeeContainer3/SpeedBar
 @onready var crit_bar: TextureProgressBar = $Panel/HBoxContainer/CritContainer4/CritBar
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.

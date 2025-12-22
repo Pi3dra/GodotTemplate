@@ -1,7 +1,11 @@
 extends Node2D
 
 # --- Nodes ---
-@onready var enemies_spawners_nodes: Array[Node2D] = [$EnemiesSpawners, $EnemiesSpawners2, $EnemiesSpawner3]
+@onready var enemies_spawners_nodes: Array[Node2D] = [
+	$EnemiesSpawners,
+	$EnemiesSpawners2,
+	$EnemiesSpawner3,
+]
 @onready var ally_spawners: Node2D = $AllySpawners
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var shaker: SimpleShaker = $Shaker
@@ -17,7 +21,8 @@ var game_over_scene: PackedScene = load("uid://b43j4xlbwfwoo")
 # --- Data structures (indexed by wave 0..2) ---
 var chosen_enemies: Array = [[], [], []] # Array[Array[LogicalCharacter.TYPE]]
 var spawn_positions: Array = [[], [], []] # Array[Array[Vector2]]
-var spawned: Array = [[], [], []] # spawned[0] = enemies wave1, spawned[1] = wave2, spawned[2] = wave3
+# spawned[0] = enemies wave1, spawned[1] = wave2, spawned[2] = wave3
+var spawned: Array = [[], [], []]
 
 # allies (separate)
 var player_party: Array = [] # Array[LogicalCharacter.TYPE]
@@ -56,7 +61,7 @@ func _ready() -> void:
 		"combat_cookies": update_active_cookies,
 		"tutorial_exit": quit_tutorial,
 	}
-	UI.manager.connect_to_caller(UI.NAME.Arena, signal_mappings)
+	UI.manager.connect_to_caller(UI.NAME.ARENA, signal_mappings)
 
 
 # Remplit spawn_positions à partir de enemies_spawners_nodes
@@ -76,7 +81,9 @@ func _process(_delta: float) -> void:
 		_check_wave_end(wave_index)
 
 
-# Vérifie l'état d'une vague : si plus d'ennemis -> joue Ending/Ending2/Win et arrête alliés ; si plus d'alliés -> Lose et arrête ennemis de la vague
+# Vérifie l'état d'une vague :
+# si plus d'ennemis -> joue Ending/Ending2/Win et arrête alliés
+# si plus d'alliés -> Lose et arrête ennemis de la vague
 func _check_wave_end(wave_index: int) -> void:
 	if wave_stopped[wave_index]:
 		return
@@ -90,8 +97,11 @@ func _check_wave_end(wave_index: int) -> void:
 			1:
 				animation_player.play("Ending2")
 			2:
-				UI.manager.call_overlay(UI.NAME.WinScreen, self, rewards)
-				UI.manager.connect_to_caller(UI.NAME.WinScreen, { "switch_to_tavern": level_victory })
+				UI.manager.call_overlay(UI.NAME.WIN_SCREEN, self, rewards)
+				UI.manager.connect_to_caller(
+					UI.NAME.WIN_SCREEN,
+					{ "switch_to_tavern": level_victory },
+				)
 
 		wave_stopped[wave_index] = true
 		_for_each_spawned(spawned_allies, "no_attacking")
@@ -99,7 +109,7 @@ func _check_wave_end(wave_index: int) -> void:
 
 	# cas défaite si plus d'alliés
 	if spawned_allies.is_empty():
-		UI.manager.call_overlay(UI.NAME.GameOver, self)
+		UI.manager.call_overlay(UI.NAME.GAME_OVER, self)
 		wave_stopped[wave_index] = true
 		_for_each_spawned(enemies_list, "no_attacking")
 		return
@@ -126,13 +136,13 @@ func _for_each_spawned(nodes: Array, method_name: String) -> void:
 # ------------------------
 #region
 func get_tavern_info(level_data: Dictionary) -> void:
-	var pWave_info = level_data["WaveInfo"]
-	var pParty_info = level_data["PartyInfo"]
+	var wave_info = level_data["WaveInfo"]
+	var party_info = level_data["PartyInfo"]
 	rewards = level_data["Rewards"]
 
 	# pWave_info attend 3 arrays (une par vague)
 	for i in range(3):
-		var wave_arr = pWave_info[i]
+		var wave_arr = wave_info[i]
 		chosen_enemies[i] = wave_arr.duplicate()
 		max_wave[i] = wave_arr.size()
 
@@ -142,18 +152,23 @@ func get_tavern_info(level_data: Dictionary) -> void:
 
 	# Récompenses et équipe du joueur
 
-	player_party = pParty_info.duplicate()
+	player_party = party_info.duplicate()
 	spawn_characters_allies(player_party)
 
 	# Choix musique selon la 1ère vague
-	_play_music_for_wave0(pWave_info[0])
+	_play_music_for_wave0(wave_info[0])
 
 
-func _play_music_for_wave0(lWave_1: Array) -> void:
+# TODO: Move this to level generation, this is dumb here!
+func _play_music_for_wave0(wave_1: Array) -> void:
 	SoundManager.instance.play_sound("Tavern", false)
-	if lWave_1.has(LogicalCharacter.TYPE.Slime) or lWave_1.has(LogicalCharacter.TYPE.Skeleton) or lWave_1.has(LogicalCharacter.TYPE.Spider):
+	if (wave_1.has(LogicalCharacter.TYPE.SLIME) or
+		wave_1.has(LogicalCharacter.TYPE.SKELETON) or
+		wave_1.has(LogicalCharacter.TYPE.SPIDER) ):
 		SoundManager.instance.play_sound("Level1", true, false)
-	elif lWave_1.has(LogicalCharacter.TYPE.Witch) or lWave_1.has(LogicalCharacter.TYPE.Goblin) or lWave_1.has(LogicalCharacter.TYPE.Orc):
+	elif (wave_1.has(LogicalCharacter.TYPE.WITCH) or
+		wave_1.has(LogicalCharacter.TYPE.GOBLIN) or
+		wave_1.has(LogicalCharacter.TYPE.ORC) ):
 		SoundManager.instance.play_sound("Level2", true, false)
 	else:
 		SoundManager.instance.play_sound("Level3", true, false)
@@ -193,32 +208,33 @@ func spawn_characters_allies(party_types: Array) -> void:
 	_for_each_spawned(spawned_allies, "no_attacking")
 
 
+#TODO: Why we use char_scene2 instead of char_scene?
 # Crée un personnage et l'ajoute au bon tableau (wave_index pour "Bad", allies pour "Good")
-func _create_character_for_wave(pChar_type: LogicalCharacter.TYPE, wave_index: int) -> void:
-	var lChar := LogicalCharacter.new(pChar_type)
-	var lCharScene: Node2D = char_scene.instantiate()
-	lCharScene.character = lChar
-	lCharScene.call_deferred("update_lifebar")
-	add_child(lCharScene)
-	lCharScene.connect("attack", combat_handler)
+func _create_character_for_wave(char_type: LogicalCharacter.TYPE, wave_index: int) -> void:
+	var character := LogicalCharacter.new(char_type)
+	var char_scene2: Node2D = char_scene.instantiate()
+	char_scene2.character = character
+	char_scene2.call_deferred("update_lifebar")
+	add_child(char_scene2)
+	char_scene2.connect("attack", combat_handler)
 
 	# Ajout selon le Side
-	match lChar.side:
-		LogicalCharacter.SIDE.Good:
-			spawned_allies.append(lCharScene)
-		LogicalCharacter.SIDE.Bad:
-			spawned[wave_index].append(lCharScene)
+	match character.side:
+		LogicalCharacter.SIDE.GOOD:
+			spawned_allies.append(char_scene2)
+		LogicalCharacter.SIDE.BAD:
+			spawned[wave_index].append(char_scene2)
 
 
 # Pour les alliés (utilisé si on veut explicitement spawn des alliés)
-func _create_character_for_ally(pChar_type: LogicalCharacter.TYPE) -> void:
-	var lChar := LogicalCharacter.new(pChar_type)
-	var lCharScene: Node2D = char_scene.instantiate()
-	lCharScene.character = lChar
-	lCharScene.call_deferred("update_lifebar")
-	add_child(lCharScene)
-	lCharScene.connect("attack", combat_handler)
-	spawned_allies.append(lCharScene)
+func _create_character_for_ally(char_type: LogicalCharacter.TYPE) -> void:
+	var character := LogicalCharacter.new(char_type)
+	var char_scene2: Node2D = char_scene.instantiate()
+	char_scene2.character = character
+	char_scene2.call_deferred("update_lifebar")
+	add_child(char_scene2)
+	char_scene2.connect("attack", combat_handler)
+	spawned_allies.append(char_scene2)
 #endregion
 # ------------------------
 # Combat handler
@@ -228,42 +244,43 @@ func _create_character_for_ally(pChar_type: LogicalCharacter.TYPE) -> void:
 signal drop_cookie(cookie: Cookie, drop_position: Vector2)
 
 
-func combat_handler(Attack_info: Array, pSide, pShooter, pSelf) -> void:
-	var lDamage = Attack_info[0]
-	var lCrit = Attack_info[1]
-	var lList_to_pick: Array = []
+func combat_handler(attack_info: Array, side, shooter, char_self) -> void:
+	var damage = attack_info[0]
+	var crit = attack_info[1]
+	var list_to_pick: Array = []
 
-	if pSide == LogicalCharacter.SIDE.Good:
+	if side == LogicalCharacter.SIDE.GOOD:
 		# priorités : wave0 -> wave1 -> wave2
 		if not spawned[0].is_empty():
-			lList_to_pick = spawned[0]
+			list_to_pick = spawned[0]
 		elif not spawned[1].is_empty():
-			lList_to_pick = spawned[1]
+			list_to_pick = spawned[1]
 		elif not spawned[2].is_empty():
-			lList_to_pick = spawned[2]
-	elif pSide == LogicalCharacter.SIDE.Bad:
-		lList_to_pick = spawned_allies
+			list_to_pick = spawned[2]
+	elif side == LogicalCharacter.SIDE.BAD:
+		list_to_pick = spawned_allies
 
-	if lList_to_pick.is_empty():
+	if list_to_pick.is_empty():
 		return
 
-	var lEnemy_to_attack: Node2D = lList_to_pick.pick_random()
-	if pShooter == true:
-		pSelf.shoot(lEnemy_to_attack.position, pSelf.character.type)
+	var enemy_to_attack: Node2D = list_to_pick.pick_random()
+	if shooter == true:
+		#TODO: Is this really needed to use char_self?
+		char_self.shoot(enemy_to_attack.position, char_self.character.type)
 
 	# Crit shake
-	if lCrit:
+	if crit:
 		if shaker.is_playing():
 			shaker.stop()
 		else:
 			shaker.start()
 
-	lEnemy_to_attack.receive_damage(lDamage, lCrit)
+	enemy_to_attack.receive_damage(damage, crit)
 
 	# Gestion de la mort
-	if lEnemy_to_attack.character.health <= 0:
-		if lEnemy_to_attack.character.side == LogicalCharacter.SIDE.Bad:
-			_drop_cookie_on_kill(lEnemy_to_attack)
+	if enemy_to_attack.character.health <= 0:
+		if enemy_to_attack.character.side == LogicalCharacter.SIDE.BAD:
+			_drop_cookie_on_kill(enemy_to_attack)
 		# shake on death
 		if shaker.is_playing():
 			shaker.stop()
@@ -271,11 +288,11 @@ func combat_handler(Attack_info: Array, pSide, pShooter, pSelf) -> void:
 			shaker.start()
 
 		# si c'est un allié tué, l'enlever de la player_party
-		if pSide == LogicalCharacter.SIDE.Bad:
-			player_party.erase(lEnemy_to_attack.character.type)
+		if side == LogicalCharacter.SIDE.BAD:
+			player_party.erase(enemy_to_attack.character.type)
 
 		# enlever l'instance du tableau de la vague appropriée ou des alliés
-		_remove_node_from_spawn_lists(lEnemy_to_attack)
+		_remove_node_from_spawn_lists(enemy_to_attack)
 
 
 func _drop_cookie_on_kill(enemy: Node2D) -> void:
@@ -285,7 +302,7 @@ func _drop_cookie_on_kill(enemy: Node2D) -> void:
 	if randf() > 0.8:
 		random_cookie = Cookie.pick_random_special()
 	else:
-		random_cookie = Cookie.TYPE.Normal
+		random_cookie = Cookie.TYPE.NORMAL
 	emit_signal("drop_cookie", random_cookie, final_pos)
 
 
@@ -313,43 +330,43 @@ func update_active_cookies(combat_cookies, _enemy) -> void:
 	#			return
 	#else:
 	for ally_node in spawned_allies:
-		ally_node.character.receive_cookie_POWER(combat_cookies)
+		ally_node.character.receive_cookie_power(combat_cookies)
 
 # ------------------------
 # Animations & UI helpers
 # ------------------------
 #region
 func win_anim_allies() -> void:
-	var lTween = create_tween().set_parallel(true)
+	var tween = create_tween().set_parallel(true)
 	for i in range(min(spawned_allies.size(), spawn_positions[0].size())):
 		var ally = spawned_allies[i]
 		var pos = spawn_positions[0][i]
-		lTween.tween_property(ally, "position", pos, 4)
+		tween.tween_property(ally, "position", pos, 4)
 
 
 func win_anim_allies2() -> void:
-	var lTween = create_tween().set_parallel(true)
+	var tween = create_tween().set_parallel(true)
 	for i in range(min(spawned_allies.size(), spawn_positions[0].size())):
 		var ally = spawned_allies[i]
 		var pos = spawn_positions[1][i]
-		lTween.tween_property(ally, "position", pos, 4)
+		tween.tween_property(ally, "position", pos, 4)
 
 
 func spawn_ui() -> void:
-	UI.manager.show_overlay(UI.NAME.Arena)
+	UI.manager.show_overlay(UI.NAME.ARENA)
 	_for_each_spawned(spawned[0], "attacking")
 	_for_each_spawned(spawned_allies, "attacking")
 
 
 func wave2() -> void:
-	UI.manager.show_overlay(UI.NAME.Arena)
+	UI.manager.show_overlay(UI.NAME.ARENA)
 	_for_each_spawned(spawned[1], "attacking")
 	_for_each_spawned(spawned_allies, "attacking")
 	_setup_shaker_for_camera()
 
 
 func wave3() -> void:
-	UI.manager.show_overlay(UI.NAME.Arena)
+	UI.manager.show_overlay(UI.NAME.ARENA)
 	_for_each_spawned(spawned[2], "attacking")
 	_for_each_spawned(spawned_allies, "attacking")
 	_setup_shaker_for_camera()

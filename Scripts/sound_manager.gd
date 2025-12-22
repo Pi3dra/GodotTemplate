@@ -10,20 +10,20 @@ var children_array = []
 func _ready() -> void:
 	instance = self
 
-	for lChilds_numb: AudioStreamPlayer in get_children():
-		children_array.append(lChilds_numb)
+	for childs_numb: AudioStreamPlayer in get_children():
+		children_array.append(childs_numb)
 
 
-func play_sound(pSound_name: String, pPlay: bool, pPitch_var: bool = false):
+func play_sound(sound_name: String, play: bool, pitch_var: bool = false):
 	for childs: AudioStreamPlayer in children_array:
-		if pSound_name == childs.name && pPlay == false:
+		if sound_name == childs.name && play == false:
 			if childs.playing:
 				childs.stop()
 			else:
-				print(pSound_name + " is not playing so it can't stop")
+				print(sound_name + " is not playing so it can't stop")
 
-		elif pSound_name == childs.name && pPlay == true:
-			if pPitch_var == true:
+		elif sound_name == childs.name && play == true:
+			if pitch_var == true:
 				childs.pitch_scale = randf_range(0.8, 1.2)
 			else:
 				pass
