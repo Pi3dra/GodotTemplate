@@ -47,7 +47,8 @@ var selected_special
 func _ready() -> void:
 	# Connexion pour recevoir les infos depuis le parent (Tavern)
 	get_parent().get_child(0).connect("pass_info_to_arena", get_tavern_info)
-	animation_player.play("Opening")
+
+	animation_player.play("WaveStart")
 
 	# Remplir les positions d'apparition ennemies
 	_fill_spawn_positions()
@@ -93,9 +94,9 @@ func _check_wave_end(wave_index: int) -> void:
 	if enemies_list.is_empty():
 		match wave_index:
 			0:
-				animation_player.play("Ending")
+				animation_player.play("WaveStart")
 			1:
-				animation_player.play("Ending2")
+				animation_player.play("WaveStart")
 			2:
 				UI.manager.call_overlay(UI.NAME.WIN_SCREEN, self, rewards)
 				UI.manager.connect_to_caller(
@@ -120,7 +121,7 @@ func level_victory():
 	var tavern = get_parent().get_child(0)
 	tavern.show()
 	tavern.get_node("Camera2D").enabled = true
-	tavern.get_node("AnimationPlayer").play("RESET")
+	tavern.animation_player.play("RESET")
 	tavern.update_after_victory(player_party, rewards)
 	queue_free()
 
@@ -282,6 +283,7 @@ func combat_handler(attack_info: Array, side, shooter, char_self) -> void:
 		if enemy_to_attack.character.side == LogicalCharacter.SIDE.BAD:
 			_drop_cookie_on_kill(enemy_to_attack)
 		# shake on death
+
 		if shaker.is_playing():
 			shaker.stop()
 		else:
@@ -321,55 +323,58 @@ func _remove_node_from_spawn_lists(node: Node2D) -> void:
 # ------------------------
 # Si enemy == true, on ajoute aux ennemis actifs (vérifie vagues dans l'ordre). Sinon aux alliés.
 func update_active_cookies(combat_cookies, _enemy) -> void:
-	print("Added,", combat_cookies)
-	#if enemy:
-	#	for i in range(3):
-	#		if not spawned[i].is_empty():
-	#			for enemy_node in spawned[i]:
-	#				enemy_node.character.receive_cookie_POWER(combat_cookies)
-	#			return
-	#else:
 	for ally_node in spawned_allies:
 		ally_node.character.receive_cookie_power(combat_cookies)
 
 # ------------------------
 # Animations & UI helpers
 # ------------------------
+# These are called by AnimationPlayer in arena
 #region
-func win_anim_allies() -> void:
-	var tween = create_tween().set_parallel(true)
-	for i in range(min(spawned_allies.size(), spawn_positions[0].size())):
-		var ally = spawned_allies[i]
-		var pos = spawn_positions[0][i]
-		tween.tween_property(ally, "position", pos, 4)
+
+# REFACTORED CODE
+var wave_counter: int = 0
+var camera_tween: Tween
+var camera_x_pos: float
 
 
-func win_anim_allies2() -> void:
-	var tween = create_tween().set_parallel(true)
-	for i in range(min(spawned_allies.size(), spawn_positions[0].size())):
-		var ally = spawned_allies[i]
-		var pos = spawn_positions[1][i]
-		tween.tween_property(ally, "position", pos, 4)
+func move_camera(target_pos: Vector2):
+	if camera_tween and camera_tween.is_running():
+		camera_tween.kill()
+
+	camera_tween = create_tween()
+	camera_tween.tween_property(
+		camera_2d,
+		"position",
+		target_pos,
+		4.0,
+	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 
-func spawn_ui() -> void:
+func update_wave():
+	print("Called Update")
 	UI.manager.show_overlay(UI.NAME.ARENA)
-	_for_each_spawned(spawned[0], "attacking")
-	_for_each_spawned(spawned_allies, "attacking")
-
-
-func wave2() -> void:
-	UI.manager.show_overlay(UI.NAME.ARENA)
-	_for_each_spawned(spawned[1], "attacking")
-	_for_each_spawned(spawned_allies, "attacking")
-	_setup_shaker_for_camera()
-
-
-func wave3() -> void:
-	UI.manager.show_overlay(UI.NAME.ARENA)
-	_for_each_spawned(spawned[2], "attacking")
+	_for_each_spawned(spawned[wave_counter], "attacking")
 	_for_each_spawned(spawned_allies, "attacking")
 	_setup_shaker_for_camera()
+	wave_counter += 1
+
+
+func move_players():
+	print("Called Move")
+	if not camera_x_pos:
+		camera_x_pos = camera_2d.position.x
+	if wave_counter > 0:
+		camera_x_pos = camera_x_pos + (get_viewport_rect().size.x * 0.25)
+		var target_pos: Vector2 = Vector2(camera_x_pos, camera_2d.position.y)
+		move_camera(target_pos)
+		var tween = create_tween().set_parallel(true)
+		for i in range(min(spawned_allies.size(), spawn_positions[0].size())):
+			var ally = spawned_allies[i]
+			var pos = spawn_positions[wave_counter - 1][i]
+			tween.tween_property(ally, "position", pos, 4)
+
+# ================
 
 
 func _setup_shaker_for_camera() -> void:
@@ -383,7 +388,7 @@ func quit_tutorial() -> void:
 	var tavern = get_parent().get_child(0)
 	tavern.show()
 	tavern.get_node("Camera2D").enabled = true
-	tavern.get_node("AnimationPlayer").play("RESET")
+	#tavern.get_node("AnimationPlayer").play("RESET")
 	SoundManager.instance.play_sound("Level3", false)
 	SoundManager.instance.play_sound("Tavern", true)
 	queue_free()

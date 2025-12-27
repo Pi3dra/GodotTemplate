@@ -34,7 +34,7 @@ var type: TYPE
 var shooter: bool
 var char_instance: Node
 var active_cookies: Dictionary = { }
-var debug_enabled = true
+var debug_enabled = false
 
 
 func debug(to_print, confirm):

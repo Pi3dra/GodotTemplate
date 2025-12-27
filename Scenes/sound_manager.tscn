@@ -1,6 +1,6 @@
 [gd_scene load_steps=21 format=3 uid="uid://budxutoolfgg5"]
 
-[ext_resource type="Script" uid="uid://olkdcudexq6q" path="res://Scripts/sound_manager.gd" id="1_32i44"]
+[ext_resource type="Script" uid="uid://olkdcudexq6q" path="res://Scripts/Managers/sound_manager.gd" id="1_32i44"]
 [ext_resource type="AudioStream" uid="uid://dyky0itgbekeu" path="res://Assets/Audio/Music/Chiptune Bounce Intensity 1.wav" id="2_25ke0"]
 [ext_resource type="AudioStream" uid="uid://cgkj0yhnmym74" path="res://Assets/Audio/Music/Chiptune Bounce Main.wav" id="3_wyfeo"]
 [ext_resource type="AudioStream" uid="uid://bmo8hdg5ypd1h" path="res://Assets/Audio/Music/Chiptune Vol5 Bruh Main.wav" id="4_08tfe"]

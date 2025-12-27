@@ -1,74 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://ccgdngh77m0hc"]
+[gd_scene load_steps=9 format=3 uid="uid://ccgdngh77m0hc"]
 
 [ext_resource type="Script" uid="uid://ctqaycr8567lg" path="res://Scripts/GameScene/arena.gd" id="1_ir3ek"]
 [ext_resource type="PackedScene" uid="uid://mbpwvbww4e0w" path="res://Scenes/GameScene/background.tscn" id="2_jo8k4"]
 [ext_resource type="PackedScene" uid="uid://bxvt4j1mm8xyq" path="res://Scenes/Tools/shaker.tscn" id="3_6qpk1"]
-
-[sub_resource type="Animation" id="Animation_m30qt"]
-resource_name = "Ending"
-length = 4.0
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 4),
-"transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [],
-"method": &"win_anim_allies"
-}, {
-"args": [],
-"method": &"wave2"
-}]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Camera2D:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(1, 4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(661, 552), Vector2(1132, 552)]
-}
-
-[sub_resource type="Animation" id="Animation_vn728"]
-resource_name = "Ending2"
-length = 4.0
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 3.96667),
-"transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [],
-"method": &"win_anim_allies2"
-}, {
-"args": [],
-"method": &"wave3"
-}]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Camera2D:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(1, 4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(1132, 552), Vector2(1437, 552)]
-}
 
 [sub_resource type="Animation" id="Animation_u8lxs"]
 resource_name = "Lose"
@@ -91,26 +25,8 @@ tracks/0/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_jo8k4"]
-resource_name = "Opening"
-length = 1.7
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"spawn_ui"
-}]
-}
-
 [sub_resource type="Animation" id="Animation_6qpk1"]
-length = 0.001
+resource_name = "RESET"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -121,7 +37,28 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(661, 552)]
+"values": [Vector2(650, 552)]
+}
+
+[sub_resource type="Animation" id="Animation_tsjor"]
+resource_name = "WaveStart"
+length = 4.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3.9666667),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"move_players"
+}, {
+"args": [],
+"method": &"update_wave"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_oyia7"]
@@ -147,11 +84,9 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_m30qt"]
 _data = {
-&"Ending": SubResource("Animation_m30qt"),
-&"Ending2": SubResource("Animation_vn728"),
 &"Lose": SubResource("Animation_u8lxs"),
-&"Opening": SubResource("Animation_jo8k4"),
 &"RESET": SubResource("Animation_6qpk1"),
+&"WaveStart": SubResource("Animation_tsjor"),
 &"Win": SubResource("Animation_oyia7")
 }
 
@@ -179,6 +114,7 @@ position = Vector2(856, 592)
 position = Vector2(872, 632)
 
 [node name="EnemiesSpawners2" type="Node2D" parent="."]
+position = Vector2(20, 0)
 
 [node name="2Marker2D" type="Marker2D" parent="EnemiesSpawners2"]
 position = Vector2(1248, 568)
@@ -196,6 +132,7 @@ position = Vector2(1312, 616)
 position = Vector2(1288, 648)
 
 [node name="EnemiesSpawner3" type="Node2D" parent="."]
+position = Vector2(40, 0)
 
 [node name="3Marker2D" type="Marker2D" parent="EnemiesSpawner3"]
 position = Vector2(1568, 584)
@@ -225,7 +162,7 @@ position = Vector2(480, 600)
 position = Vector2(438, 616)
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(661, 552)
+position = Vector2(650, 552)
 zoom = Vector2(2, 2)
 position_smoothing_enabled = true
 
