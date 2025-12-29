@@ -56,8 +56,13 @@ static func type_dict() -> Dictionary:
 	return dict
 
 
-# Mon pire cauchemar
 static func pick_random_special() -> Cookie.TYPE:
 	var choices: Array = Cookie.TYPE.values() #.pick_random()
 	choices.erase(Cookie.TYPE.NORMAL)
+	return choices.pick_random()
+
+static func pick_random_special_not_in(forbidden : Array[Cookie.TYPE]) -> Cookie.TYPE:
+	var choices: Array = Cookie.TYPE.values() #.pick_random()
+	choices.erase(Cookie.TYPE.NORMAL)
+	choices = choices.filter( func(type): return !forbidden.has(type))
 	return choices.pick_random()

@@ -25,9 +25,9 @@ func _ready() -> void:
 			richlabel.append_text("x%d  " % rewards[cookie_type])
 			$PanelContainer/VBoxContainer.add_child(richlabel)
 
-	SoundManager.instance.play_sound("Level1", false)
-	SoundManager.instance.play_sound("Level2", false)
-	SoundManager.instance.play_sound("Level3", false)
+	SoundManager.instance.play_sound("SONG1", false)
+	SoundManager.instance.play_sound("SONG2", false)
+	SoundManager.instance.play_sound("SONG3", false)
 	SoundManager.instance.play_sound("Winning", true, false)
 
 	await get_tree().create_timer(2.2).timeout

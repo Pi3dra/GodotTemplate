@@ -4,9 +4,9 @@ extends ColorRect
 func _ready() -> void:
 	UI.manager.hide_overlay(UI.NAME.ARENA)
 
-	SoundManager.instance.play_sound("Level1", false)
-	SoundManager.instance.play_sound("Level2", false)
-	SoundManager.instance.play_sound("Level3", false)
+	SoundManager.instance.play_sound("SONG1", false)
+	SoundManager.instance.play_sound("SONG2", false)
+	SoundManager.instance.play_sound("SONG3", false)
 	SoundManager.instance.play_sound("Transition", true, true)
 
 	var tween = create_tween()

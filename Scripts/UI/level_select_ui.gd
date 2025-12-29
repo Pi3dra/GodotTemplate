@@ -11,9 +11,9 @@ static var instance
 
 func _ready():
 	var levels = [lvl1, lvl2, lvl3, level_boss]
-	lvl1.generate_level(LevelPanel.Difficulty.EASY)
-	lvl2.generate_level(LevelPanel.Difficulty.MEDIUM)
-	lvl3.generate_level(LevelPanel.Difficulty.HARD)
+	lvl1.generate_level(LevelData.Difficulty.EASY)
+	lvl2.generate_level(LevelData.Difficulty.MEDIUM)
+	lvl3.generate_level(LevelData.Difficulty.HARD)
 	for level in levels:
 		level.connect("wave_information", send_level_start)
 
@@ -28,9 +28,9 @@ func send_level_start(level_data):
 
 func regen():
 	instance = self
-	lvl1.generate_level(LevelPanel.Difficulty.EASY)
-	lvl2.generate_level(LevelPanel.Difficulty.MEDIUM)
-	lvl3.generate_level(LevelPanel.Difficulty.HARD)
+	lvl1.generate_level(LevelData.Difficulty.EASY)
+	lvl2.generate_level(LevelData.Difficulty.MEDIUM)
+	lvl3.generate_level(LevelData.Difficulty.HARD)
 
 
 func _on_exit_pressed() -> void:

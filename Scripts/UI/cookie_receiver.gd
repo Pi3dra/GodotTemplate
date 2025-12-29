@@ -113,7 +113,6 @@ func _on_cookie_returned(cookie_instance: Control) -> void:
 	#Making speed constant
 	var duration = _calculate_duration(cookie_instance.position, return_position)
 
-	print("tweening")
 	var return_tween = create_tween()
 	return_tween.parallel().tween_property(cookie_instance, "position", return_position, duration)
 	return_tween.parallel().tween_property(cookie_texture, "scale", Vector2(0.5, 0.5), duration)

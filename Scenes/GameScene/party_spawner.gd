@@ -48,11 +48,9 @@ func choose_chars(party_info: Array[LogicalCharacter.TYPE]) -> Array[LogicalChar
 
 	var characters_to_spawn: Array[LogicalCharacter.TYPE] = []
 
-	print("Start: ", chars_not_picked_yet)
 	for i in range(3):
 		var spawn_enemy = randf() <= 0.75
 		if spawn_enemy and not chars_not_picked_yet.is_empty():
-			print("Start: ", chars_not_picked_yet)
 			#TODO this seems to be generating a bug, somehow chars_not_picked_yet can be empty
 			var character = chars_not_picked_yet.pick_random()
 			chars_not_picked_yet.erase(character)

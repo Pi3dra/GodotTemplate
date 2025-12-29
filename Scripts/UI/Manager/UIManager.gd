@@ -113,7 +113,7 @@ func remove_overlay(key: int):
 	active_overlays.erase(key)
 
 
-func get_data(key: int) -> Dictionary:
+func get_data(key: int):
 	if not active_overlays.has(key):
 		push_error("Trying to retrieve data from an inactive overlay")
 		return { }

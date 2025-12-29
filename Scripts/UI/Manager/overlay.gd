@@ -8,7 +8,7 @@ var tscn_path: String
 
 var instance: Node
 var caller: Caller
-var data: Dictionary = { }
+var data
 
 var from_caller_signals: Dictionary[String, Callable] = { }
 var hidden := false

@@ -135,8 +135,7 @@ func animate_spawning():
 		texture.pivot_offset = texture.size / 2
 
 	var tween = create_tween()
-	tween.tween_property(texture, "scale", Vector2(1, 1), 0.4)
-	tween.from(Vector2(0, 0))
+	tween.tween_property(texture, "scale", Vector2(1, 1), 0.4).from(Vector2(0, 0))
 	tween.set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 
 

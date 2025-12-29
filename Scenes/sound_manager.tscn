@@ -28,15 +28,15 @@ script = ExtResource("1_32i44")
 stream = ExtResource("2_25ke0")
 bus = &"Music"
 
-[node name="Level1" type="AudioStreamPlayer" parent="."]
+[node name="SONG1" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_wyfeo")
 bus = &"Music"
 
-[node name="Level2" type="AudioStreamPlayer" parent="."]
+[node name="SONG2" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_08tfe")
 bus = &"Music"
 
-[node name="Level3" type="AudioStreamPlayer" parent="."]
+[node name="SONG3" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_rc4uc")
 bus = &"Music"
 

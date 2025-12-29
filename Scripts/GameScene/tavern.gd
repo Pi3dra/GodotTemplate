@@ -11,7 +11,13 @@ signal pass_info_to_arena(ennemies_infos, party_info)
 var scene_arena: PackedScene = load("uid://ccgdngh77m0hc")
 var scene_arena_ui: PackedScene = load("uid://dpnhc72tu6qee")
 
-var level_data = { "WaveInfo": [], "PartyInfo": [], "Rewards": { }, "RiskedBiscuits": { } }
+#This information is shared with 
+# Arena
+# Merchant UI
+# Cookie Selection UI
+
+var shared_data = { "LevelData" : null, "PartyInfo": [], "RiskedBiscuits": { } }
+
 var party_info: Array[LogicalCharacter.TYPE] = []
 var available_cookies: Dictionary[Cookie.TYPE, int] = {
 	Cookie.TYPE.NORMAL: 30,
@@ -29,7 +35,6 @@ func _ready() -> void:
 	party.spawn_characters(party_info)
 
 	move_child($ColorRect, get_children().size())
-	print(available_cookies)
 	launch_tutorial()
 	update_cookie_bar()
 
@@ -52,7 +57,7 @@ func _on_board_pressed() -> void:
 
 
 # After _on_board_pressed() we launch the cookie selection UI
-func cookie_selection(data: Dictionary):
+func cookie_selection(data: LevelData):
 	var ui_name = UI.NAME.COOKIE_SELECTION
 	UI.manager.call_overlay(ui_name, self, available_cookies.duplicate())
 	UI.manager.connect_signals(
@@ -60,21 +65,20 @@ func cookie_selection(data: Dictionary):
 		{ },
 		{ "selected_cookie_deck": update_after_cookie_selection },
 	)
-	level_data["WaveInfo"] = data["WaveInfo"]
-	level_data["Rewards"] = data["Rewards"]
-	level_data["PartyInfo"] = party_info
+	shared_data["LevelData"] = data
+	shared_data["PartyInfo"] = party_info
 
 
 ## TODO: level selection getting restarted if cookie select and exit
 func update_after_cookie_selection(risked_biscuits: Dictionary[Cookie.TYPE, int]):
-	level_data["RiskedBiscuits"] = risked_biscuits
+	shared_data["RiskedBiscuits"] = risked_biscuits
 
 	#Remove from available_cookies:
 	for cookie in risked_biscuits.keys():
 		available_cookies.set(cookie, available_cookies[cookie] - risked_biscuits[cookie])
 
 	# Launch combat
-	if !level_data["WaveInfo"].is_empty() and !risked_biscuits.is_empty():
+	if  !risked_biscuits.is_empty(): # and !level_data["WaveInfo"].is_empty() 
 		SoundManager.instance.play_sound("Tavern", false)
 		SoundManager.instance.play_sound("Transition", true, true)
 		animation_player.play("Transition") # This will trigger switch_scene
@@ -88,19 +92,10 @@ func update_after_cookie_selection(risked_biscuits: Dictionary[Cookie.TYPE, int]
 func switch_scene():
 	var level_information: Dictionary
 	if Globals.training:
-		level_information = {
-			#TODO: This is weird, big bug if < 3 slimes
-			"WaveInfo": [
-				[LogicalCharacter.TYPE.UNKILLABLE_SLIME],
-				[LogicalCharacter.TYPE.UNKILLABLE_SLIME],
-				[LogicalCharacter.TYPE.UNKILLABLE_SLIME],
-			],
-			"RiskedBiscuits": available_cookies.duplicate(),
-			"PartyInfo": party_info,
-			"Rewards": { "": 0, " ": 0 },
-		}
+		#TODO DO a default tutorial
+		print("TUTORIAL NOT IMPLEMENTED")
 	else:
-		level_information = level_data
+		level_information = shared_data
 
 	var arena: Node2D = scene_arena.instantiate()
 	UI.manager.call_overlay(UI.NAME.ARENA, arena, level_information["RiskedBiscuits"])

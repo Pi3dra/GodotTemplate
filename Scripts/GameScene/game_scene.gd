@@ -6,4 +6,5 @@ static var instance
 
 #//////////function//////////
 func _ready() -> void:
+	LevelData.new(LevelData.Difficulty.MEDIUM)
 	instance = self

@@ -53,6 +53,7 @@ func _ready() -> void:
 	life_bar.max_value = character.total_health
 	character.char_instance = self
 	attack_rate()
+	no_attacking()
 
 
 func update_lifebar():
@@ -126,6 +127,7 @@ func animate_health_bar():
 
 func shoot(rival_pos: Vector2, type):
 	var projectile: Node2D = scene_projectile.instantiate()
+	projectile.scale = Vector2(1.5,1.5)
 	var tween = create_tween()
 	tween.set_parallel(true).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	var sprite: Sprite2D = projectile.get_child(0)
@@ -220,7 +222,7 @@ func kill_tween(tween: Tween, label: Label):
 
 func no_attacking():
 	timer.paused = true
-	actual_state = States.WALKING
+	actual_state = States.IDLE
 
 
 func attacking():

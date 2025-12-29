@@ -87,6 +87,7 @@ func overlaps_with_list(random_position, position_list) -> bool:
 	return overlaps
 
 
+#TODO This is crashing on big quantities of cookies
 func generate_random_pos(container_pos, rect, list = []):
 	var x = randf_range(container_pos.x, container_pos.x + rect.size.x - 64)
 	var y = randf_range(container_pos.y, container_pos.y + rect.size.y - 64)

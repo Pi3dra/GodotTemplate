@@ -15,7 +15,7 @@ func _ready() -> void:
 	cookie_bar.update_cookie_bar()
 
 	#TODO Don't forget about this
-	#UI.manager.connect_to_ui(UI.NAME.Arena,{"drop_cookie":drop_cookie})
+	UI.manager.connect_to_ui(UI.NAME.ARENA,{"drop_cookie":$PanelContainer/CookieHolder.drop_cookie})
 
 	#hide()
 	var tutorialbutton = $TutorialExit
@@ -46,7 +46,6 @@ func _on_button_pressed() -> void:
 
 	active_cookies.erase(Cookie.TYPE.WEIGHTED)
 	cookie_receiver.erase_cookie(Cookie.TYPE.WEIGHTED)
-	print(head_chance)
 
 	#### Cookie flipping
 	var correct_guesses: Array[Control]
@@ -78,7 +77,6 @@ func _on_button_pressed() -> void:
 		cookie.disappearing_animation()
 	placed_cookies.clear()
 	if cookie_receiver.available_cookies.size() > 0:
-		print(active_cookies)
 		emit_signal("combat_cookies", active_cookies, false)
 
 #endregion

@@ -8,9 +8,9 @@ var main_scene: PackedScene = load("uid://dsrw2guvcxik7")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	SoundManager.instance.play_sound("Level1", false)
-	SoundManager.instance.play_sound("Level2", false)
-	SoundManager.instance.play_sound("Level3", false)
+	SoundManager.instance.play_sound("SONG1", false)
+	SoundManager.instance.play_sound("SONG2", false)
+	SoundManager.instance.play_sound("SONG3", false)
 	SoundManager.instance.play_sound("Lose", true)
 	var tween = create_tween().set_parallel(true)
 	tween.tween_property(retry, "modulate:a", 1, 3)

@@ -1,15 +1,13 @@
 extends Node2D
 
 # --- Nodes ---
-@onready var enemies_spawners_nodes: Array[Node2D] = [
-	$EnemiesSpawners,
-	$EnemiesSpawners2,
-	$EnemiesSpawner3,
-]
-@onready var ally_spawners: Node2D = $AllySpawners
+
+@onready var ally_spawners: Node2D = $Spawners
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var shaker: SimpleShaker = $Shaker
 @onready var camera_2d: Camera2D = $Camera2D
+
+@onready var player_spawners = $Spawners
 
 # --- Scenes ---
 var char_scene: PackedScene = load("uid://b3y2sr2uweroy")
@@ -18,46 +16,25 @@ var transition_scene: PackedScene = load("uid://bkjuff60yhtk0")
 var win_scene: PackedScene = load("uid://1cnkhmktcngn")
 var game_over_scene: PackedScene = load("uid://b43j4xlbwfwoo")
 
-# --- Data structures (indexed by wave 0..2) ---
-var chosen_enemies: Array = [[], [], []] # Array[Array[LogicalCharacter.TYPE]]
-var spawn_positions: Array = [[], [], []] # Array[Array[Vector2]]
-# spawned[0] = enemies wave1, spawned[1] = wave2, spawned[2] = wave3
-var spawned: Array = [[], [], []]
-
+#all variables below are initialized inside the get_tavern_info function
+var data: LevelData = null
 # allies (separate)
-var player_party: Array = [] # Array[LogicalCharacter.TYPE]
 var spawned_allies: Array = [] # Array[Node2D]
-var allies_spawn_pos: Array = [] # Array[Vector2]
+var spawned_enemies: Array = [] # Array[Array[Node2D]]
+var all_pos_markers: Array = []
+# This stores all marker group Node2Ds, to acces each individual marker call
+# get_children()
 
-# max per wave
-var max_wave: Array[int] = [0, 0, 0]
+#This is used to keep track of dead characters
+#so they don't respawn in the tavern
+var player_party: Array[LogicalCharacter.TYPE] = []
 
-# flags pour arrêter le process pour chaque vague
-var wave_stopped: Array[bool] = [false, false, false]
-var rewards
-
-# rewards & selection
-
-var selected_special
-
-# ------------------------
-# Signals / Init
-# ------------------------
 #region
 func _ready() -> void:
 	# Connexion pour recevoir les infos depuis le parent (Tavern)
 	get_parent().get_child(0).connect("pass_info_to_arena", get_tavern_info)
 
 	animation_player.play("WaveStart")
-
-	# Remplir les positions d'apparition ennemies
-	_fill_spawn_positions()
-
-	# Remplir les positions alliées
-	for m in ally_spawners.get_children():
-		if m is Marker2D:
-			allies_spawn_pos.append(m.position)
-
 	var signal_mappings = {
 		"combat_cookies": update_active_cookies,
 		"tutorial_exit": quit_tutorial,
@@ -65,55 +42,99 @@ func _ready() -> void:
 	UI.manager.connect_to_caller(UI.NAME.ARENA, signal_mappings)
 
 
-# Remplit spawn_positions à partir de enemies_spawners_nodes
-func _fill_spawn_positions() -> void:
-	for i in enemies_spawners_nodes.size():
-		var spawner = enemies_spawners_nodes[i]
-		for child in spawner.get_children():
-			if child is Marker2D:
-				spawn_positions[i].append(child.position)
+func get_tavern_info(level_data: Dictionary) -> void:
+	data = level_data["LevelData"]
+
+	var enemy_positions = _create_enemy_spawn_positions()
+	spawned_enemies = _spawn_enemy_waves(enemy_positions)
+
+	player_party = level_data["PartyInfo"]
+	spawned_allies = _spawn_player_characters(player_party, player_spawners.get_children())
+
+	all_pos_markers = [player_spawners]
+	all_pos_markers.append_array(enemy_positions)
+
+	_play_music(data.song)
 #endregion
-# ------------------------
-# Process (vérification des fins de vague)
-# ------------------------
-#region
-func _process(_delta: float) -> void:
-	for wave_index in range(3):
-		_check_wave_end(wave_index)
+
+#region Spawning
+func _create_enemy_spawn_positions() -> Array[Node2D]:
+	var spawn_positions: Array[Node2D] = []
+	for i in range(data.waves + 1):
+		var new_spawners = player_spawners.duplicate()
+		add_child(new_spawners)
+		for child in new_spawners.get_children():
+			child.position = Vector2(child.position.x + 400 * i, child.position.y)
+		spawn_positions.append(new_spawners)
+	spawn_positions.remove_at(0)
+	return spawn_positions
 
 
-# Vérifie l'état d'une vague :
-# si plus d'ennemis -> joue Ending/Ending2/Win et arrête alliés
-# si plus d'alliés -> Lose et arrête ennemis de la vague
+# returns the enemy nodes inside 2D arrays per wave
+func _spawn_enemy_waves(wave_nodes: Array[Node2D]):
+	var waves = [] # Array[Array[Node2D]] <- these are the enemy nodes
+	for wave_index in data.wave_data.size():
+		var wave_markers = wave_nodes[wave_index].get_children()
+		var enemy_wave = []
+		for enemy in data.wave_data[wave_index]:
+			var marker = wave_markers.pick_random()
+			var enemy_instance = _spawn_char_on_marker(enemy, marker)
+			enemy_wave.append(enemy_instance)
+			wave_markers.erase(marker)
+		waves.append(enemy_wave)
+
+	return waves
+
+
+func _spawn_player_characters(chars: Array[LogicalCharacter.TYPE], markers: Array[Node]):
+	var player_nodes = []
+	for character in chars:
+		var marker = markers.pick_random()
+		var player_instance = _spawn_char_on_marker(character, marker)
+		markers.erase(marker)
+		player_nodes.append(player_instance)
+	return player_nodes
+
+
+#Creates enemy, and moves it on top of the marker2D position , returns the character instance
+func _spawn_char_on_marker(char_type: LogicalCharacter.TYPE, mark: Marker2D) -> Node2D:
+	var character := LogicalCharacter.new(char_type)
+	var char_instance = char_scene.instantiate()
+	char_instance.character = character
+	char_instance.call_deferred("update_lifebar")
+	add_child(char_instance)
+	char_instance.connect("attack", combat_handler)
+	char_instance.position = mark.position
+	return char_instance
+
+#endregion
+
+#region Level State Checking
+
 func _check_wave_end(wave_index: int) -> void:
-	if wave_stopped[wave_index]:
-		return
+	# victory waves advanced pas the last one
+	var enemies_list: Array = spawned_enemies[wave_index - 1]
 
-	var enemies_list: Array = spawned[wave_index]
-	# cas victoire pour la vague
-	if enemies_list.is_empty():
-		match wave_index:
-			0:
-				animation_player.play("WaveStart")
-			1:
-				animation_player.play("WaveStart")
-			2:
-				UI.manager.call_overlay(UI.NAME.WIN_SCREEN, self, rewards)
-				UI.manager.connect_to_caller(
-					UI.NAME.WIN_SCREEN,
-					{ "switch_to_tavern": level_victory },
-				)
-
-		wave_stopped[wave_index] = true
+	#level victory
+	if enemies_list.is_empty() && wave_counter == data.waves:
+		UI.manager.call_overlay(UI.NAME.WIN_SCREEN, self, data.rewards)
 		_for_each_spawned(spawned_allies, "no_attacking")
+		UI.manager.connect_to_caller(
+			UI.NAME.WIN_SCREEN,
+			{ "switch_to_tavern": level_victory },
+		)
 		return
 
 	# cas défaite si plus d'alliés
 	if spawned_allies.is_empty():
 		UI.manager.call_overlay(UI.NAME.GAME_OVER, self)
-		wave_stopped[wave_index] = true
 		_for_each_spawned(enemies_list, "no_attacking")
 		return
+
+	# cas victoire pour la vague
+	if enemies_list.is_empty():
+		animation_player.play("WaveStart")
+		_for_each_spawned(spawned_allies, "no_attacking")
 
 
 # Goes back to tavern
@@ -122,7 +143,7 @@ func level_victory():
 	tavern.show()
 	tavern.get_node("Camera2D").enabled = true
 	tavern.animation_player.play("RESET")
-	tavern.update_after_victory(player_party, rewards)
+	tavern.update_after_victory(player_party, data.rewards)
 	queue_free()
 
 
@@ -132,118 +153,28 @@ func _for_each_spawned(nodes: Array, method_name: String) -> void:
 		if n and n.has_method(method_name):
 			n.call(method_name)
 #endregion
-# ------------------------
-# Recevoir les données du Tavern et initialiser la scène
-# ------------------------
-#region
-func get_tavern_info(level_data: Dictionary) -> void:
-	var wave_info = level_data["WaveInfo"]
-	var party_info = level_data["PartyInfo"]
-	rewards = level_data["Rewards"]
-
-	# pWave_info attend 3 arrays (une par vague)
-	for i in range(3):
-		var wave_arr = wave_info[i]
-		chosen_enemies[i] = wave_arr.duplicate()
-		max_wave[i] = wave_arr.size()
-
-	# Spawn ennemis par vague
-	for i in range(3):
-		spawn_characters_for_wave(i)
-
-	# Récompenses et équipe du joueur
-
-	player_party = party_info.duplicate()
-	spawn_characters_allies(player_party)
-
-	# Choix musique selon la 1ère vague
-	_play_music_for_wave0(wave_info[0])
-
 
 # TODO: Move this to level generation, this is dumb here!
-func _play_music_for_wave0(wave_1: Array) -> void:
+func _play_music(songstr) -> void:
 	SoundManager.instance.play_sound("Tavern", false)
-	if (wave_1.has(LogicalCharacter.TYPE.SLIME) or
-		wave_1.has(LogicalCharacter.TYPE.SKELETON) or
-		wave_1.has(LogicalCharacter.TYPE.SPIDER) ):
-		SoundManager.instance.play_sound("Level1", true, false)
-	elif (wave_1.has(LogicalCharacter.TYPE.WITCH) or
-		wave_1.has(LogicalCharacter.TYPE.GOBLIN) or
-		wave_1.has(LogicalCharacter.TYPE.ORC) ):
-		SoundManager.instance.play_sound("Level2", true, false)
-	else:
-		SoundManager.instance.play_sound("Level3", true, false)
+	SoundManager.instance.play_sound(songstr, true, false)
+
 #endregion
-# ------------------------
-# Spawning
-# ------------------------
-#region
-# Spawn des ennemis pour une vague indiquée (0..2)
-func spawn_characters_for_wave(wave_index: int) -> void:
-	var list_types: Array = chosen_enemies[wave_index]
-	for t in list_types:
-		_create_character_for_wave(t, wave_index)
 
-	# Positionne les nodes instanciés sur les spawn points disponibles
-	for i in range(spawn_positions[wave_index].size()):
-		if i < spawned[wave_index].size():
-			spawned[wave_index][i].position = spawn_positions[wave_index][i]
-
-	# S'assurer que tout commence en "no_attacking"
-	_for_each_spawned(spawned_allies, "no_attacking")
-	for w in range(3):
-		_for_each_spawned(spawned[w], "no_attacking")
-
-	# garder color_rect en dernier plan visuel
-	#move_child(color_rect, get_children().size())
-
-
-# Spawn des alliés (player party)
-func spawn_characters_allies(party_types: Array) -> void:
-	for t in party_types:
-		_create_character_for_ally(t)
-
-	for i in range(allies_spawn_pos.size()):
-		if i < spawned_allies.size():
-			spawned_allies[i].position = allies_spawn_pos[i]
-	_for_each_spawned(spawned_allies, "no_attacking")
-
-
-#TODO: Why we use char_scene2 instead of char_scene?
-# Crée un personnage et l'ajoute au bon tableau (wave_index pour "Bad", allies pour "Good")
-func _create_character_for_wave(char_type: LogicalCharacter.TYPE, wave_index: int) -> void:
-	var character := LogicalCharacter.new(char_type)
-	var char_scene2: Node2D = char_scene.instantiate()
-	char_scene2.character = character
-	char_scene2.call_deferred("update_lifebar")
-	add_child(char_scene2)
-	char_scene2.connect("attack", combat_handler)
-
-	# Ajout selon le Side
-	match character.side:
-		LogicalCharacter.SIDE.GOOD:
-			spawned_allies.append(char_scene2)
-		LogicalCharacter.SIDE.BAD:
-			spawned[wave_index].append(char_scene2)
-
-
-# Pour les alliés (utilisé si on veut explicitement spawn des alliés)
-func _create_character_for_ally(char_type: LogicalCharacter.TYPE) -> void:
-	var character := LogicalCharacter.new(char_type)
-	var char_scene2: Node2D = char_scene.instantiate()
-	char_scene2.character = character
-	char_scene2.call_deferred("update_lifebar")
-	add_child(char_scene2)
-	char_scene2.connect("attack", combat_handler)
-	spawned_allies.append(char_scene2)
-#endregion
-# ------------------------
-# Combat handler
-# ------------------------
-
+#region Combat Handling
 #TODO break this up into mulitple funcs
 signal drop_cookie(cookie: Cookie, drop_position: Vector2)
 
+
+func shake_camera_if(condition : bool):
+	if condition:
+		shake()
+		
+func shake():
+		if shaker.is_playing():
+			shaker.stop()
+		else:
+			shaker.start()
 
 func combat_handler(attack_info: Array, side, shooter, char_self) -> void:
 	var damage = attack_info[0]
@@ -251,13 +182,7 @@ func combat_handler(attack_info: Array, side, shooter, char_self) -> void:
 	var list_to_pick: Array = []
 
 	if side == LogicalCharacter.SIDE.GOOD:
-		# priorités : wave0 -> wave1 -> wave2
-		if not spawned[0].is_empty():
-			list_to_pick = spawned[0]
-		elif not spawned[1].is_empty():
-			list_to_pick = spawned[1]
-		elif not spawned[2].is_empty():
-			list_to_pick = spawned[2]
+		list_to_pick = spawned_enemies[clamp(wave_counter - 1, 0, 8)]
 	elif side == LogicalCharacter.SIDE.BAD:
 		list_to_pick = spawned_allies
 
@@ -266,28 +191,18 @@ func combat_handler(attack_info: Array, side, shooter, char_self) -> void:
 
 	var enemy_to_attack: Node2D = list_to_pick.pick_random()
 	if shooter == true:
-		#TODO: Is this really needed to use char_self?
 		char_self.shoot(enemy_to_attack.position, char_self.character.type)
 
 	# Crit shake
-	if crit:
-		if shaker.is_playing():
-			shaker.stop()
-		else:
-			shaker.start()
-
+	shake_camera_if(crit)
 	enemy_to_attack.receive_damage(damage, crit)
 
 	# Gestion de la mort
 	if enemy_to_attack.character.health <= 0:
+		shake()
 		if enemy_to_attack.character.side == LogicalCharacter.SIDE.BAD:
+			print("SHOULD DROP COOKIE")
 			_drop_cookie_on_kill(enemy_to_attack)
-		# shake on death
-
-		if shaker.is_playing():
-			shaker.stop()
-		else:
-			shaker.start()
 
 		# si c'est un allié tué, l'enlever de la player_party
 		if side == LogicalCharacter.SIDE.BAD:
@@ -295,8 +210,10 @@ func combat_handler(attack_info: Array, side, shooter, char_self) -> void:
 
 		# enlever l'instance du tableau de la vague appropriée ou des alliés
 		_remove_node_from_spawn_lists(enemy_to_attack)
+		_check_wave_end(wave_counter)
 
-
+# TODO: Make this just put the cookie in the bar instead of leaving it on the ground
+# also make it editable in the  editor the amount of cookies dropped and the chances
 func _drop_cookie_on_kill(enemy: Node2D) -> void:
 	var enemy_pos: Vector2 = enemy.get_global_transform_with_canvas().get_origin()
 	var final_pos = enemy_pos - Vector2(32, 32)
@@ -310,29 +227,22 @@ func _drop_cookie_on_kill(enemy: Node2D) -> void:
 
 # Enlève un node des tableaux spawnés (vagues ou alliés)
 func _remove_node_from_spawn_lists(node: Node2D) -> void:
-	for i in range(3):
-		if spawned[i].has(node):
-			spawned[i].erase(node)
+	for i in data.waves:
+		if spawned_enemies[i].has(node):
+			spawned_enemies[i].erase(node)
 			return
 	if spawned_allies.has(node):
 		spawned_allies.erase(node)
-
-
-# ------------------------
-# Cookies / buffs
-# ------------------------
-# Si enemy == true, on ajoute aux ennemis actifs (vérifie vagues dans l'ordre). Sinon aux alliés.
+		
 func update_active_cookies(combat_cookies, _enemy) -> void:
 	for ally_node in spawned_allies:
 		ally_node.character.receive_cookie_power(combat_cookies)
+#endregion
 
-# ------------------------
-# Animations & UI helpers
-# ------------------------
-# These are called by AnimationPlayer in arena
-#region
 
-# REFACTORED CODE
+
+#region Animation Between Waves
+
 var wave_counter: int = 0
 var camera_tween: Tween
 var camera_x_pos: float
@@ -352,16 +262,14 @@ func move_camera(target_pos: Vector2):
 
 
 func update_wave():
-	print("Called Update")
 	UI.manager.show_overlay(UI.NAME.ARENA)
-	_for_each_spawned(spawned[wave_counter], "attacking")
+	_for_each_spawned(spawned_enemies[wave_counter], "attacking")
 	_for_each_spawned(spawned_allies, "attacking")
 	_setup_shaker_for_camera()
 	wave_counter += 1
 
 
 func move_players():
-	print("Called Move")
 	if not camera_x_pos:
 		camera_x_pos = camera_2d.position.x
 	if wave_counter > 0:
@@ -369,10 +277,14 @@ func move_players():
 		var target_pos: Vector2 = Vector2(camera_x_pos, camera_2d.position.y)
 		move_camera(target_pos)
 		var tween = create_tween().set_parallel(true)
-		for i in range(min(spawned_allies.size(), spawn_positions[0].size())):
-			var ally = spawned_allies[i]
-			var pos = spawn_positions[wave_counter - 1][i]
-			tween.tween_property(ally, "position", pos, 4)
+
+		#Move char to rangom position
+		var possible_positions = all_pos_markers[wave_counter].get_children()
+		for char_instance in spawned_allies:
+			var chosen_marker = possible_positions.pick_random()
+			possible_positions.erase(chosen_marker)
+			var pos = chosen_marker.position
+			tween.tween_property(char_instance, "position", pos, 4)
 
 # ================
 
@@ -388,8 +300,8 @@ func quit_tutorial() -> void:
 	var tavern = get_parent().get_child(0)
 	tavern.show()
 	tavern.get_node("Camera2D").enabled = true
-	#tavern.get_node("AnimationPlayer").play("RESET")
-	SoundManager.instance.play_sound("Level3", false)
+	tavern.get_node("AnimationPlayer").play("RESET")
+	SoundManager.instance.play_sound("SONG3", false)
 	SoundManager.instance.play_sound("Tavern", true)
 	queue_free()
 #endregion
