@@ -8,11 +8,15 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
-config/name="New Game Project"
-run/main_scene="uid://dsrw2guvcxik7"
-config/features=PackedStringArray("4.5", "GL Compatibility")
+config/name="Template"
+run/main_scene="uid://155xx7s6y6ta"
+config/features=PackedStringArray("4.7", "GL Compatibility")
 boot_splash/image="uid://cttmer8rfy4yu"
 config/icon="res://Assets/Sprites/icon.svg"
 boot_splash/minimum_display_time=10
@@ -27,8 +31,8 @@ Globals="*res://Scripts/Globals.gd"
 
 [display]
 
-window/size/viewport_width=1366
-window/size/viewport_height=768
+window/size/viewport_width=960
+window/size/viewport_height=540
 window/size/resizable=false
 window/stretch/mode="viewport"
 
@@ -67,7 +71,7 @@ skip={
 
 [internationalization]
 
-locale/translations=PackedStringArray("res://Localization/TestTrad.en.translation", "res://Localization/TestTrad.es.translation", "res://Localization/TestTrad.fr.translation")
+locale/translations=PackedStringArray("res://Localization/Localization.en.translation", "res://Localization/Localization.es.translation", "res://Localization/Localization.fr.translation")
 
 [rendering]
 

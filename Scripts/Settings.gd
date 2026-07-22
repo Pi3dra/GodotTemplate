@@ -2,6 +2,9 @@ extends Node
 
 ## This is a Global State Script
 ## 
+## Consider splitting this into multiple singletons
+## If you need more local data sets
+##
 ## Rules for adding variables here
 ## - Variables should be needed through multiple tscenes/interfaces
 ## - i.e Settings, Persistent player and world data, global constants

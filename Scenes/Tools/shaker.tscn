@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://bxvt4j1mm8xyq"]
+[gd_scene format=3 uid="uid://bxvt4j1mm8xyq"]
 
-[ext_resource type="Script" uid="uid://dmiwpa22usgvj" path="res://Scripts/Tools/SimpleShaker.gd" id="1_h7bub"]
+[ext_resource type="Script" uid="uid://dmiwpa22usgvj" path="res://Scripts/Tools/simple_shaker.gd" id="1_h7bub"]
 
-[node name="Shaker" type="Node2D"]
+[node name="Shaker" type="Node2D" unique_id=877028934]
 script = ExtResource("1_h7bub")

@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://i8c14jrjxiq8"]
+
+[ext_resource type="Script" uid="uid://b5ncoso1dbuk2" path="res://Scripts/UI/main_menu.gd" id="1_i2xx2"]
+
+[sub_resource type="Theme" id="Theme_5wsvm"]
+
+[node name="MainMenu" type="Control" unique_id=1671728761]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_right = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_i2xx2")
+metadata/_edit_horizontal_guides_ = [386.0]
+
+[node name="Label" type="Label" parent="." unique_id=1155840887]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.31145832
+anchor_top = 0.42407408
+anchor_right = 0.68854165
+anchor_bottom = 0.4925926
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_5wsvm")
+text = "Main Menu"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Settings" type="Button" parent="Label" unique_id=1245329784]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.36740333
+anchor_top = 1.8648651
+anchor_right = 0.640884
+anchor_bottom = 2.8648648
+grow_horizontal = 2
+grow_vertical = 2
+text = "OPTIONS"
+metadata/_edit_use_anchors_ = true
+
+[node name="Play" type="Button" parent="Label" unique_id=1443299259]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = 4.0
+offset_right = 33.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "PLAY"
+
+[connection signal="pressed" from="Label/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="Label/Play" to="." method="_on_play_pressed"]

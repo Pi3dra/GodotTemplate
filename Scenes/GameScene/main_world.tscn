@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://b8eubejy2jhw2"]
+
+[ext_resource type="Script" uid="uid://bh458a8gtbsl1" path="res://Scenes/GameScene/main_world.gd" id="1_06s8k"]
+[ext_resource type="Texture2D" uid="uid://dyxny68nsgp2b" path="res://Resources/icon.png" id="1_6wfbi"]
+[ext_resource type="Script" uid="uid://coto8y1olvjfq" path="res://Scenes/GameScene/character.gd" id="2_4fhsp"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_a3ffi"]
+
+[node name="Node2D" type="Node2D" unique_id=830768030]
+script = ExtResource("1_06s8k")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=986895318]
+script = ExtResource("2_4fhsp")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=1252232640]
+position = Vector2(10.859377, 18.96875)
+scale = Vector2(0.031337902, 0.030572291)
+texture = ExtResource("1_6wfbi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=840782205]
+position = Vector2(10, 15)
+shape = SubResource("CapsuleShape2D_a3ffi")
