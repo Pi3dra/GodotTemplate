@@ -1,17 +1,19 @@
 # interface.gd
 extends Control
+
 ## Base class for all UI interface scenes managed by UIManager.
 ## Attach this script (or a subclass) to the root Control node of any
 ## interface scene so UIManager can instantiate, show, hide, and track it.
 class_name Interface
 
-var key : UIManager.UI
+var key: UIManager.UI
 
 ## Emitted when the interface wants to be closed on user input, e.g. from a close button
 ## or Escape key. UIManager connects to this and decidec wether or not to close the interface.
 signal request_close(key: int)
 
-## Called once, right after the interface is instantiated. 
+
+## Called once, right after the interface is instantiated.
 ## Use for one-time setup that shouldn't repeat on every show call.
 ## [b]Example:[/b]
 ## [codeblock]
@@ -20,6 +22,7 @@ signal request_close(key: int)
 ## [/codeblock]
 func on_interface_created() -> void:
 	pass
+
 
 ## Called every time show makes this interface visible again. Use to
 ## refresh data that may have changed while the interface was hidden.
@@ -30,6 +33,7 @@ func on_interface_created() -> void:
 ## [/codeblock]
 func on_interface_shown() -> void:
 	pass
+
 
 ## Called when hiding this interface.
 ## Use to pause per-interface activity (timers, tweens, input focus) while
@@ -42,7 +46,8 @@ func on_interface_shown() -> void:
 func on_interface_hidden() -> void:
 	pass
 
-## Called right before the interface's node is queue_free()'d. 
+
+## Called right before the interface's node is queue_free()'d.
 ##Use for final cleanup: saving state, disconnecting
 ## signals, stopping tweens that reference this node.
 ## [b]Example:[/b]
@@ -52,7 +57,3 @@ func on_interface_hidden() -> void:
 ## [/codeblock]
 func on_interface_closing() -> void:
 	pass
-
-
-	
-	

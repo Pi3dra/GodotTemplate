@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://crb7lkmq7wr6"]
 
 [ext_resource type="Script" uid="uid://jjj4ol5ydkai" path="res://Scripts/UI/settings.gd" id="1_owiy1"]
+[ext_resource type="Theme" uid="uid://ctxx0tdux0vvj" path="res://Assets/Themes/default_theme.tres" id="2_ma1v7"]
 
 [node name="Settings" type="Control" unique_id=649186109]
 layout_mode = 3
@@ -13,27 +14,28 @@ script = ExtResource("1_owiy1")
 
 [node name="Label" type="Label" parent="." unique_id=163939200]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -73.5
-offset_right = 73.5
-offset_bottom = 31.0
+anchors_preset = -1
+anchor_left = 0.423
+anchor_right = 0.577
+anchor_bottom = 0.057000004
+offset_left = 0.4199829
+offset_right = -0.42004395
+offset_bottom = 0.2199974
 grow_horizontal = 2
 text = "OPTIONS"
 horizontal_alignment = 1
 
 [node name="Sliders" type="BoxContainer" parent="." unique_id=1740505165]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -420.0
-offset_top = -226.5
-offset_right = -36.0
-offset_bottom = 226.5
+anchors_preset = -1
+anchor_left = 0.062000003
+anchor_top = 0.037
+anchor_right = 0.462
+anchor_bottom = 0.96300006
+offset_left = 0.47999573
+offset_top = 23.52
+offset_right = 0.47998047
+offset_bottom = -23.52002
 grow_horizontal = 2
 grow_vertical = 2
 vertical = true
@@ -53,6 +55,8 @@ text = "Master"
 
 [node name="MasterSlider" type="HSlider" parent="Sliders/Audio" unique_id=749116707]
 layout_mode = 2
+max_value = 2.0
+step = 0.025
 
 [node name="Music" type="Label" parent="Sliders/Audio" unique_id=1729820280]
 layout_mode = 2
@@ -60,6 +64,9 @@ text = "MUSIC"
 
 [node name="MusicSlider" type="HSlider" parent="Sliders/Audio" unique_id=83691490]
 layout_mode = 2
+theme = ExtResource("2_ma1v7")
+max_value = 2.0
+step = 0.025
 
 [node name="SFX" type="Label" parent="Sliders/Audio" unique_id=966840512]
 layout_mode = 2
@@ -67,6 +74,8 @@ text = "SFX"
 
 [node name="SFXSlider" type="HSlider" parent="Sliders/Audio" unique_id=1278995545]
 layout_mode = 2
+max_value = 2.0
+step = 0.025
 
 [node name="Display" type="BoxContainer" parent="Sliders" unique_id=1456881113]
 layout_mode = 2
@@ -83,6 +92,8 @@ text = "BRIGHTNESS"
 
 [node name="BrightnessSlider" type="HSlider" parent="Sliders/Display" unique_id=861953993]
 layout_mode = 2
+max_value = 2.0
+step = 0.05
 
 [node name="Contrast" type="Label" parent="Sliders/Display" unique_id=1872116715]
 layout_mode = 2
@@ -90,6 +101,17 @@ text = "CONTRAST"
 
 [node name="ContrastSlider" type="HSlider" parent="Sliders/Display" unique_id=1927978211]
 layout_mode = 2
+max_value = 2.0
+step = 0.025
+
+[node name="Saturation" type="Label" parent="Sliders/Display" unique_id=1649728746]
+layout_mode = 2
+text = "SATURATION"
+
+[node name="SaturationSlider" type="HSlider" parent="Sliders/Display" unique_id=527748625]
+layout_mode = 2
+max_value = 2.0
+step = 0.025
 
 [node name="Accesibility" type="BoxContainer" parent="Sliders" unique_id=86705807]
 layout_mode = 2
@@ -106,6 +128,8 @@ text = "TIMESCALE"
 
 [node name="TimeSlider" type="HSlider" parent="Sliders/Accesibility" unique_id=1459949125]
 layout_mode = 2
+max_value = 2.0
+step = 0.025
 
 [node name="FontSize" type="Label" parent="Sliders/Accesibility" unique_id=1842140762]
 layout_mode = 2
@@ -113,6 +137,10 @@ text = "FONTSIZE"
 
 [node name="FontSlider" type="HSlider" parent="Sliders/Accesibility" unique_id=1993596094]
 layout_mode = 2
+min_value = 0.5
+max_value = 1.5
+step = 0.025
+value = 0.5
 
 [node name="VFXStrength" type="Label" parent="Sliders/Accesibility" unique_id=54109657]
 layout_mode = 2
@@ -120,18 +148,20 @@ text = "VFXSTRENGTH"
 
 [node name="VFXSlider" type="HSlider" parent="Sliders/Accesibility" unique_id=1727206184]
 layout_mode = 2
+max_value = 2.0
+step = 0.025
 
 [node name="Controllers" type="BoxContainer" parent="." unique_id=2060906066]
 layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -443.0
-offset_top = -234.0
-offset_right = -59.0
-offset_bottom = 227.0
+anchors_preset = -1
+anchor_left = 0.53900003
+anchor_top = 0.067
+anchor_right = 0.93900007
+anchor_bottom = 0.92
+offset_left = -0.44006348
+offset_top = -0.1800003
+offset_right = -0.44006348
+offset_bottom = 0.19998169
 grow_horizontal = 0
 grow_vertical = 2
 vertical = true
@@ -163,156 +193,59 @@ layout_mode = 2
 text = "SP
 "
 
-[node name="Inputs" type="GridContainer" parent="Controllers" unique_id=573062001]
+[node name="Languages2" type="HBoxContainer" parent="Controllers" unique_id=1785939331]
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_stretch_ratio = 1.05
-offset_transform_enabled = true
-columns = 4
+accessibility_region = true
+alignment = 1
 
-[node name="Label" type="Label" parent="Controllers/Inputs" unique_id=1810102488]
+[node name="Inputs" type="GridContainer" parent="Controllers/Languages2" unique_id=573062001]
+custom_minimum_size = Vector2(115, 0)
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="Controllers/Languages2/Inputs" unique_id=1810102488]
 layout_mode = 2
 text = "Move Up	"
 
-[node name="Button" type="Button" parent="Controllers/Inputs" unique_id=573359119]
+[node name="MoveUp" type="Button" parent="Controllers/Languages2/Inputs" unique_id=573359119]
+custom_minimum_size = Vector2(115, 20)
+custom_maximum_size = Vector2(115, 32)
 layout_mode = 2
-text = "A
-"
+text = "A"
+icon_alignment = 1
+expand_icon = true
 
-[node name="Label2" type="Label" parent="Controllers/Inputs" unique_id=1160931392]
-layout_mode = 2
-text = "input 1"
-
-[node name="Button2" type="Button" parent="Controllers/Inputs" unique_id=1685475540]
-layout_mode = 2
-text = "A
-"
-
-[node name="Label3" type="Label" parent="Controllers/Inputs" unique_id=1397487978]
+[node name="Label2" type="Label" parent="Controllers/Languages2/Inputs" unique_id=874231036]
 layout_mode = 2
 text = "Move Down"
 
-[node name="Button3" type="Button" parent="Controllers/Inputs" unique_id=1333100319]
+[node name="MoveDown" type="Button" parent="Controllers/Languages2/Inputs" unique_id=303126903]
+custom_minimum_size = Vector2(115, 20)
+custom_maximum_size = Vector2(115, 32)
 layout_mode = 2
-text = "A
-"
+text = "A"
 
-[node name="Label4" type="Label" parent="Controllers/Inputs" unique_id=1996241011]
-layout_mode = 2
-text = "input 1"
-
-[node name="Button4" type="Button" parent="Controllers/Inputs" unique_id=976534311]
-layout_mode = 2
-text = "A
-"
-
-[node name="Label5" type="Label" parent="Controllers/Inputs" unique_id=757878741]
+[node name="Label3" type="Label" parent="Controllers/Languages2/Inputs" unique_id=266350939]
 layout_mode = 2
 text = "Move Left"
 
-[node name="Button5" type="Button" parent="Controllers/Inputs" unique_id=1126805891]
+[node name="MoveLeft" type="Button" parent="Controllers/Languages2/Inputs" unique_id=1420780404]
+custom_minimum_size = Vector2(115, 20)
+custom_maximum_size = Vector2(115, 32)
 layout_mode = 2
-text = "A
+text = "A"
+
+[node name="Label4" type="Label" parent="Controllers/Languages2/Inputs" unique_id=32415668]
+layout_mode = 2
+text = "Move Right
 "
 
-[node name="Label6" type="Label" parent="Controllers/Inputs" unique_id=2023966898]
+[node name="MoveRight" type="Button" parent="Controllers/Languages2/Inputs" unique_id=445957389]
+custom_minimum_size = Vector2(115, 20)
+custom_maximum_size = Vector2(115, 32)
 layout_mode = 2
-text = "input 1"
-
-[node name="Button6" type="Button" parent="Controllers/Inputs" unique_id=1067052367]
-layout_mode = 2
-text = "A
-"
-
-[node name="Label7" type="Label" parent="Controllers/Inputs" unique_id=1089325147]
-layout_mode = 2
-text = "Move Right"
-
-[node name="Button7" type="Button" parent="Controllers/Inputs" unique_id=629951226]
-layout_mode = 2
-text = "A
-"
-
-[node name="Label8" type="Label" parent="Controllers/Inputs" unique_id=543540078]
-layout_mode = 2
-text = "input 1"
-
-[node name="Button8" type="Button" parent="Controllers/Inputs" unique_id=536218936]
-layout_mode = 2
-text = "A
-"
-
-[node name="Label9" type="Label" parent="Controllers/Inputs" unique_id=2075235691]
-layout_mode = 2
-text = "Pause"
-
-[node name="Button9" type="Button" parent="Controllers/Inputs" unique_id=1667953489]
-layout_mode = 2
-text = "A
-"
-
-[node name="Label10" type="Label" parent="Controllers/Inputs" unique_id=162097733]
-layout_mode = 2
-text = "input 1"
-
-[node name="Button10" type="Button" parent="Controllers/Inputs" unique_id=1548425489]
-layout_mode = 2
-text = "A
-"
-
-[node name="Label11" type="Label" parent="Controllers/Inputs" unique_id=1274411125]
-layout_mode = 2
-text = "input 1"
-
-[node name="Button11" type="Button" parent="Controllers/Inputs" unique_id=1163080645]
-layout_mode = 2
-text = "A
-"
-
-[node name="Label12" type="Label" parent="Controllers/Inputs" unique_id=138513758]
-layout_mode = 2
-text = "input 1"
-
-[node name="Button12" type="Button" parent="Controllers/Inputs" unique_id=686636316]
-layout_mode = 2
-text = "A
-"
-
-[node name="Label13" type="Label" parent="Controllers/Inputs" unique_id=1306526396]
-layout_mode = 2
-text = "input 1"
-
-[node name="Button13" type="Button" parent="Controllers/Inputs" unique_id=534822743]
-layout_mode = 2
-text = "A
-"
-
-[node name="Label14" type="Label" parent="Controllers/Inputs" unique_id=455601757]
-layout_mode = 2
-text = "input 1"
-
-[node name="Button14" type="Button" parent="Controllers/Inputs" unique_id=566808145]
-layout_mode = 2
-text = "A
-"
-
-[node name="Label15" type="Label" parent="Controllers/Inputs" unique_id=1256723732]
-layout_mode = 2
-text = "input 1"
-
-[node name="Button15" type="Button" parent="Controllers/Inputs" unique_id=209895945]
-layout_mode = 2
-text = "A
-"
-
-[node name="Label16" type="Label" parent="Controllers/Inputs" unique_id=2074139343]
-layout_mode = 2
-text = "input 1"
-
-[node name="Button16" type="Button" parent="Controllers/Inputs" unique_id=253045703]
-layout_mode = 2
-text = "A
-"
+text = "A"
 
 [node name="Save Settings" type="Button" parent="." unique_id=1997635669]
 layout_mode = 0
@@ -327,6 +260,7 @@ text = "SAVE"
 [connection signal="value_changed" from="Sliders/Audio/SFXSlider" to="." method="_on_sfx_slider_value_changed"]
 [connection signal="value_changed" from="Sliders/Display/BrightnessSlider" to="." method="_on_brightness_slider_value_changed"]
 [connection signal="value_changed" from="Sliders/Display/ContrastSlider" to="." method="_on_contrast_slider_value_changed"]
+[connection signal="value_changed" from="Sliders/Display/SaturationSlider" to="." method="_on_saturation_slider_value_changed"]
 [connection signal="value_changed" from="Sliders/Accesibility/TimeSlider" to="." method="_on_time_slider_value_changed"]
 [connection signal="value_changed" from="Sliders/Accesibility/FontSlider" to="." method="_on_font_slider_value_changed"]
 [connection signal="value_changed" from="Sliders/Accesibility/VFXSlider" to="." method="_on_vfx_slider_value_changed"]

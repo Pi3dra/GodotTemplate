@@ -1,4 +1,5 @@
 extends Node
+
 class_name StateMachine
 ## A generic, reusable finite state machine (FSM) for Godot.
 ##
@@ -75,12 +76,12 @@ signal transitioned(from: int, to: int, input: int)
 @export var history_size: int = 8
 
 var current_state: State
-var machine_states: Dictionary[int, State] = {}
+var machine_states: Dictionary[int, State] = { }
 var input_alphabet: Array[int] = []
 
 ## Transitions available from ANY state, keyed by input. Checked only if the
 ## current state itself has no (guard-passing) transition for that input.
-var global_transitions: Dictionary[int, Array] = {}
+var global_transitions: Dictionary[int, Array] = { }
 ## Condition-only transitions available from ANY state, checked every frame
 ## regardless of which state is currently active.
 var global_auto_transitions: Array[Transition] = []
@@ -93,7 +94,6 @@ var current_payload: Variant = null
 ## The state that was active immediately before the current one. -1 if none.
 var previous_state: int = -1
 var state_history: Array[int] = []
-
 
 #region Setup
 
@@ -240,7 +240,6 @@ func add_global_auto_transition(to: int, condition_func: Callable, action_func :
 	global_auto_transitions.append(t)
 
 #endregion
-
 
 #region Runtime
 
@@ -408,7 +407,6 @@ func _to_string() -> String:
 
 #endregion
 
-
 #region Inner classes
 
 class State:
@@ -419,7 +417,7 @@ class State:
 	var process_funcs: Array[Callable] = []
 	var physics_process_funcs: Array[Callable] = []
 	## input(int) -> Array[Transition]
-	var transitions: Dictionary[int, Array] = {}
+	var transitions: Dictionary[int, Array] = { }
 	var auto_transitions: Array[Transition] = []
 
 

@@ -1,7 +1,6 @@
 extends Node
-
 ## This is a Global State Script
-## 
+##
 ## Rules for adding variables here
 ## - Variables should be needed through multiple tscenes/interfaces
 ## - i.e Settings, Persistent player and world data, global constants
