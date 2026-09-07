@@ -27,9 +27,10 @@ buses/default_bus_layout="res://Assets/Audio/default_bus_layout.tres"
 
 [autoload]
 
-Globals="*res://Scripts/Globals.gd"
+Globals="*res://Scripts/Autoloads/Globals.gd"
 Settings="*uid://c3lbi66x35v83"
 FontSize="*uid://ch5b0fhbgpcuf"
+Events="*uid://wnd2bu06w5bk"
 
 [display]
 
@@ -47,9 +48,9 @@ enabled=PackedStringArray("res://addons/GDQuest_GDScript_formatter/plugin.cfg", 
 folder_colors={
 "res://Assets/": "green",
 "res://Resources/": "purple",
+"res://Resources/Shaders/": "purple",
 "res://Scenes/": "blue",
 "res://Scripts/": "red",
-"res://Shaders/": "purple",
 "res://addons/": "gray"
 }
 

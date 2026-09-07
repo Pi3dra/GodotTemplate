@@ -3,7 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://budxutoolfgg5" path="res://Scenes/sound_manager.tscn" id="2_8gbba"]
 [ext_resource type="Script" uid="uid://bqyiqkgchrden" path="res://Scripts/Managers/UIManager/ui_tscn.gd" id="2_jjvhh"]
 [ext_resource type="Script" uid="uid://ycaj8j2jrhh6" path="res://Scripts/Managers/WorldManager/world_tscn.gd" id="3_8gbba"]
-[ext_resource type="Shader" uid="uid://cd43cg7qm7wtc" path="res://Scenes/screen.gdshader" id="3_jjvhh"]
+[ext_resource type="Shader" uid="uid://cd43cg7qm7wtc" path="res://Resources/Shaders/screen.gdshader" id="3_jjvhh"]
+[ext_resource type="Script" uid="uid://ywoe1s06uiim" path="res://Scripts/Managers/cursor.gd" id="4_kry3j"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8gbba"]
 shader = ExtResource("3_jjvhh")
@@ -28,6 +29,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="Cursor" type="TextureRect" parent="ShaderOverlay" unique_id=1358013322]
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+script = ExtResource("4_kry3j")
 
 [node name="World" type="Node" parent="." unique_id=72758377]
 script = ExtResource("3_8gbba")

@@ -13,4 +13,4 @@ func _on_play_pressed() -> void:
 
 
 func _on_settings_pressed() -> void:
-	UI.manager.switch_ui(UIManager.UI.SETTINGS, true)
+	UI.manager.switch_ui(UIManager.UI.SETTINGS)

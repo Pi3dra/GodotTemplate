@@ -61,6 +61,9 @@ func pop_world():
 
 
 func push_world(key: WorldManager.WORLDS):
+	for child in _root_node.get_children():
+		child.queue_free()
+		
 	var world_scene: PackedScene = _get_world(key)
 
 	_active_world = world_scene.instantiate()
@@ -70,3 +73,4 @@ func push_world(key: WorldManager.WORLDS):
 
 	world_created.emit(key)
 	_active_world.on_world_enter()
+	

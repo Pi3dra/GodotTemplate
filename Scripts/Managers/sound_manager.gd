@@ -2,6 +2,7 @@ class_name SoundManager
 extends Node
 
 #TODO ADVANCED adapt this for spatial sound
+#TODO Make settings load default bus config!
 
 static var instance: SoundManager
 
@@ -29,41 +30,51 @@ func _ready():
 #region LOADING SOUNDS
 
 func _load_resources():
-	var all_sounds: Array[SoundData] = []
-	all_sounds.append_array(_load_folder("res://Assets/Audio/Music", "Music"))
-	all_sounds.append_array(_load_folder("res://Assets/Audio/SFX", "SFX"))
+	sound_library.clear()
+	_active_counts.clear()
 
-	for sound in all_sounds:
-		sound_library[sound.name] = sound
-		_active_counts[sound.name] = 0
+	_load_folder("res://Assets/Audio/Music", "Music")
+	_load_folder("res://Assets/Audio/SFX", "SFX")
 
 
-func _load_folder(folder_name: String, bus: String) -> Array[SoundData]:
-	var dir = DirAccess.open(folder_name)
-	var sounds_data: Array[SoundData] = []
+func _load_folder(folder_name: String, bus: String):
+	var files := ResourceLoader.list_directory(folder_name)
 
-	if dir == null:
-		push_warning("Could not open folder: " + folder_name)
-		return sounds_data
+	if files.is_empty():
+		push_warning("No resources found in: " + folder_name)
+		return
 
-	for file_name in dir.get_files():
+	for file_name in files:
+		if file_name == "." or file_name == "..":
+			continue
+
+		# Ignore metadata
 		if file_name.ends_with(".import"):
 			continue
 
-		var stream = load(folder_name.path_join(file_name))
-		if stream == null:
+		# Only load audio files
+		var extension := file_name.get_extension().to_lower()
+		if extension not in ["ogg", "mp3", "wav"]:
 			continue
 
-		var data = SoundData.new()
+		var path := folder_name.path_join(file_name)
+
+		var stream := load(path)
+
+		if stream == null:
+			push_warning("Could not load audio resource: " + path)
+			continue
+
+		if not stream is AudioStream:
+			continue
+
+		var data := SoundData.new()
 		data.name = file_name.get_basename()
 		data.stream = stream
 		data.bus = bus
-		sounds_data.append(data)
 
-	for sub_folder in dir.get_directories():
-		sounds_data.append_array(_load_folder(folder_name.path_join(sub_folder), bus))
-
-	return sounds_data
+		sound_library[data.name] = data
+		_active_counts[data.name] = 0
 
 #endregion
 
@@ -92,7 +103,12 @@ func _on_player_finished(player: AudioStreamPlayer, sound_name: String):
 
 #endregion
 
-func play(sound_name: String, volume_db := 0.0, pitch := 1.0) -> AudioStreamPlayer:
+func play(
+	sound_name: String,
+	volume_db := 0.0,
+	pitch := 1.0,
+	loop := false
+) -> AudioStreamPlayer:
 	if not sound_library.has(sound_name):
 		push_warning("Sound not found: " + sound_name)
 		return null
@@ -101,34 +117,46 @@ func play(sound_name: String, volume_db := 0.0, pitch := 1.0) -> AudioStreamPlay
 
 	var max_poly = data.max_polyphony if "max_polyphony" in data and data.max_polyphony > 0 else default_max_polyphony
 	if _active_counts.get(sound_name, 0) >= max_poly:
-		return null # skip: too many of this sound already playing
+		return null
 
 	var player := _get_free_player()
+
 	if player.playing:
 		var previous_sound: String = player.get_meta("sound_name", "")
-		player.stop() # stealing an in-use player; stop it first (stop() doesn't emit 'finished')
+		player.stop()
+
 		if previous_sound != "":
-			_on_player_finished(player, previous_sound) # manually reconcile counts/active list
+			_on_player_finished(player, previous_sound)
 
 	player.stream = data.stream
-	player.bus = data.bus # bus assigned per-play now, since players are shared across sounds
+	player.bus = data.bus
 	player.volume_db = volume_db
 	player.pitch_scale = pitch
 	player.set_meta("sound_name", sound_name)
 
+	if player.stream is AudioStreamOggVorbis:
+		player.stream.loop = loop
+	elif player.stream is AudioStreamMP3:
+		player.stream.loop = loop
+	elif player.stream is AudioStreamWAV:
+		player.stream.loop_mode = AudioStreamWAV.LOOP_FORWARD if loop else AudioStreamWAV.LOOP_DISABLED
+		
 	if not active_players.has(player):
 		active_players.append(player)
+
 	_active_counts[sound_name] = _active_counts.get(sound_name, 0) + 1
 
-	# Disconnect any previous one-shot connection to avoid stacking callbacks
-	# on a reused pooled player.
 	if player.finished.is_connected(_on_player_finished):
 		player.finished.disconnect(_on_player_finished)
-	player.finished.connect(_on_player_finished.bind(player, sound_name), CONNECT_ONE_SHOT)
+
+	player.finished.connect(
+		_on_player_finished.bind(player, sound_name),
+		CONNECT_ONE_SHOT
+	)
 
 	player.play()
-	return player
 
+	return player
 
 func play_random_pitch(sound_name: String, min_pitch := 0.8, max_pitch := 1.2) -> AudioStreamPlayer:
 	return play(sound_name, 0.0, randf_range(min_pitch, max_pitch))
