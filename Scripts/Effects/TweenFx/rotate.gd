@@ -1,14 +1,14 @@
 extends Effect 
 class_name RotateEffect
 
-@export var degrees: float = 360.0   # how far to rotate
-@export var duration: float = 1.0
-@export var reset_after: bool = false # snap back to 0 when done
+@export var degrees: float   # how far to rotate
+@export var duration: float
+@export var reset_after: bool # snap back to 0 when done
 
 func _init(
-	p_duration: float = 0.3, 
-	p_degrees: float = 360.0,
-	reset : bool = false
+	p_duration: float, 
+	p_degrees: float,
+	reset : bool
 ) -> void:
 
 	duration = p_duration 

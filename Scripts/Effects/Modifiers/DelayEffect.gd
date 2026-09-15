@@ -11,11 +11,8 @@ func _init(p_duration: float) -> void:
 
 func execute(context: EffectContext) -> EffectHandle:
 	var handle := EffectHandle.new()
-
 	var tween := context.target.create_tween()
-
 	tween.tween_interval(duration)
-
 	tween.finished.connect(handle.complete)
 
 	return handle

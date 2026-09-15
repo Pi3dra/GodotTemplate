@@ -8,11 +8,12 @@ var shakes: int
 var axis : Vector2
 
 
+## axis: Vector2.RIGHT for horizontal only, Vector2.DOWN for vertical only, Vector2.ONE for both.
 func _init(
-	p_duration: float = 0.3, 
-	p_strength: float = 10.0,
-	p_shakes: int = 5, 
-	p_axis: Vector2 = Vector2.ONE
+	p_duration: float, 
+	p_strength: float,
+	p_shakes: int, 
+	p_axis: Vector2
 ) -> void:
 
 	duration = p_duration 
@@ -31,7 +32,6 @@ func execute(context: EffectContext) -> EffectHandle:
 	var original_pos: Vector2 = target.position
 	var tween := target.create_tween()
 	
-	## axis: Vector2.RIGHT for horizontal only, Vector2.DOWN for vertical only, Vector2.ONE for both.
 	for i in range(shakes):
 		var offset = Vector2(
 			randf_range(-strength, strength) * axis.x,

@@ -4,6 +4,7 @@ extends Effect
 
 var effect: Effect
 var times: int
+var _child_handle : EffectHandle
 
 
 func _init(
@@ -32,8 +33,9 @@ func _run(
 		return
 
 	var child_handle := effect.execute(context)
+	_child_handle = child_handle
 
-	child_handle.finished.connect(
+	child_handle.on_finished(
 		func():
 			_run(
 				context,
@@ -41,3 +43,4 @@ func _run(
 				count + 1
 			)
 	)
+	

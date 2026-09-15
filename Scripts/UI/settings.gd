@@ -31,7 +31,7 @@ func _ready():
 
 
 func _on_save_settings_pressed() -> void:
-	UI.manager.switch_ui(UIManager.UI.MAIN_MENU, false)
+	UI.manager.switch_ui(UIManager.UI.MAIN_MENU)
 
 #region AUDIO
 

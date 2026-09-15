@@ -1,6 +1,7 @@
 class_name EffectContext
 extends RefCounted
 
+# TODO Should adapt this so that effects can apply tween effects and behaviours 
 
 var target: Node
 var data: Dictionary = {}

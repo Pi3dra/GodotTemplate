@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://bny35w3sxwbqw"]
+
+[ext_resource type="Script" uid="uid://b37jbqwt4x78j" path="res://Scripts/Tools/dev_console.gd" id="1_3fwy6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sn43p"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lhwsi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3dpkw"]
+
+[sub_resource type="Theme" id="Theme_kwwpi"]
+LineEdit/styles/focus = SubResource("StyleBoxEmpty_sn43p")
+LineEdit/styles/normal = SubResource("StyleBoxEmpty_lhwsi")
+LineEdit/styles/read_only = SubResource("StyleBoxEmpty_3dpkw")
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=1876058542]
+script = ExtResource("1_3fwy6")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1309396301]
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.528
+offset_left = 3.0
+offset_right = -4.0
+offset_bottom = -0.11999512
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer" unique_id=702627575]
+layout_mode = 2
+color = Color(0.011764706, 0.011764706, 0.011764706, 0.46666667)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=2041142304]
+layout_mode = 2
+
+[node name="Console" type="RichTextLabel" parent="MarginContainer/VBoxContainer" unique_id=1023668844]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 250)
+layout_mode = 2
+focus_mode = 2
+bbcode_enabled = true
+scroll_following = true
+scroll_following_visible_characters = true
+selection_enabled = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=673702842]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="prompt" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=3821198]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(20, 30)
+custom_maximum_size = Vector2(-1, 30)
+clip_contents = false
+layout_mode = 2
+size_flags_horizontal = 0
+bbcode_enabled = true
+text = "[context] "
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+vertical_alignment = 1
+
+[node name="TextInput" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=188414007]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 30)
+custom_maximum_size = Vector2(-1, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_kwwpi")
+caret_blink = true
+
+[connection signal="text_submitted" from="MarginContainer/VBoxContainer/HBoxContainer/TextInput" to="." method="_on_text_input_text_submitted"]

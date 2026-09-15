@@ -10,9 +10,9 @@ var duration: float
 
 
 func _init(
-	p_strength := 0.2,
-	p_duration := 0.2,
-	p_behavior := Behavior.OUT
+	p_strength,
+	p_duration,
+	p_behavior
 ) -> void:
 
 	strength = p_strength

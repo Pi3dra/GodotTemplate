@@ -1,0 +1,407 @@
+[gd_scene format=3 uid="uid://cj3t5js1uawx3"]
+
+[ext_resource type="Script" uid="uid://di7dsgra8rvc2" path="res://Scripts/Effects/Test/test_fx.gd" id="1_2i6qy"]
+[ext_resource type="Texture2D" uid="uid://mtak4mb30gkn" path="res://Assets/Sprites/icon.svg" id="2_pvtp4"]
+
+[node name="TestFx" type="Control" unique_id=1353340298]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2i6qy")
+
+[node name="Punch" type="Button" parent="." unique_id=1791197266]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.021000002
+anchor_top = 0.041
+anchor_right = 0.177
+anchor_bottom = 0.098000005
+offset_left = -1.1600018
+offset_top = 74.86
+offset_right = -0.91999817
+offset_bottom = 75.08
+text = "Punch Out"
+
+[node name="PunchIn" type="Button" parent="." unique_id=300705844]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.021000002
+anchor_top = 0.041
+anchor_right = 0.177
+anchor_bottom = 0.098000005
+offset_left = 173.84
+offset_top = 74.86
+offset_right = 174.08
+offset_bottom = 75.08
+text = "Punch In"
+
+[node name="Color" type="Button" parent="." unique_id=624772415]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.021000002
+anchor_top = 0.041
+anchor_right = 0.177
+anchor_bottom = 0.098000005
+offset_left = -1.1600018
+offset_top = -5.1400013
+offset_right = -0.91999817
+offset_bottom = -4.920002
+text = "Color"
+
+[node name="Scale" type="Button" parent="." unique_id=752891099]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.021000002
+anchor_top = 0.041
+anchor_right = 0.177
+anchor_bottom = 0.098000005
+offset_left = 173.84
+offset_top = -5.1400013
+offset_right = 174.08
+offset_bottom = -4.920002
+text = "Scale"
+
+[node name="Move" type="Button" parent="." unique_id=905054948]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.021000002
+anchor_top = 0.041
+anchor_right = 0.177
+anchor_bottom = 0.098000005
+offset_left = 173.84
+offset_top = 32.86
+offset_right = 174.08
+offset_bottom = 33.079998
+text = "Move"
+
+[node name="Rotate" type="Button" parent="." unique_id=1074496004]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.021000002
+anchor_top = 0.041
+anchor_right = 0.177
+anchor_bottom = 0.098000005
+offset_left = -0.16000175
+offset_top = 32.86
+offset_right = 0.08000183
+offset_bottom = 33.079998
+text = "Rotate"
+
+[node name="FadeIn" type="Button" parent="." unique_id=1877295271]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.021000002
+anchor_top = 0.041
+anchor_right = 0.177
+anchor_bottom = 0.098000005
+offset_left = 173.84
+offset_top = 122.86
+offset_right = 174.08
+offset_bottom = 123.08
+text = "Fade_in"
+
+[node name="FadeOut" type="Button" parent="." unique_id=2072067378]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.021000002
+anchor_top = 0.041
+anchor_right = 0.177
+anchor_bottom = 0.098000005
+offset_left = -1.1600018
+offset_top = 122.86
+offset_right = -0.91999817
+offset_bottom = 123.08
+text = "Fade_out"
+
+[node name="Shake" type="Button" parent="." unique_id=296014699]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.021000002
+anchor_top = 0.041
+anchor_right = 0.177
+anchor_bottom = 0.098000005
+offset_left = -1.1600018
+offset_top = 169.86
+offset_right = -0.91999817
+offset_bottom = 170.08
+text = "Shake"
+
+[node name="Rainbow" type="Button" parent="." unique_id=1693263543]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.021000002
+anchor_top = 0.041
+anchor_right = 0.177
+anchor_bottom = 0.098000005
+offset_left = -1.1600018
+offset_top = 169.86
+offset_right = -0.91999817
+offset_bottom = 170.08
+text = "Shake"
+
+[node name="FlipV" type="Button" parent="." unique_id=110209376]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.021000002
+anchor_top = 0.041
+anchor_right = 0.177
+anchor_bottom = 0.098000005
+offset_left = 173.84
+offset_top = 215.86
+offset_right = 174.08
+offset_bottom = 216.08
+text = "Flip Vertical"
+
+[node name="FlipH" type="Button" parent="." unique_id=383050188]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.021000002
+anchor_top = 0.041
+anchor_right = 0.177
+anchor_bottom = 0.098000005
+offset_left = -1.1600018
+offset_top = 215.86
+offset_right = -0.91999817
+offset_bottom = 216.08
+text = "Flip Horizontal"
+
+[node name="Shader" type="Button" parent="." unique_id=1060631991]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.021000002
+anchor_top = 0.041
+anchor_right = 0.177
+anchor_bottom = 0.098000005
+offset_left = 0.83999825
+offset_top = 273.86
+offset_right = 1.0800018
+offset_bottom = 274.08
+text = "Apply Shaders"
+
+[node name="TextureRect" type="TextureRect" parent="Shader" unique_id=980307065]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 43.0
+offset_right = 142.0
+offset_bottom = 171.0
+texture = ExtResource("2_pvtp4")
+
+[node name="Complex" type="Button" parent="." unique_id=581409521]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.021000002
+anchor_top = 0.041
+anchor_right = 0.17500001
+anchor_bottom = 0.086
+offset_left = 593.84
+offset_top = 324.86
+offset_right = 596.0
+offset_bottom = 331.56
+text = "Complex fx"
+
+[node name="TextureRect" type="TextureRect" parent="Complex" unique_id=1114095448]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.947
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 43.0
+offset_right = -0.05000305
+offset_bottom = 140.0
+texture = ExtResource("2_pvtp4")
+
+[node name="Spawn" type="Button" parent="." unique_id=875909253]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.021000002
+anchor_top = 0.041
+anchor_right = 0.177
+anchor_bottom = 0.098000005
+offset_left = 174.84
+offset_top = 271.86
+offset_right = 175.08
+offset_bottom = 272.08
+text = "Spawn Fx"
+
+[node name="Text" type="Button" parent="." unique_id=931255315]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.021000002
+anchor_top = 0.041
+anchor_right = 0.177
+anchor_bottom = 0.098000005
+offset_left = 174.84
+offset_top = 318.86
+offset_right = 175.08
+offset_bottom = 319.08
+text = "Spawn Text "
+
+[node name="Sound" type="Button" parent="." unique_id=493356121]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.021000002
+anchor_top = 0.041
+anchor_right = 0.177
+anchor_bottom = 0.098000005
+offset_left = 277.84
+offset_top = 397.86
+offset_right = 278.08002
+offset_bottom = 398.08
+text = "Make Sound"
+
+[node name="FadeSound" type="Button" parent="." unique_id=1673986482]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.021000002
+anchor_top = 0.041
+anchor_right = 0.177
+anchor_bottom = 0.098000005
+offset_left = 277.84
+offset_top = 437.86
+offset_right = 278.08002
+offset_bottom = 438.08
+text = "Fade Sound"
+
+[node name="PitchSound" type="Button" parent="." unique_id=1231974055]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.021000002
+anchor_top = 0.041
+anchor_right = 0.177
+anchor_bottom = 0.098000005
+offset_left = 277.84
+offset_top = 477.86
+offset_right = 278.08002
+offset_bottom = 478.08
+text = "Pitch Sound"
+
+[node name="Sequence" type="Button" parent="." unique_id=815563876]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.021000002
+anchor_top = 0.041
+anchor_right = 0.177
+anchor_bottom = 0.098000005
+offset_left = 468.84
+offset_top = -0.1400013
+offset_right = 469.08002
+offset_bottom = 0.07999802
+text = "Sequence"
+
+[node name="Parallel" type="Button" parent="." unique_id=60831167]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.021000002
+anchor_top = 0.041
+anchor_right = 0.177
+anchor_bottom = 0.098000005
+offset_left = 468.84
+offset_top = 47.86
+offset_right = 469.08002
+offset_bottom = 48.079998
+text = "Parallel"
+
+[node name="Repeat" type="Button" parent="." unique_id=345890639]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.021000002
+anchor_top = 0.041
+anchor_right = 0.177
+anchor_bottom = 0.098000005
+offset_left = 468.84
+offset_top = 94.86
+offset_right = 469.08002
+offset_bottom = 95.08
+text = "Repeat"
+
+[node name="Compositon" type="Button" parent="." unique_id=2026361850]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.021000002
+anchor_top = 0.041
+anchor_right = 0.177
+anchor_bottom = 0.098000005
+offset_left = 648.84
+offset_top = 47.86
+offset_right = 649.08
+offset_bottom = 48.079998
+text = "Both"
+
+[node name="All" type="Button" parent="." unique_id=1396884654]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.021000002
+anchor_top = 0.041
+anchor_right = 0.177
+anchor_bottom = 0.098000005
+offset_left = 648.84
+offset_top = 94.86
+offset_right = 649.08
+offset_bottom = 95.08
+text = "All"
+
+[node name="Label" type="Label" parent="." unique_id=495500881]
+layout_mode = 0
+offset_left = 489.0
+offset_top = 163.0
+offset_right = 892.0
+offset_bottom = 342.0
+text = "There are a few modifiers
+- Parallel: runs effects in parallel
+- Sequence: runs a sequence of effects
+- Repeat: repeats an effect N times
+- Delay : waits a given time, in seconds
+
+All of these are composable to build complex effects"
+
+[connection signal="pressed" from="Punch" to="." method="_on_punch_pressed"]
+[connection signal="pressed" from="PunchIn" to="." method="_on_punch_in_pressed"]
+[connection signal="pressed" from="Color" to="." method="_on_color_pressed"]
+[connection signal="pressed" from="Scale" to="." method="_on_scale_pressed"]
+[connection signal="pressed" from="Move" to="." method="_on_move_pressed"]
+[connection signal="pressed" from="Rotate" to="." method="_on_rotate_pressed"]
+[connection signal="pressed" from="FadeIn" to="." method="_on_fade_in_pressed"]
+[connection signal="pressed" from="FadeOut" to="." method="_on_fade_out_pressed"]
+[connection signal="pressed" from="Shake" to="." method="_on_shake_pressed"]
+[connection signal="pressed" from="Rainbow" to="." method="_on_rainbow_pressed"]
+[connection signal="pressed" from="FlipV" to="." method="_on_flip_v_pressed"]
+[connection signal="pressed" from="FlipH" to="." method="_on_flip_h_pressed"]
+[connection signal="pressed" from="Shader" to="." method="_on_shader_pressed"]
+[connection signal="pressed" from="Complex" to="." method="_on_complex_pressed"]
+[connection signal="pressed" from="Spawn" to="." method="_on_spawn_pressed"]
+[connection signal="pressed" from="Text" to="." method="_on_text_pressed"]
+[connection signal="pressed" from="Sound" to="." method="_on_sound_pressed"]
+[connection signal="pressed" from="FadeSound" to="." method="_on_fade_sound_pressed"]
+[connection signal="pressed" from="PitchSound" to="." method="_on_pitch_sound_pressed"]
+[connection signal="pressed" from="Sequence" to="." method="_on_sequence_pressed"]
+[connection signal="pressed" from="Parallel" to="." method="_on_parallel_pressed"]
+[connection signal="pressed" from="Repeat" to="." method="_on_repeat_pressed"]
+[connection signal="pressed" from="Compositon" to="." method="_on_compositon_pressed"]
+[connection signal="pressed" from="All" to="." method="_on_all_pressed"]

@@ -9,4 +9,4 @@ func _ready() -> void:
 	var root_node = $"."
 	manager = WorldManager.new(root_node)
 
-	SoundManager.instance.play("Crash-Landing")
+	SoundManager.play("Crash-Landing")

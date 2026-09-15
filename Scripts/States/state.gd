@@ -1,4 +1,5 @@
 extends Resource
+
 class_name player_state
 # This is a collection of local observable and non observable values
 # when a certain scene its instantiated it can create its own state which it can share with any interface

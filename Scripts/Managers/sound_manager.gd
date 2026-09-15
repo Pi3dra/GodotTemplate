@@ -1,10 +1,9 @@
-class_name SoundManager
 extends Node
 
 #TODO ADVANCED adapt this for spatial sound
 #TODO Make settings load default bus config!
+#TODO Make it easy to add effects like fading in, fading out, ducking
 
-static var instance: SoundManager
 
 @export var total_pool_size: int = 16 # total concurrent voices, shared across all sounds
 @export var default_max_polyphony: int = 8 # hard cap per sound unless SoundData overrides it
@@ -18,12 +17,6 @@ var _paused: bool = false
 
 
 func _ready():
-	if instance != null:
-		push_warning("Multiple SoundManager instances detected, freeing duplicate.")
-		queue_free()
-		return
-	instance = self
-
 	_load_resources()
 	_build_pool()
 
@@ -104,10 +97,10 @@ func _on_player_finished(player: AudioStreamPlayer, sound_name: String):
 #endregion
 
 func play(
-	sound_name: String,
-	volume_db := 0.0,
-	pitch := 1.0,
-	loop := false
+		sound_name: String,
+		volume_db := 0.0,
+		pitch := 1.0,
+		loop := false,
 ) -> AudioStreamPlayer:
 	if not sound_library.has(sound_name):
 		push_warning("Sound not found: " + sound_name)
@@ -140,7 +133,7 @@ func play(
 		player.stream.loop = loop
 	elif player.stream is AudioStreamWAV:
 		player.stream.loop_mode = AudioStreamWAV.LOOP_FORWARD if loop else AudioStreamWAV.LOOP_DISABLED
-		
+
 	if not active_players.has(player):
 		active_players.append(player)
 
@@ -151,12 +144,13 @@ func play(
 
 	player.finished.connect(
 		_on_player_finished.bind(player, sound_name),
-		CONNECT_ONE_SHOT
+		CONNECT_ONE_SHOT,
 	)
 
 	player.play()
 
 	return player
+
 
 func play_random_pitch(sound_name: String, min_pitch := 0.8, max_pitch := 1.2) -> AudioStreamPlayer:
 	return play(sound_name, 0.0, randf_range(min_pitch, max_pitch))

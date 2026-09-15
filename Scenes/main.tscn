@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://155xx7s6y6ta"]
 
-[ext_resource type="PackedScene" uid="uid://budxutoolfgg5" path="res://Scenes/sound_manager.tscn" id="2_8gbba"]
+[ext_resource type="PackedScene" uid="uid://budxutoolfgg5" path="res://Scenes/Tools/sound_manager.tscn" id="2_8gbba"]
 [ext_resource type="Script" uid="uid://bqyiqkgchrden" path="res://Scripts/Managers/UIManager/ui_tscn.gd" id="2_jjvhh"]
 [ext_resource type="Script" uid="uid://ycaj8j2jrhh6" path="res://Scripts/Managers/WorldManager/world_tscn.gd" id="3_8gbba"]
 [ext_resource type="Shader" uid="uid://cd43cg7qm7wtc" path="res://Resources/Shaders/screen.gdshader" id="3_jjvhh"]

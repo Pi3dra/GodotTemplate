@@ -3,9 +3,9 @@ class_name FlipEffect
 
 enum Orientation { HORIZONTAL, VERTICAL }
 
-@export var orientation: FlipEffect.Orientation = Orientation.HORIZONTAL
-@export var duration: float = 0.6
-@export var mirror: bool = false  # true = end flipped (-1), false = end normal (1)
+@export var orientation: FlipEffect.Orientation 
+@export var duration: float 
+@export var mirror: bool  # true = end flipped (-1), false = end normal (1)
 
 func _init(p_orientation : FlipEffect.Orientation, p_duration, p_mirror):
 	orientation = p_orientation

@@ -3,17 +3,19 @@ extends RefCounted
 
 
 signal finished
-
-var _is_finished := false
+var is_finished := false
 
 
 func complete() -> void:
-	if _is_finished:
+	if is_finished:
 		return
 
-	_is_finished = true
+	is_finished = true
 	finished.emit()
 
 
-func is_finished() -> bool:
-	return _is_finished
+func on_finished(callback: Callable) -> void:
+	if is_finished:
+		callback.call()
+	else:
+		finished.connect(callback, CONNECT_ONE_SHOT)
