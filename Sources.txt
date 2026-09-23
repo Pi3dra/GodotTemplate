@@ -17,3 +17,12 @@ Some considerable telemetry options:
 	https://trytalo.com/pricing
 	https://www.gameanalytics.com/pricing
 	https://github.com/godot-mobile-plugins/godot-firebase
+
+
+A must have plugin for easily and quickly translating the game:
+
+https://godotengine.org/asset-library/asset/284
+
+
+A seemingly nice plugin manager, nice to dev in team without having to commit all plugin files:
+https://github.com/imjp94/gd-plug
