@@ -28,4 +28,4 @@ A seemingly nice plugin manager, nice to dev in team without having to commit al
 https://github.com/imjp94/gd-plug 
 
 A must have to track TODOs in your code: 
-https://github.com/ProgrammerOnCoffee/GDTask
+https://godotengine.org/asset-library/asset/1327
