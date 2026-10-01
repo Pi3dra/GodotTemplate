@@ -18,7 +18,7 @@ config/name="Template"
 run/main_scene="uid://155xx7s6y6ta"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 boot_splash/image="uid://cttmer8rfy4yu"
-config/icon="res://Assets/Sprites/icon.svg"
+config/icon="res://Assets/Sprites/Images/icon.svg"
 boot_splash/minimum_display_time=10
 
 [audio]
@@ -32,6 +32,7 @@ Settings="*uid://c3lbi66x35v83"
 FontSize="*uid://ch5b0fhbgpcuf"
 Events="*uid://wnd2bu06w5bk"
 SoundManager="*uid://budxutoolfgg5"
+EffectManager="*uid://cj513wjul3mcx"
 DevConsole="*uid://bny35w3sxwbqw"
 
 [display]

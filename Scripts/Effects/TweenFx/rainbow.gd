@@ -10,7 +10,7 @@ func _init(
 		p_duration,
 		p_saturation,
 		p_value,
-)-> void:
+) -> void:
 	duration = p_duration
 	saturation = p_saturation
 	value = p_value
@@ -24,7 +24,6 @@ func execute(context: EffectContext) -> EffectHandle:
 		handle.complete()
 		return handle
 
-AudioBusLayout
 	var tween := target.create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT)
 	tween.set_trans(Tween.TRANS_SINE)

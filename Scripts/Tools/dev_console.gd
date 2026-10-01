@@ -9,22 +9,20 @@ extends CanvasLayer
 # - find and tree inspection
 # - basic function chaining stuff like && | etc (don't know if chaining is easily possible)
 
-
 ## FEATURES
 ## History with arrow keys
 ## Simple autocomplete with tab
 ## Customization
 ## Helpful commands to navigate through your nodes/code
-## 
+##
 ## Uses expressions so many gdscript expressions are supported
 ## You don't need to export every function you want to be able to use from the console
 ## to expose functions you just pass along the node with add_context, and the dev console will
 ## handle exposing functions, variables and signals.
-## 
+##
 ## Contexts are here to make it easier to navigate through your nodes and commands
 ## you can list contexts with 'ls c' and access them with 'cd mycontext', you can then call 'ls'
 ## again to see al available functions, variables and signals
-
 
 # --- Inspector-facing (must stay public) ---
 @export var prompt_symbol: String = "~ "

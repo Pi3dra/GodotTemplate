@@ -1,18 +1,18 @@
 class_name RepeatEffect
 extends Effect
 
-
 var effect: Effect
 var times: int
-var _child_handle : EffectHandle
+var _child_handle: EffectHandle
 
 
 func _init(
-	p_effect: Effect,
-	p_times: int
+		p_effect: Effect,
+		p_times: int,
 ) -> void:
 	effect = p_effect
 	times = p_times
+
 
 func execute(context: EffectContext) -> EffectHandle:
 	var handle := EffectHandle.new()
@@ -23,11 +23,10 @@ func execute(context: EffectContext) -> EffectHandle:
 
 
 func _run(
-	context: EffectContext,
-	handle: EffectHandle,
-	count: int
+		context: EffectContext,
+		handle: EffectHandle,
+		count: int,
 ) -> void:
-
 	if count >= times:
 		handle.complete()
 		return
@@ -40,7 +39,6 @@ func _run(
 			_run(
 				context,
 				handle,
-				count + 1
+				count + 1,
 			)
 	)
-	

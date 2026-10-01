@@ -25,19 +25,19 @@ func execute(context: EffectContext) -> EffectHandle:
 	var start_color := target.modulate
 
 	tween.tween_method(
-	func(t: float):
-		var rgb := start_color.lerp(target_color, t)
+		func(t: float):
+			var rgb := start_color.lerp(target_color, t)
 
-		target.modulate = Color(
-			rgb.r,
-			rgb.g,
-			rgb.b,
-			target.modulate.a # ← preserve whatever alpha currently is
-		),
-	0.0,
-	1.0,
-	duration * 0.5
-)
+			target.modulate = Color(
+				rgb.r,
+				rgb.g,
+				rgb.b,
+				target.modulate.a, # ← preserve whatever alpha currently is
+			),
+		0.0,
+		1.0,
+		duration * 0.5,
+	)
 	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 
 	tween.finished.connect(handle.complete)

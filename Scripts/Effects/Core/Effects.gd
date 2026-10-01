@@ -1,11 +1,83 @@
 class_name Effect
 extends RefCounted
 
-func execute(_context: EffectContext) -> EffectHandle:
-	push_error("Effect.execute() must be implemented")
+
+#region API
+
+signal finished          # normal completion only
+signal ended(effect: Effect)  # finished or cancelled, used by the manager
+
+var target: Node
+var done := false
+var was_cancelled := false
+var _tween: Tween
+
+#TO OVERRIDE
+
+func get_effect_name() -> StringName:
+	var script: Script = get_script()
+	var n := script.get_global_name()
+	# fallback for scripts without class_name
+	return n if n != &"" else StringName(script.resource_path) 
+
+#TO OVERRIDE
+func _start() -> Tween:
 	return null
 
-#region modifiers
+
+func play(p_target: Node, name: StringName = &"") -> Effect:
+	assert(target == null, "Effects are single-use: create a new one per play.")
+	center_pivot(p_target)
+	target = p_target
+	EffectManager.play(self, name)
+	return self
+
+
+## Chainable. Runs cb on normal completion, immediately if already finished.
+func on_finished(cb: Callable) -> Effect:
+	if done:
+		if not was_cancelled:
+			cb.call()
+	else:
+		finished.connect(cb, CONNECT_ONE_SHOT)
+	return self
+
+
+func begin() -> void:
+	_tween = _start()
+	if _tween == null:
+		_finish()
+	else:
+		_tween.finished.connect(_finish)
+
+
+func _finish() -> void:
+	if done:
+		return
+	done = true
+	_tween = null
+	finished.emit()
+	ended.emit(self)
+	_clear_connections()
+
+
+func cancel() -> void:
+	if done:
+		return
+	done = true
+	was_cancelled = true
+	if _tween and _tween.is_valid():
+		_tween.kill()
+	_tween = null
+	ended.emit(self)
+	_clear_connections() # drops pending on_finished callbacks, so they never fire
+
+
+func _clear_connections() -> void:
+	for sig in [finished, ended]:
+		for c in sig.get_connections():
+			sig.disconnect(c.callable)
+			
 
 func then(effect: Effect) -> Effect:
 	return SequenceEffect.new(
@@ -27,12 +99,6 @@ func with(effect: Effect) -> Effect:
 
 func repeat(times: int) -> Effect:
 	return RepeatEffect.new(self, times)
-
-
-func play(target: Node) -> EffectHandle:
-	center_pivot(target)
-	var context := EffectContext.new(target)
-	return execute(context)
 
 
 static func center_pivot(target) -> void:
@@ -116,8 +182,10 @@ static func spawn_text(
 ):
 	return TextParticle.new(text, duration, strength, effects, position)
 
+
 static func rainbow(duration: float = 3.0, saturation: float = 1.0, value: float = 1.0):
 	return RainbowEffect.new(duration, saturation, value)
+
 
 static func scale(target_scale: Vector2 = Vector2(1.5, 1.5), duration = 1.):
 	return ScaleEffect.new(target_scale, duration)
@@ -130,17 +198,22 @@ static func color(target_color: Color = Color.RED, duration = 1.):
 static func move(target_pos: Vector2, duration: float = 1., add: bool = true):
 	return MoveEffect.new(target_pos, duration, add)
 
-static func play_sound(sound_name: String,
+
+static func play_sound(
+		sound_name: String,
 		duration := 1.,
 		volume_db := 0.0,
 		pitch := 1.0,
-		loop := false):
-	return SoundEffect.new(sound_name, volume_db, pitch, loop,duration)
+		loop := false,
+):
+	return SoundEffect.new(sound_name, volume_db, pitch, loop, duration)
+
 
 static func fade_sound(target_db := 0, duration := 15):
 	return FadeSoundEffect.new(target_db, duration)
 
+
 static func pitch_sound(target_pitch_scale := 1., duration := 15):
 	return PitchSoundEffect.new(target_pitch_scale, duration)
-	
+
 #endregion

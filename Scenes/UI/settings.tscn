@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://crb7lkmq7wr6"]
 
-[ext_resource type="Script" uid="uid://jjj4ol5ydkai" path="res://Scripts/UI/settings.gd" id="1_owiy1"]
+[ext_resource type="Script" uid="uid://jjj4ol5ydkai" path="res://Scripts/UI/settings_ui.gd" id="1_owiy1"]
 [ext_resource type="Theme" uid="uid://ctxx0tdux0vvj" path="res://Assets/Themes/default_theme.tres" id="2_ma1v7"]
 
 [node name="Settings" type="Control" unique_id=649186109]
@@ -193,22 +193,22 @@ layout_mode = 2
 text = "SP
 "
 
-[node name="Languages2" type="HBoxContainer" parent="Controllers" unique_id=1785939331]
+[node name="KeyBinds" type="HBoxContainer" parent="Controllers" unique_id=1785939331]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 accessibility_region = true
 alignment = 1
 
-[node name="Inputs" type="GridContainer" parent="Controllers/Languages2" unique_id=573062001]
+[node name="Inputs" type="GridContainer" parent="Controllers/KeyBinds" unique_id=573062001]
 custom_minimum_size = Vector2(115, 0)
 layout_mode = 2
 columns = 2
 
-[node name="Label" type="Label" parent="Controllers/Languages2/Inputs" unique_id=1810102488]
+[node name="Label" type="Label" parent="Controllers/KeyBinds/Inputs" unique_id=1810102488]
 layout_mode = 2
 text = "Move Up	"
 
-[node name="MoveUp" type="Button" parent="Controllers/Languages2/Inputs" unique_id=573359119]
+[node name="MoveUp" type="Button" parent="Controllers/KeyBinds/Inputs" unique_id=573359119]
 custom_minimum_size = Vector2(115, 20)
 custom_maximum_size = Vector2(115, 32)
 layout_mode = 2
@@ -216,36 +216,40 @@ text = "A"
 icon_alignment = 1
 expand_icon = true
 
-[node name="Label2" type="Label" parent="Controllers/Languages2/Inputs" unique_id=874231036]
+[node name="Label2" type="Label" parent="Controllers/KeyBinds/Inputs" unique_id=874231036]
 layout_mode = 2
 text = "Move Down"
 
-[node name="MoveDown" type="Button" parent="Controllers/Languages2/Inputs" unique_id=303126903]
+[node name="MoveDown" type="Button" parent="Controllers/KeyBinds/Inputs" unique_id=303126903]
 custom_minimum_size = Vector2(115, 20)
 custom_maximum_size = Vector2(115, 32)
 layout_mode = 2
 text = "A"
 
-[node name="Label3" type="Label" parent="Controllers/Languages2/Inputs" unique_id=266350939]
+[node name="Label3" type="Label" parent="Controllers/KeyBinds/Inputs" unique_id=266350939]
 layout_mode = 2
 text = "Move Left"
 
-[node name="MoveLeft" type="Button" parent="Controllers/Languages2/Inputs" unique_id=1420780404]
+[node name="MoveLeft" type="Button" parent="Controllers/KeyBinds/Inputs" unique_id=1420780404]
 custom_minimum_size = Vector2(115, 20)
 custom_maximum_size = Vector2(115, 32)
 layout_mode = 2
 text = "A"
 
-[node name="Label4" type="Label" parent="Controllers/Languages2/Inputs" unique_id=32415668]
+[node name="Label4" type="Label" parent="Controllers/KeyBinds/Inputs" unique_id=32415668]
 layout_mode = 2
 text = "Move Right
 "
 
-[node name="MoveRight" type="Button" parent="Controllers/Languages2/Inputs" unique_id=445957389]
+[node name="MoveRight" type="Button" parent="Controllers/KeyBinds/Inputs" unique_id=445957389]
 custom_minimum_size = Vector2(115, 20)
 custom_maximum_size = Vector2(115, 32)
 layout_mode = 2
 text = "A"
+
+[node name="CollisionLabel" type="Label" parent="Controllers" unique_id=1368962292]
+layout_mode = 2
+horizontal_alignment = 1
 
 [node name="Save Settings" type="Button" parent="." unique_id=1997635669]
 layout_mode = 0
@@ -254,6 +258,15 @@ offset_top = 466.0
 offset_right = 899.0
 offset_bottom = 497.0
 text = "SAVE"
+
+[node name="Reset to default" type="Button" parent="." unique_id=261740564]
+layout_mode = 0
+offset_left = 515.0
+offset_top = 379.0
+offset_right = 899.0
+offset_bottom = 410.0
+text = "Reset to default
+"
 
 [connection signal="value_changed" from="Sliders/Audio/MasterSlider" to="." method="_on_master_slider_value_changed"]
 [connection signal="value_changed" from="Sliders/Audio/MusicSlider" to="." method="_on_music_slider_value_changed"]
@@ -268,3 +281,4 @@ text = "SAVE"
 [connection signal="pressed" from="Controllers/Languages/FR" to="." method="_on_fr_pressed"]
 [connection signal="pressed" from="Controllers/Languages/SP" to="." method="_on_sp_pressed"]
 [connection signal="pressed" from="Save Settings" to="." method="_on_save_settings_pressed"]
+[connection signal="pressed" from="Reset to default" to="." method="_on_reset_to_default_pressed"]

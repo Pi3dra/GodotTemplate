@@ -3,7 +3,6 @@ extends Node
 
 class_name WorldManager
 
-##TODO: Documents this
 
 ## This is where the user should add their UIs mapped to their corresponding UID
 enum WORLDS { MAIN_WORLD }
@@ -63,7 +62,7 @@ func pop_world():
 func push_world(key: WorldManager.WORLDS):
 	for child in _root_node.get_children():
 		child.queue_free()
-		
+
 	var world_scene: PackedScene = _get_world(key)
 
 	_active_world = world_scene.instantiate()
@@ -72,5 +71,3 @@ func push_world(key: WorldManager.WORLDS):
 	_root_node.add_child(_active_world)
 
 	world_created.emit(key)
-	_active_world.on_world_enter()
-	

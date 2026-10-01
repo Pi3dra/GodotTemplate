@@ -1,7 +1,6 @@
 class_name ParallelEffect
 extends Effect
 
-
 var effects: Array[Effect]
 var _child_handles: Array[EffectHandle] = []
 
@@ -17,7 +16,7 @@ func execute(context: EffectContext) -> EffectHandle:
 		handle.complete()
 		return handle
 
-	var remaining := [effects.size()]  # single-element array = shared mutable box
+	var remaining := [effects.size()] # single-element array = shared mutable box
 	_child_handles.clear()
 
 	for effect in effects:

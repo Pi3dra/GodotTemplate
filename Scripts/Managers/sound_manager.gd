@@ -4,7 +4,6 @@ extends Node
 #TODO Make settings load default bus config!
 #TODO Make it easy to add effects like fading in, fading out, ducking
 
-
 @export var total_pool_size: int = 16 # total concurrent voices, shared across all sounds
 @export var default_max_polyphony: int = 8 # hard cap per sound unless SoundData overrides it
 

@@ -93,21 +93,27 @@ func _on_sound_pressed() -> void:
 	var effect = Effect.play_sound("UIPress")
 	effect.play($Sound)
 
+
 #TODO for spawning effects do it in a specific layer, tracked by the manager
 func _on_complex_pressed() -> void:
-	var center_pos = ($Complex/TextureRect.size)/2
-	var effect = ParallelEffect.new([
-		Effect.shake(),
-		Effect.spawn_text("[color=red]-10[/color]",1.0,1.0,null,center_pos),
-		Effect.spawn_animation("res://Scripts/Effects/Test/Impact.tres","default", -1,center_pos),
-		Effect.play_sound("RevolverShot",0.9)
-	])
-	var fade = ParallelEffect.new([
-		Effect.color(Color.RED,0.5),
-		Effect.fade(0.3, true)
-	])
-	
+	var center_pos = ($Complex/TextureRect.size) / 2
+	var effect = ParallelEffect.new(
+		[
+			Effect.shake(),
+			Effect.spawn_text("[color=red]-10[/color]", 1.0, 1.0, null, center_pos),
+			Effect.spawn_animation("res://Scripts/Effects/Test/Impact.tres", "default", -1, center_pos),
+			Effect.play_sound("RevolverShot", 0.9),
+		],
+	)
+	var fade = ParallelEffect.new(
+		[
+			Effect.color(Color.RED, 0.5),
+			Effect.fade(0.3, true),
+		],
+	)
+
 	effect.then(fade).play($Complex/TextureRect)
+
 
 func _on_fade_sound_pressed() -> void:
 	var player = SoundManager.play("Crash-Landing", -50)
@@ -123,4 +129,3 @@ func _on_pitch_sound_pressed() -> void:
 
 func _on_rainbow_pressed() -> void:
 	Effect.rainbow().play($Rainbow)
-	

@@ -1,5 +1,5 @@
 class_name ObservableDictionnary
-extends RefCounted
+extends Resource
 
 signal field_changed(old_value, new_value, key, behavior)
 signal reset(items: Array)

@@ -2,7 +2,6 @@ extends Effect
 
 class_name PitchSoundEffect
 
-
 var target_pitch_scale
 var duration
 
@@ -14,8 +13,9 @@ func _init(
 	target_pitch_scale = pitch
 	duration = p_duration
 
+
 func execute(context: EffectContext) -> EffectHandle:
-	var target := context.target 
+	var target := context.target
 	var handle := EffectHandle.new()
 
 	if target == null:

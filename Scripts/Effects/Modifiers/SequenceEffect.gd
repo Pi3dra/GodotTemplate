@@ -1,9 +1,8 @@
 class_name SequenceEffect
 extends Effect
 
-
 var effects: Array[Effect]
-var _current_handle: EffectHandle  # keeps it alive, this is ref counted so it needs to keep a ref
+var _current_handle: EffectHandle # keeps it alive, this is ref counted so it needs to keep a ref
 
 
 func _init(p_effects: Array[Effect]) -> void:
@@ -17,9 +16,9 @@ func execute(context: EffectContext) -> EffectHandle:
 
 
 func _run_next(
-	context: EffectContext,
-	handle: EffectHandle,
-	index: int
+		context: EffectContext,
+		handle: EffectHandle,
+		index: int,
 ) -> void:
 	if index >= effects.size():
 		handle.complete()

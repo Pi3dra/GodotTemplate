@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cj3t5js1uawx3"]
 
 [ext_resource type="Script" uid="uid://di7dsgra8rvc2" path="res://Scripts/Effects/Test/test_fx.gd" id="1_2i6qy"]
-[ext_resource type="Texture2D" uid="uid://mtak4mb30gkn" path="res://Assets/Sprites/icon.svg" id="2_pvtp4"]
+[ext_resource type="Texture2D" uid="uid://mtak4mb30gkn" path="res://Assets/Sprites/Images/icon.svg" id="2_pvtp4"]
 
 [node name="TestFx" type="Control" unique_id=1353340298]
 layout_mode = 3

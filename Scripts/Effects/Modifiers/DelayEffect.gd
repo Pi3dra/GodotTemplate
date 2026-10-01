@@ -1,7 +1,6 @@
 class_name DelayEffect
 extends Effect
 
-
 var duration: float
 
 

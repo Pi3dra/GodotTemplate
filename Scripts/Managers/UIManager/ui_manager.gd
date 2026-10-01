@@ -6,14 +6,13 @@ class_name UIManager
 ##
 ##
 ## 1. Create new [b]UI[/b] tscn, extending the [Interface] class (interface.gd) [br]
-## 2. Add a new entry in the [enum UIManager.UI] enum 
+## 2. Add a new entry in the [enum UIManager.UI] enum
 ##    and [member UIManager.UI_PATHS] dictionary in (ui_manager.gd)[br]
 ## 4. You can override different [b]callbacks[/b] shown in (interface.gd)[br]
-## 5. You can finally show any UI with: 
+## 5. You can finally show any UI with:
 ##    [code]UI.manager.invoke_ui(UI.manager.UI.MAIN_MENU)[/code][br]
 
-
-# TODO add connect and disconnect functions, so that game scenes can connect special 
+# TODO add connect and disconnect functions, so that game scenes can connect special
 # signals to the ui
 #
 # TODO add connection to observable states and keep a mapping,
@@ -24,19 +23,18 @@ class_name UIManager
 # automatically connect to it and its observables, as well as access them easily with
 # something like state.varname
 #
-# 
+#
 #
 
-
 ## This is where the user should add their UIs mapped to their corresponding UID
-enum UI {NONE, MAIN_MENU, SETTINGS }
+enum UI { NONE, MAIN_MENU, SETTINGS }
 const UI_PATHS = {
 	UI.MAIN_MENU: "uid://i8c14jrjxiq8",
 	UI.SETTINGS: "uid://crb7lkmq7wr6",
 }
 
 var instance: UIManager
-var active_interfaces: Dictionary[UIManager.UI, Interface] = {}
+var active_interfaces: Dictionary[UIManager.UI, Interface] = { }
 
 # The UI navigation stack.
 # Last element = currently active/top UI.
@@ -45,7 +43,6 @@ var ui_stack: Array[UIManager.UI] = []
 var root_node: CanvasLayer
 
 enum DisplayMode { ON_TOP, HIDE, REMOVE }
-
 
 signal interface_shown(key: UI)
 signal interface_hidden(key: UI)
@@ -72,7 +69,6 @@ func invoke_ui(key: UIManager.UI):
 	var interface: Interface = interface_path.instantiate()
 	interface.key = key
 
-	interface.on_interface_created()
 	interface_created.emit(key)
 
 	active_interfaces[key] = interface
@@ -92,8 +88,8 @@ func invoke_ui(key: UIManager.UI):
 ##     Current UI is removed, and the new UI is put on top.
 ##     When the new UI is removed, the previous UI comes back.
 func switch_ui(
-	key: UIManager.UI,
-	display_mode: DisplayMode = DisplayMode.ON_TOP
+		key: UIManager.UI,
+		display_mode: DisplayMode = DisplayMode.ON_TOP,
 ):
 	var current := get_top_ui()
 
@@ -101,12 +97,10 @@ func switch_ui(
 		DisplayMode.ON_TOP:
 			if current != key:
 				ui_stack.append(key)
-
 		DisplayMode.HIDE:
 			if current != UI.NONE and current != key:
 				hide_all()
 				ui_stack.append(key)
-
 		DisplayMode.REMOVE:
 			if current != UI.NONE and current != key:
 				remove_all()
@@ -256,44 +250,43 @@ func _show_previous_ui():
 
 	if active_interfaces.has(previous):
 		show(previous)
-		
-		
+
 #region STATE CONNECTIONS
 
 # this is what allows the ui to connect to a given game state
 
-
 func connect_observables(state: Resource, ui_key: UIManager.UI) -> void:
 	var observables = get_all_observables(state)
 	var ui_instance = get_ui_instance(ui_key)
-	
+
 	for observable_entry in observables:
 		var observable = observable_entry["observable"]
 		var observable_name = observable_entry["field_name"]
-		
+
 		if observable is Observable:
 			var bound = ui_instance.on_observable_changed.bind(observable_name)
 			observable.changed.connect(bound)
-			
+
 		if observable is ObservableArray:
 			var bound = ui_instance.on_field_changed_array.bind(observable_name)
 			var bound1 = ui_instance.on_reset_array.bind(observable_name)
 			observable.field_changed.connect(bound)
 			observable.reset.connect(bound1)
-			
+
 		if observable is ObservableDictionnary:
 			var bound = ui_instance.on_field_changed_dict.bind(observable_name)
 			var bound1 = ui_instance.on_reset_dict.bind(observable_name)
 			observable.field_changed.connect(bound)
 			observable.reset.connect(bound1)
-			
+
+
 func get_all_observables(state: Resource):
 	var observables = []
-	
+
 	for prop in state.get_property_list():
 		if not (prop.usage & PROPERTY_USAGE_SCRIPT_VARIABLE):
 			continue
-			
+
 		var value = state.get(prop.name)
-		if value is Observable or value is ObservableArray or value is ObservableDictionnary: 
-			observables.append({"observable": value, "field_name": prop.name})
+		if value is Observable or value is ObservableArray or value is ObservableDictionnary:
+			observables.append({ "observable": value, "field_name": prop.name })

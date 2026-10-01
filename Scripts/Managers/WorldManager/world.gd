@@ -12,18 +12,6 @@ var key: WorldManager.WORLDS
 ## or Escape key. UIManager connects to this and decidec wether or not to close the world.
 signal request_close(key: int)
 
-
-## Called once, right after the world is instantiated.
-## Use for one-time setup that shouldn't repeat on every show call.
-## [b]Example:[/b]
-## [codeblock]
-## func _on_world_opened() -> void:
-##     $AnimationPlayer.play("fade_in")
-## [/codeblock]
-func on_world_enter() -> void:
-	pass
-
-
 ## Called every time show makes this world visible again. Use to
 ## refresh data that may have changed while the world was hidden.
 ## [b]Example:[/b]
