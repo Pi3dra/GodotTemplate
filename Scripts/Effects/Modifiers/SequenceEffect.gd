@@ -2,31 +2,42 @@ class_name SequenceEffect
 extends Effect
 
 var effects: Array[Effect]
-var _current_handle: EffectHandle # keeps it alive, this is ref counted so it needs to keep a ref
+var _current: Effect
 
 
 func _init(p_effects: Array[Effect]) -> void:
 	effects = p_effects
 
 
-func execute(context: EffectContext) -> EffectHandle:
-	var handle := EffectHandle.new()
-	_run_next(context, handle, 0)
-	return handle
+func _begin() -> void:
+	_run_next(0)
 
 
-func _run_next(
-		context: EffectContext,
-		handle: EffectHandle,
-		index: int,
-) -> void:
+func _run_next(index: int) -> void:
+	if done:
+		return
 	if index >= effects.size():
-		handle.complete()
+		_current = null
+		_finish()
 		return
 
-	_current_handle = effects[index].execute(context)
+	_current = effects[index]
+	_current.on_finished(_run_next.bind(index + 1)) # connect before starting, so instant effects still chain
+	_current._run_as_child(self)
 
-	_current_handle.on_finished(
-		func():
-			_run_next(context, handle, index + 1)
-	)
+
+func cancel() -> void:
+	if _current:
+		_current.cancel()
+		_current = null
+	super()
+
+
+func pause() -> void:
+	if _current:
+		_current.pause()
+
+
+func resume() -> void:
+	if _current:
+		_current.resume()

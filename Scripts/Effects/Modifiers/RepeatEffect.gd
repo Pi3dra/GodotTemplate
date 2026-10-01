@@ -1,44 +1,48 @@
 class_name RepeatEffect
 extends Effect
 
-var effect: Effect
+var factory: Callable # func() -> Effect
 var times: int
-var _child_handle: EffectHandle
+var _count := 0
+var _current: Effect
 
 
-func _init(
-		p_effect: Effect,
-		p_times: int,
-) -> void:
-	effect = p_effect
+func _init(p_factory: Callable, p_times: int) -> void:
+	factory = p_factory
 	times = p_times
 
 
-func execute(context: EffectContext) -> EffectHandle:
-	var handle := EffectHandle.new()
-
-	_run(context, handle, 0)
-
-	return handle
+func _begin() -> void:
+	_count = 0
+	_next()
 
 
-func _run(
-		context: EffectContext,
-		handle: EffectHandle,
-		count: int,
-) -> void:
-	if count >= times:
-		handle.complete()
+func _next() -> void:
+	if done:
+		return
+	if _count >= times:
+		_current = null
+		_finish()
 		return
 
-	var child_handle := effect.execute(context)
-	_child_handle = child_handle
+	_count += 1
+	_current = factory.call()
+	_current.on_finished(_next)
+	_current._run_as_child(self)
 
-	child_handle.on_finished(
-		func():
-			_run(
-				context,
-				handle,
-				count + 1,
-			)
-	)
+
+func cancel() -> void:
+	if _current:
+		_current.cancel()
+		_current = null
+	super()
+
+
+func pause() -> void:
+	if _current:
+		_current.pause()
+
+
+func resume() -> void:
+	if _current:
+		_current.resume()

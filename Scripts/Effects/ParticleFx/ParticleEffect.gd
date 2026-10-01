@@ -20,38 +20,29 @@ func _init(
 	position = pos
 
 
-func execute(context: EffectContext) -> EffectHandle:
-	var target := context.target as CanvasItem
-	var handle := EffectHandle.new()
+var animated_sprite : AnimatedSprite2D
 
+func _start() -> Tween:
 	if target == null:
-		handle.complete()
-		return handle
+		return null
 
 	var animation_frames: SpriteFrames = load(path)
-	var effect := AnimatedSprite2D.new()
-	effect.sprite_frames = animation_frames
-	effect.play(animation_name)
-	effect.position = position
-	target.add_child(effect)
+	var efferi:= AnimatedSprite2D.new()
+	animated_sprite.sprite_frames = animation_frames
+	animated_sprite.play(animation_name)
+	animated_sprite.position = position
+	target.add_child(animated_sprite)
 
 	var looping = animation_frames.get_animation_loop_mode(animation_name) != SpriteFrames.LoopMode.LOOP_NONE
 
 	if not looping:
-		effect.animation_finished.connect(
-			func():
-				handle.complete()
-				effect.queue_free()
+		animated_sprite.animation_finished.connect(
 		)
 	elif looping && duration != -1:
 		var tween := context.target.create_tween()
 		tween.tween_interval(duration)
-		tween.finished.connect(
-			func():
-				handle.complete()
-				effect.queue_free()
-		)
-	else:
-		handle.complete()
 
 	return handle
+	
+func _cleanup(_cancelled: bool) -> void:
+	animated_sprite.queue_free()

@@ -24,3 +24,7 @@ func _start() -> Tween:
 	var tween := target.create_tween()
 
 	return tween
+
+
+func _cleanup(_cancelled: bool) -> void:
+	pass

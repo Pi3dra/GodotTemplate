@@ -1,28 +1,34 @@
 class_name Effect
 extends RefCounted
 
-
 #region API
 
-signal finished          # normal completion only
-signal ended(effect: Effect)  # finished or cancelled, used by the manager
+signal finished # normal completion only
+signal ended(effect: Effect) # finished or cancelled, used by the manager
 
 var target: Node
 var done := false
 var was_cancelled := false
 var _tween: Tween
 
-#TO OVERRIDE
 
+## To indicate the effect to stop in the effect manager use this name
 func get_effect_name() -> StringName:
 	var script: Script = get_script()
 	var n := script.get_global_name()
 	# fallback for scripts without class_name
-	return n if n != &"" else StringName(script.resource_path) 
+	return n if n != &"" else StringName(script.resource_path)
 
-#TO OVERRIDE
+
+## Override this is where you actually implement the effect
 func _start() -> Tween:
 	return null
+
+
+## Override to undo side effects (stop a sound, remove a material...).
+## Called once when the effect finishes or is cancelled.
+func _cleanup(_cancelled: bool) -> void:
+	pass
 
 
 func play(p_target: Node, name: StringName = &"") -> Effect:
@@ -31,6 +37,11 @@ func play(p_target: Node, name: StringName = &"") -> Effect:
 	target = p_target
 	EffectManager.play(self, name)
 	return self
+
+
+func _run_as_child(parent: Effect) -> void:
+	target = parent.target
+	_begin()
 
 
 ## Chainable. Runs cb on normal completion, immediately if already finished.
@@ -43,7 +54,7 @@ func on_finished(cb: Callable) -> Effect:
 	return self
 
 
-func begin() -> void:
+func _begin() -> void:
 	_tween = _start()
 	if _tween == null:
 		_finish()
@@ -55,7 +66,10 @@ func _finish() -> void:
 	if done:
 		return
 	done = true
+	if _tween and _tween.is_valid():
+		_tween.kill() # e.g. the sound ended before its duration timer
 	_tween = null
+	_cleanup(false)
 	finished.emit()
 	ended.emit(self)
 	_clear_connections()
@@ -77,7 +91,7 @@ func _clear_connections() -> void:
 	for sig in [finished, ended]:
 		for c in sig.get_connections():
 			sig.disconnect(c.callable)
-			
+
 
 func then(effect: Effect) -> Effect:
 	return SequenceEffect.new(

@@ -1,42 +1,34 @@
-extends Effect
-
 class_name ShaderEffect
-
-# TODO Shader composition isn't yet supported, aThere are multiple approaches to chaining shaders
-# the first one is to use next_pass on the shader Material
-# the second and apparently the better one is to use subviewport chaining
+extends Effect
 
 var duration: float
 var shaderpath: String
+var _canvas: CanvasItem
 
 
-func _init(p_shaderpath: String, p_duration: float):
-	duration = p_duration
+func _init(p_shaderpath: String, p_duration: float) -> void:
 	shaderpath = p_shaderpath
+	duration = p_duration
 
 
-func execute(context: EffectContext) -> EffectHandle:
-	var shader_mat := ShaderMaterial.new()
-	shader_mat.shader = load(shaderpath)
+func _start() -> Tween:
+	_canvas = target as CanvasItem
+	if _canvas == null:
+		return null
 
-	var target := context.target as CanvasItem
-	var handle := EffectHandle.new()
+	var mat := ShaderMaterial.new()
+	mat.shader = load(shaderpath)
+	_canvas.material = mat
 
-	if target == null:
-		handle.complete()
-		return handle
+	if duration < 0:
+		return null # permanent: finish now, leave the material on
 
-	target.material = shader_mat
-	if duration == -1:
-		handle.complete()
-		return handle
-	else:
-		var tween := context.target.create_tween()
-		tween.tween_interval(duration)
-		tween.finished.connect(
-			func():
-				target.material = null
-				handle.complete()
-		)
+	var tween := _canvas.create_tween()
+	tween.tween_interval(duration)
+	return tween
 
-	return handle
+
+func _cleanup(_cancelled: bool) -> void:
+	# Permanent shaders (duration < 0) stay applied.
+	if duration >= 0 and is_instance_valid(_canvas):
+		_canvas.material = null
