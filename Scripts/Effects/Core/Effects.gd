@@ -3,121 +3,56 @@ extends RefCounted
 
 #region API
 
-signal finished # normal completion only
-signal ended(effect: Effect) # finished or cancelled, used by the manager
-
-var target: Node
-var done := false
-var was_cancelled := false
-var _tween: Tween
-
-
-## To indicate the effect to stop in the effect manager use this name
+## Name used by EffectManager to stop/replace effects. Defaults to the class_name.
 func get_effect_name() -> StringName:
 	var script: Script = get_script()
 	var n := script.get_global_name()
-	# fallback for scripts without class_name
 	return n if n != &"" else StringName(script.resource_path)
 
 
-## Override this is where you actually implement the effect
-func _start() -> Tween:
-	return null
+## Override this. Start the effect; make sure _finish() gets called eventually
+## (directly, or through _use_tween / _finish_after / _finish_on_signal).
+func _begin(run : EffectContext) -> void:
+	run._finish() # default: do nothing, end instantly
 
 
 ## Override to undo side effects (stop a sound, remove a material...).
 ## Called once when the effect finishes or is cancelled.
-func _cleanup(_cancelled: bool) -> void:
+func _cleanup(_run: EffectContext, _cancelled: bool) -> void:
+	pass
+
+## Can be orverriden
+func _on_pause(_run: EffectContext) -> void:
+	pass
+
+## Can be overriden
+func _on_resume(_run: EffectContext) -> void:
 	pass
 
 
-func play(p_target: Node, name: StringName = &"") -> Effect:
-	assert(target == null, "Effects are single-use: create a new one per play.")
-	center_pivot(p_target)
-	target = p_target
-	EffectManager.play(self, name)
-	return self
+func play(target: Node, name: StringName = &"") -> EffectContext:
+	return EffectManager.play(self, target, name)
+
+#endregion
 
 
-func _run_as_child(parent: Effect) -> void:
-	target = parent.target
-	_begin()
-
-
-## Chainable. Runs cb on normal completion, immediately if already finished.
-func on_finished(cb: Callable) -> Effect:
-	if done:
-		if not was_cancelled:
-			cb.call()
-	else:
-		finished.connect(cb, CONNECT_ONE_SHOT)
-	return self
-
-
-func _begin() -> void:
-	_tween = _start()
-	if _tween == null:
-		_finish()
-	else:
-		_tween.finished.connect(_finish)
-
-
-func _finish() -> void:
-	if done:
-		return
-	done = true
-	if _tween and _tween.is_valid():
-		_tween.kill() # e.g. the sound ended before its duration timer
-	_tween = null
-	_cleanup(false)
-	finished.emit()
-	ended.emit(self)
-	_clear_connections()
-
-
-func cancel() -> void:
-	if done:
-		return
-	done = true
-	was_cancelled = true
-	if _tween and _tween.is_valid():
-		_tween.kill()
-	_tween = null
-	ended.emit(self)
-	_clear_connections() # drops pending on_finished callbacks, so they never fire
-
-
-func _clear_connections() -> void:
-	for sig in [finished, ended]:
-		for c in sig.get_connections():
-			sig.disconnect(c.callable)
-
+#region Composition
 
 func then(effect: Effect) -> Effect:
-	return SequenceEffect.new(
-		[
-			self,
-			effect,
-		],
-	)
+	return SequenceEffect.new([self, effect])
 
 
 func with(effect: Effect) -> Effect:
-	return ParallelEffect.new(
-		[
-			self,
-			effect,
-		],
-	)
+	return ParallelEffect.new([self, effect])
 
 
-func repeat(times: int) -> Effect:
-	return RepeatEffect.new(self, times)
+static func repeat(factory: Callable, times: int) -> Effect:
+	return RepeatEffect.new(factory, times)
 
 
-static func center_pivot(target) -> void:
-	if target is Control:
-		target.pivot_offset = target.size / 2.0
+static func center_pivot(p_target: Node) -> void:
+	if p_target is Control:
+		p_target.pivot_offset = p_target.size / 2.0
 
 #endregion
 

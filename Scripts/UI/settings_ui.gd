@@ -30,7 +30,7 @@ func _refresh_sliders():
 
 func _on_save_settings_pressed() -> void:
 	Settings.save()
-	UI.manager.switch_ui(UIManager.UI.MAIN_MENU)
+	UIManager.switch_ui(UIManager.UI.MAIN_MENU)
 
 #region AUDIO
 

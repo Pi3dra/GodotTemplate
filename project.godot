@@ -29,10 +29,12 @@ buses/default_bus_layout="res://Assets/Audio/default_bus_layout.tres"
 
 Globals="*res://Scripts/Autoloads/Globals.gd"
 Settings="*uid://c3lbi66x35v83"
-FontSize="*uid://ch5b0fhbgpcuf"
-Events="*uid://wnd2bu06w5bk"
+UIManager="*uid://dcmiapxsnwndq"
+WorldManager="*uid://mliv371bbg6u"
 SoundManager="*uid://budxutoolfgg5"
 EffectManager="*uid://cj513wjul3mcx"
+FontSize="*uid://ch5b0fhbgpcuf"
+Events="*uid://wnd2bu06w5bk"
 DevConsole="*uid://bny35w3sxwbqw"
 
 [display]
