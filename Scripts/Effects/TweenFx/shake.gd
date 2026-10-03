@@ -20,11 +20,13 @@ func _init(
 	axis = p_axis
 
 
-func _start() -> Tween:
-	var node := target as CanvasItem
-	if node == null:
-		return null # finishes instantly
+func _begin(run: EffectContext) -> void:
+	var target := run.target as CanvasItem
 
+	if target == null:
+		run.finish()
+		return
+		
 	var original_pos: Vector2 = target.position
 	var tween := target.create_tween()
 
@@ -36,4 +38,4 @@ func _start() -> Tween:
 		tween.tween_property(target, "position", original_pos + offset, duration / (shakes * 2))
 		tween.tween_property(target, "position", original_pos, duration / (shakes * 2))
 
-	return tween
+	run.use_tween(tween)

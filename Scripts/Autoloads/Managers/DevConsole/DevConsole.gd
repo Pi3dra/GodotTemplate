@@ -104,25 +104,25 @@ func close() -> void:
 	hide()
 
 
-func add_context(name: String, node: Node) -> void:
+func add_context(context_name: String, node: Node) -> void:
 	if node == null:
 		push_error("trying to add a null node as context")
 		return
-	_contexts[name] = node
+	_contexts[context_name] = node
 
 	node.tree_exiting.connect(
 		func():
-			if _contexts.get(name) == node:
+			if _contexts.get(context_name) == node:
 				_contexts.erase(name)
 	)
 
 
-func set_context(name: String) -> void:
-	if name in _contexts:
-		_current_context = name
+func set_context(context_name: String) -> void:
+	if context_name in _contexts:
+		_current_context = context_name
 
 		if _current_context == null:
-			var error_msg = name + " context it's no longer available, it may have been queue free'd"
+			var error_msg = context_name + " context it's no longer available, it may have been queue free'd"
 			push_error(error_msg)
 			print_line(error_msg, error_color)
 			return

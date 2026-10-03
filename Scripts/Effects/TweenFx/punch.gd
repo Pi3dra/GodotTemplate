@@ -18,16 +18,14 @@ func _init(
 	behavior = p_behavior
 
 
-func execute(context: EffectContext) -> EffectHandle:
-	var target := context.target as CanvasItem
-	var handle := EffectHandle.new()
+func _begin(run: EffectContext) -> void:
+	var target := run.target as CanvasItem
 
 	if target == null:
-		handle.complete()
-		return handle
+		run.finish()
+		return
 
 	var original_scale = target.scale
-
 	var tween := target.create_tween()
 
 	var target_scale = original_scale / (1.0 + strength)
@@ -48,6 +46,4 @@ func execute(context: EffectContext) -> EffectHandle:
 		duration * 0.5,
 	)
 
-	tween.finished.connect(handle.complete)
-
-	return handle
+	run.use_tween(tween)

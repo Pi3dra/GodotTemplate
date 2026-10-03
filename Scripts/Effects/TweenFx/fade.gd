@@ -12,14 +12,12 @@ func _init(
 	duration = p_duration
 	fade_out = p_fade_out
 
-
-func execute(context: EffectContext) -> EffectHandle:
-	var target := context.target as CanvasItem
-	var handle := EffectHandle.new()
+func _begin(run: EffectContext) -> void:
+	var target := run.target as CanvasItem
 
 	if target == null:
-		handle.complete()
-		return handle
+		run.finish()
+		return 
 
 	var tween := target.create_tween()
 
@@ -38,6 +36,4 @@ func execute(context: EffectContext) -> EffectHandle:
 			duration * 0.5,
 		).from(0.0)
 
-	tween.finished.connect(handle.complete)
-
-	return handle
+	run.use_tween(tween)

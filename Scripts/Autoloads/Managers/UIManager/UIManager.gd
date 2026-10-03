@@ -48,9 +48,6 @@ signal interface_created(key: UI)
 signal interface_removed(key: UI)
 
 
-func _init(canvas_layer: CanvasLayer):
-	root_node = canvas_layer
-
 
 ## Shows an existing UI or creates it if necessary.
 func invoke_ui(key: UIManager.UI):

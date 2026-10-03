@@ -8,8 +8,5 @@ func _init(p_duration: float) -> void:
 	duration = p_duration
 
 
-func start() -> Tween:
-	var tween := target.create_tween()
-	tween.tween_interval(duration)
-
-	return tween 
+func _begin(run : EffectContext) -> void:
+	run.finish_after(duration)

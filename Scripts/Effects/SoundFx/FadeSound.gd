@@ -14,17 +14,15 @@ func _init(
 	duration = p_duration
 
 
-func execute(context: EffectContext) -> EffectHandle:
-	var target := context.target
-	var handle := EffectHandle.new()
+func _begin(run: EffectContext) -> void:
+	var target := run.target
 
 	if target == null:
-		handle.complete()
-		return handle
+		run.finish()
+		return 
 
 	var tween = target.create_tween()
 	tween.tween_property(target, "volume_db", target_db, duration)
 	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	tween.finished.connect(handle.complete)
-
-	return handle
+	
+	run.use_tween(tween)

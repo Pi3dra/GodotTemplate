@@ -16,13 +16,12 @@ func _init(
 	value = p_value
 
 
-func execute(context: EffectContext) -> EffectHandle:
-	var target := context.target as CanvasItem
-	var handle := EffectHandle.new()
+func _begin(run: EffectContext) -> void:
+	var target := run.target as CanvasItem
 
 	if target == null:
-		handle.complete()
-		return handle
+		run.finish()
+		return
 
 	var tween := target.create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT)
@@ -36,9 +35,7 @@ func execute(context: EffectContext) -> EffectHandle:
 		Color.from_hsv(0.83, saturation, value),
 		Color.from_hsv(1.0, saturation, value),
 	]
-	for color in colors:
-		tween.tween_property(target, "modulate", color, duration / colors.size())
-
-	tween.finished.connect(handle.complete)
-
-	return handle
+	for c in colors:
+		tween.tween_property(target, "modulate", c, duration / colors.size())
+	
+	run.use_tween(tween)

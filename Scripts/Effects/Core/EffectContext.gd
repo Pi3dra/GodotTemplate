@@ -11,6 +11,7 @@ var target: Node
 var done := false
 var was_cancelled := false
 var data := {} # per-run scratch space for effects (sprite, origin, child runs...)
+var paused := false
 
 var _tween: Tween
 var _timer: Tween
@@ -86,7 +87,7 @@ func _end(cancelled: bool) -> void:
 
 	data.clear()
 
-var paused := false
+
 
 func pause() -> void:
 	if done or paused:

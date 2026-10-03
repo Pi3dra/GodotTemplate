@@ -146,11 +146,11 @@ anchor_left = 0.021000002
 anchor_top = 0.041
 anchor_right = 0.177
 anchor_bottom = 0.098000005
-offset_left = -1.1600018
+offset_left = 173.84
 offset_top = 169.86
-offset_right = -0.91999817
+offset_right = 174.08
 offset_bottom = 170.08
-text = "Shake"
+text = "Color Cycle"
 
 [node name="FlipV" type="Button" parent="." unique_id=110209376]
 custom_minimum_size = Vector2(150, 0)

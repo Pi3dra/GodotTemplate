@@ -16,10 +16,17 @@ func _init(
 	strength = p_strength
 
 ## Override this. Start the effect; make sure _finish() gets called eventually
-## (directly, or through _use_tween / _finish_after / _finish_on_signal).
-func _begin() -> void:
+## (directly, or through run._use_tween / run._finish_after / run._finish_on_signal).
+## store data in run.data if:
+## - You need to use it later on _cleanup, _on_pause, _on_resume
+## - If you play this effect in multiple nodes and they need different values/instances
+## Else store it directly on this script
+func _begin(run: EffectContext) -> void:
+	var target = run.target
 	if target == null:
-		_finish()
+		run.finish()
+		push_warning("Attempting to run effect on null target")
+		return
 
 	_finish() # default: do nothing, end instantly
 

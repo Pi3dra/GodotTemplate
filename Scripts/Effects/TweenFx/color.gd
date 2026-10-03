@@ -12,14 +12,12 @@ func _init(
 	duration = p_duration
 	target_color = p_color
 
-
-func execute(context: EffectContext) -> EffectHandle:
-	var target := context.target as CanvasItem
-	var handle := EffectHandle.new()
+func _begin(run: EffectContext) -> void:
+	var target := run.target as CanvasItem
 
 	if target == null:
-		handle.complete()
-		return handle
+		run.finish()
+		return 
 
 	var tween := target.create_tween()
 	var start_color := target.modulate
@@ -40,6 +38,4 @@ func execute(context: EffectContext) -> EffectHandle:
 	)
 	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 
-	tween.finished.connect(handle.complete)
-
-	return handle
+	run.use_tween(tween)

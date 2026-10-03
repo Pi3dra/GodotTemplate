@@ -49,21 +49,21 @@ func on_interface_closing() -> void:
 	pass
 
 
-func on_observable_changed(old_value, new_value, field_name: StringName) -> void:
+func on_observable_changed(_old_value, _new_value, _field_name: StringName) -> void:
 	pass
 
 
-func on_field_changed_array(old_value, new_value, key, behavior, array_name: StringName) -> void:
+func on_field_changed_array(_old_value, _new_value, _key, _behavior, _array_name: StringName) -> void:
 	pass
 
 
-func on_field_changed_dict(old_value, new_value, key, behavior, dict_name: StringName) -> void:
+func on_field_changed_dict(_old_value, _new_value, _key, _behavior, _dict_name: StringName) -> void:
 	pass
 
 
-func on_reset_array(array, array_name: StringName):
+func on_reset_array(_array, _array_name: StringName):
 	pass
 
 
-func on_reset_dict(array, array_name: StringName):
+func on_reset_dict(_array, _array_name: StringName):
 	pass

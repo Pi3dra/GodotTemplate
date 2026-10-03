@@ -17,12 +17,12 @@ func _init(
 	reset_after = reset
 
 
-func execute(context: EffectContext) -> EffectHandle:
-	var target := context.target as CanvasItem
-	var handle := EffectHandle.new()
+func _begin(run: EffectContext) -> void:
+	var target := run.target as CanvasItem
+
 	if target == null:
-		handle.complete()
-		return handle
+		run.finish()
+		return
 
 	var tween := target.create_tween()
 
@@ -36,5 +36,4 @@ func execute(context: EffectContext) -> EffectHandle:
 	if reset_after:
 		tween.tween_callback(func(): target.rotation_degrees = 0.0)
 
-	tween.finished.connect(handle.complete)
-	return handle
+	run.use_tween(tween)

@@ -46,8 +46,8 @@ func with(effect: Effect) -> Effect:
 	return ParallelEffect.new([self, effect])
 
 
-static func repeat(factory: Callable, times: int) -> Effect:
-	return RepeatEffect.new(factory, times)
+func repeat(times: int) -> Effect:
+	return RepeatEffect.new(self , times)
 
 
 static func center_pivot(p_target: Node) -> void:

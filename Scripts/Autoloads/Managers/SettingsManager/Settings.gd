@@ -19,14 +19,13 @@ var data: SettingsData
 #TODO revamp ui to be more usable for controllers
 #TODO prevent user when a key collides
 
-#TODO for world and ui managers, do we really need the _tscn scripts? maybe do a single script which sets everything up
 #TODO port effects to new API
 #TODO Add possibility for effects to run on a different canvas layer
 #TODO Test how easy it is to implement transitions/effects for UI and Sound
-#TODO How to hook up managers, add node to main and attach scripts?
-#TODO I think it depends on which is which
+#TODO Make it so that effect cleanup can be chosen, by default is on
 
 #TODO Document
+#TODO Test
 
 
 func _ready():
@@ -34,14 +33,21 @@ func _ready():
 		ProjectSettings.globalize_path("user://saves"),
 	)
 
-	if ResourceLoader.exists(SETTINGS_PATH):
-		data = ResourceLoader.load(SETTINGS_PATH)
+	var loaded := _try_load_settings()
+	if loaded != null:
+		data = loaded
 		apply_all_settings()
 	else:
 		print("Loading Settings For First Time")
 		data = SettingsData.new()
 		_create_default_snapshot()
 
+
+func _try_load_settings() -> SettingsData:
+	if not ResourceLoader.exists(SETTINGS_PATH):
+		return null
+	var res := ResourceLoader.load(SETTINGS_PATH)
+	return res as SettingsData # null if the load failed or the type is wrong
 
 func save():
 	ResourceSaver.save(data, SETTINGS_PATH)

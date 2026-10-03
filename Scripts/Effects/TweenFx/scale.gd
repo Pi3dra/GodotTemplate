@@ -13,13 +13,12 @@ func _init(
 	duration = p_duration
 
 
-func execute(context: EffectContext) -> EffectHandle:
-	var target := context.target as CanvasItem
-	var handle := EffectHandle.new()
+func _begin(run: EffectContext) -> void:
+	var target := run.target as CanvasItem
 
 	if target == null:
-		handle.complete()
-		return handle
+		run.finish()
+		return
 
 	var original_scale = target.scale
 	var target_scale = original_scale * new_scale
@@ -33,6 +32,4 @@ func execute(context: EffectContext) -> EffectHandle:
 		duration,
 	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
-	tween.finished.connect(handle.complete)
-
-	return handle
+	run.use_tween(tween)

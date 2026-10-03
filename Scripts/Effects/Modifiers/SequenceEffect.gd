@@ -2,42 +2,39 @@ class_name SequenceEffect
 extends Effect
 
 var effects: Array[Effect]
-var _current: Effect
 
 
-func _init(p_effects: Array[Effect]) -> void:
+func _init(p_effects: Array[Effect] = []) -> void:
 	effects = p_effects
 
 
-func _begin() -> void:
-	_run_next(0)
+func _begin(run: EffectContext) -> void:
+	_next(run, 0)
 
 
-func _run_next(index: int) -> void:
-	if done:
+func _next(run: EffectContext, index: int) -> void:
+	if run.done:
 		return
 	if index >= effects.size():
-		_current = null
-		_finish()
+		run.finish()
 		return
 
-	_current = effects[index]
-	_current.on_finished(_run_next.bind(index + 1)) # connect before starting, so instant effects still chain
-	_current._run_as_child(self)
+	var child := EffectContext.new(effects[index], run.target)
+	run.data.current = child
+	child.on_finished(_next.bind(run, index + 1)) # connect before start, so instant children still chain
+	child.start()
 
 
-func cancel() -> void:
-	if _current:
-		_current.cancel()
-		_current = null
-	super()
+func _cleanup(run: EffectContext, cancelled: bool) -> void:
+	if cancelled and run.data.get("current"):
+		run.data.current.cancel()
 
 
-func pause() -> void:
-	if _current:
-		_current.pause()
+func _on_pause(run: EffectContext) -> void:
+	if run.data.get("current"):
+		run.data.current.pause()
 
 
-func resume() -> void:
-	if _current:
-		_current.resume()
+func _on_resume(run: EffectContext) -> void:
+	if run.data.get("current"):
+		run.data.current.resume()
