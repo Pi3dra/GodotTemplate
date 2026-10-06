@@ -1,0 +1,165 @@
+[gd_scene load_steps=17 format=3 uid="uid://dngx7vu22cd8o"]
+
+[ext_resource type="Script" uid="uid://hw6bytylistb" path="res://Scripts/GameScene/tavern.gd" id="1_273kw"]
+[ext_resource type="PackedScene" uid="uid://mbpwvbww4e0w" path="res://Scenes/GameScene/background.tscn" id="2_3swb4"]
+[ext_resource type="Texture2D" uid="uid://dj5n0440363ub" path="res://Assets/Sprites/UI/DoubleWooden sign.png" id="3_gkydx"]
+[ext_resource type="Texture2D" uid="uid://ducng482cqo0x" path="res://Assets/Sprites/Characters/Pnj/Alchemist_idle.png" id="4_abfkn"]
+[ext_resource type="Texture2D" uid="uid://dijmd1yb28d3g" path="res://Assets/Sprites/TileMap/RPG tileset (full) - 200%.png" id="4_upti4"]
+
+[sub_resource type="Animation" id="Animation_gkydx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-833, -5)]
+}
+
+[sub_resource type="Animation" id="Animation_3swb4"]
+resource_name = "Transition"
+length = 2.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"switch_scene"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.15, 1),
+"update": 0,
+"values": [Vector2(-833, -5), Vector2(-833, 384)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_abfkn"]
+_data = {
+&"RESET": SubResource("Animation_gkydx"),
+&"Transition": SubResource("Animation_3swb4")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p7d70"]
+atlas = ExtResource("4_upti4")
+region = Rect2(956, 660, 40, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_18yo5"]
+atlas = ExtResource("4_upti4")
+region = Rect2(956, 660, 40, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7b57p"]
+atlas = ExtResource("4_upti4")
+region = Rect2(956, 660, 40, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_upti4"]
+atlas = ExtResource("4_abfkn")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e4y1a"]
+atlas = ExtResource("4_abfkn")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6qqgm"]
+atlas = ExtResource("4_abfkn")
+region = Rect2(64, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8fg7r"]
+atlas = ExtResource("4_abfkn")
+region = Rect2(96, 0, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p7d70"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_upti4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e4y1a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qqgm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8fg7r")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Tavern" type="Node2D"]
+script = ExtResource("1_273kw")
+
+[node name="Background" parent="." instance=ExtResource("2_3swb4")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-464, 575)
+zoom = Vector2(2, 2)
+position_smoothing_enabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_abfkn")
+}
+
+[node name="Board" type="TextureButton" parent="."]
+offset_left = -320.0
+offset_top = 400.0
+offset_right = -248.0
+offset_bottom = 440.0
+texture_normal = ExtResource("3_gkydx")
+texture_pressed = ExtResource("3_gkydx")
+texture_hover = ExtResource("3_gkydx")
+stretch_mode = 0
+
+[node name="Door" type="TextureButton" parent="."]
+modulate = Color(0.321569, 0.321569, 0.321569, 1)
+offset_left = -484.0
+offset_top = 702.0
+offset_right = -444.0
+offset_bottom = 742.0
+texture_normal = SubResource("AtlasTexture_p7d70")
+texture_pressed = SubResource("AtlasTexture_18yo5")
+texture_hover = SubResource("AtlasTexture_7b57p")
+
+[node name="Merchant" type="TextureButton" parent="."]
+offset_left = -670.0
+offset_top = 436.0
+offset_right = -630.0
+offset_bottom = 481.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Merchant"]
+position = Vector2(20, 19)
+sprite_frames = SubResource("SpriteFrames_p7d70")
+autoplay = "default"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -833.0
+offset_top = -5.0
+offset_right = -97.0
+offset_bottom = 379.0
+color = Color(0, 0, 0, 1)
+
+[connection signal="pressed" from="Board" to="." method="_on_board_pressed"]
+[connection signal="pressed" from="Door" to="." method="_on_door_pressed"]
+[connection signal="pressed" from="Merchant" to="." method="_on_merchant_pressed"]
+
+[editable path="Background"]

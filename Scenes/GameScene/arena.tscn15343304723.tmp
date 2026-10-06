@@ -1,0 +1,214 @@
+[gd_scene load_steps=10 format=3 uid="uid://ccgdngh77m0hc"]
+
+[ext_resource type="Script" uid="uid://ctqaycr8567lg" path="res://Scripts/GameScene/arena.gd" id="1_ir3ek"]
+[ext_resource type="Shader" uid="uid://c4xsqigo7i03g" path="res://Shaders/transition.gdshader" id="1_m30qt"]
+[ext_resource type="PackedScene" uid="uid://mbpwvbww4e0w" path="res://Scenes/GameScene/background.tscn" id="2_jo8k4"]
+[ext_resource type="PackedScene" uid="uid://bxvt4j1mm8xyq" path="res://Scenes/shaker.tscn" id="3_6qpk1"]
+
+[sub_resource type="Animation" id="Animation_jo8k4"]
+resource_name = "Opening"
+length = 1.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 1.6, 1.7),
+"transitions": PackedFloat32Array(1, 1, 1, 0.15),
+"update": 0,
+"values": [Vector2(320, 360), Vector2(320, 360), Vector2(-856, 744), Vector2(-856, 352)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.53333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"spawn_ui"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ColorRect:material:shader_parameter/progress")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 15.0]
+}
+
+[sub_resource type="Animation" id="Animation_6qpk1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-856, 352)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect:material:shader_parameter/progress")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [15.0]
+}
+
+[sub_resource type="Animation" id="Animation_m30qt"]
+resource_name = "Ending"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(320, 360)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"win_anim_allies"
+}, {
+"args": [],
+"method": &"kys"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ColorRect:material:shader_parameter/progress")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1.5, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [15.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m30qt"]
+_data = {
+&"Ending": SubResource("Animation_m30qt"),
+&"Opening": SubResource("Animation_jo8k4"),
+&"RESET": SubResource("Animation_6qpk1")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m30qt"]
+shader = ExtResource("1_m30qt")
+shader_parameter/use_sprite_alpha = true
+shader_parameter/use_transition_texture = false
+shader_parameter/transition_type = 2
+shader_parameter/position = Vector2(0, 0)
+shader_parameter/invert = false
+shader_parameter/grid_size = Vector2(8, 6)
+shader_parameter/rotation_angle = 0.0
+shader_parameter/stagger = Vector2(0, 0)
+shader_parameter/stagger_frequency = Vector2i(2, 2)
+shader_parameter/flip_frequency = Vector2i(1, 1)
+shader_parameter/basic_feather = 0.0
+shader_parameter/use_mask_size = false
+shader_parameter/mask_size = Vector2(100, 100)
+shader_parameter/edges = 4
+shader_parameter/shape_feather = 0.0
+shader_parameter/sectors = 1
+shader_parameter/clock_feather = 0.0
+shader_parameter/progress = 15.0
+shader_parameter/progress_bias = Vector2(10, 10)
+
+[node name="Arena" type="Node2D"]
+script = ExtResource("1_ir3ek")
+
+[node name="Background" parent="." instance=ExtResource("2_jo8k4")]
+
+[node name="EnemiesSpawners" type="Node2D" parent="."]
+
+[node name="Marker2D" type="Marker2D" parent="EnemiesSpawners"]
+position = Vector2(889, 552)
+
+[node name="Marker2D2" type="Marker2D" parent="EnemiesSpawners"]
+position = Vector2(850, 595)
+
+[node name="Marker2D3" type="Marker2D" parent="EnemiesSpawners"]
+position = Vector2(908, 601)
+
+[node name="Marker2D4" type="Marker2D" parent="EnemiesSpawners"]
+position = Vector2(928, 568)
+
+[node name="Marker2D5" type="Marker2D" parent="EnemiesSpawners"]
+position = Vector2(872, 632)
+
+[node name="AllySpawners" type="Node2D" parent="."]
+
+[node name="Marker2D" type="Marker2D" parent="AllySpawners"]
+position = Vector2(490, 601)
+
+[node name="Marker2D2" type="Marker2D" parent="AllySpawners"]
+position = Vector2(453, 573)
+
+[node name="Marker2D3" type="Marker2D" parent="AllySpawners"]
+position = Vector2(438, 616)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_m30qt")
+}
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(661, 552)
+zoom = Vector2(2, 2)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_m30qt")
+offset_left = -856.0
+offset_top = 352.0
+offset_right = -168.0
+offset_bottom = 736.0
+color = Color(0, 0, 0, 1)
+
+[node name="Shaker" parent="." node_paths=PackedStringArray("_targets") instance=ExtResource("3_6qpk1")]
+_targets = [NodePath("../Camera2D")]
+duration = 0.2
+amplitude = Vector2(3, 3)
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+offset_left = -833.0
+offset_top = 366.0
+offset_right = -97.0
+offset_bottom = 750.0
+color = Color(0.0214346, 0.0214346, 0.0214346, 1)
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

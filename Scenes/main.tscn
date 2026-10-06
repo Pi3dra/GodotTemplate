@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://155xx7s6y6ta"]
+
+[ext_resource type="Script" uid="uid://beph73q4080ef" path="res://Scenes/initial_setup.gd" id="1_21xkr"]
+[ext_resource type="Shader" uid="uid://cd43cg7qm7wtc" path="res://Resources/Shaders/screen.gdshader" id="3_jjvhh"]
+[ext_resource type="Script" uid="uid://ywoe1s06uiim" path="res://Scripts/Tools/custom_cursor.gd" id="4_kry3j"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8gbba"]
+shader = ExtResource("3_jjvhh")
+shader_parameter/brightness = 0.8
+shader_parameter/contrast = 1.0
+shader_parameter/saturation = 1.0
+
+[node name="Main" type="Node" unique_id=945907959]
+script = ExtResource("1_21xkr")
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1324729080]
+
+[node name="ShaderOverlay" type="CanvasLayer" parent="." unique_id=1864104659]
+
+[node name="Shader" type="ColorRect" parent="ShaderOverlay" unique_id=1486192593]
+material = SubResource("ShaderMaterial_8gbba")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Cursor" type="TextureRect" parent="ShaderOverlay" unique_id=1358013322]
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+script = ExtResource("4_kry3j")
+
+[node name="World" type="Node" parent="." unique_id=72758377]
+
+[node name="Effects" type="Node" parent="." unique_id=1822870213]

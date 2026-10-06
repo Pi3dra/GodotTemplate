@@ -1,0 +1,284 @@
+[gd_scene format=3 uid="uid://crb7lkmq7wr6"]
+
+[ext_resource type="Script" uid="uid://jjj4ol5ydkai" path="res://Scripts/UI/settings_ui.gd" id="1_owiy1"]
+[ext_resource type="Theme" uid="uid://ctxx0tdux0vvj" path="res://Assets/Themes/default_theme.tres" id="2_ma1v7"]
+
+[node name="Settings" type="Control" unique_id=649186109]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_owiy1")
+
+[node name="Label" type="Label" parent="." unique_id=163939200]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.423
+anchor_right = 0.577
+anchor_bottom = 0.057000004
+offset_left = 0.4199829
+offset_right = -0.42004395
+offset_bottom = 0.2199974
+grow_horizontal = 2
+text = "OPTIONS"
+horizontal_alignment = 1
+
+[node name="Sliders" type="BoxContainer" parent="." unique_id=1740505165]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.062000003
+anchor_top = 0.037
+anchor_right = 0.462
+anchor_bottom = 0.96300006
+offset_left = 0.47999573
+offset_top = 23.52
+offset_right = 0.47998047
+offset_bottom = -23.52002
+grow_horizontal = 2
+grow_vertical = 2
+vertical = true
+
+[node name="Audio" type="BoxContainer" parent="Sliders" unique_id=862015063]
+layout_mode = 2
+vertical = true
+
+[node name="Audio" type="Label" parent="Sliders/Audio" unique_id=421937729]
+layout_mode = 2
+text = "Audio"
+horizontal_alignment = 1
+
+[node name="Master" type="Label" parent="Sliders/Audio" unique_id=445797446]
+layout_mode = 2
+text = "Master"
+
+[node name="MasterSlider" type="HSlider" parent="Sliders/Audio" unique_id=749116707]
+layout_mode = 2
+max_value = 2.0
+step = 0.025
+
+[node name="Music" type="Label" parent="Sliders/Audio" unique_id=1729820280]
+layout_mode = 2
+text = "MUSIC"
+
+[node name="MusicSlider" type="HSlider" parent="Sliders/Audio" unique_id=83691490]
+layout_mode = 2
+theme = ExtResource("2_ma1v7")
+max_value = 2.0
+step = 0.025
+
+[node name="SFX" type="Label" parent="Sliders/Audio" unique_id=966840512]
+layout_mode = 2
+text = "SFX"
+
+[node name="SFXSlider" type="HSlider" parent="Sliders/Audio" unique_id=1278995545]
+layout_mode = 2
+max_value = 2.0
+step = 0.025
+
+[node name="Display" type="BoxContainer" parent="Sliders" unique_id=1456881113]
+layout_mode = 2
+vertical = true
+
+[node name="Display" type="Label" parent="Sliders/Display" unique_id=1529756722]
+layout_mode = 2
+text = "DISPLAY"
+horizontal_alignment = 1
+
+[node name="Brightness" type="Label" parent="Sliders/Display" unique_id=118661063]
+layout_mode = 2
+text = "BRIGHTNESS"
+
+[node name="BrightnessSlider" type="HSlider" parent="Sliders/Display" unique_id=861953993]
+layout_mode = 2
+max_value = 2.0
+step = 0.05
+
+[node name="Contrast" type="Label" parent="Sliders/Display" unique_id=1872116715]
+layout_mode = 2
+text = "CONTRAST"
+
+[node name="ContrastSlider" type="HSlider" parent="Sliders/Display" unique_id=1927978211]
+layout_mode = 2
+max_value = 2.0
+step = 0.025
+
+[node name="Saturation" type="Label" parent="Sliders/Display" unique_id=1649728746]
+layout_mode = 2
+text = "SATURATION"
+
+[node name="SaturationSlider" type="HSlider" parent="Sliders/Display" unique_id=527748625]
+layout_mode = 2
+max_value = 2.0
+step = 0.025
+
+[node name="Accesibility" type="BoxContainer" parent="Sliders" unique_id=86705807]
+layout_mode = 2
+vertical = true
+
+[node name="Accesibility" type="Label" parent="Sliders/Accesibility" unique_id=392457906]
+layout_mode = 2
+text = "ACCESIBILITY"
+horizontal_alignment = 1
+
+[node name="Timescale" type="Label" parent="Sliders/Accesibility" unique_id=629544042]
+layout_mode = 2
+text = "TIMESCALE"
+
+[node name="TimeSlider" type="HSlider" parent="Sliders/Accesibility" unique_id=1459949125]
+layout_mode = 2
+max_value = 2.0
+step = 0.025
+
+[node name="FontSize" type="Label" parent="Sliders/Accesibility" unique_id=1842140762]
+layout_mode = 2
+text = "FONTSIZE"
+
+[node name="FontSlider" type="HSlider" parent="Sliders/Accesibility" unique_id=1993596094]
+layout_mode = 2
+min_value = 0.5
+max_value = 1.5
+step = 0.025
+value = 0.5
+
+[node name="VFXStrength" type="Label" parent="Sliders/Accesibility" unique_id=54109657]
+layout_mode = 2
+text = "VFXSTRENGTH"
+
+[node name="VFXSlider" type="HSlider" parent="Sliders/Accesibility" unique_id=1727206184]
+layout_mode = 2
+max_value = 2.0
+step = 0.025
+
+[node name="Controllers" type="BoxContainer" parent="." unique_id=2060906066]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.53900003
+anchor_top = 0.067
+anchor_right = 0.93900007
+anchor_bottom = 0.92
+offset_left = -0.44006348
+offset_top = -0.1800003
+offset_right = -0.44006348
+offset_bottom = 0.19998169
+grow_horizontal = 0
+grow_vertical = 2
+vertical = true
+
+[node name="Language" type="Label" parent="Controllers" unique_id=394259176]
+layout_mode = 2
+text = "LANGUAGE"
+horizontal_alignment = 1
+
+[node name="Languages" type="HBoxContainer" parent="Controllers" unique_id=36468440]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+alignment = 1
+
+[node name="EN" type="Button" parent="Controllers/Languages" unique_id=1438422007]
+custom_maximum_size = Vector2(40, 40)
+layout_mode = 2
+text = "EN"
+
+[node name="FR" type="Button" parent="Controllers/Languages" unique_id=1611489934]
+custom_maximum_size = Vector2(40, 40)
+layout_mode = 2
+text = "FR
+"
+
+[node name="SP" type="Button" parent="Controllers/Languages" unique_id=1644577268]
+custom_maximum_size = Vector2(40, 40)
+layout_mode = 2
+text = "SP
+"
+
+[node name="KeyBinds" type="HBoxContainer" parent="Controllers" unique_id=1785939331]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+accessibility_region = true
+alignment = 1
+
+[node name="Inputs" type="GridContainer" parent="Controllers/KeyBinds" unique_id=573062001]
+custom_minimum_size = Vector2(115, 0)
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="Controllers/KeyBinds/Inputs" unique_id=1810102488]
+layout_mode = 2
+text = "Move Up	"
+
+[node name="MoveUp" type="Button" parent="Controllers/KeyBinds/Inputs" unique_id=573359119]
+custom_minimum_size = Vector2(115, 20)
+custom_maximum_size = Vector2(115, 32)
+layout_mode = 2
+text = "A"
+icon_alignment = 1
+expand_icon = true
+
+[node name="Label2" type="Label" parent="Controllers/KeyBinds/Inputs" unique_id=874231036]
+layout_mode = 2
+text = "Move Down"
+
+[node name="MoveDown" type="Button" parent="Controllers/KeyBinds/Inputs" unique_id=303126903]
+custom_minimum_size = Vector2(115, 20)
+custom_maximum_size = Vector2(115, 32)
+layout_mode = 2
+text = "A"
+
+[node name="Label3" type="Label" parent="Controllers/KeyBinds/Inputs" unique_id=266350939]
+layout_mode = 2
+text = "Move Left"
+
+[node name="MoveLeft" type="Button" parent="Controllers/KeyBinds/Inputs" unique_id=1420780404]
+custom_minimum_size = Vector2(115, 20)
+custom_maximum_size = Vector2(115, 32)
+layout_mode = 2
+text = "A"
+
+[node name="Label4" type="Label" parent="Controllers/KeyBinds/Inputs" unique_id=32415668]
+layout_mode = 2
+text = "Move Right
+"
+
+[node name="MoveRight" type="Button" parent="Controllers/KeyBinds/Inputs" unique_id=445957389]
+custom_minimum_size = Vector2(115, 20)
+custom_maximum_size = Vector2(115, 32)
+layout_mode = 2
+text = "A"
+
+[node name="CollisionLabel" type="Label" parent="Controllers" unique_id=1368962292]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Save Settings" type="Button" parent="." unique_id=1997635669]
+layout_mode = 0
+offset_left = 515.0
+offset_top = 466.0
+offset_right = 899.0
+offset_bottom = 497.0
+text = "SAVE"
+
+[node name="Reset to default" type="Button" parent="." unique_id=261740564]
+layout_mode = 0
+offset_left = 515.0
+offset_top = 379.0
+offset_right = 899.0
+offset_bottom = 410.0
+text = "Reset to default
+"
+
+[connection signal="value_changed" from="Sliders/Audio/MasterSlider" to="." method="_on_master_slider_value_changed"]
+[connection signal="value_changed" from="Sliders/Audio/MusicSlider" to="." method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="Sliders/Audio/SFXSlider" to="." method="_on_sfx_slider_value_changed"]
+[connection signal="value_changed" from="Sliders/Display/BrightnessSlider" to="." method="_on_brightness_slider_value_changed"]
+[connection signal="value_changed" from="Sliders/Display/ContrastSlider" to="." method="_on_contrast_slider_value_changed"]
+[connection signal="value_changed" from="Sliders/Display/SaturationSlider" to="." method="_on_saturation_slider_value_changed"]
+[connection signal="value_changed" from="Sliders/Accesibility/TimeSlider" to="." method="_on_time_slider_value_changed"]
+[connection signal="value_changed" from="Sliders/Accesibility/FontSlider" to="." method="_on_font_slider_value_changed"]
+[connection signal="value_changed" from="Sliders/Accesibility/VFXSlider" to="." method="_on_vfx_slider_value_changed"]
+[connection signal="pressed" from="Controllers/Languages/EN" to="." method="_on_en_pressed"]
+[connection signal="pressed" from="Controllers/Languages/FR" to="." method="_on_fr_pressed"]
+[connection signal="pressed" from="Controllers/Languages/SP" to="." method="_on_sp_pressed"]
+[connection signal="pressed" from="Save Settings" to="." method="_on_save_settings_pressed"]
+[connection signal="pressed" from="Reset to default" to="." method="_on_reset_to_default_pressed"]

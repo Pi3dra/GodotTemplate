@@ -1,0 +1,43 @@
+https://github.com/chairfull/GodotRichTextLabel2
+Some really nice text BBCode effect library
+
+https://github.com/nathanhoad/godot_dialogue_manager
+A decent looking dialog manager
+
+https://github.com/GDQuest/GDScript-formatter
+A formatter for gdscript, this is a must have for all projects
+
+https://github.com/elliotfontaine/yard-godot
+Yet Another Resource Database is a plugin for managing and querying collections of resources, 
+with a spreadsheet-like editor and a lightweight runtime API. 
+
+
+Some considerable telemetry options:
+	by order of preference
+	https://trytalo.com/pricing
+	https://www.gameanalytics.com/pricing
+	https://github.com/godot-mobile-plugins/godot-firebase
+
+
+A plugin for making google ads easier to use (haven't tried it yet):
+	https://store.godotengine.org/asset/poingstudios/admob/
+
+A must have plugin for easily and quickly translating the game:
+https://godotengine.org/asset-library/asset/284
+
+A seemingly nice plugin manager, nice to dev in team without having to commit all plugin files:
+https://github.com/imjp94/gd-plug 
+
+A must have to track TODOs in your code: 
+https://godotengine.org/asset-library/asset/1327
+
+
+
+
+Some really good resources for shaders, in order of preference:
+
+https://www.youtube.com/watch?v=kfM-yu0iQBk - Shader Basics, Blending & Textures • Shaders for Game Devs [Part 1] to [Part 3]
+
+https://www.youtube.com/watch?v=WjK5mNxolwg&list=PLpnN_P-OjLuyrfMObLML7AC2W-o6uxwIR - Godot Shaders - Cashew OldDew
+
+https://www.youtube.com/watch?v=J9qx8MxuJYM&t=12961s - The ultimate introduction to shaders in Godot

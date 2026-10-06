@@ -1,0 +1,35 @@
+class_name ScaleEffect
+extends Effect
+
+@export var new_scale: Vector2
+@export var duration: float
+
+
+func _init(
+		p_scale: Vector2,
+		p_duration: float,
+) -> void:
+	new_scale = p_scale
+	duration = p_duration
+
+
+func _begin(run: EffectContext) -> void:
+	var target := run.target as CanvasItem
+
+	if target == null:
+		run.finish()
+		return
+
+	var original_scale = target.scale
+	var target_scale = original_scale * new_scale
+
+	var tween := target.create_tween()
+
+	tween.tween_property(
+		target,
+		"scale",
+		target_scale,
+		duration,
+	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+	run.use_tween(tween)
