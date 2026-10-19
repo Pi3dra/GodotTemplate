@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cy25nmpyqjfdk"]
+
+[ext_resource type="Script" uid="uid://c6crn51ku6rp2" path="res://Scripts/UI/credits.gd" id="1_h87vg"]
+
+[node name="Credits" type="Control" unique_id=351642297]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_h87vg")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=368621661]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.005
+anchor_bottom = 1.0020001
+offset_right = 0.2000122
+offset_bottom = -0.080078125
+
+[node name="Container" type="VBoxContainer" parent="ScrollContainer" unique_id=936298043]
+layout_mode = 2
+alignment = 1
